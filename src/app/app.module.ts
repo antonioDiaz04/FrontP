@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './core/commons/components/footer/footer.component';
 import { HeaderComponent } from './core/commons/components/header/header.component';
 // import { PublicComponent } from './core/features/public/public.component';
-import { HomeView } from './features/public/view/home/home.view';
+// import { HomeView } from './features/public/view/home/home.view';
 import { FormVehiculoComponent } from './features/admin/commons/components/form-vehiculo/form-vehiculo.component';
 import { FormRepartidoresComponent } from './features/admin/commons/components/form-repartidores/form-repartidores.component';
 import { FormRutasComponent } from './features/admin/commons/components/form-rutas/form-rutas.component';
@@ -20,7 +20,7 @@ import { AdminComponent } from './features/admin/admin.component';
     FooterComponent,
     HeaderComponent,
     // PublicComponent,
-    HomeView,
+    // HomeView,
     FormVehiculoComponent,
     FormRepartidoresComponent,
     FormRutasComponent,
