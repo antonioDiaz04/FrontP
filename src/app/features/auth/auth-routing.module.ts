@@ -4,8 +4,6 @@ import { AuthComponent } from './auth.component';
 import { IniciarSesionView } from './view/iniciar-sesion/iniciar-sesion.view';
 
 const routes: Routes = [
-
-
   {
     path: '',
     component: AuthComponent,

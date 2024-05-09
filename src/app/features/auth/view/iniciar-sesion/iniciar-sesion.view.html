@@ -1,1 +1,15 @@
-<p>iniciar-sesion works!</p>
+<div class="container">
+    <!-- <div ></div> -->
+    <form method="post" [formGroup]="loginForm" (ngSubmit)="login()" class="form-login">
+
+        <div class="container-input">
+
+            <label>ingrese su usuario:</label>
+            <input  formControlName="usuario" pInputText>
+            <label >ingrese su contraseña:</label>
+
+            <input formControlName="pass" pInputText>
+            <button type="submit">ingresar</button>
+        </div>
+    </form>
+</div>

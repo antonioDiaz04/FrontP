@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { IniciarSesionView } from './view/iniciar-sesion/iniciar-sesion.view';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { IniciarSesionView } from './view/iniciar-sesion/iniciar-sesion.view';
     IniciarSesionView
   ],
   imports: [
+    ReactiveFormsModule,FormsModule,
     CommonModule,
     AuthRoutingModule
   ]
