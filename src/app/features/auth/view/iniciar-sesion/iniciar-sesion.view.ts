@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import { catchError, finalize, throwError } from 'rxjs';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { SignInService } from '../../services/sign-in.service';
+import { SignInService } from '../../commons/services/sign-in.service';
 import { StorageService } from '../../../../core/commons/components/service/storage.service';
 import { SessionService } from '../../../../core/commons/components/service/session.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,17 +27,14 @@ export class IniciarSesionView {
     private signInService: SignInService,
     private storageService: StorageService,
     private sessionService: SessionService,
-
-
-
     private fb: FormBuilder,
     // private toastr: ToastrService,
     private router: Router,
     // private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
-      usuario: ['', Validators.required],
-      pass: ['', Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -49,11 +46,11 @@ export class IniciarSesionView {
 
 
   login(): void {
-    const usuario = this.loginForm.value.usuario;
-    const pass = this.loginForm.value.pass;
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
     this.ngxService.start();
     this.signInService
-      .signIn({ usuario, pass })
+      .signIn({ email, password }) 
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.errorMessage = error.error.message || 'Error en la solicitud';

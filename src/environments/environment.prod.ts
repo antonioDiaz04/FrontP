@@ -1,6 +1,6 @@
 export const environment = {
   production: true
   // ,api:'http://localhost:3000'
-  ,api:'https://apipurificadora.onrender.com/'
+  ,api:'https://apipurificadora.onrender.com'
 
 };
