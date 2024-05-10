@@ -1,6 +1,6 @@
 .wave-container {
     height: 40vh;
-    background-color: #20B2AA;
+    background-color: #2073b2;
     position: relative;
 /* margin-top: -10px; */
 }
@@ -19,7 +19,7 @@
 }
 
 .lead{
-color: rgb(23, 25, 27) !important;
+color: rgb(255, 255, 255) !important;
 }
 
 @media(max-width:850px) {

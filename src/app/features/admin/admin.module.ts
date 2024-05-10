@@ -21,6 +21,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ComentariosView } from './view/comentarios/comentarios.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
+import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
+import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 
 
 const MATERIALS = [
@@ -43,7 +45,9 @@ const MATERIALS = [
     TablaUsuarioComponent,
     UsuarioView,
     ComentariosView,
-    PedidosView
+    PedidosView,
+    ControlEntregasView,
+    MapaClientsView
   ],
   imports: [MATERIALS,
     CommonModule,

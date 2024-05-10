@@ -7,6 +7,8 @@ import { InicioView } from './view/inicio/inicio.view';
 import { UsuarioView } from './view/usuario/usuario.view';
 import { ComentariosView } from './view/comentarios/comentarios.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
+import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
+import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 
 const routes: Routes = [
   {
@@ -28,8 +30,8 @@ const routes: Routes = [
       },
       {
         // path: 'detail/:id',
-        path: 'productos',
-        component: ProductoView,
+        path: 'Control-entregas',
+        component: ControlEntregasView,
       },
       {
         // path: 'detail/:id',
@@ -45,6 +47,11 @@ const routes: Routes = [
         // path: 'detail/:id',
         path: 'pedidos',
         component: PedidosView,
+      },
+      {
+        // path: 'detail/:id',
+        path: 'mapa-entregas',
+        component: MapaClientsView,
       },
       // {
       //   // path: 'detail/:id',

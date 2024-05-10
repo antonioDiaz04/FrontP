@@ -45,9 +45,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a (click)="redirectToAdmin('productos')" class="nav-link">
+              <a (click)="redirectToAdmin('Control-entregas')" class="nav-link">
                 <span data-feather="shopping-cart"></span>
-                Productos
+                Control de entregas
               </a>
             </li>
             <li class="nav-item">
@@ -57,11 +57,18 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" >
-                <span data-feather="bar-chart-2"></span>
-                Reports
+              <a   (click)="redirectToAdmin('repartidores')"  class="nav-link" >
+                <span data-feather="users"></span>
+                Repartidores
               </a>
             </li>
+            <li class="nav-item">
+              <a   (click)="redirectToAdmin('mapa-entregas')"  class="nav-link" >
+                <span data-feather="users"></span>
+                Proximos Entregas
+              </a>
+            </li>
+            
             <li class="nav-item">
               <a class="nav-link" (click)="redirectToAdmin('comentarios')">
                 <span data-feather="file-text"></span>
