@@ -17,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     AuthComponent,
     IniciarSesionView
   ],
-  imports: [HttpClientModule,
+  imports: [
+    HttpClientModule,
     ReactiveFormsModule,FormsModule,
     CommonModule,
     AuthRoutingModule

@@ -33,8 +33,8 @@ export class IniciarSesionView {
     // private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      correo: ['', Validators.required],
+      pass: ['', Validators.required]
     });
   }
 
@@ -46,11 +46,13 @@ export class IniciarSesionView {
 
 
   login(): void {
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
+    const correo = this.loginForm.value.correo;
+    const pass = this.loginForm.value.pass;
+    console.log("correo=>",correo)
+    console.log("pass=>", pass)
     this.ngxService.start();
     this.signInService
-      .signIn({ email, password }) 
+      .signIn({ correo, pass }) 
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.errorMessage = error.error.message || 'Error en la solicitud';

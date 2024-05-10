@@ -45,7 +45,7 @@ export class AuthService {
     const url = `${environment.api}/auth/verify-code-and-reset-password`;
     return this.http.post(url, data);
   }
-  verifyVerificationCode(data: { email: string; verificationCode: string }): Observable<any> {
+  verifyVerificationCode(data: { correo: string; verificationCode: string }): Observable<any> {
     const url = `${environment.api}/auth/verify-verification-code`; // Reemplaza con la ruta adecuada de tu backend
     return this.http.post(url, data);
   }
