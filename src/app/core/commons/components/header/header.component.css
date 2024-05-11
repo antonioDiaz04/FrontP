@@ -1,6 +1,7 @@
 
 
-.menu {    font-family: sans-serif;
+.menu { 
+   font-family: sans-serif;
     margin: 0;
     padding: 0;background-color: #2073b2;
     position: sticky;
@@ -30,7 +31,7 @@
 }
 
 .menu a:hover {
-    color: #007bff;
+    color: #add5ff;
 }
 
 main {

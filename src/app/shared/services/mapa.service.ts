@@ -18,15 +18,15 @@ export class MapaService {
   map!: mapboxgl.Map;
 
 
-  style = 'mapbox://styles/mapbox/streets-v11'
+  style = 'mapbox://styles/mapbox/streets-v12'
   lat = 21.096391850541213;
   lng = -98.46080933099502;
-  zoom = 3;
+  zoom = 5;
 
 
 
   //coordenadas de hidalgo: 21.096391850541213, -98.46080933099502
-  constructor() { 
+  constructor() {
 
     // this.mapbox.accessToken = environment.mapPk;
     console.log(environment.mapPk)
@@ -47,10 +47,26 @@ export class MapaService {
           zoom: this.zoom,
           center: [this.lng, this.lat]
         })
+        // input de zoom
+        this.map.addControl(new mapboxgl.NavigationControl)
+
+      // input buscador de direcciones
+
+        const geocoder = new MapboxGeocoder({
+          
+          accessToken: environment.mapPk,
+          mapboxgl
+        })
+        
+
+        
+
+
 
         resolve({
 
-          map: this.map
+          map: this.map,
+          geocoder
         })
       } catch (error) {
         reject(error)
