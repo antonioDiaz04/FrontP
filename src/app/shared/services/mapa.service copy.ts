@@ -26,9 +26,6 @@ export class MapaService {
   lng = -98.46080933099502;
   zoom = 4;
 
-  geolocateControl!: mapboxgl.GeolocateControl;
-
-
   //coordenadas de hidalgo: 21.096391850541213, -98.46080933099502
   constructor() {
     // this.mapbox.accessToken = environment.mapPk;
@@ -48,14 +45,15 @@ export class MapaService {
         // aqui empieza la de geolocalizacion
         this.map.addControl(new mapboxgl.NavigationControl()); // input de zoom
         this.map.addControl(new mapboxgl.FullscreenControl());
-
-        this.geolocateControl = new mapboxgl.GeolocateControl({
+        
+        
+        this.map.addControl(new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
           },
           trackUserLocation: true
-        });
-        this.map.addControl(this.geolocateControl);
+        }));
+
         // aqui termina la de geolocalizacion
         // Maneja el evento mousemove
         this.map.on('mousemove', (e) => {
@@ -63,7 +61,7 @@ export class MapaService {
           if (coordenadasElement) {
             coordenadasElement.innerHTML = JSON.stringify(e.lngLat);
 
-
+          
           }
 
         });
@@ -74,28 +72,24 @@ export class MapaService {
           const latitud = e.lngLat.lat;
           const longitud = e.lngLat.lng;
 
-          console.log("long:", longitud, "lat:", latitud)
+            console.log("long:",longitud, "lat:", latitud)
           // Agregar marcador al mapa en la posición del clic
           const marker = new mapboxgl.Marker()
             .setLngLat([longitud, latitud])
             .addTo(this.map);
-
-
-          // Update the map when user moves
-          this.geolocateControl.on('geolocate', (position) => {
-            // const { latitud, longitud } = position;
-            this.map.setCenter([longitud, latitud]);
-          });
-
-
         });
 
         // aqui lo que haremos es hacer que reconozca en tiempo real nuestra ubicacion actual
-
+        
         resolve({
           map: this.map
         });
 
+        // Update the map when user moves
+        this.map.on('geolocate', (position) => {
+          const { latitude, longitude } = position.coords;
+          this.map.setCenter([longitude, latitude]);
+        });
 
 
 
