@@ -85,10 +85,7 @@ export class MapaService {
         });
 
         // Update the map when user moves
-        this.geolocateControl.on('geolocate', (position) => {
-          const { latitude, longitude } = position.coords;
-          this.map.setCenter([longitude, latitude]);
-        });
+      
 
 
 
