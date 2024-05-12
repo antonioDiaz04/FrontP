@@ -1,0 +1,77 @@
+
+.body-panel {
+    font-family: Arial, sans-serif;
+    margin-left: 40px;
+    /* padding: 20px; */
+}
+
+.heeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.info {
+    text-align: right;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.map {
+    width: 100%;
+    
+}
+/* 
+.map img {
+    width: 100%;
+    height: auto;
+} */
+
+/* Estilos para los botones */
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+
+/*  */
+.button-container {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    /* Ajusta el valor según sea necesario */
+    transform: translateY(-50%);
+}
+
+.centered-modal .ant-modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered-modal .ant-modal-body {
+    width: auto;
+}

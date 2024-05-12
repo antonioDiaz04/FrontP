@@ -30,8 +30,8 @@ export class IniciarSesionView {
     private router: Router,
   ) {
     this.loginForm = this.fb.group({
-      correo: ['', Validators.required],
-      pass: ['', Validators.required]
+      email: ['', Validators.required],
+      password1: ['', Validators.required]
     });
   }
 
@@ -47,11 +47,11 @@ export class IniciarSesionView {
       return;
     }
 
-    const correo = this.loginForm.value.correo;
-    const pass = this.loginForm.value.pass;
+    const email = this.loginForm.value.email;
+    const password1 = this.loginForm.value.password1;
     this.ngxService.start();
     this.signInService
-      .signIn({ correo, pass })
+      .signIn({ email, password1 })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.errorMessage = error.error.message || 'Error en la solicitud';

@@ -1,3 +1,6 @@
+// import { HttpClient } from '@angular/HttpClientt';
+// import { HttpClient } from '@angular/HttpClient';
+// import { HttpModule } from '@angular/HttpClient';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -23,10 +26,26 @@ import { ComentariosView } from './view/comentarios/comentarios.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
+import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+// import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { DialogModule } from 'primeng/dialog';
+import { MapaView } from './view/mapa/mapa.view';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  HttpClientModule } from '@angular/common/http';
+import { SignupService } from '../../shared/services/signup.service';
+import { ClientesService } from '../../shared/services/clientes.service';
+// HttpClientMod 
 
+// import { HttpClient, HttpModule } from '@angular/HttpClient';
 
+// ReactiveFormsModule
+// FormsModule
 const MATERIALS = [
-  AvatarModule, AvatarGroupModule
+  AvatarModule, AvatarGroupModule, NzModalModule, DialogModule, ModalModule
 ]
 // import { AdmDashboardView } from './adm-dashboard/adm-dashboard.view';
 @NgModule({
@@ -47,11 +66,16 @@ const MATERIALS = [
     ComentariosView,
     PedidosView,
     ControlEntregasView,
-    MapaClientsView
+    MapaClientsView,
+    ClienteFormComponent,
+    ClienteTablaComponent,
+    MapaView,  
   ],
-  imports: [MATERIALS,
-    CommonModule,
-    AdminRoutingModule, MaterialModule
-  ]
+  imports: [MATERIALS, HttpClientModule,
+    CommonModule, NzButtonModule, FormsModule,
+    AdminRoutingModule, MaterialModule, ReactiveFormsModule
+  ],
+  providers: [
+    SignupService,ClientesService]
 })
 export class AdminModule { }

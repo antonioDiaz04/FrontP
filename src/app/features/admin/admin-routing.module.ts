@@ -9,6 +9,7 @@ import { ComentariosView } from './view/comentarios/comentarios.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
+import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,11 @@ const routes: Routes = [
         // path: 'detail/:id',
         path: 'mapa-entregas',
         component: MapaClientsView,
+      },
+      {
+        // path: 'detail/:id',
+        path: 'agregar-cliente',
+        component: ClienteFormComponent,
       },
       // {
       //   // path: 'detail/:id',

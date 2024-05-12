@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+// import { UsuariosclientesService } from '../../../../shared/services/usuariosclientes.service';
 
 @Component({
   selector: 'app-control-entregas',
@@ -6,6 +7,31 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrl: './control-entregas.view.css',
   encapsulation: ViewEncapsulation.None
 })
-export class ControlEntregasView {
+export class ControlEntregasView implements OnInit{
+
+  // constructor(private UserS:UsuariosclientesService)
+  // {
+
+  // }
+
+  ngOnInit() {
+    this.getDetalleClienteyEntrega()
+  }
+  
+getDetalleClienteyEntrega(){
+
+
+  // console.log("ocurrio un error al obtener la información");
+  // // getUsuarios
+  // this.UserS.getUsuarios().subscribe(data => {
+    
+  //   console.log(data)
+  // }, error=>{
+  //   console.log("ocurrio un error", error)
+  // }
+  // )
+  
+}
+
 
 }

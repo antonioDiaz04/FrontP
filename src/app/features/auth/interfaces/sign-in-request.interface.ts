@@ -1,5 +1,5 @@
 export interface ISingInRequest
 {
-  correo:string,
-  pass:string
+  email:string,
+  password1:string
 }
