@@ -70,14 +70,15 @@ export class MapaService {
           const latitud = e.lngLat.lat;
           const longitud = e.lngLat.lng;
           // aqui lo que harà es buscar input con el id para al hacer click este se los asigne cada valor de la coordenada
-          const latitudElement = document.getElementById('latitude') as HTMLInputElement;;
+          const latitudElement = document.getElementById('latitude') as HTMLInputElement;
           if (latitudElement) {
-            latitudElement.value = latitud.toString();;
+            latitudElement.value = latitud.toString();
           }
-          const longitudeElement = document.getElementById('longitude') as HTMLInputElement;;
+          const longitudeElement = document.getElementById('longitude') as HTMLInputElement;
           if (longitudeElement) {
-            longitudeElement.value = longitud.toString();;
+            longitudeElement.value = longitud.toString();
           }
+
           console.log("long:", longitud, "lat:", latitud)
           // Agregar marcador al mapa en la posición del clic
           const marker = new mapboxgl.Marker()

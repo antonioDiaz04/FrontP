@@ -23,25 +23,29 @@ export class RegitroPurificadoraView implements OnInit {
     this.registroForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
-      purificadora: ['', Validators.required],
+      telefono: ['', Validators.required],
+      nombrePurificadora: ['', Validators.required],
       calle: ['', Validators.required],
       estado: ['', Validators.required],
       codigoPostal: ['', Validators.required],
       longitud: ['', Validators.required],
       latitud: ['', Validators.required],
-      telefono: ['', Validators.required],
       numero: ['', Validators.required],
     });
   }
 
+  
   registroCliente() {
     const nombre = this.registroForm.get('nombre')?.value;
     const email = this.registroForm.get('email')?.value;
-    const purificadora = this.registroForm.get('purificadora')?.value;
+    const telefono = this.registroForm.get('telefono')?.value;
+    const purificadora = this.registroForm.get('nombrePurificadora')?.value;
     const calle = this.registroForm.get('calle')?.value;
     const longitud = this.registroForm.get('longitud')?.value;
     const latitud = this.registroForm.get('latitud')?.value;
-    const telefono = this.registroForm.get('telefono')?.value;
+    console.log("noombre=>", nombre);
+    console.log("Long=>",longitud);
+    console.log("Lat=>", latitud);
     const codigoPostal = this.registroForm.get('codigoPostal')?.value;
     const estado = this.registroForm.get('estado')?.value;
     const numero = this.registroForm.get('numero')?.value;
@@ -76,19 +80,15 @@ export class RegitroPurificadoraView implements OnInit {
       return;
     }
     if (!numero) {
-      Swal.fire('Error', 'Por favor ingresa tu numCasa', 'error');
+      Swal.fire('Error', 'Por favor ingresa tu numero', 'error');
       return;
     }
 
-    const Purificadora: Purificadora = {
-
-
+    const PURIFICADORA: Purificadora = {
       nombre: this.registroForm.get('nombre')?.value,
       email: this.registroForm.get('email')?.value,
       telefono: this.registroForm.get('telefono')?.value,
-
       purificadora: this.registroForm.get('nombrePurificadora')?.value,
-
       calle: this.registroForm.get('calle')?.value,
       numero: this.registroForm.get('numero')?.value,
       estado: this.registroForm.get('estado')?.value,
@@ -96,7 +96,7 @@ export class RegitroPurificadoraView implements OnInit {
       longitud: this.registroForm.get('longitud')?.value,
       latitud: this.registroForm.get('latitud')?.value,
     }
-    this.purificadoraServicio.addPurificadora(Purificadora).subscribe(response => {
+    this.purificadoraServicio.addPurificadora(PURIFICADORA).subscribe(response => {
 
       Swal.fire("Exitoso", "El resgitro fue exitos", 'success')
     }, (error) => {
