@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- <head> -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+        type="text/css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <!-- </head> -->
+
+</head>
+
+<body>
+    <div class="form-container">
+        <form [formGroup]="registroForm" (ngSubmit)="registroCliente()" class="form-flex">
+            <div class="left-column">
+                <h2>Ingrese su información:</h2>
+                <label for="nombre">Nombre del propietario:</label>
+                <input formControlName="nombre" type="text" id="nombre" name="nombre" required>
+
+                <label for="email">Dirección de correo electrónico:</label>
+                <input formControlName="email" type="email" id="email" name="email" required>
+
+                <label for="phone">Número de teléfono:</label>
+                <input formControlName="telefono" type="tel" id="phone" name="phone">
+
+                <h2>Información de la purificadora:</h2>
+
+                <label for="nombrePurificadora">Nombre de la purificadora:</label>
+                <input formControlName="nombrePurificadora" type="text" id="nombrePurificadora"
+                    name="nombrePurificadora">
+
+                <label for="calle">Calle de la purificadora:</label>
+                <input formControlName="calle" type="text" id="calle" name="calle">
+
+                <label for="numero">Número de la purificadora:</label>
+                <input formControlName="numero" type="text" id="numero" name="numero">
+
+                <label for="estado">Estado de la República:</label>
+                <input formControlName="estado" type="text" id="estado" name="estado">
+            </div>
+            <div class="right-column">
+                <h2>Agrege la ubicación de la purificadora:</h2>
+                <label for="codigoPostal">Código postal:</label>
+                <input formControlName="codigoPostal" type="text" id="codigoPostal" name="codigoPostal">
+
+
+                <!-- mapa -->
+                <!-- <div class="wrapper">
+                    <div class="box-form">
+                        <div id="geocoder" #asGeocoder class="geocoder"></div>
+                    </div>
+                </div> -->
+                <h2>Agrega tu ubicación:</h2>
+
+                <div id="map"></div>
+                <!-- <pre id='coordenadas'></pre> -->
+                <label for="latitude">Latitud:</label>
+                <input formControlName="latitud" type="text" id="latitude" name="latitude" [readOnly]="true">
+
+                <label for="longitude">Longitud:</label>
+                <input formControlName="longitud" type="text" id="longitude" name="longitude" [readOnly]="true">
+                <input type="submit" value="Register" class="button">
+                <button type="button" (click)="volverAtras()" class="button">Atras</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

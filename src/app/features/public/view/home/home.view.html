@@ -1,29 +1,55 @@
-<div class="wave-container"></div>
+<body>
 
-<style>
- .wave-container {  
-  height: 40vh;
-  background-color: #416d97;
-  position: relative;
-}
 
-.wave-container::before {   
-  content: "";
-  width: 100%;
-  height: 130px;
-  position: absolute;
-  bottom: -0.3%;
-  left: 0;
-  background-size: auto;
-  background-repeat: repeat no-repeat;
-  background-position: 20vw bottom;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  134' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 98L50 92C100 86 200 74 300 50C400 26 500 -10 600 2C700 14 800 74 900 98C1000 122 1100 110 1150 104L1200 98V134H1150C1100 134 1000 134 900 134C800 134 700 134 600 134C500 134 400 134 300 134C200 134 100 134 50 134H0V98Z' fill='%23ffffff'/></svg>");
-}
+  <div class="wave-container"></div>
 
-@media(max-width:850px) {
-  .wave-container::before {    
-    height: 65px
-  }  
-}
 
-</style>
+  <div class="overlay-container">
+    <div class="content">
+      <h2 class="nombre">Nombre de la purificadora</h2>
+      <p>Eslogan de la purificadora</p>
+    </div>
+  </div>
+
+
+<div class="contiene-contenido">
+
+  <div class="container primero">
+    <div class="text-container">
+        <p class="text-title">Purificadora</p>
+        <p class="text">Registro de tu purificadora. Haz click en el enlace para registrar tu purificadora.</p>
+        <a (click)="redirectTo('Registrar-purificadora')" class="register-link">Registra tu purificadora aqui</a>
+    </div>
+    <div class="image-container">
+      <img src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1715467313/images/mzclm82hxxu5uypl1aaz.png"
+        alt="Imagen">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="image-container">
+      <img style="width:55%; margin-left: 70px;" src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1715560105/images/rx67gnmvt5xd1i43vogd.jpg"
+        alt="Imagen">
+    </div>
+    <div class="text-container">
+      <p class="text-title">Titulo</p>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus cum ipsa quod aut blanditiis tempora error
+        laboriosam atque reiciendis excepturi nemo minus, voluptates mollitia quisquam dolore soluta facere, voluptatem
+        pariatur.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="text-container">
+      <p class="text-title">Titulo</p>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus cum ipsa quod aut blanditiis tempora error
+        laboriosam atque reiciendis excepturi nemo minus, voluptates mollitia quisquam dolore soluta facere, voluptatem
+        pariatur.</p>
+    </div>
+    <div class="image-container">
+      <img style="width:55%;" src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1715467313/images/yi9pnxoxs8vh1razck6s.jpg"
+        alt="Imagen">
+    </div>
+  </div>
+
+</div>
+</body>

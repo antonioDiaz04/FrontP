@@ -17,6 +17,10 @@ export class SignupService {
     const url = `${environment.api}/usuarios/signUp`;
     return this.http.post(url, data);
   }
+  addPurificadora(data: any): Observable<any> {
+    const url = `${environment.api}/purificadora/agregacionPurificadora`;
+    return this.http.post(url, data);
+  }
 
 
 }

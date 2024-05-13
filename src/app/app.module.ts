@@ -14,6 +14,9 @@ import { SigninComponent } from './features/auth/commons/components/signin/signi
 import { PublicComponent } from './features/public/public.component';
 // import { AdminComponent } from './features/admin/admin.component';
 // import { AdminModule } from './features/admin/admin.module';
+import { SidebarModule } from 'primeng/sidebar';
+// import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -29,8 +32,8 @@ import { PublicComponent } from './features/public/public.component';
     // AdminModule
 
   ],
-  imports: [
-    BrowserModule,
+  imports: [SidebarModule,
+    BrowserModule, ButtonModule,
     AppRoutingModule
   ],
   providers: [

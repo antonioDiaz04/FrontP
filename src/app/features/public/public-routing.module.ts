@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PublicComponent } from './public.component';
 import { HomeView } from './view/home/home.view';
+import { RegitroPurificadoraView } from './view/regitro-purificadora/regitro-purificadora.view';
 
 const routes: Routes = [
 
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeView,
+      },
+      {
+        path: 'Registrar-purificadora',
+        component: RegitroPurificadoraView,
       },
       // {
       //   // path: 'detail/:id',

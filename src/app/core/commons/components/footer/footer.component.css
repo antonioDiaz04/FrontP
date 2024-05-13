@@ -1,7 +1,11 @@
-/* ... (estilos del menú) */
-
+/* Estilos para pantallas mayores a 700px */
 footer.pie {
-    background-color: #222;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    top: 40px;
+    width: 100%;
+    background-color: #2073b2;
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -60,4 +64,21 @@ footer.pie {
 
 .fab fa-instagram {
     color: #e1306c;
+}
+
+/* Estilos para pantallas de 700px o menos */
+@media (max-width: 700px) {
+    .contenedor-pie {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pie li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .redes-sociales {
+        margin-top: 20px;
+    }
 }

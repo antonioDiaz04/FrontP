@@ -1,9 +1,23 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    /* top: 0; */
+    /* left: 0; */
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
 
 
-.menu { 
-   font-family: sans-serif;
+
+.menu {
+    font-family: sans-serif;
     margin: 0;
-    padding: 0;background-color: #2073b2;
+    padding: 0;
+    background-color: #2073b2;
     position: sticky;
     box-shadow: 0 5px 10px #e7e7e7;
     color: #ffffff;
@@ -11,6 +25,11 @@
     text-align: center;
     border-bottom: #e7e7e741 solid;
 }
+
+.hidden {
+    display: none;
+}
+
 
 .menu ul {
     list-style: none;
@@ -31,7 +50,9 @@
 }
 
 .menu a:hover {
-    color: #add5ff;
+    color: #81f7ff;
+
+    border-bottom: solid 1px #81f7ff;
 }
 
 main {
