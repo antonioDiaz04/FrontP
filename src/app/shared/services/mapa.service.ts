@@ -14,12 +14,18 @@ import { environment } from '../../../environments/environment';
 })
 export class MapaService {
 
+
+
+  
   mapbox = (mapboxgl as typeof mapboxgl)
 
   map!: mapboxgl.Map;
 
 
   cbAddress: EventEmitter<any> = new EventEmitter<any>();
+
+
+  latitudLongitudCambiadas: EventEmitter<{ latitud: number, longitud: number }> = new EventEmitter();
 
   style = 'mapbox://styles/mapbox/satellite-streets-v12'
   lat = 21.096391850541213;
@@ -70,14 +76,24 @@ export class MapaService {
           const latitud = e.lngLat.lat;
           const longitud = e.lngLat.lng;
           // aqui lo que harà es buscar input con el id para al hacer click este se los asigne cada valor de la coordenada
-          const latitudElement = document.getElementById('latitude') as HTMLInputElement;
-          if (latitudElement) {
-            latitudElement.value = latitud.toString();
-          }
-          const longitudeElement = document.getElementById('longitude') as HTMLInputElement;
-          if (longitudeElement) {
-            longitudeElement.value = longitud.toString();
-          }
+         
+
+
+
+          this.latitudLongitudCambiadas.emit({ latitud, longitud });
+         
+          // const latitudElement = document.getElementById('latitude') as HTMLInputElement;
+          // if (latitudElement) {
+          //   latitudElement.value = latitud.toString();
+          // }
+
+          // const longitudElement = document.getElementById('longitude') as HTMLInputElement;
+          // if (longitudElement) {
+          //   longitudElement.value = longitud.toString();
+          // }
+
+
+
 
           console.log("long:", longitud, "lat:", latitud)
           // Agregar marcador al mapa en la posición del clic

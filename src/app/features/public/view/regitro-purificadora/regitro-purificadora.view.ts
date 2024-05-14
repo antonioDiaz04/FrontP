@@ -28,9 +28,9 @@ export class RegitroPurificadoraView implements OnInit {
       calle: ['', Validators.required],
       estado: ['', Validators.required],
       codigoPostal: ['', Validators.required],
-      longitud: ['', Validators.required],
-      latitud: ['', Validators.required],
-      numero: ['', Validators.required],
+      latitud: [{ value: '', disabled: true }, Validators.required],
+      longitud: [{ value: '', disabled: true }, Validators.required],
+    numero: ['', Validators.required],
     });
   }
 
@@ -88,7 +88,7 @@ export class RegitroPurificadoraView implements OnInit {
       nombre: this.registroForm.get('nombre')?.value,
       email: this.registroForm.get('email')?.value,
       telefono: this.registroForm.get('telefono')?.value,
-      purificadora: this.registroForm.get('nombrePurificadora')?.value,
+      purificadoraNombre: this.registroForm.get('nombrePurificadora')?.value,
       calle: this.registroForm.get('calle')?.value,
       numero: this.registroForm.get('numero')?.value,
       estado: this.registroForm.get('estado')?.value,
@@ -125,6 +125,13 @@ export class RegitroPurificadoraView implements OnInit {
 
 
   ngOnInit(): void {
+
+
+    this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
+      this.registroForm.get('latitud')?.setValue(latitud);
+      this.registroForm.get('longitud')?.setValue(longitud);
+    });
+
     this.setEstado("registrando");
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {
