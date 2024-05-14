@@ -42,9 +42,9 @@
                 <h2>Agrega tu ubicación:</h2>
                 <div id="map"></div>
                 <label for="latitude">Latitud:</label>
-                <input formControlName="latitud" type="text"  id="latitude" name="latitude" [readOnly]="true">
+                <input formControlName="latitud" type="text"  id="latitude" name="latitude" [disabled]="true">
                 <label for="longitude">Longitud:</label>
-                <input formControlName="longitud" type="text" id="longitude" name="longitude" [readOnly]="true">
+                <input formControlName="longitud" type="text" id="longitude" name="longitude" [disabled]="true">
                 <input type="submit" value="Register" class="button">
                 <button type="button" (click)="volverAtras()" class="button">Atras</button>
             </div>
