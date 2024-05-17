@@ -10,7 +10,10 @@ export class Purificadora {
     longitud: string;
     latitud: string;
     telefono: string;
-    constructor(nombre: string, telefono: string, longitud: string, email: string, calle: string, purificadoraNombre: string, latitud: string, numero: string, estado:string,codigoPostal:string) {
+    usuario: string;
+    password1: string;
+
+    constructor(nombre: string, telefono: string, longitud: string, email: string, calle: string, purificadoraNombre: string, latitud: string, numero: string, estado: string, codigoPostal: string, usuario: string, password1:string) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
@@ -21,5 +24,7 @@ export class Purificadora {
         this.codigoPostal = codigoPostal;
         this.estado = estado;
         this.numero = numero;
+        this.usuario = usuario;
+        this.password1 = password1;
     }
 }

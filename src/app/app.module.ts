@@ -17,6 +17,10 @@ import { PublicComponent } from './features/public/public.component';
 import { SidebarModule } from 'primeng/sidebar';
 // import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
+// import {  } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdmPurificadoraComponent } from './features/adm-purificadora/adm-purificadora.component';
+import { EmpleadoComponent } from './features/empleado/empleado.component';
 
 @NgModule({
   declarations: [
@@ -28,12 +32,14 @@ import { ButtonModule } from 'primeng/button';
     
     SigninComponent,
     PublicComponent,
+    AdmPurificadoraComponent,
+    EmpleadoComponent,
     // AdminComponent,
     // AdminModule
 
   ],
   imports: [SidebarModule,
-    BrowserModule, ButtonModule,
+    BrowserModule, ButtonModule, BrowserAnimationsModule,
     AppRoutingModule
   ],
   providers: [

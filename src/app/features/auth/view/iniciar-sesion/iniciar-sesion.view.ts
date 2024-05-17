@@ -73,10 +73,12 @@ export class IniciarSesionView {
           const userData = this.sessionService.getUserData();
           if (userData) {
             this.userROL = userData.rol;
-            if (this.userROL === ERol.ADMIN) {
+            if (this.userROL === ERol.ADMIN) {//administrador de la pagina 
               this.router.navigate(['admin/inicio'])
                 .then(() => window.location.reload());
-            } else if (this.userROL === ERol.CLIENT) {
+            } else if (this.userROL === ERol.ADMPRF) {//administrador de purificadora
+              this.router.navigate(['/']).then(() => window.location.reload());
+            } else if (this.userROL === ERol.REPARTIDOR) {//repartidor
               this.router.navigate(['/']).then(() => window.location.reload());
             }
           }

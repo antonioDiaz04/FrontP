@@ -9,9 +9,10 @@ import { RegitroPurificadoraView } from './view/regitro-purificadora/regitro-pur
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientesService } from '../../shared/services/clientes.service';
 import { SignupService } from '../../shared/services/signup.service';
+// DialogModule, ButtonModule
 
-
-
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 const VIEW_COMPONENTS = [
     RegitroPurificadoraView,
 HomeView
@@ -22,7 +23,7 @@ HomeView
     ComponentsComponent,
   ],
   imports: [
-    CommonModule, HttpClientModule,
+    CommonModule, HttpClientModule, DialogModule, ButtonModule,
     PublicRoutingModule, FormsModule, ReactiveFormsModule
   ],
   providers: [

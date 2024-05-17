@@ -6,17 +6,31 @@ import { Purificadora } from '../../../../shared/models/purificadora.model';
 import { Location } from '@angular/common';
 import { ClipboardService } from 'ngx-clipboard';
 import { MapaService } from '../../../../shared/services/mapa.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-regitro-purificadora',
   templateUrl: './regitro-purificadora.view.html',
   styleUrl: './regitro-purificadora.view.css',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  // standalone: true,
+  // imports: [DialogModule, ButtonModule]
+  // animations: [NoopAnimationsModule]
 })
 export class RegitroPurificadoraView implements OnInit {
 
 
   registroForm: FormGroup;
+  
+  
+  visible: boolean = false;
 
+  showDialog() {
+    this.visible = true;
+  }
 
 
   constructor(private clipboardService: ClipboardService, private mapService: MapaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private purificadoraServicio: SignupService) {
@@ -30,7 +44,7 @@ export class RegitroPurificadoraView implements OnInit {
       codigoPostal: ['', Validators.required],
       latitud: [{ value: '', disabled: true }, Validators.required],
       longitud: [{ value: '', disabled: true }, Validators.required],
-    numero: ['', Validators.required],
+       numero: ['', Validators.required],
     });
   }
 
@@ -95,7 +109,13 @@ export class RegitroPurificadoraView implements OnInit {
       codigoPostal: this.registroForm.get('codigoPostal')?.value,
       longitud: this.registroForm.get('longitud')?.value,
       latitud: this.registroForm.get('latitud')?.value,
+      password1: '',
+      usuario: '',
     }
+
+// ! modal
+
+
     this.purificadoraServicio.addPurificadora(PURIFICADORA).subscribe(response => {
 
       Swal.fire("Exitoso", "El resgitro fue exitos", 'success')
