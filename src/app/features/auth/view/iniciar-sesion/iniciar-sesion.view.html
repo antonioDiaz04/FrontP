@@ -1,8 +1,15 @@
+<div class="text">
+    <p class="title">
+        Acceso al sistema
+    </p>
+    <p>Ingrese sus datos correctamente</p>
+</div>
 <div class="container">
+
+            <img src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1715954646/images/cmwt32h4uonoqfnecoav.png"  alt="Ilustración" class="illustration-image">
     <form method="post" [formGroup]="loginForm" (ngSubmit)="login()" class="form-login">
         <div class="container-input">
             <!-- Aquí puedes colocar la imagen que desees -->
-            <!-- <img src="https://images.unsplash.com/photo-1518384491952-3f4731b5f9cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"  alt="Ilustración" class="illustration-image"> -->
 
             <label for="usuario">Ingrese su correo:</label>
             <input id="usuario" formControlName="email" pInputText>
