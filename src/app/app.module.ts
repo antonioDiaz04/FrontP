@@ -27,15 +27,12 @@ import { EmpleadoComponent } from './features/empleado/empleado.component';
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    // PublicComponent,
-    // HomeView,
-    
+
     SigninComponent,
     PublicComponent,
     AdmPurificadoraComponent,
     EmpleadoComponent,
-    // AdminComponent,
-    // AdminModule
+  
 
   ],
   imports: [SidebarModule,
