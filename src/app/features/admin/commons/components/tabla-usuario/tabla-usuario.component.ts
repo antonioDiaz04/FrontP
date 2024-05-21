@@ -45,15 +45,5 @@ export class TablaUsuarioComponent {
 
 
 
-
-
-
-
-
-
-
-
-
-
   
 }
