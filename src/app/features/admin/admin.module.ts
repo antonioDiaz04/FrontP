@@ -72,7 +72,7 @@ const MATERIALS = [
     MapaView,  
   ],
   imports: [MATERIALS, HttpClientModule,
-    CommonModule, NzButtonModule, FormsModule,
+    CommonModule, FormsModule,
     AdminRoutingModule, MaterialModule, ReactiveFormsModule
   ],
   providers: [

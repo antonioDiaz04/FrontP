@@ -9,7 +9,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
 
-
   {
     path: 'public',
     loadChildren: () =>
@@ -19,6 +18,11 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./features/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'purificadoraAdm',
+    loadChildren: () =>
+      import('./features/adm-purificadora/adm-purificadora.module').then((m) => m.AdmPurificadoraModule),
   },
   {
     path: 'auth',

@@ -23,76 +23,8 @@ const routes: Routes = [
         path: 'Registrar-purificadora',
         component: RegitroPurificadoraView,
       },
-      // {
-      //   // path: 'detail/:id',
-      //   path: 'detail',
-      //   component: DetailView,
-      // },
-      // {
-      //   // path: 'detail/:id',
-      //   path: 'detail-categoria',
-      //   component: CategoriaView,
-      // },
-      // {
-      //   // path: 'detail/:id',
-      //   path: 'detail-categoria',
-      //   component: CategoriaView,
-      // },
-      // {
-      //   // path: 'detail/:id',
-      //   path: 'registrarme',
-      //   component: RegistroUsuarioView,
-      // },
-      // {
-      //   // path: 'detail/:id',
-      //   path: 'acerca-empresa',
-      //   component: AcercaEmpresaView,
-      // },
-      // {
-      //   title:"Productos",
-      //   path: 'productos',
-      //   component: ProductosView,
-      // },
-      // {
-      //   title:"Politica |",
-      //   path: 'politica',
-      //   component: PoliticaPrivView,
-      // },
-      // {
-      //   title:"Politica |Cookies",
-      //   path: 'cookies',
-      //   component: PoliticaCookiesView,
-      // },
-      // {
-      //   title:"Terminos |Condiciones",
-      //   path: 'Terminos',
-      //   component: TerminosCondicionesView,
-      // },
-      // {
-      //   title:"preguntas |frecuentes",
-      //   path: 'faq',
-      //   component: PreguntasFreqView,
-      // },
-      // {
-      //   title:"Acerca de |",
-      //   path: 'acercade',
-      //   component: AcercaDeView,
-      // },
-      // {
-      //   title:"404",
-      //   path: 'not-found',
-      //   component: NotFoundView,
-      // },
-      // {
-      //   title:"500",
-      //   path: 'unknown',
-      //   component: UnknownView ,
-      // },
-      // {
-      //   title:"404",
-      //   path: '**',
-      //   component: NotFoundView,
-      // },
+     
+      
     ],
   },
 ];

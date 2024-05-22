@@ -35,7 +35,7 @@ redirectToAdmin(route: string): void {
     if (route === 'login') {
       this.router.navigate(['/auth/login']) // Navegación hacia la página de inicio de sesión
     } else {
-      this.router.navigate(['/admin', route]) // Navegación hacia otras páginas públicas
+      this.router.navigate(['/purificadoraAdm', route]) // Navegación hacia otras páginas públicas
     }
   }
   

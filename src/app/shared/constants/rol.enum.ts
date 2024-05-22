@@ -1,6 +1,6 @@
 export enum ERol
 {
   ADMIN="ADMINPG",
-  REPARTIDOR = "admPurificadora",
+  REPARTIDOR = "Repartidor",
   ADMPRF ="admPurificadora"
 }

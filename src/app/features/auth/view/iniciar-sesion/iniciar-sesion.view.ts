@@ -77,7 +77,10 @@ export class IniciarSesionView {
               this.router.navigate(['admin/inicio'])
                 .then(() => window.location.reload());
             } else if (this.userROL === ERol.ADMPRF) {//administrador de purificadora
-              this.router.navigate(['/']).then(() => window.location.reload());
+              console.log(ERol.ADMPRF)
+              this.router.navigate(['purificadoraAdm/Home'])
+                .then(() => window.location.reload());
+
             } else if (this.userROL === ERol.REPARTIDOR) {//repartidor
               this.router.navigate(['/']).then(() => window.location.reload());
             }

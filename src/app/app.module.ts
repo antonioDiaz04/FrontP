@@ -30,7 +30,7 @@ import { EmpleadoComponent } from './features/empleado/empleado.component';
 
     SigninComponent,
     PublicComponent,
-    AdmPurificadoraComponent,
+    
     EmpleadoComponent,
   
 

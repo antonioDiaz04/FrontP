@@ -6,6 +6,8 @@ funcionalidad para mas tarde
  mostrará la imagen de enviar(enviar correo y password al correo )
 
 Delegación de modulos
+
+
 📂proyecto
 │
 ├── /backend
@@ -25,4 +27,27 @@ Delegación de modulos
 │   ├── .env
 │   ├── .gitignore
 │   └── README.md
+
+
+
+📂Admin
 │
+├── /View
+│   ├── /src
+│   │   ├── /controllers
+│   │   ├── /models
+│   │   ├── /routes
+│   │   ├── /middlewares
+│   │   ├── /services
+│   │   ├── /config
+│   │   ├── /utils
+│   │   ├── app.js
+│   │   └── server.js
+│   ├── /tests
+│   ├── /docs
+│   ├── package.json
+│   ├── .env
+│   ├── .gitignore
+│   └── README.md
+│
+
