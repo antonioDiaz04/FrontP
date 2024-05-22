@@ -109,6 +109,7 @@ export class RegitroPurificadoraView implements OnInit {
       codigoPostal: this.registroForm.get('codigoPostal')?.value,
       longitud: this.registroForm.get('longitud')?.value,
       latitud: this.registroForm.get('latitud')?.value,
+      estatus: '',
       password1: '',
       usuario: '',
     }

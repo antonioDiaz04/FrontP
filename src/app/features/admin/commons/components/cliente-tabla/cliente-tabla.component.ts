@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -12,23 +12,28 @@ import { Router } from '@angular/router';
 import { NzFormTooltipIcon } from 'ng-zorro-antd/form';
 import { UsuariosclientesService } from '../../../../../shared/services/usuariosclientes.service';
 import { ClientesService } from '../../../../../shared/services/clientes.service';
+import { Purificadora } from '../../../../../shared/models/purificadora.model';
 
 @Component({
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
-  styleUrl: './cliente-tabla.component.css',
+  styleUrl: './cliente-tabla.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class ClienteTablaComponent implements OnInit{
-  
+export class ClienteTablaComponent implements OnInit {
+
+
+
+  allPurificadoras: Purificadora[] = [] // Mantén una copia original de todos los productos
+
   ngOnInit(): void {
     this.getUsers();
   }
-  
+
   isVisible = false;
 
-  constructor(private UserS:ClientesService,private router:Router) { }
-redirectToAdmin(route: string): void {
+  constructor( private renderer2:Renderer2,private UserS: ClientesService, private router: Router) { }
+  redirectToAdmin(route: string): void {
 
     // this.sidebarVisible2 = !this.sidebarVisible2
     console.log(route)
@@ -38,22 +43,57 @@ redirectToAdmin(route: string): void {
       this.router.navigate(['/admin', route]) // Navegación hacia otras páginas públicas
     }
   }
+
+
+
+
   
 
-
+  @ViewChild('estatus') estatusElements!: QueryList<ElementRef>;
+  // identificarStatus() {
+  //   this.estatusElements.forEach((estatusElement: ElementRef) => {
+  //     const estatus = estatusElement.nativeElement.textContent.trim().toLowerCase();
+  //     if (estatus === 'Activo') {
+  //       this.renderer2.setStyle(estatusElement.nativeElement, 'color', 'green');
+  //     } else if (estatus === 'Cancelado') {
+  //       this.renderer2.setStyle(estatusElement.nativeElement, 'color', 'red');
+  //     }
+  //   });
+  // }
 
   getUsers() {
-   console.log("ocurrio un error al obtener la información");
-  // getUsuarios
-    this.UserS.obtenerUsuarios().subscribe(data => {
-    
-    console.log(data)
-  }, error=>{
-    console.log("ocurrio un error", error)
-  }
-  )
-    
-}
+    console.log("ocurrio un error al obtener la información");
+    // getUsuarios
+    this.UserS.obtenerPurificadoras().subscribe(data => {
 
+      console.log(data)
+
+
+      this.allPurificadoras = data;
+      console.log("nombre", data.purificadoraNombre)
+    }, error => {
+      console.log("ocurrio un error", error)
+    }
+    )
+
+  }
+
+
+
+
+
+
+
+  eliminarUsuario(id: any) {
+    this.UserS.eliminarPurificadora(id).subscribe(data => {
+      console.log("eliminado")
+      this.getUsers();
+
+    }, error => {
+      console.log("ocurrio un error", error)
+      
+    })
+    
+  }
 
 }

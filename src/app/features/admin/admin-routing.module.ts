@@ -31,7 +31,7 @@ const routes: Routes = [
       },
       {
         // path: 'detail/:id',
-        path: 'Control-entregas',
+        path: 'Control-purificadoras',
         component: ControlEntregasView,
       },
       {

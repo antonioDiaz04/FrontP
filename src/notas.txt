@@ -1,0 +1,28 @@
+
+
+funcionalidad para mas tarde 
+-Encuentra tu Purificadora Más Cercana"
+-al momento de editar el password y la contraseña ,al principio se mostrará la imagen de editar y al realizar la accion de editar 
+ mostrará la imagen de enviar(enviar correo y password al correo )
+
+Delegación de modulos
+📂proyecto
+│
+├── /backend
+│   ├── /src
+│   │   ├── /controllers
+│   │   ├── /models
+│   │   ├── /routes
+│   │   ├── /middlewares
+│   │   ├── /services
+│   │   ├── /config
+│   │   ├── /utils
+│   │   ├── app.js
+│   │   └── server.js
+│   ├── /tests
+│   ├── /docs
+│   ├── package.json
+│   ├── .env
+│   ├── .gitignore
+│   └── README.md
+│

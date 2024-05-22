@@ -2,56 +2,47 @@
     <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Panel de Reparto</h1>
+            <h1 class="h2">Panel de purificadoras</h1>
         </div>
         <header class="heeader">
             <!-- <h1>Panel de Reparto</h1> -->
-            <div class="info">
-                <p>Repartidor: <span id="repartidor_name"></span></p>
-                <p>Fecha: <span id="delivery_date"></span></p>
-            </div>
+        <div class="info">
+            <p>Filtrar por: <span id="repartidor_name"></span></p>
+        </div>
             <div class="button-container">
                 <button class="btn btn-success" (click)="redirectToAdmin('agregar-cliente')"  nz-button [nzType]="'primary'"><span> Agregar Cliente</span></button>
             </div>
 
         </header>
-        <section class="content">
             <h2>Clientes</h2>
+        <section class="content-table-purificadoras">
             <table>
                 <thead>
                     <tr>
                         <th>Cliente</th>
-                        <th>Dirección</th>
-                        <th>Garrafones</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th> <!-- Columna de acciones -->
+                        <th>Nombre Purificadora</th>
+                        <th>Estado</th>
+                        <th>Telefóno</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody  *ngFor="let purificadora of allPurificadoras">
                     <tr>
-                        <td>[Nombre del cliente 1]</td>
-                        <td>[Dirección del cliente 1]</td>
-                        <td>[Cantidad de garrafones]</td>
-                        <td>[Observaciones]</td>
+                        <td>{{purificadora.nombre}}</td>
+                        <td>{{purificadora.purificadoraNombre}}</td>
+                        <td  [ngClass]="{'activo': purificadora.estatus === 'Activo', 'eliminado': purificadora.estatus === 'Eliminado'}">{{purificadora.estatus}}</td>
+                        <td>{{purificadora.telefono}}</td>
+                        <td>{{purificadora.email}}</td>
                         <td> <!-- Botones de acciones -->
-                            <button class="btn btn-danger">Eliminar</button>
-                            <button class="btn btn-info ">Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>[Nombre del cliente 2]</td>
-                        <td>[Dirección del cliente 2]</td>
-                        <td>[Cantidad de garrafones]</td>
-                        <td>[Observaciones]</td>
-                        <td> <!-- Botones de acciones -->
-                            <button class="btn btn-danger">Eliminar</button>
-                            <button class="btn btn-info ">Editar</button>
+                            <i (click)="eliminarUsuario(purificadora._id)" class="fas fa-regular fa-trash-can text-danger m-3   "></i>
+                            <i class="fa-solid fa-pen-to-square m-3 "></i>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="map">
-                <h2>Ruta de Entrega</h2>
+                <h2>Mapa de Ubicaciones de Purificadoras</h2>
 
 <app-mapa></app-mapa>
 

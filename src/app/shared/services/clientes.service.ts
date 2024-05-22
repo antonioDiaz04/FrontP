@@ -8,11 +8,22 @@ import { environment } from '../../../environments/environment';
 })
 export class ClientesService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  url = 'https://apipurificadora.onrender.com/usuarios/getUsuarios';
 
-  obtenerUsuarios(): Observable<any> {
-    return this.http.get(this.url);
+
+  obtenerPurificadoras(): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/getPuricadoras`;
+    return this.http.get(url);
   }
+
+
+  eliminarPurificadora(id: string): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/deletePurificadora/`+id
+    return this.http.delete(url)
+  }
+
+
+
+
 }
