@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+</head>
+
+<body>
+    <header>
+        <h1>Gestión de Repartidores</h1>
+        <nav>
+            <ul>
+                <li><a (click)="redirectToAdminPurificadora('agregar-repartidor')">Registrar Empleado</a></li>
+                <li><a (click)="redirectToAdminPurificadora('lista-repartidores')">Lista de Empleados</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+    
+</body>
+
+</html>

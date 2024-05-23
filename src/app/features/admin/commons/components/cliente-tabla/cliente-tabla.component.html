@@ -6,15 +6,15 @@
         </div>
         <header class="heeader">
             <!-- <h1>Panel de Reparto</h1> -->
-        <div class="info">
-            <p>Filtrar por: <span id="repartidor_name"></span></p>
-        </div>
-            <div class="button-container">
-                <button class="btn btn-success" (click)="redirectToAdmin('agregar-cliente')"><span> Agregar Cliente</span></button>
+            <div class="info">
+                <p>Filtrar por: <span id="repartidor_name"></span></p>
             </div>
-
+            <div class="button-container">
+                <button class="btn btn-success" (click)="redirectToAdmin('agregar-cliente')"><span> Agregar
+                        Cliente</span></button>
+            </div>
         </header>
-            <h2>Clientes</h2>
+        <h2>Clientes</h2>
         <section class="content-table-purificadoras">
             <table>
                 <thead>
@@ -27,16 +27,85 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody  *ngFor="let purificadora of allPurificadoras">
+                <tbody *ngFor="let purificadora of allPurificadoras">
                     <tr>
                         <td>{{purificadora.nombre}}</td>
                         <td>{{purificadora.purificadoraNombre}}</td>
-                        <td  [ngClass]="{'activo': purificadora.estatus === 'Activo', 'eliminado': purificadora.estatus === 'Eliminado'}">{{purificadora.estatus}}</td>
+                        <td
+                            [ngClass]="{'activo': purificadora.estatus === 'Activo', 'eliminado': purificadora.estatus === 'Eliminado'}">
+                            {{purificadora.estatus}}</td>
                         <td>{{purificadora.telefono}}</td>
                         <td>{{purificadora.email}}</td>
                         <td> <!-- Botones de acciones -->
-                            <i (click)="eliminarUsuario(purificadora._id)" class="fas fa-regular fa-trash-can text-danger m-3   "></i>
-                            <i class="fa-solid fa-pen-to-square m-3 "></i>
+                            <i (click)="eliminarUsuario(purificadora._id)"
+                                class="fas fa-regular fa-trash-can text-danger m-3   "></i>
+                            <i (click)="showDialog()" class="fa-solid fa-pen-to-square m-3 "></i>
+
+                            <p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible"
+                                [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                                <i class="fa-regular fa-floppy-disk"></i>
+                                <form>
+                                    <h3>Detalles Personales</h3>
+                                    <div>
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" id="nombre" name="nombre" value="Carlos">
+                                    </div>
+                                    <div>
+                                        <label for="apellido">Apellido:</label>
+                                        <input type="text" id="apellido" name="apellido" value="García">
+                                    </div>
+                                    <div>
+                                        <label for="email">Email:</label>
+                                        <input type="email" id="email" name="email" value="carlos.garcia@example.com">
+                                    </div>
+                                    <h3>Detalles de la Purificadora</h3>
+                                    <div>
+                                        <label for="purificadoraNombre">Nombre de la Purificadora:</label>
+                                        <input type="text" id="purificadoraNombre" name="purificadoraNombre"
+                                            value="Agua Pura">
+                                    </div>
+                                    <div>
+                                        <label for="calle">Calle:</label>
+                                        <input type="text" id="calle" name="calle" value="Avenida Siempre Viva">
+                                    </div>
+                                    <div>
+                                        <label for="numero">Número:</label>
+                                        <input type="text" id="numero" name="numero" value="123">
+                                    </div>
+                                    <div>
+                                        <label for="colonia">Colonia:</label>
+                                        <input type="text" id="colonia" name="colonia" value="Centro">
+                                    </div>
+                                    <div>
+                                        <label for="municipio">Municipio:</label>
+                                        <input type="text" id="municipio" name="municipio" value="Cuauhtémoc">
+                                    </div>
+                                    <div>
+                                        <label for="estado">Estado:</label>
+                                        <input type="text" id="estado" name="estado" value="Ciudad de México">
+                                    </div>
+                                    <div>
+                                        <label for="codigoPostal">Código Postal:</label>
+                                        <input type="text" id="codigoPostal" name="codigoPostal" value="01000">
+                                    </div>
+                                    <div>
+                                        <label for="telefono">Teléfono:</label>
+                                        <input type="text" id="telefono" name="telefono" value="5551234567">
+                                    </div>
+                                    
+                                    <h3>Credenciales</h3><i class="fa-solid fa-paper-plane"></i>
+                                    <div>
+                                        <label for="usuario">Usuario:</label>
+                                        <input type="text" id="usuario" name="usuario" value="pepe">
+                                    </div>
+                                    <div>
+                                        <label for="password1">Contraseña:</label>
+                                        <input type="password" id="password1" name="password1" value="contraseña123">
+                                    </div>
+
+                                </form>
+                            </p-dialog>
+
                         </td>
                     </tr>
                 </tbody>
@@ -44,7 +113,7 @@
             <div class="map">
                 <h2>Mapa de Ubicaciones de Purificadoras</h2>
 
-<app-mapa></app-mapa>
+                <app-mapa></app-mapa>
 
                 <!-- <img src="placeholder.png" alt="Mapa de Ruta"> -->
             </div>

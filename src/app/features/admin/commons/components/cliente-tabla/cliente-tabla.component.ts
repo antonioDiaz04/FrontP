@@ -17,7 +17,7 @@ import { Purificadora } from '../../../../../shared/models/purificadora.model';
 @Component({
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
-  styleUrl: './cliente-tabla.component.scss',
+  styleUrls:[ './cliente-tabla.component.scss','./p-dialog.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteTablaComponent implements OnInit {
@@ -28,6 +28,13 @@ export class ClienteTablaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
+  }
+
+
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
   }
 
   isVisible = false;

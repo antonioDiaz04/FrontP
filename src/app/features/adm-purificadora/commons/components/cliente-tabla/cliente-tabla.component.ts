@@ -19,16 +19,16 @@ import { ClientesService } from '../../../../../shared/services/clientes.service
   styleUrl: './cliente-tabla.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class ClienteTablaComponent implements OnInit{
-  
+export class ClienteTablaComponent implements OnInit {
+
   ngOnInit(): void {
     this.getUsers();
   }
-  
+
   isVisible = false;
 
-  constructor(private UserS:ClientesService,private router:Router) { }
-redirectToAdmin(route: string): void {
+  constructor(private UserS: ClientesService, private router: Router) { }
+  redirectToAdmin(route: string): void {
 
     // this.sidebarVisible2 = !this.sidebarVisible2
     console.log(route)
@@ -38,22 +38,22 @@ redirectToAdmin(route: string): void {
       this.router.navigate(['/purificadoraAdm', route]) // Navegación hacia otras páginas públicas
     }
   }
-  
+
 
 
 
   getUsers() {
-   console.log("ocurrio un error al obtener la información");
-  // getUsuarios
+    console.log("ocurrio un error al obtener la información");
+    // getUsuarios
     this.UserS.obtenerPurificadoras().subscribe(data => {
-    
-    console.log(data)
-  }, error=>{
-    console.log("ocurrio un error", error)
+
+      console.log(data)
+    }, error => {
+      console.log("ocurrio un error", error)
+    }
+    )
+
   }
-  )
-    
-}
 
 
 }

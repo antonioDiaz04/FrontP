@@ -3,9 +3,15 @@
 funcionalidad para mas tarde 
 -Encuentra tu Purificadora Más Cercana"
 -al momento de editar el password y la contraseña ,al principio se mostrará la imagen de editar y al realizar la accion de editar 
+<i class="fa-solid fa-paper-plane"></i>enviar
+<i class="fa-regular fa-floppy-disk"></i>guardar
+
  mostrará la imagen de enviar(enviar correo y password al correo )
 
 Delegación de modulos
+
+completado✅
+Falta❌
 
 
 📂proyecto
@@ -30,24 +36,18 @@ Delegación de modulos
 
 
 
-📂Admin
+📂Admin Page
 │
 ├── /View
 │   ├── /src
-│   │   ├── /controllers
-│   │   ├── /models
-│   │   ├── /routes
-│   │   ├── /middlewares
-│   │   ├── /services
-│   │   ├── /config
-│   │   ├── /utils
-│   │   ├── app.js
-│   │   └── server.js
-│   ├── /tests
-│   ├── /docs
-│   ├── package.json
-│   ├── .env
-│   ├── .gitignore
-│   └── README.md
+│   │   ├── /Control de empleados❌
+│   │   └── Control de clientes❌
+
+
+📂Admin Purificadora
 │
+├── /View
+│   ├── /src
+│   │   ├── /Control de empleados❌
+│   │   └── Control de clientes❌
 

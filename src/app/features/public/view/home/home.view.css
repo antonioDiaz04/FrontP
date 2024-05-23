@@ -1,7 +1,15 @@
+@import url(https://fonts.googleapis.com/css2?family=Questrial&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Mitr:wght@100;200;300;400;500;600;700&display=swap);
+
 body {
     padding: 0;
     margin: 0;
 }
+
+body {
+    font-family: 'Questrial', sans-serif;
+}
+
 
 .wave-container {
     height: 40vh;
@@ -22,6 +30,8 @@ body {
     background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  134' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 98L50 92C100 86 200 74 300 50C400 26 500 -10 600 2C700 14 800 74 900 98C1000 122 1100 110 1150 104L1200 98V134H1150C1100 134 1000 134 900 134C800 134 700 134 600 134C500 134 400 134 300 134C200 134 100 134 50 134H0V98Z' fill='%23ffffff'/></svg>");
 }
 
+@import url(https://fonts.googleapis.com/css2?family=Forum&display=swap);
+
 .overlay-container {
     position: absolute;
     top: 20%;
@@ -32,7 +42,9 @@ body {
     border-radius: 10px;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); Sombra */
     z-index: 999;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    font-family: 'Questrial', sans-serif;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
     color: #ffffff;
 }
 
@@ -68,10 +80,14 @@ body {
     margin-left: 50px;
 }
 
+/* @import url(https://fonts.googleapis.com/css2?family=Sarala:wght@100;200;300;400;500;600;700&display=swap); */
+
+@import url(https://fonts.googleapis.com/css2?family=Antic&display=swap);
+
 
 .text-title {
     color: #2073b2;
-
+    font-family: 'Antic', sans-serif;
     font-size: 50px;
 }
 
@@ -91,12 +107,13 @@ body {
 
 
 .text-container {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    font-family: 'Mitr', sans-serif;
     color: #2073b2;
+    /* font-weight: bold; */
     margin-left: auto;
     margin-right: 50px;
     width: 40%;
-    /* Ocupa la mitad del espacio disponible */
 }
 
 
@@ -135,7 +152,7 @@ div>div>h2 {
     animation-play-state: running;
     -webkit-animation-play-state: paused;
     animation-play-state: paused;
-/* }
+    /* }
 
 div>div>h2:hover { */
     /* background-position-x: 0;

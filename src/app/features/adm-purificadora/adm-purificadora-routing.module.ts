@@ -4,13 +4,15 @@ import { ClienteFormComponent } from './commons/components/cliente-form/cliente-
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { ComentariosView } from './view/comentarios/comentarios.view';
-import { UsuarioView } from './view/usuario/usuario.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
 // import { AdmHomeView } from './view/adm-home/adm-home.view';
 import { InicioView } from './view/inicio/inicio.view';
 // import { AdminComponent } from '../admin/admin.component';
 import { AdmPurificadoraComponent } from './adm-purificadora.component';
 import { AdmHomeView } from './view/adm-home/adm-home.view';
+import { RepartidoresFormComponent } from './commons/components/repartidores-form/repartidores-form.component';
+import { RepartidoresListadoComponent } from './commons/components/repartidores-listado/repartidores-listado.component';
+import { RepartidoresView } from './view/repartidores/repartidores.view';
 
 const routes: Routes = [
   {
@@ -32,13 +34,13 @@ const routes: Routes = [
       },
       {
         // path: 'detail/:id',
-        path: 'Control-purificadoras',
+        path: 'Control-entregas',
         component: ControlEntregasView,
       },
       {
         // path: 'detail/:id',
-        path: 'usuarios',
-        component: UsuarioView,
+        path: 'repartidores',
+        component: RepartidoresView,
       },
       {
         // path: 'detail/:id',
@@ -57,8 +59,19 @@ const routes: Routes = [
       },
       {
         // path: 'detail/:id',
+        path: 'lista-repartidores',
+        component: MapaClientsView,
+      },
+      {
+        // path: 'detail/:id',
+        path: 'agregar-repartidor',
+        component: RepartidoresFormComponent,
+      },
+      {
+        // path: 'detail/:id',
         path: 'agregar-cliente',
-        component: ClienteFormComponent,
+        component: RepartidoresListadoComponent,
+
       },
       
       // {
