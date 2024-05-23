@@ -20,7 +20,7 @@ export class RepartidoresView {
       this.router.navigate(['/auth/login']) // Navegación hacia la página de inicio de sesión
     } else {
       console.log("llegaste a purificadoraAdm")
-      this.router.navigate(['/purificadoraAdm', route]) // Navegación hacia otras páginas públicas
+      this.router.navigate(['/purificadoraAdm/repartidores', route]) // Navegación hacia otras páginas públicas
     }
   }
 

@@ -39,9 +39,10 @@ const routes: Routes = [
       },
       {
         // path: 'detail/:id',
-        path: 'repartidores',
-        component: RepartidoresView,
+        path: 'agregar-cliente',
+        component: ClienteFormComponent,
       },
+      
       {
         // path: 'detail/:id',
         path: 'comentarios',
@@ -58,20 +59,23 @@ const routes: Routes = [
         component: MapaClientsView,
       },
       {
-        // path: 'detail/:id',
-        path: 'lista-repartidores',
-        component: MapaClientsView,
-      },
-      {
-        // path: 'detail/:id',
-        path: 'agregar-repartidor',
-        component: RepartidoresFormComponent,
-      },
-      {
-        // path: 'detail/:id',
-        path: 'agregar-cliente',
-        component: RepartidoresListadoComponent,
-
+        path: 'repartidores',
+        component: RepartidoresView,
+        children: [
+          {
+            path: 'agregar-repartidor',
+            component: RepartidoresFormComponent,
+          },
+          {
+            path: 'lista-repartidores',
+            component: RepartidoresListadoComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'lista-repartidores', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
       },
       
       // {

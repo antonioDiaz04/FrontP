@@ -14,18 +14,28 @@
    }
 
 
+
    .nav-link {
        cursor: pointer;
    }
 
-   .nav-link:focus{
-   color: rgb(0, 160, 107);
-   background: beige;
+   a:focus {
+       color: rgb(0, 160, 107);
+       background: beige;
+
+       color: rgb(104, 104, 104)
    }
+
+   .nav-item a:focus,
+   .nav-item a:active {
+       color: rgb(0, 160, 107);
+       background: beige;
+   }
+
 
    body {
 
-       font-size: .875rem;
+       font-size: .860rem;
    }
 
    footer {
@@ -81,19 +91,12 @@
        font-weight: 500;
        color: #494949;
    }
+
    .sidebar .nav-link:focus {
        font-weight: 500;
        color: #0044a3;
    }
 
-//    .sidebar .nav-link .feather {
-//        margin-right: 4px;
-//        color: #727272;
-//    }
-
-//    .sidebar .nav-link.active {
-//        color: #007bff;
-//    }
 
    .sidebar .nav-link:hover .feather,
    .sidebar .nav-link.active .feather {
