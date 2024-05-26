@@ -1,0 +1,7 @@
+{
+  "name": "purificadora",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

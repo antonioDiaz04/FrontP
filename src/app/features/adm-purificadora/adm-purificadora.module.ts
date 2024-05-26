@@ -26,7 +26,7 @@ import { ControlEntregasView } from './view/control-entregas/control-entregas.vi
 import { ComentariosView } from './view/comentarios/comentarios.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
-import { ProductFormComponent } from './commons/components/product-form/product-form.component';
+// import { ProductFormComponent } from './commons/components/product-form/product-form.component';
 import { VentasComponent } from './commons/components/ventas/ventas.component';
 import { PedidosComponent } from './commons/components/pedidos/pedidos.component';
 import { AdmPurificadoraComponent } from './adm-purificadora.component';
@@ -34,6 +34,7 @@ import { Grafica1Component } from './commons/components/grafica1/grafica1.compon
 import { RepartidoresFormComponent } from './commons/components/repartidores-form/repartidores-form.component';
 import { RepartidoresListadoComponent } from './commons/components/repartidores-listado/repartidores-listado.component';
 import { RepartidoresView } from './view/repartidores/repartidores.view';
+import { MapaClientUbicacionView } from './view/mapa-client-ubicacion/mapa.view';
 
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
@@ -42,8 +43,8 @@ const MATERIALS = [
   declarations: [
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, ProductoView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
-    AdmDashboardView, VentasComponent, InicioView, ProductFormComponent, PedidosComponent,
-    MapaView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresListadoComponent, RepartidoresView,
+    AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresListadoComponent, RepartidoresView,
   ],
   imports: [MATERIALS, HttpClientModule,
     CommonModule, FormsModule,

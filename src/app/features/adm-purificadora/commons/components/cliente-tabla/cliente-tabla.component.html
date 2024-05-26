@@ -1,59 +1,100 @@
+<p-dialog *ngIf="listUsuario" header="Información del Usuario" [modal]="true" [(visible)]="visible"
+    [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+
+    <form [formGroup]="clienteForm" (ngSubmit)="actualizarCliente(listUsuario._id)">
+        <h3>Detalles Personales</h3>
+
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" formControlName="nombre">
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" formControlName="email">
+        </div>
+
+        <div>
+            <label for="estatus">Status:</label>
+            <input type="text" id="estatus" formControlName="estatus">
+        </div>
+
+
+        <div>
+            <label for="numCasa">Número de casa:</label>
+            <input type="text" id="numCasa" formControlName="numCasa">
+        </div>
+
+        <div>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" formControlName="telefono">
+        </div>
+<!-- <div class="map"> -->
+    <!-- <app-mapa></app-mapa> -->
+   <app-mapa-client-ubicacion></app-mapa-client-ubicacion>
+<!-- </div> -->
+
+      
+        <!-- <input formControlName="longitud" type="hidden">
+
+        <input formControlName="latitud" type="hidden"> -->
+
+
+
+
+        <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+        </div>
+    </form>
+</p-dialog>
+
+
+
+
+
 <body class="body-panel">
     <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Panel de purificadoras</h1>
+            <h1 class="h2">Listado de Clientes</h1>
         </div>
         <header class="heeader">
             <div class="info">
                 <p>Filtrar por: <span id="repartidor_name"></span></p>
             </div>
             <div class="button-container">
-                <button class="btn btn-success" (click)="redirectToAdmin('agregar-cliente')"><span> Agregar Cliente</span></button>
+                <button class="btn btn-success" (click)="redirectToAdmin('agregar-cliente')"><span> Agregar
+                        Cliente</span></button>
             </div>
         </header>
         <section class="content">
-            <h2>Clientes</h2>
-            <table>
+            <table class="styled-table">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Pedido</th>
                         <th>Observaciones</th>
-                        <th>Acciones</th> <!-- Columna de acciones -->
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>[Nombre del cliente 1]</td>
-                        <td>[Dirección del cliente 1]</td>
-                        <td>[Cantidad de garrafones]</td>
-                        <td>[Observaciones]</td>
+                    <tr *ngFor="let cliente of allClients">
+                        <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.estatus }}</td>
                         <td> <!-- Botones de acciones -->
-                            <button class="btn btn-danger">Eliminar</button>
-                            <button class="btn btn-info ">Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>[Nombre del cliente 2]</td>
-                        <td>[Dirección del cliente 2]</td>
-                        <td>[Cantidad de garrafones]</td>
-                        <td>[Observaciones]</td>
-                        <td> <!-- Botones de acciones -->
-                            <button class="btn btn-danger">Eliminar</button>
-                            <button class="btn btn-info ">Editar</button>
+                            <i (click)="eliminarUsuario(cliente._id)" class="fas fa-trash-can text-danger m-3"></i>
+                            <i (click)="editar(cliente._id)" class="fa-solid fa-pen-to-square m-3 "></i>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="map">
-                <h2>Ruta de Entrega</h2>
-
-<app-mapa></app-mapa>
-
-
-                <!-- <img src="placeholder.png" alt="Mapa de Ruta"> -->
+                <h2>Ubicación de clientes:
+                </h2>
+                <app-mapa></app-mapa>
             </div>
         </section>
     </main>

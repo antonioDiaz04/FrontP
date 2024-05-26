@@ -3,25 +3,28 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation 
 import { MapaService } from '../../commons/services/mapa.service';
 
 import { ClipboardService } from 'ngx-clipboard';
+import { MapaClientDetailUbacionService } from '../../commons/services/mapaClientDetalle.service';
 
 @Component({
-  selector: 'app-mapa',
+  selector: 'app-mapa-client-ubicacion',
   templateUrl: './mapa.view.html',
   styleUrl: './mapa.view.css',
   encapsulation: ViewEncapsulation.None
 })
-export class MapaView implements OnInit{
-
-  @ViewChild('asGeocoder') asGeocoder!: ElementRef;
+export class MapaClientUbicacionView implements OnInit{
 
 
 
-  constructor(private clipboardService: ClipboardService,private mapService: MapaService, private render2: Renderer2) { }
+  @ViewChild('geoUbicacion') geoUbicacion!: ElementRef;
 
+  constructor(private clipboardService: ClipboardService,private mapService: MapaClientDetailUbacionService, private render2: Renderer2) { }
+
+
+  
   ngOnInit(): void {
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {
-        this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));
+        this.render2.appendChild(this.geoUbicacion.nativeElement, geocoder.onAdd(map));
         console.log('Perfecto |');
         // this.loadMarkers();
       })

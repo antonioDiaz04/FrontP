@@ -1,8 +1,7 @@
-
 .body-panel {
     font-family: Arial, sans-serif;
-    margin-left: 40px;
     /* padding: 20px; */
+    /* background-color: #e0e0e0; */
 }
 
 .heeader {
@@ -26,26 +25,11 @@ h1 {
     flex-wrap: wrap;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
 
 .map {
     width: 100%;
-    
+
 }
-/* 
-.map img {
-    width: 100%;
-    height: auto;
-} */
 
 /* Estilos para los botones */
 .buttons {
@@ -74,4 +58,79 @@ td {
 
 .centered-modal .ant-modal-body {
     width: auto;
+}
+
+
+h2,
+h1 {
+    color: rgb(87, 87, 87);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* styles table */
+.styled-table {
+    width: 80%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.styled-table thead tr {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:nth-of-type(odd) {
+    background-color: #fff;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.styled-table th {
+    background-color: #e0e0e0;
+    color: #333;
+    font-weight: bold;
+}
+
+.styled-table td {
+    color: #555;
+}
+
+.styled-table td .fas,
+.styled-table td .fa-solid {
+    cursor: pointer;
+}
+
+.styled-table td .fa-trash-can {
+    color: #e74c3c;
+}
+
+.styled-table td .fa-pen-to-square {
+    color: #3498db;
+}
+
+.styled-table td .fa-trash-can:hover,
+.styled-table td .fa-pen-to-square:hover {
+    color: #555;
 }

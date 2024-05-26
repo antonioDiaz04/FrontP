@@ -21,8 +21,8 @@ export class ClienteFormComponent {
     this.registroForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
-      password1: ['', Validators.required],
-      passwordConfirmar: ['', Validators.required],
+      // password1: ['', Validators.required],
+      // passwordConfirmar: ['', Validators.required],
       longitud: ['', Validators.required],
       latitud: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -33,8 +33,8 @@ export class ClienteFormComponent {
   registroCliente() {
     const nombre = this.registroForm.get('nombre')?.value;
     const email = this.registroForm.get('email')?.value;
-    const password1 = this.registroForm.get('password1')?.value;
-    const passwordConfirmar = this.registroForm.get('passwordConfirmar')?.value;
+    // const password1 = this.registroForm.get('password1')?.value;
+    // const passwordConfirmar = this.registroForm.get('passwordConfirmar')?.value;
     const longitud = this.registroForm.get('longitud')?.value;
     const latitud = this.registroForm.get('latitud')?.value;
     const telefono = this.registroForm.get('telefono')?.value;
@@ -49,14 +49,14 @@ export class ClienteFormComponent {
       Swal.fire('Error', 'Por favor ingresa tu email', 'error');
       return;
     }
-    if (!password1) {
-      Swal.fire('Error', 'Por favor ingresa tu passwor1', 'error');
-      return;
-    }
-    if (!passwordConfirmar) {
-      Swal.fire('Error', 'Por favor ingresa tu passwordConfirmar', 'error');
-      return;
-    }
+    // if (!password1) {
+    //   Swal.fire('Error', 'Por favor ingresa tu passwor1', 'error');
+    //   return;
+    // }
+    // if (!passwordConfirmar) {
+    //   Swal.fire('Error', 'Por favor ingresa tu passwordConfirmar', 'error');
+    //   return;
+    // }
     if (!longitud) {
       Swal.fire('Error', 'Por favor ingresa tu longitud', 'error');
       return;
@@ -79,8 +79,8 @@ export class ClienteFormComponent {
 
       nombre: this.registroForm.get('nombre')?.value,
       email: this.registroForm.get('email')?.value,
-      password1: this.registroForm.get('password1')?.value,
-      passwordConfirmar: this.registroForm.get('passwordConfirmar')?.value,
+      // password1: this.registroForm.get('password1')?.value,
+      // passwordConfirmar: this.registroForm.get('passwordConfirmar')?.value,
       longitud: this.registroForm.get('longitud')?.value,
       latitud: this.registroForm.get('latitud')?.value,
       telefono: this.registroForm.get('telefono')?.value,

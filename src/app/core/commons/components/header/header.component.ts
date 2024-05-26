@@ -41,12 +41,15 @@ export class HeaderComponent implements OnInit{
   }
 
   checkIfMobile() {
-    if (window.innerWidth < 768) { // Cambia el valor a tu criterio para determinar cuándo consideras que es un dispositivo móvil
-      this.sidebarVisible2 = true;
-    } else {
-      this.sidebarVisible2 = false;
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 768) { // Cambia el valor a tu criterio para determinar cuándo consideras que es un dispositivo móvil
+        this.sidebarVisible2 = true;
+      } else {
+        this.sidebarVisible2 = false;
+      }
     }
   }
+
 
   redirectTo(route: string): void {
 

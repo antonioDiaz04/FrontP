@@ -41,8 +41,6 @@ export class ClienteTablaComponent implements OnInit {
 
   constructor( private renderer2:Renderer2,private UserS: ClientesService, private router: Router) { }
   redirectToAdmin(route: string): void {
-
-    // this.sidebarVisible2 = !this.sidebarVisible2
     console.log(route)
     if (route === 'login') {
       this.router.navigate(['/auth/login']) // Navegación hacia la página de inicio de sesión
@@ -51,22 +49,6 @@ export class ClienteTablaComponent implements OnInit {
     }
   }
 
-
-
-
-  
-
-  @ViewChild('estatus') estatusElements!: QueryList<ElementRef>;
-  // identificarStatus() {
-  //   this.estatusElements.forEach((estatusElement: ElementRef) => {
-  //     const estatus = estatusElement.nativeElement.textContent.trim().toLowerCase();
-  //     if (estatus === 'Activo') {
-  //       this.renderer2.setStyle(estatusElement.nativeElement, 'color', 'green');
-  //     } else if (estatus === 'Cancelado') {
-  //       this.renderer2.setStyle(estatusElement.nativeElement, 'color', 'red');
-  //     }
-  //   });
-  // }
 
   getUsers() {
     console.log("ocurrio un error al obtener la información");
@@ -84,12 +66,6 @@ export class ClienteTablaComponent implements OnInit {
     )
 
   }
-
-
-
-
-
-
 
   eliminarUsuario(id: any) {
     this.UserS.eliminarPurificadora(id).subscribe(data => {

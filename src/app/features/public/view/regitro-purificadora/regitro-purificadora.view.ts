@@ -137,13 +137,9 @@ export class RegitroPurificadoraView implements OnInit {
     console.log("presionado atras")
   }
 
-
-
   // mapa
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
-
-
 
   ngOnInit(): void {
 
