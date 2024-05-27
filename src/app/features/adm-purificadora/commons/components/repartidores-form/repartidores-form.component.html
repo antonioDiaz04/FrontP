@@ -1,39 +1,28 @@
 <section id="registro">
-    <form action="ruta-al-servidor" method="post">
+    <form [formGroup]="registroRepartidores"(ngSubmit)="registroRepartidor()" method="post">
         <div class="form-column">
             <fieldset>
                 <legend>Información Básica</legend>
                 <label for="nombre">Nombre Completo:</label>
-                <input type="text" id="nombre" name="nombre" required>
-
-                <label for="identificacion">Número de Identificación:</label>
-                <input type="text" id="identificacion" name="identificacion" required>
-
-                <label for="telefono">Número de Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required>
+                <input type="text" id="nombre" formControlName="nombre">
 
                 <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" formControlName="email">
+
+                <label for="telefono">Número de Teléfono:</label>
+                <input type="tel" id="telefono" formControlName="telefono">
+                <label for="telefono">Número de casa:</label>
+                <input type="tel" id="telefono" formControlName="numCasa">
             </fieldset>
         </div>
 
         <div class="form-column">
             <fieldset>
                 <legend>Información Laboral</legend>
-                
-                <label for="horario">Horario de Trabajo:</label>
-                <input type="text" id="horario" name="horario" required>
+                <label for="horario">passwor de Trabajo:</label>
+                <input type="text" id="horario" formControlName="password1">
             </fieldset>
         </div>
-
-        <!-- <fieldset>
-            <legend>Documentación</legend>
-            <label for="licencia">Licencia de Conducir:</label>
-            <input type="text" id="licencia" name="licencia" required>
-
-            <label for="vencimiento-licencia">Fecha de Vencimiento de la Licencia:</label>
-            <input type="date" id="vencimiento-licencia" name="vencimiento-licencia" required>
-        </fieldset> -->
 
         <button type="submit">Registrar Empleado</button>
     </form>

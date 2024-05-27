@@ -71,7 +71,6 @@ export class AdmHomeView {
 
 
   redirectToAdmin(route: string): void {
-
     // this.sidebarVisible2 = !this.sidebarVisible2
     console.log(route)
     if (route === 'login') {

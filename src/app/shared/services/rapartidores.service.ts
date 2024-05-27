@@ -32,5 +32,13 @@ export class RepartidoresService {
         return this.http.delete(url)
     }
 
+
+
+    signUp(data: any): Observable<any> {
+        const url = `${environment.api}/purificadoraRepartidores/crearRepartidores/`
+        return this.http.post(url, data)
+    }
+
+
 }
 

@@ -4,6 +4,38 @@
 
     
 </head>
+<p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible"
+    [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+
+    <form [formGroup]="usuarioForm" (ngSubmit)="actualizarCliente(listRepartidor._id)">
+        <h3>Detalles Personales</h3>
+
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" formControlName="nombre">
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" formControlName="email">
+        </div>
+
+        <div>
+            <label for="numCasa">Número de casa:</label>
+            <input type="text" id="numCasa" formControlName="numCasa">
+        </div>
+
+        <div>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" formControlName="telefono">
+        </div>
+        <app-mapa-client-ubicacion></app-mapa-client-ubicacion>
+
+        <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+        </div>
+    </form>
+</p-dialog>
 
 <section id="lista">
     <h2>Lista de Empleados</h2>

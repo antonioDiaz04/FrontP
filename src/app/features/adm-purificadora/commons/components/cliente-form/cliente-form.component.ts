@@ -108,8 +108,8 @@ export class ClienteFormComponent implements OnInit {
       if (error && error.error && error.error.message) {
         errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
       }
+      
       Swal.fire("Error", errorMessage, 'error'); // Mostramos el mensaje de error en la alerta
-
     })
   }
 

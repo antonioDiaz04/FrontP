@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
 import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-repartidores-listado',
@@ -13,13 +13,25 @@ export class RepartidoresListadoComponent implements OnInit {
 
   visible: boolean = false;
   isVisible = false;
+  id!: string | null
 
   allRepartidores?: Repartidor[];
   listRepartidor?: Repartidor;
   idRepartidor!: string
 
   usuarioForm!: FormGroup;
-  constructor(private repService: RepartidoresService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) { }
+  reparitorForm!: FormGroup;
+  constructor(private fb:FormBuilder,private repService: RepartidoresService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) {
+    this.usuarioForm = this.fb.group({
+      nombre: ['', Validators.required],
+      email: ['', Validators.required],
+      numCasa: ['', Validators.required],
+      telefono: ['', Validators.required],
+    });
+    this.id = this.router.snapshot.paramMap.get('id');
+
+   }
+
   ngOnInit(): void {
     this.getRepartidores();
   }
@@ -34,7 +46,7 @@ export class RepartidoresListadoComponent implements OnInit {
         this.usuarioForm.setValue({
           nombre: data.nombre,
           email: data.email,
-          estatus: data.estatus,
+          // estatus: data.estatus,
           numCasa: data.numCasa,
           telefono: data.telefono
         });
@@ -54,7 +66,8 @@ export class RepartidoresListadoComponent implements OnInit {
         });
     }
   }
-
+  
+  
   eliminarUsuario(id: any) {
     this.repService.eliminarRepartidores(id).subscribe(data => {
       console.log("eliminado")
@@ -65,7 +78,6 @@ export class RepartidoresListadoComponent implements OnInit {
   }
 
   getRepartidores() {
-
     this.repService.getRepartidores().subscribe(
       data => {
         this.allRepartidores = data;
