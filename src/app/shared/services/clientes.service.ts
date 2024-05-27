@@ -25,10 +25,10 @@ export class ClientesService {
     return this.http.get(url)
 
   }
+
   detalleProductoById(id:string): Observable<any> {
     const url = `${environment.api}/usuarios/getDetalles/` + id
     return this.http.get(url)
-
   }
   
   updateUsuario(id: string, cliente: any): Observable<any> {
@@ -44,8 +44,11 @@ export class ClientesService {
     const url = `${environment.api}/purificadoraAdmin/deletePurificadora/` + id
     return this.http.delete(url)
   }
+
   eliminarCliente(id: string): Observable<any> {
     const url = `${environment.api}/usuarios/deleteCliente/` + id
     return this.http.delete(url)
   }
+
+  
 }

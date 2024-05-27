@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsuarioModel } from './models/usuario.model';
+// import { UsuarioModel } from './models/usuario.model';
 
 
 
 @NgModule({
   declarations: [
-    UsuarioModel
+    // UsuarioModel
   ],
   imports: [
     CommonModule

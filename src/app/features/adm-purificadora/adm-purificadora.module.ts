@@ -11,7 +11,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { DialogModule } from 'primeng/dialog';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { AdminRoutingModule } from '../admin/admin-routing.module';
@@ -35,6 +35,10 @@ import { RepartidoresFormComponent } from './commons/components/repartidores-for
 import { RepartidoresListadoComponent } from './commons/components/repartidores-listado/repartidores-listado.component';
 import { RepartidoresView } from './view/repartidores/repartidores.view';
 import { MapaClientUbicacionView } from './view/mapa-client-ubicacion/mapa.view';
+// import { RepartidoresService } from './commons/services/repartidores.service';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { RepartidoresService } from '../../shared/services/rapartidores.service';
+// import { RepartidoresInterface } from './commons/interfaces/repartidores/repartidores.interface';
 
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
@@ -44,14 +48,14 @@ const MATERIALS = [
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, ProductoView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresListadoComponent, RepartidoresView,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView,
   ],
   imports: [MATERIALS, HttpClientModule,
     CommonModule, FormsModule,
      AdmPurificadoraRoutingModule,MaterialModule, ReactiveFormsModule
   ],
-  providers: [
-    SignupService,ClientesService]
+  providers: [provideClientHydration(), [provideHttpClient(withFetch())],
+    SignupService,ClientesService,RepartidoresService]
 })
 export class AdmPurificadoraModule { 
 }

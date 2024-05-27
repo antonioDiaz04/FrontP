@@ -19,10 +19,10 @@ export class AdmHomeView {
 
   
   ngOnInit() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    // const documentStyle = getComputedStyle(document.documentElement);
+    // const textColor = documentStyle.getPropertyValue('--text-color');
+    // const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    // const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     // this.basicData = {
     //   labels: ['Q1', 'Q2', 'Q3', 'Q4'],

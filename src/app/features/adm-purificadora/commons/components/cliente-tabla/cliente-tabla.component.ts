@@ -63,16 +63,8 @@ export class ClienteTablaComponent implements OnInit {
     }
   }
 
+  
   editar(id: any) {
-    
-
-    // this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
-    //   this.clienteForm.get('latitud')?.setValue(latitud);
-    //   this.clienteForm.get('longitud')?.setValue(longitud);
-    // });
-
-
-
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {
         this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));
@@ -86,7 +78,6 @@ export class ClienteTablaComponent implements OnInit {
       console.log('*** getPoint', getPoint)
     })
 
-    
     this.visible = true;
       this.idCliente = this.router.snapshot.params['id'];
     if (id !== null) {

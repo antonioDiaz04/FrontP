@@ -1,0 +1,33 @@
+main.col-md-9.ml-sm-auto.col-lg-10.px-md-4 {
+    >div.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.border-bottom {
+        >h1.h2 {}
+
+        >div.btn-toolbar.mb-2.mb-md-0 {
+            >div.btn-group.mr-2 {
+                >ul {
+                    list-style: none;
+                    /* Elimina los marcadores predeterminados */
+                    padding-left: 0;
+                    /* Elimina el espacio vacío a la izquierda */
+
+                    >li::marker {
+                        content: '📌';
+
+                        a:focus {
+                            background-attachment: fixed;
+                            color: rgb(3, 150, 150);
+
+                            background: rgb(205, 232, 255);
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+
+    >main {
+        >router-outlet {}
+    }
+}

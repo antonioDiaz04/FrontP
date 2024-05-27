@@ -33,12 +33,10 @@ const routes: Routes = [
         component: AdmHomeView,
       },
       {
-        // path: 'detail/:id',
         path: 'Control-entregas',
         component: ControlEntregasView,
       },
       {
-        // path: 'detail/:id',
         path: 'agregar-cliente',
         component: ClienteFormComponent,
       },

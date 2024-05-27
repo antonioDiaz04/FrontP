@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-repartidores',
   templateUrl: './repartidores.view.html',
-  styleUrl: './repartidores.view.css',
+  styleUrl: './repartidores.view.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class RepartidoresView {

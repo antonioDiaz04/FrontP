@@ -10,6 +10,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmpleadoComponent } from './features/empleado/empleado.component';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { EmpleadoComponent } from './features/empleado/empleado.component';
     BrowserModule, ButtonModule, BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [
+  providers: [[provideHttpClient(withFetch())],
     provideClientHydration()
   ],
   bootstrap: [AppComponent]
