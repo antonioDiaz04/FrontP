@@ -13,18 +13,10 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class MapaService {
-
-
-
   
   mapbox = (mapboxgl as typeof mapboxgl)
-
   map!: mapboxgl.Map;
-
-
   cbAddress: EventEmitter<any> = new EventEmitter<any>();
-
-
   latitudLongitudCambiadas: EventEmitter<{ latitud: number, longitud: number }> = new EventEmitter();
 
   style = 'mapbox://styles/mapbox/satellite-streets-v12'

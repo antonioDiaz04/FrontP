@@ -13,10 +13,7 @@ export class RepartidoresService {
     getRepartidores(): Observable<any> {
         return this.http.get(`${environment.api}/purificadoraRepartidores/obtenerRepartidores`);
     }
-    // getUsuarios(): Observable<any> {
-
-    //     return this.http.get(`${environment.api}/usuarios/getUsuarios`)
-    // }
+    
     detalleUsuarioById(id: string): Observable<any> {
         const url = `${environment.api}/purificadoraRepartidores/getDetalles/` + id
         return this.http.get(url)

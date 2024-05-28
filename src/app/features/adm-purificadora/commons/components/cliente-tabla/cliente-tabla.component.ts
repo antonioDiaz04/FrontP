@@ -34,6 +34,8 @@ export class ClienteTablaComponent implements OnInit {
   puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
   ngOnInit(): void {
     this.getUsers();
+
+    
   }
   visible: boolean = false;
   isVisible = false;
