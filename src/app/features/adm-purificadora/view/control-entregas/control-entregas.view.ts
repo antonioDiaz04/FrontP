@@ -7,17 +7,9 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
   styleUrl: './control-entregas.view.css',
   encapsulation: ViewEncapsulation.None
 })
-export class ControlEntregasView implements OnInit{
-
-  
-  ngOnInit() {
-    this.getDetalleClienteyEntrega()
-  }
-  
-getDetalleClienteyEntrega(){
+export class ControlEntregasView {
 
 
-}
-
+ 
 
 }

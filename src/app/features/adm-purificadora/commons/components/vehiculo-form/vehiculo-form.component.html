@@ -1,0 +1,45 @@
+<section id="registro">
+    <form [formGroup]="vehiculoForm" (ngSubmit)="registroVehiculo()" method="post">
+        <div class="form-column">
+            <fieldset>
+                <legend>Información del Vehículo</legend>
+                <label for="marca">Marca del Vehículo:</label>
+                <input type="text" id="marca" formControlName="marca">
+
+                <label for="modelo">Modelo del Vehículo:</label>
+                <input type="text" id="modelo" formControlName="modelo">
+
+                <label for="anio">Año del Vehículo:</label>
+                <input type="number" id="anio" formControlName="anio">
+
+                <label for="placas">Placas del Vehículo:</label>
+                <input type="text" id="placas" formControlName="placas">
+        <button type="submit">Registrar Ruta</button>
+            </fieldset>
+        </div>
+
+        <!-- <div class="form-column">
+            <fieldset>
+                <legend>Información de la Ruta</legend>
+                <label for="descripcion">Descripción de la Ruta:</label>
+                <input type="text" id="descripcion" formControlName="descripcion">
+
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" id="fechaInicio" formControlName="fechaInicio">
+
+                <label for="repartidorId">ID del Repartidor:</label>
+                <input type="text" id="repartidorId" formControlName="repartidorId">
+
+                <label for="estado">Estado de la Ruta:</label>
+                <select id="estado" formControlName="estado">
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en_curso">En Curso</option>
+                    <option value="finalizada">Finalizada</option>
+                </select>
+            </fieldset>
+        </div> -->
+
+        <!-- Puedes agregar más columnas o secciones si es necesario -->
+
+    </form>
+</section>

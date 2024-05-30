@@ -11,11 +11,58 @@
 <body class="body-panel">
 
     <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-        <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Mapa</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Rutas</h1>
+        <div class="ml-auto">
+            <button class="btn btn-primary">Agregar Ruta</button>
         </div>
+    </div>
 
+        <section class="cards-rutas">
+            <div class="tarjeta-container">
+                <div class="tarjeta">
+                    <img src="https://via.placeholder.com/80x80?text=Ruta A" alt="Ruta A">
+                    <ul>
+                        <li>Repartidor: Juan Pérez</li>
+                        <li>Vehículo: Camión 1</li>
+                        <li>Cantidad de Clientes: 10</li>
+                        <li>Direcciones de entrega:
+                            <ul>
+                                <li>Calle A, Número 123</li>
+                                <li>Calle B, Número 456</li>
+                                <li>Calle C, Número 789</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="botones">
+                        <button class="mt-lg-5 boton-editar">Detalles</button>
+                        <button  type="hidden" class="boton-editar">Editar</button>
+                        <button   type="hidden" class="boton-eliminar">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="tarjeta">
+                    <img src="https://via.placeholder.com/80x80?text=Ruta B" alt="Ruta B">
+                    <ul>
+                        <li>Repartidor: María García</li>
+                        <li>Vehículo: Moto 2</li>
+                        <li>Cantidad de Clientes: 8</li>
+                        <li>Direcciones de entrega:
+                            <ul>
+                                <li>Calle A, Número 123</li>
+                                <li>Calle B, Número 456</li>
+                                <li>Calle C, Número 789</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="botones">
+                        <button class="mt-lg-5 boton-editar">Detalles</button>
+                        <button class="mt-lg-5 boton-editar">Editar</button>
+                        <button class="mt-lg-5 boton-eliminar">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <div class="wrapper">
             <div class="box-form">
@@ -23,34 +70,8 @@
             </div>
         </div>
         <div class="wrapper">
-
             <div id="map" #asMap class="map-container">
             </div>
-
-
         </div>
-
-
     </main>
 </body>
-
-<style>
-    #map {
-        width: 800px;
-        height: 400px;
-        /* Ajusta la altura según tus necesidades */
-        margin-left: 20px;
-        /* Agrega márgenes de 20px */
-        border: 4px dashed #ffffff;
-        box-shadow: 0 5px 10px #cbcbcb;
-        /* Agrega un borde punteado de color #083088 */
-    }
-
-
-
-    .wrapper {
-        padding: 2rem;
-        display: flex;
-        justify-content: center;
-    }
-</style>

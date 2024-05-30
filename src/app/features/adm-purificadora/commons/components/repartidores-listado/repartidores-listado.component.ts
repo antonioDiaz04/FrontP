@@ -7,21 +7,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-repartidores-listado',
   templateUrl: './repartidores-listado.component.html',
-  styleUrl: './repartidores-listado.component.scss'
+  styleUrls: ['./repartidores-listado.component.scss', './form.scss']
 })
 export class RepartidoresListadoComponent implements OnInit {
-
   visible: boolean = false;
   isVisible = false;
   id!: string | null
-
   allRepartidores?: Repartidor[];
   listRepartidor?: Repartidor;
   idRepartidor!: string
-
   usuarioForm!: FormGroup;
   reparitorForm!: FormGroup;
-  constructor(private fb:FormBuilder,private repService: RepartidoresService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) {
+  constructor(private fb: FormBuilder, private repService: RepartidoresService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) {
     this.usuarioForm = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -29,13 +26,12 @@ export class RepartidoresListadoComponent implements OnInit {
       telefono: ['', Validators.required],
     });
     this.id = this.router.snapshot.paramMap.get('id');
-
-   }
+  }
 
   ngOnInit(): void {
     this.getRepartidores();
   }
-  
+
   editar(id: any) {
     this.visible = true;
     this.idRepartidor = this.router.snapshot.params['id'];
@@ -66,8 +62,7 @@ export class RepartidoresListadoComponent implements OnInit {
         });
     }
   }
-  
-  
+
   eliminarUsuario(id: any) {
     this.repService.eliminarRepartidores(id).subscribe(data => {
       console.log("eliminado")

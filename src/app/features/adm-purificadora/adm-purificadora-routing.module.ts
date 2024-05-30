@@ -5,14 +5,18 @@ import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { ComentariosView } from './view/comentarios/comentarios.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
-// import { AdmHomeView } from './view/adm-home/adm-home.view';
 import { InicioView } from './view/inicio/inicio.view';
-// import { AdminComponent } from '../admin/admin.component';
 import { AdmPurificadoraComponent } from './adm-purificadora.component';
 import { AdmHomeView } from './view/adm-home/adm-home.view';
 import { RepartidoresFormComponent } from './commons/components/repartidores-form/repartidores-form.component';
 import { RepartidoresListadoComponent } from './commons/components/repartidores-listado/repartidores-listado.component';
 import { RepartidoresView } from './view/repartidores/repartidores.view';
+import { RutaView } from './view/ruta/ruta.view';
+import { RutaFormComponent } from './commons/components/ruta-form/ruta-form.component';
+import { RutaListadoComponent } from './commons/components/ruta-listado/ruta-listado.component';
+import { VehiculosView } from './view/vehiculos/vehiculos.view';
+import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehiculo-form.component';
+import { VehiculoListadoComponent } from './commons/components/vehiculo-listado/vehiculo-listado.component';
 
 const routes: Routes = [
   {
@@ -40,7 +44,6 @@ const routes: Routes = [
         path: 'agregar-cliente',
         component: ClienteFormComponent,
       },
-      
       {
         // path: 'detail/:id',
         path: 'comentarios',
@@ -51,10 +54,44 @@ const routes: Routes = [
         path: 'pedidos',
         component: PedidosView,
       },
+
       {
-        // path: 'detail/:id',
-        path: 'mapa-entregas',
-        component: MapaClientsView,
+        path: 'repartidores',
+        component: RepartidoresView,
+        children: [
+          {
+            path: 'agregar-repartidor',
+            component: RepartidoresFormComponent,
+          },
+          {
+            path: 'lista-repartidores',
+            component: RepartidoresListadoComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'lista-repartidores', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
+      },
+      {
+        path: 'vehiculo',
+        component: VehiculosView,
+        children: [
+          {
+            path: 'agregar-vehiculo',
+            component: VehiculoFormComponent,
+          },
+          {
+            path: 'lista-vehiculo',
+            component:  VehiculoListadoComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'lista-vehiculo', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
       },
       {
         path: 'repartidores',
@@ -75,7 +112,27 @@ const routes: Routes = [
           }
         ]
       },
-      
+      {
+        path: 'rutas',
+        component: RutaView,
+        children: [
+          {
+            path: 'agregar-ruta',
+            component: RutaFormComponent,
+          },
+          {
+            path: 'lista-rutas',
+            component: RutaListadoComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de rutas (opcional)
+            redirectTo: 'lista-rutas', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
+      },
+
+
       // {
       //   title:"404",
       //   path: 'not-found',

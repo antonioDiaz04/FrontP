@@ -20,7 +20,7 @@ import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle
 @Component({
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
-  styleUrls: ['./cliente-tabla.component.css', './p-dialog.scss'],
+  styleUrls: ['./cliente-tabla.component.css', './form.scss','./p-dialog.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteTablaComponent implements OnInit {
@@ -34,8 +34,7 @@ export class ClienteTablaComponent implements OnInit {
   puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
   ngOnInit(): void {
     this.getUsers();
-
-    
+    this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
   }
   visible: boolean = false;
   isVisible = false;
@@ -135,6 +134,8 @@ export class ClienteTablaComponent implements OnInit {
     this.UserS.eliminarCliente(id).subscribe(data => {
       console.log("eliminado")
       this.getUsers();
+      this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
+
     }, error => {
       console.log("ocurrio un error", error)
     })

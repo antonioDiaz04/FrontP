@@ -14,6 +14,7 @@ export class MapaClientService implements OnInit {
   
   
   ngOnInit(): void {
+    this.buildMap()
   }
   mapbox = (mapboxgl as typeof mapboxgl)
   map!: mapboxgl.Map;

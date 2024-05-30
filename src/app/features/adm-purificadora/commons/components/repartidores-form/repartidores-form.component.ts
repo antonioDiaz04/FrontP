@@ -2,15 +2,13 @@ import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
-// import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
 import { Location } from '@angular/common';
 import { Repartidor } from '../../../../../shared/models/repartidor.model';
-// import { Repartidor } from '../../interfaces/repartidores/repartidores.interface';
 
 @Component({
   selector: 'app-repartidores-form',
   templateUrl: './repartidores-form.component.html',
-  styleUrl: './repartidores-form.component.css'
+  styleUrls:  ['./repartidores-form.component.css']
 })
 export class RepartidoresFormComponent {
 

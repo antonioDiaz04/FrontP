@@ -1,0 +1,14 @@
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.checkbox-item {
+    margin-bottom: 0.5rem;
+    /* Espacio entre elementos */
+}
+
+:host ::ng-deep .ui-dropdown-panel ul {
+    margin: 0;
+}

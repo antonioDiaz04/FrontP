@@ -23,8 +23,6 @@ const routes: Routes = [
         path: 'Registrar-purificadora',
         component: RegitroPurificadoraView,
       },
-     
-      
     ],
   },
 ];

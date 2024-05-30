@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdmPurificadoraRoutingModule } from './adm-purificadora-routing.module';
 import { MapaView } from './view/mapa/mapa.view';
 import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
@@ -13,12 +12,10 @@ import { DialogModule } from 'primeng/dialog';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { AdminRoutingModule } from '../admin/admin-routing.module';
+import { DropdownModule } from 'primeng/dropdown';
 import { MaterialModule } from '../admin/commons/material/material.module';
 import { ClientesService } from '../../shared/services/clientes.service';
 import { SignupService } from '../../shared/services/signup.service';
-// import { UsuarioView } from './view/usuario/usuario.view';
 import { ProductoView } from './view/producto/producto.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
@@ -26,7 +23,6 @@ import { ControlEntregasView } from './view/control-entregas/control-entregas.vi
 import { ComentariosView } from './view/comentarios/comentarios.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
-// import { ProductFormComponent } from './commons/components/product-form/product-form.component';
 import { VentasComponent } from './commons/components/ventas/ventas.component';
 import { PedidosComponent } from './commons/components/pedidos/pedidos.component';
 import { AdmPurificadoraComponent } from './adm-purificadora.component';
@@ -35,10 +31,16 @@ import { RepartidoresFormComponent } from './commons/components/repartidores-for
 import { RepartidoresListadoComponent } from './commons/components/repartidores-listado/repartidores-listado.component';
 import { RepartidoresView } from './view/repartidores/repartidores.view';
 import { MapaClientUbicacionView } from './view/mapa-client-ubicacion/mapa.view';
-// import { RepartidoresService } from './commons/services/repartidores.service';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { RepartidoresService } from '../../shared/services/rapartidores.service';
-// import { RepartidoresInterface } from './commons/interfaces/repartidores/repartidores.interface';
+import { RutaFormComponent } from './commons/components/ruta-form/ruta-form.component';
+import { RutaListadoComponent } from './commons/components/ruta-listado/ruta-listado.component';
+import { RutaView } from './view/ruta/ruta.view';
+import { VehiculosView } from './view/vehiculos/vehiculos.view';
+import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehiculo-form.component';
+import { VehiculoListadoComponent } from './commons/components/vehiculo-listado/vehiculo-listado.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CheckboxModule } from 'primeng/checkbox';
 
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
@@ -48,10 +50,10 @@ const MATERIALS = [
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, ProductoView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,
   ],
-  imports: [MATERIALS, HttpClientModule,
-    CommonModule, FormsModule,
+  imports: [MATERIALS, HttpClientModule,CheckboxModule,
+    CommonModule, FormsModule, DropdownModule, 
      AdmPurificadoraRoutingModule,MaterialModule, ReactiveFormsModule
   ],
   providers: [provideClientHydration(), [provideHttpClient(withFetch())],

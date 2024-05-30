@@ -1,13 +1,14 @@
 <head>
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    
+
 </head>
-<p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible"
+<p-dialog  header="Información del Usuario" [modal]="true"
     [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+<!-- <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible" --> 
 
-    <form [formGroup]="usuarioForm" (ngSubmit)="actualizarCliente(listRepartidor._id)">
+    <form>
         <h3>Detalles Personales</h3>
 
         <div>
@@ -38,7 +39,7 @@
 </p-dialog>
 
 <section id="lista">
-    <h2>Lista de repartidores</h2>
+    <h2>Lista de rutas</h2>
     <table>
         <thead>
             <tr>
@@ -51,20 +52,20 @@
         </thead>
         <tbody>
 
-            <tr *ngFor="let repartidor of allRepartidores">
+            <!-- <tr *ngFor="let repartidor of allRepartidores">
                 <td>{{repartidor.nombre}}</td>
                 <td>{{repartidor.telefono}}</td>
                 <td>{{repartidor.email}}</td>
                 <td>{{repartidor.fechaDeAgregacion}}</td>
                 <td>
-                    <span  (click)="eliminarUsuario(repartidor._id)" class="material-symbols-outlined">
+                    <span (click)="eliminarUsuario(repartidor._id)" class="material-symbols-outlined">
                         delete
                     </span>
-                    <span   (click)="editar(repartidor._id)"class="material-symbols-outlined">
+                    <span (click)="editar(repartidor._id)" class="material-symbols-outlined">
                         surgical
                     </span>
                 </td>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </section>

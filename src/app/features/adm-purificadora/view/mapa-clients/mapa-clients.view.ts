@@ -1,11 +1,9 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MapaService } from '../../../../shared/services/mapa.service';
-// import * as mapboxgl from '@mapbox/mapbox-gl-js';
-//  import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 @Component({
   selector: 'app-mapa-clients',
   templateUrl: './mapa-clients.view.html',
-  styleUrl: './mapa-clients.view.css',
+  styleUrls: ['./mapa-clients.view.css','./card.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class MapaClientsView implements OnInit {
