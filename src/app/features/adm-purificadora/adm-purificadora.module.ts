@@ -41,6 +41,9 @@ import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehicu
 import { VehiculoListadoComponent } from './commons/components/vehiculo-listado/vehiculo-listado.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConsultasCOPOMEXService } from '../../shared/services/consultas-copomex.service';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
@@ -52,12 +55,12 @@ const MATERIALS = [
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
     MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,
   ],
-  imports: [MATERIALS, HttpClientModule,CheckboxModule,
-    CommonModule, FormsModule, DropdownModule, 
+  imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule,
+    CommonModule, FormsModule, DropdownModule, MultiSelectModule, 
      AdmPurificadoraRoutingModule,MaterialModule, ReactiveFormsModule
   ],
   providers: [provideClientHydration(), [provideHttpClient(withFetch())],
-    SignupService,ClientesService,RepartidoresService]
+    SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService]
 })
 export class AdmPurificadoraModule { 
 }

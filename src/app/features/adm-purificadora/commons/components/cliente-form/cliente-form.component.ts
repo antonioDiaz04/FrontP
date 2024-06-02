@@ -7,6 +7,7 @@ import { response } from 'express';
 import { error } from 'console';
 import { Location } from '@angular/common';
 import { MapaClientService } from '../../services/mapaClient.service';
+import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
 
 @Component({
   selector: 'app-cliente-form',
@@ -17,8 +18,14 @@ import { MapaClientService } from '../../services/mapaClient.service';
 export class ClienteFormComponent implements OnInit {
 
   registroForm: FormGroup;
+  allMuncipioXEstado: any;
+  allColoniaXMuncipio: any;
 
-  constructor(private render2: Renderer2,private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
+  selectedMunicipio: any
+  selectedColonia: any
+
+
+  constructor(private consultasCOPOMEX: ConsultasCOPOMEXService,private render2: Renderer2,private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
     this.registroForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -26,19 +33,37 @@ export class ClienteFormComponent implements OnInit {
       latitud: ['', Validators.required],
       telefono: ['', Validators.required],
       numCasa: ['', Validators.required],
+      selectedColonia: ['', Validators.required],
+      selectedMunicipio: ['', Validators.required],
+
     });
   }
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
+  
+  
+  onMunicipioSelectionChange(event: any) {
+    this.selectedMunicipio = event.target.value;
+    console.log('Municipio seleccionado:', this.selectedMunicipio);
+  }
 
+  onColoniaSelectionChange(event: any) {
+    this.selectedColonia = event.target.value;
+    console.log('Colonia seleccionado:', this.selectedColonia);
+  }
 
   ngOnInit(): void {
+    this.getMunicipioPorExtado();
+    this.getColoniaPorMunicipio()
     this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
       this.registroForm.get('latitud')?.setValue(latitud);
       this.registroForm.get('longitud')?.setValue(longitud);
+      
     });
 
 
+
+    
 
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {
@@ -61,8 +86,21 @@ export class ClienteFormComponent implements OnInit {
     const latitud = this.registroForm.get('latitud')?.value;
     const telefono = this.registroForm.get('telefono')?.value;
     const numCasa = this.registroForm.get('numCasa')?.value;
-    // Aquí puedes realizar las operaciones necesarias con el valor de 'nombre'
+    const colonia = this.registroForm.get('selectedColonia')?.value;
+    const municipio = this.registroForm.get('selectedMunicipio')?.value;
+    // const municipio = this.selectedMunicipio;
+    // const colonia = this.selectedColonia;
 
+    if (!municipio) {
+      Swal.fire('Error', 'Por favor ingresa tu municipio', 'error');
+      return;
+    }
+    if (!colonia) {
+      Swal.fire('Error', 'Por favor ingresa tu colonia', 'error');
+      return;
+    }
+
+    // Aquí puedes realizar las operaciones necesarias con el valor de 'nombre'
     if (!nombre) {
       Swal.fire('Error', 'Por favor ingresa tu nombre', 'error');
       return;
@@ -98,6 +136,8 @@ export class ClienteFormComponent implements OnInit {
       latitud: this.registroForm.get('latitud')?.value,
       telefono: this.registroForm.get('telefono')?.value,
       numCasa: this.registroForm.get('numCasa')?.value,
+      municipio: this.selectedMunicipio,
+      colonia: this.selectedColonia,
     }
     this.clienteS.signUp(USUARIO).subscribe(response => {
 
@@ -112,9 +152,52 @@ export class ClienteFormComponent implements OnInit {
       Swal.fire("Error", errorMessage, 'error'); // Mostramos el mensaje de error en la alerta
     })
   }
+  
 
   volverAtras() {
     this.location.back();
     console.log("presionado atras")
+  }
+
+
+
+
+
+  getMunicipioPorExtado() {
+    this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
+      data => {
+        this.allMuncipioXEstado = data.municipios;
+        console.log(this.allMuncipioXEstado);
+      },
+      error => {
+        console.log("Ocurrió un error al obtener la información", error);
+      }
+    );
+
+    // this.consultasCOPOMEX.getMunicipioXEstado('Hidalgo').subscribe(
+    //   data => {
+    //     // ! lo que hacemos aqui es tomar los valores cuando son obtject[]
+    //     this.allMuncipioXEstado = data;
+    //     console.log(this.allMuncipioXEstado)
+    //   },
+    //   error => {
+    //     console.log("Ocurrió un error al obtener la información", error);
+    //   }
+    // )
+  }
+
+
+  getColoniaPorMunicipio() {
+    this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
+      data1 => {
+        this.allColoniaXMuncipio = data1.Colonias;
+        console.log("colonias=>", this.allColoniaXMuncipio)
+        // console.log(allColonias);
+        console.log("objeto=>", data1)
+      },
+      error => {
+        console.log("Ocurrió un error al obtener la información", error);
+      }
+    )
   }
 }

@@ -6,7 +6,6 @@ import { Purificadora } from '../../../../shared/models/purificadora.model';
 import { Location } from '@angular/common';
 import { ClipboardService } from 'ngx-clipboard';
 import { MapaService } from '../../../../shared/services/mapa.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';

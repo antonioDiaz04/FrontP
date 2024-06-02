@@ -27,10 +27,8 @@ import { PedidosView } from './view/pedidos/pedidos.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
-import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-// import { NzModalModule } from 'ng-zorro-antd/modal';
+// import  } from 'ng-zorro-antd/modal';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DialogModule } from 'primeng/dialog';
 import { MapaView } from './view/mapa/mapa.view';
@@ -45,7 +43,7 @@ import { ClientesService } from '../../shared/services/clientes.service';
 // ReactiveFormsModule
 // FormsModule
 const MATERIALS = [
-  AvatarModule, AvatarGroupModule, NzModalModule, DialogModule, ModalModule
+  AvatarModule, AvatarGroupModule, DialogModule, ModalModule
 ]
 // import { AdmDashboardView } from './adm-dashboard/adm-dashboard.view';
 @NgModule({

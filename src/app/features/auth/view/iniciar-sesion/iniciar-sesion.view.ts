@@ -13,7 +13,7 @@ import { ERol } from '../../../../shared/constants/rol.enum';
 @Component({
   selector: 'app-iniciar-sesion',
   templateUrl: './iniciar-sesion.view.html',
-  styleUrls: ['./iniciar-sesion.view.css'],
+  styleUrls: ['./iniciar-sesion.view.css','./frm.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class IniciarSesionView {

@@ -1,9 +1,5 @@
-
-
-
-
 <head>
-  
+
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <script
@@ -32,18 +28,37 @@
 
                 <label for="phone">Numero de telefono:</label>
                 <input formControlName="telefono" type="tel" id="phone" name="phone">
+                <div>
+                    <label for="nombre">Seleccione el municipio:</label>
+                    <div class="custom-dropdown">
+                        <!-- lo que hacemos aqui,aqui tomará el valor para asarlo en la funcion onMunicipioSelectionChange($event)" -->
+                        <select formControlName="selectedMunicipio" (change)="onMunicipioSelectionChange($event)">
+                            <option value="" disabled selected>Selecciona un municipio</option>
+                            <option *ngFor="let municipio of allMuncipioXEstado" [value]="municipio">{{ municipio }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="nombre">Seleccione la colonia:</label>
+                    <div class="custom-dropdown">
+                        <select formControlName="selectedColonia" (change)="onColoniaSelectionChange($event)">
+                            <option value="" disabled selected>Selecciona un colonia</option>
+                            <option *ngFor="let colonia of allColoniaXMuncipio" [value]="colonia">{{ colonia }}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="right-column">
-
                 <h2>Agrega tu ubicación:</h2>
                 <label for="phone">Numero de casa:</label>
                 <input formControlName="numCasa" type="tel" id="phone" name="phone">
 
                 <div id="map"></div>
 
-                <input formControlName="longitud" type="hidden"  >
+                <input formControlName="longitud" type="hidden">
 
-                <input formControlName="latitud" type="hidden"  >
+                <input formControlName="latitud" type="hidden">
 
                 <input type="submit" value="Register" class="button">
                 <button type="button" (click)="volverAtras()" class="button">Atras</button>
@@ -53,4 +68,3 @@
     </div>
 
 </body>
-

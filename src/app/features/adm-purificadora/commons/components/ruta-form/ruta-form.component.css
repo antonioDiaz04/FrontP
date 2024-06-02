@@ -1,20 +1,20 @@
 /* Estilos para el formulario */
-form {
-    background: white;
+.form-registro-ruta {
+    background: #fff5ec;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
-    border: 1px solid #e8e7e7;
+    box-shadow: 0 0 15px #4f4f4fb7;
+    border: 1px solid #aeaeae;
     width: 100%;
-    /* Ajusta el ancho del formulario según tus necesidades */
+    /* Ajusta el ancho del .form-registro-rutaulario según tus necesidades */
     /* margin: 20px auto;.] */
-    /* Centra el formulario en la página */
+    /* Centra el .form-registro-rutaulario en la página */
     display: flex;
     flex-wrap: wrap;
     /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
 }
 
-form fieldset label {
+.form-registro-ruta fieldset label {
     color: #7a7a7a;
 }
 
@@ -42,23 +42,45 @@ label {
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="tel"],
-input[type="email"],
-input[type="number"],
-input[type="password"] {
-    width: calc(100% - 18px);
+.form-registro-ruta input {
+    width: calc(52% - 10px);
     /* Ajusta el ancho del input para evitar que se desborde por el borde */
     padding: 8px;
     margin-bottom: 10px;
+    /* border: 1px solid #ccc; */
     border: 1px solid #ccc;
-    border-radius: 4px;
+}
+
+/* @layer primeng {
+    .for-direccion .p-multiselect .p-component .p-inputwrapper {
+      
+        width: 100%;
+    }
+} */
+
+.for-direccion .custom-dropdown[_ngcontent-ng-c2506789401] select[_ngcontent-ng-c2506789401] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #686767;
+    font-size: 16px;
+    outline: none;
+
+    /* .p-multiselect {
+        width: 100%;
+    } */
+}
+
+
+.for-direccion button[type="submit"] {
+    width: 100%;
 }
 
 button[type="submit"] {
     background-color: #4cafa2;
-    color: #000000;
+    /* color: #000000; */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -66,11 +88,8 @@ button[type="submit"] {
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
-    /* Espacio superior al botón */
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #44b07a;
 }
-
-

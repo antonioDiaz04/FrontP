@@ -29,7 +29,7 @@ export class VehiculoListadoComponent {
   }
 
   ngOnInit(): void {
-    this.getRepartidores();
+    this.getVehiculos();
   }
 
   editar(id: any) {
@@ -53,7 +53,7 @@ export class VehiculoListadoComponent {
     if (this.vehiculoForm.valid) {
       this.repService.updateVehiculo(id, this.vehiculoForm.value)
         .subscribe(response => {
-          this.getRepartidores()
+          this.getVehiculos()
           this.visible = false;
           console.log('Usuario actualizado:', response);
         }, error => {
@@ -65,13 +65,13 @@ export class VehiculoListadoComponent {
   eliminarUsuario(id: any) {
     this.repService.eliminarVehiculo(id).subscribe(data => {
       console.log("eliminado")
-      this.getRepartidores();
+      this.getVehiculos();
     }, error => {
       console.log("ocurrio un error", error)
     })
   }
 
-  getRepartidores() {
+  getVehiculos() {
     this.repService.getVehiculos().subscribe(
       data => {
         this.allRepartidores = data;

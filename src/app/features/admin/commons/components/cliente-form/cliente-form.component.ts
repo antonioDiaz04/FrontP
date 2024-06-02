@@ -74,6 +74,7 @@ export class ClienteFormComponent {
       return;
     }
 
+    // !corregir en la parte de registro de usuario
     const USUARIO: Usuario = {
 
 
@@ -85,6 +86,9 @@ export class ClienteFormComponent {
       latitud: this.registroForm.get('latitud')?.value,
       telefono: this.registroForm.get('telefono')?.value,
       numCasa: this.registroForm.get('numCasa')?.value,
+      municipio:'',
+      colonia:'',
+
     }
     this.clienteS.signUp(USUARIO).subscribe(response => {
 

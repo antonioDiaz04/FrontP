@@ -6,9 +6,39 @@
 
 .checkbox-item {
     margin-bottom: 0.5rem;
-    /* Espacio entre elementos */
 }
 
 :host ::ng-deep .ui-dropdown-panel ul {
-    margin: 0;
+    padding-left: 0;
+}
+
+
+
+// select 
+.custom-dropdown select {
+    width: 50%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #686767;
+    font-size: 16px;
+    outline: none;
+}
+
+.custom-dropdown select:hover,
+.custom-dropdown select:focus {
+    border-color: #ccc;
+}
+
+span {
+    font-size: 15px;
+    color: #51a47b;
+}
+
+span.strike-through {
+    cursor: not-allowed;
+
+    color: #d06868;
+    text-decoration: line-through;
 }
