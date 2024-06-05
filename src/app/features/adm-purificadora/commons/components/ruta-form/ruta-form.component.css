@@ -1,4 +1,37 @@
 /* Estilos para el formulario */
+.Primer-seccion {
+    display: block ruby;
+    grid-template-columns: max-content 1fr;
+    /* Columna de etiquetas y columna de inputs/selects */
+    grid-row-gap: 10px;
+    /* Espacio entre filas */
+
+    /*  */
+
+    label {
+        grid-column: 1;
+        margin: 10px;
+        /* Las etiquetas en la primera columna */
+    }
+
+    input[type="text"] {
+        width: 20%;
+        /* Los inputs y selects ocupan todo el ancho de su contenedor */
+        grid-column: 2;
+        /* Los inputs y selects en la segunda columna */
+    }
+
+    .custom-dropdown select {
+        grid-row-gap: 20px;
+
+        width: 100%;
+        /* Los inputs y selects ocupan todo el ancho de su contenedor */
+        grid-column: 2;
+        /* Los inputs y selects en la segunda columna */
+        /* Alinear los dropdowns a la derecha */
+    }
+}
+
 .form-registro-ruta {
     background: #fff5ec;
     padding: 20px;
@@ -15,11 +48,13 @@
 }
 
 .form-registro-ruta fieldset label {
-    color: #7a7a7a;
+
+        color: #595959;
+
 }
 
 .form-column {
-    width: calc(50% - 20px);
+    width: calc(100% - 20px);
     /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
     margin-right: 20px;
     /* Espacio entre las columnas */
@@ -42,24 +77,11 @@ label {
     font-weight: bold;
 }
 
-.form-registro-ruta input {
-    width: calc(52% - 10px);
-    /* Ajusta el ancho del input para evitar que se desborde por el borde */
-    padding: 8px;
-    margin-bottom: 10px;
-    /* border: 1px solid #ccc; */
-    border: 1px solid #ccc;
-}
 
-/* @layer primeng {
-    .for-direccion .p-multiselect .p-component .p-inputwrapper {
-      
-        width: 100%;
-    }
-} */
 
-.for-direccion .custom-dropdown[_ngcontent-ng-c2506789401] select[_ngcontent-ng-c2506789401] {
-    width: 100%;
+.custom-dropdown select,
+input {
+    width: 30%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -67,14 +89,10 @@ label {
     color: #686767;
     font-size: 16px;
     outline: none;
-
-    /* .p-multiselect {
-        width: 100%;
-    } */
 }
 
 
-.for-direccion button[type="submit"] {
+.form-registro-ruta button[type="submit"] {
     width: 100%;
 }
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-ruta',
   templateUrl: './ruta.view.html',
-  styleUrl: './ruta.view.css'
+  styleUrl: 'ruta.view.scss'
 })
 export class RutaView {
   constructor(private router: Router) { }

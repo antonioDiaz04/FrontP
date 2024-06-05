@@ -23,13 +23,21 @@ export class AdmDashboardView {
 
      
       this.basicData = {
-        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [
           {
-            label: 'Sales',
-            data: [540, 325, 702, 620],
-            backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+            label: 'Ventas',
+            data: [540, 325, 702, 620, 450, 380, 510, 460, 620, 700, 750, 800], // Ejemplo de datos de ventas para cada mes
+            backgroundColor: [
+              'rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+              'rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)',
+              'rgb(255, 206, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)',
+              'rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)'
+            ],
             borderWidth: 1
           }
         ]
@@ -65,7 +73,7 @@ export class AdmDashboardView {
           }
         }
       };
-    
+
 
     
     }

@@ -14,8 +14,6 @@ export class MapaView implements OnInit{
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
 
-
-
   constructor(private clipboardService: ClipboardService,private mapService: MapaService, private render2: Renderer2) { }
 
   ngOnInit(): void {
@@ -34,19 +32,15 @@ export class MapaView implements OnInit{
     })
   }
 
-
-
-
-
-  copiarClave() {
-    console.log("hola mundo copy");
-    const coordenadasElement = document.getElementById('coordenadas');
-    if (coordenadasElement) {
-      const coordenadasCopy = coordenadasElement.innerText;
-      this.clipboardService.copyFromContent(coordenadasCopy);
-    } else {
-      console.error("Elemento con ID 'coordenadas' no encontrado.");
-    }
-  }
+  // copiarClave() {
+  //   console.log("hola mundo copy");
+  //   const coordenadasElement = document.getElementById('coordenadas');
+  //   if (coordenadasElement) {
+  //     const coordenadasCopy = coordenadasElement.innerText;
+  //     this.clipboardService.copyFromContent(coordenadasCopy);
+  //   } else {
+  //     console.error("Elemento con ID 'coordenadas' no encontrado.");
+  //   }
+  // }
 
 }

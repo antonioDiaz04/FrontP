@@ -16,7 +16,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MaterialModule } from '../admin/commons/material/material.module';
 import { ClientesService } from '../../shared/services/clientes.service';
 import { SignupService } from '../../shared/services/signup.service';
-import { ProductoView } from './view/producto/producto.view';
+// import { ProductoView } from './view/producto/producto.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
@@ -44,20 +44,21 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ConsultasCOPOMEXService } from '../../shared/services/consultas-copomex.service';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
-
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { MenuItem, PrimeIcons } from 'primeng/api';
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
 ]
 @NgModule({
   declarations: [
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
-    AdmHomeView, ProductoView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
+    AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
     MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,
   ],
   imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule,
-    CommonModule, FormsModule, DropdownModule, MultiSelectModule, 
-     AdmPurificadoraRoutingModule,MaterialModule, ReactiveFormsModule
+    CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
+    AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule,
   ],
   providers: [provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService]

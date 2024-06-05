@@ -14,33 +14,111 @@ td {
 }
 
 /* Estilos para el encabezado de la tabla */
-th {
-    background-color: #f2f2f2;
+table thead th {
+    background-color: #343a40;
+    color: #ffffff;
 }
 
-/* Estilos para las filas impares */
-tr:nth-child(odd) {
-    background-color: #f9f9f9;
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
+
+
+
+
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+// /* Estilos para las filas impares */
+tbody {
+    background-color: #f9f9f9;
+
+    /* Estilos para el botón */
+    button {
+        margin: 0;
+    }
+
+
+
+
+
+
+    // button:hover,
+    .remove:hover {
+
+        color: rgb(192, 2, 2);
+        background-color: #ffffff;
+        border: 1px solid #d60000;
+
+        // .material-symbols-outlined {
+        //     color: rgb(255, 255, 255);
+
+        // }
+    }
+
+    .remove {
+
+        color: rgb(255, 255, 255);
+        background-color: #d60000;
+        border: 1px solid #ffffff;
+
+        // .material-symbols-outlined {
+        //     color: rgb(255, 255, 255);
+
+        // }
+    }
+
+
+
+    // button:hover,
+
+
+
+}
+
+button[type="button"]:hover {
+
+    color: rgb(255, 255, 255);
+    background-color: #45a08f;
+
+    .material-symbols-outlined {
+        color: rgb(255, 255, 255);
+    }
+}
+
 
 /* Estilos para el botón */
-button {
+button,
+input[type="button"] {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    background-color: #ffffff;
+    color: rgb(97, 97, 97);
+    border: 1px solid #45a08f;
     border-radius: 4px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #45a049;
+input[type="button"]:hover {
+
+    color: rgb(255, 255, 255);
+    background-color: #45a08f;
+
+    .material-symbols-outlined {
+        color: rgb(255, 255, 255);
+
+    }
 }
+
 
 
 
 .material-symbols-outlined {
     cursor: pointer;
-    font-size: 25px;
+    font-size: 20px;
 }

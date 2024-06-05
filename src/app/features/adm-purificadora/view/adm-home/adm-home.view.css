@@ -36,7 +36,7 @@
 
    /* Sidebar*/
 
-  
+
 
    .card1 {
        margin-top: 20px;
@@ -62,7 +62,8 @@
        overflow-y: auto;
        /* Scrollable contents if viewport is shorter than content. */
    }
-/* 
+
+   /* 
    .sidebar .nav-link {
        font-weight: 500;
        color: #494949;
@@ -117,4 +118,15 @@
 
    .container-fluid {
        margin-top: 50px;
+   }
+
+
+   .content {
+       margin-left: 250px;
+       padding: 20px;
+       border: dashed;
+   }
+
+   .content h2 {
+       color: #333;
    }

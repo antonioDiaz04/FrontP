@@ -1,9 +1,13 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+
 <p-dialog *ngIf="listUsuario" header="Información del Usuario" [modal]="true" [(visible)]="visible"
     [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
 
     <form [formGroup]="clienteForm" (ngSubmit)="actualizarCliente(listUsuario._id)">
         <h3>Detalles Personales</h3>
-
         <div>
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" formControlName="nombre">
@@ -35,27 +39,19 @@
     </form>
 </p-dialog>
 
-
-
-
-
-<body class="body-panel">
-    <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-        <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Listado de Clientes</h1>
+<section id="lista">
+        <!-- <div
+          >
         </div>
         <header class="heeader">
             <div class="info">
                 <p>Filtrar por: <span id="repartidor_name"></span></p>
             </div>
-            <div class="button-container">
-                <button class="btn btn-success" (click)="redirectToAdmin('agregar-cliente')"><span> Agregar
-                        Cliente</span></button>
-            </div>
-        </header>
-        <section class="table">
-            <table class="styled-table">
+            
+        </header> -->
+            <h2>Listado de Clientes</h2>
+        <!-- <section class="table"> -->
+            <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -63,11 +59,19 @@
                         <th>Pedido</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
+                        <th>Acciones</th>
+                        <th>Acciones</th>
+                        <th>Acciones</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let cliente of allClients">
                         <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.email }}</td>
                         <td>{{ cliente.email }}</td>
                         <td>{{ cliente.email }}</td>
                         <td>{{ cliente.estatus }}</td>
@@ -78,11 +82,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="map">
+            <!-- <div class="map">
                 <h2>Ubicación de clientes:
                 </h2>
                 <app-mapa></app-mapa>
-            </div>
-        </section>
-    </main>
-</body>
+            </div> -->
+        <!-- </section> -->
+</section>

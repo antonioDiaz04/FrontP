@@ -17,6 +17,7 @@ import { RutaListadoComponent } from './commons/components/ruta-listado/ruta-lis
 import { VehiculosView } from './view/vehiculos/vehiculos.view';
 import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehiculo-form.component';
 import { VehiculoListadoComponent } from './commons/components/vehiculo-listado/vehiculo-listado.component';
+import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
 
 const routes: Routes = [
   {
@@ -37,12 +38,24 @@ const routes: Routes = [
         component: AdmHomeView,
       },
       {
-        path: 'Control-entregas',
+        path: 'clientes',
         component: ControlEntregasView,
-      },
-      {
-        path: 'agregar-cliente',
-        component: ClienteFormComponent,
+        children: [
+
+          {
+            path: 'lista-clientes&ubicaciones',
+            component: ClienteTablaComponent,
+          },
+          {
+            path: 'agregar-cliente',
+            component: ClienteFormComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'lista-clientes&ubicaciones', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
       },
       {
         // path: 'detail/:id',
@@ -84,7 +97,7 @@ const routes: Routes = [
           },
           {
             path: 'lista-vehiculo',
-            component:  VehiculoListadoComponent,
+            component: VehiculoListadoComponent,
           },
           {
             path: '', // Ruta por defecto dentro de repartidores (opcional)

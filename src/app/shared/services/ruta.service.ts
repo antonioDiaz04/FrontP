@@ -10,8 +10,8 @@ export class RutaService {
 
   constructor(private http: HttpClient) { }
   
-  getRepartidores(): Observable<any> {
-    return this.http.get(`${environment.api}/purificadoraRepartidores/obtenerRepartidores`);
+  getRutas(): Observable<any> {
+    return this.http.get(`${environment.api}/purificadoraAdmin/getRutas`);
   }
 
   detalleUsuarioById(id: string): Observable<any> {
@@ -23,15 +23,15 @@ export class RutaService {
     return this.http.put(url, cliente)
   }
 
-  eliminarRepartidores(id: string): Observable<any> {
-    const url = `${environment.api}/purificadoraRepartidores/deleteRepartidor/` + id
+  eliminarRuta(id: string): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/deleteRuta/` + id
     return this.http.delete(url)
   }
 
 
 
-  signUp(data: any): Observable<any> {
-    const url = `${environment.api}/purificadoraRepartidores/crearRepartidores/`
+  addRuta(data: any): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/crearRuta/`
     return this.http.post(url, data)
   }
 

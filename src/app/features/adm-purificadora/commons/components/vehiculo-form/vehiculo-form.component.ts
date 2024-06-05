@@ -42,7 +42,7 @@ export class VehiculoFormComponent {
 
 
     if (!anio) {
-      Swal.fire('Error', 'Por favor ingresa tu anio', 'error');
+      Swal.fire('Error', 'Por favor ingresa tu año', 'error');
       return;
     }
     if (!placas) {

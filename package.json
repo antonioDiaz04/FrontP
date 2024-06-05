@@ -41,6 +41,7 @@
     "ngx-mapbox-gl": "^10.0.0",
     "ngx-toastr": "^18.0.0",
     "ngx-ui-loader": "^13.0.0",
+    "primeicons": "^7.0.0",
     "primeng": "^17.16.1",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.10.8",

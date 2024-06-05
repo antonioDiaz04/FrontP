@@ -4,9 +4,8 @@
 
 
 </head>
-<p-dialog  header="Información del Usuario" [modal]="true"
+<!-- <p-dialog  header="Información del Usuario" [modal]="true"
     [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-<!-- <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible" --> 
 
     <form>
         <h3>Detalles Personales</h3>
@@ -36,36 +35,39 @@
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
     </form>
-</p-dialog>
+</p-dialog> -->
 
 <section id="lista">
-    <h2>Lista de rutas</h2>
+    <h1>Lista de rutas</h1>
     <table>
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Fecha de Contratación</th>
+                <th>Ruta</th>
+                <th>Repartidor</th>
+                <th>Vehiculo</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
 
-            <!-- <tr *ngFor="let repartidor of allRepartidores">
-                <td>{{repartidor.nombre}}</td>
-                <td>{{repartidor.telefono}}</td>
-                <td>{{repartidor.email}}</td>
-                <td>{{repartidor.fechaDeAgregacion}}</td>
-                <td>
-                    <span (click)="eliminarUsuario(repartidor._id)" class="material-symbols-outlined">
+             <tr *ngFor="let ruta of allRutas">
+                <td>{{ruta.nombreRuta}}</td>
+                <td>{{ruta.repartidorId}}</td>
+                <td>{{ruta.vehiculoId}}</td>
+                <td>{{ruta.estado}}</td>
+                 <td>
+                            <i (click)="eliminarRuta(ruta._id)" class="fas fa-trash-can text-danger m-3"></i>
+                            <!-- <i (click)="editar(cliente._id)" class="fa-solid fa-pen-to-square m-3 "></i> -->
+
+                    <!-- <span (click)="eliminarRuta(ruta._id)" class="material-symbols-outlined">
                         delete
-                    </span>
-                    <span (click)="editar(repartidor._id)" class="material-symbols-outlined">
+                    </span> -->
+                    <!-- <span (click)="editar(ruta._id)" class="material-symbols-outlined">
                         surgical
-                    </span>
-                </td>
-            </tr> -->
+                    </span> -->
+                </td> 
+            </tr> 
         </tbody>
     </table>
 </section>

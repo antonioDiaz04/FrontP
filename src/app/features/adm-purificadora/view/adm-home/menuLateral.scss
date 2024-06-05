@@ -2,6 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #eae7e7e6;
+
 }
 
 
@@ -20,7 +22,7 @@ body {
 }
 
 .sidebar h2 {
-font-weight: bold;
+    font-weight: bold;
     color: #3e3e3e;
     text-align: center;
 }
@@ -38,7 +40,7 @@ font-weight: bold;
 .sidebar ul li a {
     text-decoration: none;
     display: block;
-margin-left: 20px;
+    margin-left: 20px;
     color: #333;
 }
 
@@ -51,14 +53,4 @@ margin-left: 20px;
 .sidebar ul li a:active {
     color: rgb(0, 160, 107);
     background: beige;
-}
-
-.content {
-    margin-left: 150px;
-    padding: 20px;
-    // background: #fff9e6;
-}
-
-.content h2 {
-    color: #333;
 }

@@ -1,9 +1,10 @@
 <head>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-
 </head>
+
+
+
 <p-dialog *ngIf="dataVehiculo"   [(visible)]="visible"  header="Información del vehiculo" [modal]="true" [style]="{ width: '35rem' }"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
     <!-- <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible" -->
@@ -53,12 +54,15 @@
                 <td>{{repartidor.anio}}</td>
                 <td>{{repartidor.placas}}</td>
                 <td>
-                    <span (click)="eliminarUsuario(repartidor._id)" class="material-symbols-outlined">
+                                            <i (click)="eliminarUsuario(repartidor._id)" class="fas fa-trash-can text-danger m-3"></i>
+                                            <i (click)="editar(repartidor._id)" class="fa-solid fa-pen-to-square m-3 "></i>
+ 
+                    <!-- <span (click)="eliminarUsuario(repartidor._id)" class="material-symbols-outlined">
                         delete
                     </span>
                     <span (click)="editar(repartidor._id)" class="material-symbols-outlined">
                         surgical
-                    </span>
+                    </span> -->
                 </td>
             </tr>
         </tbody>

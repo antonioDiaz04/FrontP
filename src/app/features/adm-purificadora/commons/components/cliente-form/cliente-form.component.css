@@ -1,75 +1,159 @@
-body {
-  font-family: Arial, sans-serif;
+/* Estilos para el formulario */
+.Primer-seccion {
+  display: block ruby;
+  grid-template-columns: max-content 1fr;
+  /* Columna de etiquetas y columna de inputs/selects */
+  grid-row-gap: 10px;
+  /* Espacio entre filas */
+
+  /*  */
+
+  label {
+    grid-column: 1;
+    margin: 10px;
+    /* Las etiquetas en la primera columna */
+  }
+
+  input[type="text"] {
+    width: 20%;
+    /* Los inputs y selects ocupan todo el ancho de su contenedor */
+    grid-column: 2;
+    /* Los inputs y selects en la segunda columna */
+  }
+
+  .custom-dropdown select {
+    grid-column: 2;
+    width: 80%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #686767;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 10px;
+  }
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="url"] {
+input {
+  grid-column: 2;
+  width: 40%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #686767;
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+form {
+  background: #fff5ec;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
+  border: 1px solid #e8e7e7;
   width: 100%;
-  padding: 5px;
-  margin: 5px 0;
-  border: 1px solid #2dd9d1;
-  border-radius: 2px;
+  /* Ajusta el ancho del formulario según tus necesidades */
+  /* margin: 20px auto;.] */
+  /* Centra el formulario en la página */
+  display: flex;
+  flex-wrap: wrap;
+  /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
 }
 
-label::before {
-  content: "*";
-  color: #ff0000;
+form fieldset label {
+  color: #595959;
 }
 
-.button {
-  width: 100%;
+.form-column {
+  width: calc(50% - 20px);
+  /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
+  margin-right: 20px;
+  /* Espacio entre las columnas */
+}
+
+fieldset {
+  margin-bottom: 20px;
   padding: 10px;
-  margin: 10px 0;
-  background-color: #007bff;
+  border-radius: 5px;
+}
+
+legend {
+  font-weight: bold;
+
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+
+
+
+button[type="submit"] {
+  background-color: #4cafa2;
+  /* color: #000000; */
   color: white;
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
-.button:hover {
-  background-color: #0056b3;
+button[type="submit"]:hover {
+  background-color: #44b07a;
 }
 
-.checkbox {
-  margin: 10px 0;
+input[type="button"]:hover {
+
+  color: rgb(255, 255, 255);
+  background-color: #45a08f;
+
+  .material-symbols-outlined {
+    color: rgb(255, 255, 255);
+
+  }
 }
 
-.form-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+input[type="button"] {
+  margin-top: 10px;
+}
 
-  width: 1000px;
-  /* margin: 0 auto; */
-  padding: 20px;
-  /* background: #f9f9f9; */
-  /* border: 1px solid #ddd; */
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+  width: calc(100% - 18px);
+  /* Ajusta el ancho del input para evitar que se desborde por el borde */
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  background-color: #4cafa2;
+  color: white;
+  padding: 10px 15px;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  /* Espacio superior al botón */
 }
 
-.form-flex {
-  display: flex;
-  /* gap: 50px; */
-  margin-top: 50px;
-  justify-content: space-between;
-  /* Añade espacio entre las columnas */
-}
-
-.left-column,
-.right-column {
-  flex: 1;
-}
-
-.right-column {
-  margin-left: 40px;
-  margin-right: 0;
-
-  /* border: #0056b3 dashed; */
+button[type="submit"]:hover {
+  background-color: #45a049;
 }
 
 /* mapa} */
@@ -90,7 +174,7 @@ label::before {
 }
 
 #map {
-  width: 400px;
+  width: 450px;
   height: 250px;
   /* Ajusta la altura según tus necesidades */
   margin-left: 20px;
