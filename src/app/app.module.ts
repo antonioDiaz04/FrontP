@@ -9,7 +9,6 @@ import { PublicComponent } from './features/public/public.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EmpleadoComponent } from './features/empleado/empleado.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     HeaderComponent,
     SigninComponent,
     PublicComponent,
-    EmpleadoComponent,
   ],
   imports: [SidebarModule,
     BrowserModule, ButtonModule, BrowserAnimationsModule,

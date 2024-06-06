@@ -2,11 +2,18 @@
     width: 400px;
     padding: 20px;
     border-radius: 10px;
-}
-.form-login h2 ,p{
 
-color: rgb(0, 125, 148);
+    >h2 {
+
+        color: rgb(27, 209, 255);
+    }
+
+    >p {
+
+        color: rgb(87, 87, 87);
+    }
 }
+
 .form-login label {
     display: block;
     font-weight: bold;

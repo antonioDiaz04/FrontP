@@ -16,7 +16,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MaterialModule } from '../admin/commons/material/material.module';
 import { ClientesService } from '../../shared/services/clientes.service';
 import { SignupService } from '../../shared/services/signup.service';
-// import { ProductoView } from './view/producto/producto.view';
 import { PedidosView } from './view/pedidos/pedidos.view';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';

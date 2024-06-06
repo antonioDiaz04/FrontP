@@ -14,13 +14,7 @@
        }
    }
 
-
-
-
-
-
    body {
-
        font-size: .860rem;
    }
 
@@ -124,7 +118,7 @@
    .content {
        margin-left: 250px;
        padding: 20px;
-       border: dashed;
+       /* border: dashed; */
    }
 
    .content h2 {
