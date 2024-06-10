@@ -1,3 +1,6 @@
+
+
+
 export interface Cliente {
     _id?: string;
     nombre: string;
@@ -6,7 +9,6 @@ export interface Cliente {
     latitud: string;
     telefono: string;
     numCasa: string;
-    
     rol: string;
     estatus: string;
 }

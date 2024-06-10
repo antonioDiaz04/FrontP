@@ -5,19 +5,13 @@ import Swal from 'sweetalert2';
 import { RutaService } from '../../../../../shared/services/ruta.service';
 import { Ruta } from '../../../../../shared/models/ruta.model';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
-
-
-
 import { Repartidor } from '../../../../../shared/models/repartidor.model';
 import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle.service';
 import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
 import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
-
-
 import { ClientesService } from '../../../../../shared/services/clientes.service';
 import { Cliente } from '../../../../../shared/interfaces/client.interface';
-
 @Component({
   selector: 'app-ruta-form',
   templateUrl: './ruta-form.component.html',
@@ -49,7 +43,8 @@ export class RutaFormComponent implements OnInit {
     'color': '#333'
   };
   customDropdownClass = 'custom-dropdown'; // Agrega tus clases de estilo personalizadas aquí
-  constructor(private UserS: ClientesService, private consultasCOPOMEX: ConsultasCOPOMEXService, private vehiculoService: VehiculoService, private repService: RepartidoresService, private rutaService: RutaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private mapService: MapaClientDetailUbacionService) {
+  constructor(private UserS: ClientesService,
+    private consultasCOPOMEX: ConsultasCOPOMEXService, private vehiculoService: VehiculoService, private repService: RepartidoresService, private rutaService: RutaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private mapService: MapaClientDetailUbacionService) {
     this.registroRuta = this.formBuilder.group({
       nombreRuta: ['', Validators.required],
       fechaInicio: ['', Validators.required],
@@ -61,13 +56,9 @@ export class RutaFormComponent implements OnInit {
     this.filas = this.registroRuta.get('filas') as FormArray;
   }
 
-  // get diasAsignados() {
-  //   return this.registroRuta.get('diasAsignados') as FormArray;
-  // }
   onRepartidorSelectionChange() {
     const selectedId = this.registroRuta.get('selectedRepartidor')?.value;
     console.log('ID del repartidor seleccionado:', selectedId);
-    // console.log('Repartidor seleccionado:', this.selectedRepartidor);
   }
 
   onVehiculoSelectionChange() {
@@ -266,6 +257,8 @@ export class RutaFormComponent implements OnInit {
     return municipiosSeleccionados;
   }
 
+
+  
   obtenerTodosLasColonias() {
     const coloniasSeleccionados = this.filas.controls.map(fila => fila.get('selectedColonia')?.value);
     return coloniasSeleccionados;
@@ -323,8 +316,12 @@ export class RutaFormComponent implements OnInit {
     const puntosDeEntrega = allClients.map((clienteId, index) => ({
       municipio: allMunicipios[index],
       colonia: allColonias[index],
-      clienteId: allClients
+      clienteId: allClients[index]
     }));
+
+    
+    console.log("puntosDeEntrega:",puntosDeEntrega)
+    
     const RUTA: Ruta = {
       nombreRuta: nombreRuta,
       repartidorId: selectedRepartidor,
@@ -391,6 +388,7 @@ export class RutaFormComponent implements OnInit {
   //     }
   //   )
   // }
+
   agregarFila() {
     this.filas.push(this.formBuilder.group({
       selectedMunicipio: [''], // Aquí deberías inicializar los valores según tus necesidades

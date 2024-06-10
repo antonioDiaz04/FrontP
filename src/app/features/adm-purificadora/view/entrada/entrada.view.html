@@ -1,0 +1,80 @@
+<section id="lista">
+
+    <h1>Gestión de Entrada</h1>
+    <div class="top-bar">
+        <!-- <button class="add-entry-btn">Añadir Entrada</button> -->
+        <input type="text" id="searchBar" placeholder="Buscar...">
+    </div>
+    <div class="filter-container">
+        <div class="filter-group">
+            <label for="date">Días Programada la Salida:</label>
+            <select id="date" name="date">
+                <option value="">Seleccione...</option>
+                <!-- Opciones de fechas -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="vehicle">Vehículo:</label>
+            <select id="vehicle" name="vehicle">
+                <option value="">Seleccione...</option>
+                <!-- Opciones de vehículos -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="repartidor">Repartidor:</label>
+            <select id="repartidor" name="repartidor">
+                <option value="">Seleccione...</option>
+                <!-- Opciones de repartidores -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="route">Ruta:</label>
+            <select id="route" name="route">
+                <option value="">Seleccione...</option>
+                <!-- Opciones de rutas -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="estatus">Estatus:</label>
+            <select id="estatus" name="estatus">
+                <option value="">Seleccione...</option>
+                <!-- Opciones de municipios -->
+            </select>
+        </div>
+        
+    </div>
+    <table class="entry-table">
+        <thead>
+            <tr>
+                <th>Ruta</th>
+                <th>Fecha Programada la Entrega</th>
+                <th>Vehículo</th>
+                <th>Repartidor</th>
+                <th>Cantidad de salida</th>
+                <th>Cantidad de entrada</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let delivery of deliveries">
+                <td>{{ delivery.route }}</td>
+                <td>{{ delivery.scheduledDate }}</td>
+                <td>{{ delivery.vehicle }}</td>
+                <td>{{ delivery.deliveryPerson }}</td>
+                <td>{{ delivery.outQuantity }}</td>
+                <td>{{ delivery.inQuantity }}</td>
+                <td>
+                <!-- <td [ngStyle]="{ 'color': delivery.status === 'Entregado' ? 'green' : 'red' }"> -->
+                   <p [ngClass]=" delivery.status === 'Entregado' ? 'entregado' : 'pendiente' ">{{ delivery.status }}</p >
+                </td>
+                <td>
+                    <!-- Aquí puedes agregar acciones, por ejemplo, un botón para ver detalles -->
+                    <button type="button" class="add-entry-btn" (click)="viewDetails(delivery)">Ver detalles</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</section>

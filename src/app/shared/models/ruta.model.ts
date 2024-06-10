@@ -14,3 +14,29 @@ export class Ruta {
     diasAsignados!: string[];
 
 }
+
+
+
+
+// export interface Ruta {
+//     nombre: string;
+//     repartidor: {
+//         nombre: string;
+//         telefono: string;
+//     };
+//     vehiculo: {
+//         marca: string;
+//         modelo: string;
+//         placa: string;
+//     };
+//     domicilios: Array<{
+//         municipio: string;
+//         colonias: Array<{
+//             nombre: string;
+//             clientes: Array<{
+//                 nombre: string;
+//                 direccion: string;
+//             }>;
+//         }>;
+//     }>;
+// }

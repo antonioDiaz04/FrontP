@@ -1,0 +1,169 @@
+/* General Styles */
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL'0,
+        'wght'400,
+        'GRAD'0,
+        'opsz'24
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+main {
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Table Styles */
+
+/* Responsive Design */
+@media (max-width: 600px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 10px;
+    }
+
+    td {
+        padding: 10px;
+        text-align: right;
+        position: relative;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+section#lista {
+    >h2 {
+        color: rgb(185, 158, 123);
+    }
+
+    >table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        >thead {
+            >tr {
+                >th {
+                    padding: 12px 15px;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                    background-color: #343a40;
+                    color: #ffffff;
+                    color: rgb(255, 255, 255);
+                }
+            }
+        }
+
+        >tbody {
+            >tr {
+                >td {
+                    padding: 5px;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                    color: rgb(76, 76, 76);
+                    .remove {
+
+                        color: rgb(192, 2, 2);
+                        background-color: #ffffff;
+                        border: 1px solid #d60000;
+                    }
+
+                    .remove:hover {
+                        color: rgb(255, 255, 255);
+                        background-color: #d60000;
+                        border: 1px solid #ffffff;
+                    }
+                    >tr:hover {
+                        background-color: #f5f5f5;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+button[type="button"]:hover {
+
+    color: rgb(255, 255, 255);
+    background-color: #45a08f;
+
+    .material-symbols-outlined {
+        color: rgb(255, 255, 255);
+    }
+}
+
+
+/* Estilos para el botón */
+button,
+input[type="button"] {
+    // margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(97, 97, 97);
+    border: 1px solid #45a08f;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+
+    color: rgb(255, 255, 255);
+    background-color: #45a08f;
+
+    .material-symbols-outlined {
+        color: rgb(255, 255, 255);
+
+    }
+}
+
+table {
+
+    >tbody {
+        >tr {
+
+            >td {
+                span.material-symbols-outlined {
+                    cursor: pointer;
+                }
+            }
+        }
+
+
+    }
+}

@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { initFlowbite } from 'flowbite'
 
 @Component({
   selector: 'app-home',
@@ -9,13 +8,8 @@ import { initFlowbite } from 'flowbite'
   encapsulation: ViewEncapsulation.None
 })
 export class HomeView {
-  
 
-// initialize components based on data attribute selectors
-// onMounted(() => {
-  // initFlowbite();
-// })
-  constructor(private router:Router) {}
+  constructor(private router: Router) { }
 
   redirectTo(route: string): void {
 

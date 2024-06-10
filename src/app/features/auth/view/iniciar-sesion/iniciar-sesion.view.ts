@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { catchError, finalize, throwError } from 'rxjs';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SignInService } from '../../commons/services/sign-in.service';
-import { StorageService } from '../../../../core/commons/components/service/storage.service';
+// import { StorageService } from '../../../../core/commons/components/service/storage.service';
 import { SessionService } from '../../../../core/commons/components/service/session.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ERol } from '../../../../shared/constants/rol.enum';
@@ -24,7 +24,7 @@ export class IniciarSesionView {
   constructor(
     private ngxService: NgxUiLoaderService,
     private signInService: SignInService,
-    private storageService: StorageService,
+    // private storageService: StorageService,
     private sessionService: SessionService,
     private fb: FormBuilder,
     private router: Router,
@@ -69,7 +69,7 @@ export class IniciarSesionView {
       )
       .subscribe((response) => {
         if (response) {
-          this.storageService.setToken(response.token);
+          // this.storageService.setToken(response.token);
           const userData = this.sessionService.getUserData();
           if (userData) {
             this.userROL = userData.rol;

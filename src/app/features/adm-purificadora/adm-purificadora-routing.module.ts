@@ -18,6 +18,9 @@ import { VehiculosView } from './view/vehiculos/vehiculos.view';
 import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehiculo-form.component';
 import { VehiculoListadoComponent } from './commons/components/vehiculo-listado/vehiculo-listado.component';
 import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
+import { RutaDetalleComponent } from './commons/components/ruta-detalle/ruta-detalle.component';
+import { SalidaView } from './view/salida/salida.view';
+import { EntradaView } from './view/entrada/entrada.view';
 
 const routes: Routes = [
   {
@@ -58,9 +61,12 @@ const routes: Routes = [
         ]
       },
       {
-        // path: 'detail/:id',
-        path: 'comentarios',
-        component: ComentariosView,
+        path: 'salida',
+        component: SalidaView,
+      },
+      {
+        path: 'entrada',
+        component: EntradaView,
       },
       {
         // path: 'detail/:id',
@@ -136,6 +142,10 @@ const routes: Routes = [
           {
             path: 'lista-rutas',
             component: RutaListadoComponent,
+          },
+          {
+            path: 'detalleByIdRutaFrom/:id',
+            component: RutaDetalleComponent,
           },
           {
             path: '', // Ruta por defecto dentro de rutas (opcional)

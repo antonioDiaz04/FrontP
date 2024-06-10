@@ -50,15 +50,16 @@
             </tr>
         </thead>
         <tbody>
-
              <tr *ngFor="let ruta of allRutas">
+
                 <td>{{ruta.nombreRuta}}</td>
-                <td>{{ruta.repartidorId}}</td>
-                <td>{{ruta.vehiculoId}}</td>
+                <td>{{ruta.repartidorId?.nombre}}</td>
+                <td>{{ruta.vehiculoId?.marca}}</td>
                 <td>{{ruta.estado}}</td>
                  <td>
                             <i (click)="eliminarRuta(ruta._id)" class="fas fa-trash-can text-danger m-3"></i>
-                            <!-- <i (click)="editar(cliente._id)" class="fa-solid fa-pen-to-square m-3 "></i> -->
+                            <i  (click)="detalleById(ruta._id)"  class="fas fa-solid fa-book-open"></i>
+                            <!-- <i (click)="editar(ruta._id)" class="fa-solid fa-pen-to-square m-3 "></i> -->
 
                     <!-- <span (click)="eliminarRuta(ruta._id)" class="material-symbols-outlined">
                         delete

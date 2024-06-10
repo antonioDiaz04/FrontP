@@ -82,7 +82,7 @@ export class ClienteTablaComponent implements OnInit {
       this.idCliente = this.router.snapshot.params['id'];
     if (id !== null) {
     console.log("actualizar....")
-      this.UserS.detalleProductoById(id).subscribe((data) => {
+      this.UserS.detalleClienteById(id).subscribe((data) => {
             this.listUsuario = data;
         this.clienteForm.setValue({
           nombre: data.nombre,
@@ -128,6 +128,8 @@ export class ClienteTablaComponent implements OnInit {
       }
     );
   }
+
+  
 
   eliminarUsuario(id: any) {
     this.UserS.eliminarCliente(id).subscribe(data => {

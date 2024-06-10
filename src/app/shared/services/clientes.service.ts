@@ -26,7 +26,7 @@ export class ClientesService {
 
   }
 
-  detalleProductoById(id:string): Observable<any> {
+  detalleClienteById(id:string): Observable<any> {
     const url = `${environment.api}/usuarios/getDetalles/` + id
     return this.http.get(url)
   }

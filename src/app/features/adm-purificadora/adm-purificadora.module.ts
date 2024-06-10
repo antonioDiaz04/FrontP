@@ -45,6 +45,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import { RutaDetalleComponent } from './commons/components/ruta-detalle/ruta-detalle.component';
+import { StepperModule } from 'primeng/stepper';
+import { SalidaView } from './view/salida/salida.view';
+import { EntradaView } from './view/entrada/entrada.view';
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
 ]
@@ -53,9 +57,9 @@ const MATERIALS = [
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView,
   ],
-  imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule,
+  imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
     AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule,
   ],

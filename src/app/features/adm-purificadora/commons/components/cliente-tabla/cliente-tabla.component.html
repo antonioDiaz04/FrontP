@@ -40,28 +40,16 @@
 </p-dialog>
 
 <section id="lista">
-        <!-- <div
-          >
-        </div>
-        <header class="heeader">
-            <div class="info">
-                <p>Filtrar por: <span id="repartidor_name"></span></p>
-            </div>
-            
-        </header> -->
             <h2>Listado de Clientes</h2>
-        <!-- <section class="table"> -->
             <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Correo</th>
-                        <th>Pedido</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th>
-                        <th>Acciones</th>
-                        <th>Acciones</th>
-                        <th>Acciones</th>
+                        <th>telefono</th>
+                        <th>Numero de casa</th>
+                        <th>Municipio</th>
+                        <th>colonia</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -69,12 +57,13 @@
                     <tr *ngFor="let cliente of allClients">
                         <td>{{ cliente.nombre }}</td>
                         <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.estatus }}</td>
+                        <td>{{ cliente.telefono }}</td>
+                        <td>{{ cliente.numCasa }}</td>
+                        <td>nombre municipio</td>
+                        <td>nombre colonia</td>
+                        <!-- <td>{{ cliente.email }}</td> -->
+                        <!-- <td>{{ cliente.email }}</td> -->
+                        <!-- <td>{{ cliente.estatus }}</td> -->
                         <td> <!-- Botones de acciones -->
                             <i (click)="eliminarUsuario(cliente._id)" class="fas fa-trash-can text-danger m-3"></i>
                             <i (click)="editar(cliente._id)" class="fa-solid fa-pen-to-square m-3 "></i>

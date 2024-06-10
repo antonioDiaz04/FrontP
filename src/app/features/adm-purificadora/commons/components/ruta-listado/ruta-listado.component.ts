@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RutaService } from '../../../../../shared/services/ruta.service';
-import { Ruta } from '../../../../../shared/models/ruta.model';
+// import { Ruta } from '../../../../../shared/models/ruta.model';
+import { Repartidor } from '../../../../../shared/models/repartidor.model';
+import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
+// import { Repartidor } from '../../interfaces/repartidores/repartidores.interface';
 
 @Component({
   selector: 'app-ruta-listado',
@@ -12,10 +15,8 @@ export class RutaListadoComponent  implements OnInit{
   // getRutas
 
 
-  allRutas?: Ruta[];
-
-
-  constructor(private rutaS:RutaService) {
+  allRutas?: Ruta[]=[];
+  constructor(private rutaS: RutaService, private router:Router) {
     
   }
 ngOnInit(): void {
@@ -26,6 +27,7 @@ ngOnInit(): void {
     this.rutaS.getRutas().subscribe(
       data => {
         this.allRutas = data;
+        // this.allRepartidorData = data.repartidorId;
         console.log(this.allRutas);
       },
       error => {
@@ -38,6 +40,15 @@ ngOnInit(): void {
     this.rutaS.eliminarRuta(id).subscribe(data => {
       console.log("eliminado")
       this.obtenerRutas();
+    }, error => {
+      console.log("ocurrio un error", error)
+    })
+  }
+
+  detalleById(id: any) {
+    this.rutaS.detalleRutaById(id).subscribe(data => {
+      console.log("detallado...")
+      this.router.navigate(['/purificadoraAdm/rutas/detalleByIdRutaFrom/' ,id]) // Navegación hacia otras páginas públicas
     }, error => {
       console.log("ocurrio un error", error)
     })
