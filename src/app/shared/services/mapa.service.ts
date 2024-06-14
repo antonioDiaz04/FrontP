@@ -4,11 +4,6 @@ import * as mapboxgl from 'mapbox-gl';
 import { resolve } from 'path';
 import { rejects } from 'assert';
 import { environment } from '../../../environments/environment';
-// import EventEmitter from 'events';
-// import { environment } from '../../../environments/environment.prod';
-// import MapboxGeocoder  from '@mapbox/mapbox-gl-MapboxGeocoder';
-
-
 @Injectable({
   providedIn: 'root'
 })

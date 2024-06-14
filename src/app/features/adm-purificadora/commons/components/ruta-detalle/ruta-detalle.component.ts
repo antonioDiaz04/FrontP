@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RutaService } from '../../../../../shared/services/ruta.service';
-import { PuntoDeEntrega, Ruta } from '../../../../../shared/interfaces/ruta.interface';
+import { DetalleEntregaInterface, PuntoDeEntrega } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
 import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
 import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
@@ -12,17 +12,21 @@ import { Observable, forkJoin } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
-
+import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle.service';
+import { MapaService } from '../../services/mapa.service';
 @Component({
   selector: 'app-ruta-detalle',
   templateUrl: './ruta-detalle.component.html',
   styleUrls: ['./ruta-detalle.component.css', './form.scss', 'tablaStyle.scss', 'inputs.scss']
 })
-export class RutaDetalleComponent implements OnInit {
 
+export class RutaDetalleComponent implements OnInit {
+  private intervalId: any;
   visible: boolean = false;
 
-  detalleRuta?: Ruta;
+  puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
+
+  detalleRuta?: DetalleEntregaInterface;
   // dataReponse: Ruta[]=[];
   // detalleVehiculo?: Vehiculo;
   detalleRepartidor?: Repartidor;
@@ -38,7 +42,7 @@ export class RutaDetalleComponent implements OnInit {
   selectedMunicipio: any
   selectedColonia: any
   selectedClient: any;
-
+  visitCount: number= 0;
   isLoading = true;//variable rastreador de carga de producto
   constructor(private router: ActivatedRoute,
     private rutaService: RutaService,
@@ -47,6 +51,8 @@ export class RutaDetalleComponent implements OnInit {
     private clienteService: ClientesService,
     private formBuilder: FormBuilder,
     private consultasCOPOMEX: ConsultasCOPOMEXService,
+    private mapService: MapaClientDetailUbacionService,
+    private mapaService: MapaService,
   ) {
 
     this.clienteFormAdd = this.formBuilder.group({
@@ -61,10 +67,10 @@ export class RutaDetalleComponent implements OnInit {
     this.isLoading = true;//comienza la carga/el isLoading esta
     this.idRuta = this.router.snapshot.params['id'];
     this.todo()
-
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio()
-    
+    this.getUsers()
+
   }
 
 
@@ -73,24 +79,43 @@ export class RutaDetalleComponent implements OnInit {
 
   todo() {
 
-    this.rutaService.detalleRutaById(this.idRuta).subscribe((data:Ruta)=> {
+    this.rutaService.detalleRutaById(this.idRuta).subscribe((data: DetalleEntregaInterface) => {
       this.detalleRuta = data;
-      // this.dataReponse = data;
-      
-      
-      console.log("Response  detalleruta {  " + this.detalleRuta + "}");
+      this.enviarUbicacionesMapa(this.detalleRuta)
       console.log(this.detalleRuta);
-      // console.log(data['repartidorId']['nombre']); 
-      // console.log(this.dataReponse.nombreRuta); // Salida: "A"
-     
-      // this.puntosEntrega = this.detalleRuta?.puntosDeEntrega;
     }, error => {
       console.log("ocurrio un error", error)
     })
-
   }
 
 
+  enviarUbicacionesMapa(detalleRuta:any){
+    this.visitCount++;
+    console.log(`Visitado por: ${this.visitCount}`);
+    const entregas = detalleRuta.clientesIdsDeEntregas;
+
+    console.log("clientesIdsDeEntregas en enviarUbicacionesMapa:", entregas);
+    if (Array.isArray(entregas) && entregas.length > 0) {
+      // Accede a las longitudes y latitudes de los clientes
+      this.puntosClientesUbicaciones = entregas.map(entrega => {
+        console.log("clienteId:", entrega.clienteId);
+        return {
+          longitud: entrega.clienteId?.longitud,
+          latitud: entrega.clienteId?.latitud
+        };
+      }).filter(ubicacion => ubicacion.longitud && ubicacion.latitud);
+
+      console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
+      this.mapaService.setUbicaciones(this.puntosClientesUbicaciones);
+
+    } else {
+      // En caso de que no haya puntos de entrega o el array esté vacío, limpia los marcadores
+      this.mapaService.setUbicaciones([]);
+      console.log("No se encontraron puntos de entrega o el array está vacío.");
+    }
+  }
+
+  
 
   agregarCliente() {
 
@@ -129,13 +154,6 @@ export class RutaDetalleComponent implements OnInit {
       clienteId: selectedClient._id,
       _id: generateUniqueId()
     }
-    // Supongamos que tienes una función para generar IDs únicos
-
-
-    // const RUTA: Ruta = {
-    //   puntosDeEntrega: [newPuntosDeEntrega]
-    // };
-
 
     this.rutaService.addPuntoEntregaRutaById(this.idRuta, newPuntosDeEntrega).subscribe(response => {
       this.visible = false;
@@ -164,9 +182,9 @@ export class RutaDetalleComponent implements OnInit {
       title: 'Error',
       text: text,
       icon: 'error',
-      position: 'bottom-left', // Mostrar el alerta en la parte superior
-      toast: true, // Hacer que el alerta sea tipo toast
-      timer: 2000 // Duración en milisegundos antes de que el alerta se cierre automáticamente
+      position: 'bottom-left',
+      toast: true,
+      timer: 2000
     });
     // return;
   }
@@ -233,7 +251,7 @@ export class RutaDetalleComponent implements OnInit {
 
     const selectedId = this.clienteFormAdd.get('selectedClient')?.value;
     this.selectedClient = selectedId._id;
-    
+
     if (selectedId.length === 0) {
       Swal.fire({
         title: 'Error!',
@@ -249,11 +267,13 @@ export class RutaDetalleComponent implements OnInit {
     }
   }
 
-  
+
   eliminarPuntoUbicacion(id: any) {
     this.rutaService.eliminarPuntoEntrega(id).subscribe(data => {
       console.log("eliminarPuntoUbicacion")
-      this.todo();
+      this.todo()
+      // this.enviarUbicacionesMapa(this.detalleRuta)
+      console.log(this.detalleRuta);
     }, error => {
       console.log("ocurrio un error", error)
     })
@@ -264,13 +284,6 @@ export class RutaDetalleComponent implements OnInit {
     this.clienteService.obtenerCLientes().subscribe(
       (data: Cliente[]) => {
         this.allClients = data;
-        
-        // this.puntosClientesUbicaciones = data.map(cliente => ({
-        //   longitud: cliente.longitud,
-        //   latitud: cliente.latitud
-        // }));
-        // console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
-        // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);

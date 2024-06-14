@@ -30,10 +30,10 @@ export class ClienteTablaComponent implements OnInit {
   clienteForm!: FormGroup;
 
   allClients: Cliente[] = []
-  puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
+  // puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
   ngOnInit(): void {
     this.getUsers();
-    this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
+    // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
   }
   visible: boolean = false;
   isVisible = false;
@@ -116,12 +116,12 @@ export class ClienteTablaComponent implements OnInit {
     this.UserS.obtenerCLientes().subscribe(
       (data: Cliente[]) => {
         this.allClients = data;
-        this.puntosClientesUbicaciones = data.map(cliente => ({
-          longitud: cliente.longitud,
-          latitud: cliente.latitud
-        }));
-        console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
-        this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
+        // this.puntosClientesUbicaciones = data.map(cliente => ({
+        //   longitud: cliente.longitud,
+        //   latitud: cliente.latitud
+        // }));
+        // console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
+        // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);
@@ -135,21 +135,25 @@ export class ClienteTablaComponent implements OnInit {
     this.UserS.eliminarCliente(id).subscribe(data => {
       console.log("eliminado")
       this.getUsers();
-      this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
+      // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
 
     }, error => {
       console.log("ocurrio un error", error)
     })
   }
 
-  iniciarMapa(){
+  
+  
+  
+  iniciarMapa() {
+   
+   
     this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
       this.clienteForm.get('latitud')?.setValue(latitud);
       this.clienteForm.get('longitud')?.setValue(longitud);
     });
 
-
-
+    
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {
         this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));

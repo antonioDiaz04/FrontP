@@ -54,8 +54,8 @@ const routes: Routes = [
             component: ClienteFormComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
-            redirectTo: 'lista-clientes&ubicaciones', // Redirigir a lista-repartidores por defecto
+            path: '',
+            redirectTo: 'lista-clientes&ubicaciones', 
             pathMatch: 'full',
           }
         ]

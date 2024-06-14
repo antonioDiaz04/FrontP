@@ -1,7 +1,7 @@
 .formulario {
     display: flex;
     flex-direction: column;
-    /* Ajusta el ancho máximo del formulario según tu preferencia */
+        /* Ajusta el ancho máximo del formulario según tu preferencia */
 }
 
 
@@ -29,11 +29,11 @@
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 0.25rem;
-    border: 1px solid #878a8e;
+    border: 1px solid #ced4da;
     box-sizing: border-box;
 }
 
-.btn-group {
+.form-container .btn-group {
     display: flex;
     justify-content: flex-start;
     width: 100%;
@@ -72,14 +72,4 @@ input {
     /* Borde del input */
     border-radius: 5px;
     /* Bordes redondeados */
-}
-
-.custom-dropdown {
-    // display: inline-flex;
-    cursor: pointer;
-    // position: relative;
-    -webkit-user-select: none;
-    background: azure;
-    user-select: none;
-    margin-bottom: 30px;
 }

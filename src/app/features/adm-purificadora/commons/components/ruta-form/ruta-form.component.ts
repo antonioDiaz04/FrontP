@@ -1,9 +1,10 @@
+import { DetalleEntregaInterface } from './../../../../../shared/interfaces/detalle-entrega-schema.interface';
+import { DetalleEntregaSchema } from './../../../../../shared/models/DetalleEntregaSchema.model';
 import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RutaService } from '../../../../../shared/services/ruta.service';
-import { Ruta } from '../../../../../shared/models/ruta.model';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
 import { Repartidor } from '../../../../../shared/models/repartidor.model';
 import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle.service';
@@ -12,6 +13,7 @@ import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
 import { ClientesService } from '../../../../../shared/services/clientes.service';
 import { Cliente } from '../../../../../shared/interfaces/client.interface';
+import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
 @Component({
   selector: 'app-ruta-form',
   templateUrl: './ruta-form.component.html',
@@ -29,12 +31,21 @@ export class RutaFormComponent implements OnInit {
   selectedClients: any[] = [];
   allRepartidores: Repartidor[] = [];
   allVehiculos: Vehiculo[] = [];
+  allNombreRuta: Ruta[] = [];
   selectedRepartidor: any;
   allMunicipioXEstado: any;
   allColoniaXMuncipio: any;
   filas!: FormArray;
   registroRuta!: FormGroup;
 
+  nombre: string = '';
+
+  guardarNombre() {
+    console.log('Nombre guardado:', this.nombre);
+    // Aquí puedes agregar la lógica para guardar el nombre
+  }
+
+  
   customDropdownStyle = {
     'width': '300px',
     'border': '1px solid #ccc',
@@ -44,6 +55,7 @@ export class RutaFormComponent implements OnInit {
   };
   customDropdownClass = 'custom-dropdown'; // Agrega tus clases de estilo personalizadas aquí
   constructor(private UserS: ClientesService,
+    private rutaSe:RutaService,
     private consultasCOPOMEX: ConsultasCOPOMEXService, private vehiculoService: VehiculoService, private repService: RepartidoresService, private rutaService: RutaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private mapService: MapaClientDetailUbacionService) {
     this.registroRuta = this.formBuilder.group({
       nombreRuta: ['', Validators.required],
@@ -56,6 +68,10 @@ export class RutaFormComponent implements OnInit {
     this.filas = this.registroRuta.get('filas') as FormArray;
   }
 
+  onRutaNombreSelectionChange() {
+    const selectedId = this.registroRuta.get('nombreRuta')?.value;
+    console.log('ID del ruta seleccionado:', selectedId);
+  }
   onRepartidorSelectionChange() {
     const selectedId = this.registroRuta.get('selectedRepartidor')?.value;
     console.log('ID del repartidor seleccionado:', selectedId);
@@ -94,6 +110,7 @@ export class RutaFormComponent implements OnInit {
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio()
     this.getUsers()
+    this.getAllNombresRutas()
   }
 
   getRepartidores() {
@@ -107,6 +124,19 @@ export class RutaFormComponent implements OnInit {
       }
     );
   }
+
+  getAllNombresRutas() {
+    this.rutaSe.getNombreRutas().subscribe(
+      (data: DetalleEntregaInterface[]) => {
+        this.allNombreRuta = data;
+        console.log(this.allNombreRuta);
+      },
+      error => {
+        console.log("Ocurrió un error al obtener la información", error);
+      }
+    );
+  }
+
   getVehiculos() {
     this.vehiculoService.getVehiculos().subscribe(
       (data: Vehiculo[]) => {
@@ -131,6 +161,27 @@ export class RutaFormComponent implements OnInit {
       }
     );
   }
+
+
+  // onRutaNombreSelectionChange(event: any, index: number) {
+  //   const filaFormGroup = this.filas.at(index) as FormGroup;
+  //   const selectedColoniaValue = filaFormGroup.get('selectedRepartidor')?.value;
+  //   console.log('Colonia seleccionado:', selectedColoniaValue);
+  //   if (selectedColoniaValue === null) {
+  //     return "No ha seleccionado ninguna colonia!"; // Retorna una matriz vacía si el valor seleccionado es nulo
+  //   }
+  //   let filtered: any[] = [];
+  //   for (let colonia of this.allColoniaXMuncipio) {
+  //     if (colonia.toLowerCase().indexOf(selectedColoniaValue.toLowerCase()) == 0) {
+  //       filtered.push(colonia);
+  //     }
+  //   }
+  //   return filtered;
+  // }
+
+
+
+
 
 
   onColoniaSelectionChange(event: any, index: number) {
@@ -257,8 +308,6 @@ export class RutaFormComponent implements OnInit {
     return municipiosSeleccionados;
   }
 
-
-  
   obtenerTodosLasColonias() {
     const coloniasSeleccionados = this.filas.controls.map(fila => fila.get('selectedColonia')?.value);
     return coloniasSeleccionados;
@@ -281,7 +330,7 @@ export class RutaFormComponent implements OnInit {
     const selectedRepartidor = this.registroRuta.get('selectedRepartidor')?.value;
     const diasAsignados = this.diasSeleccionados;
     if (!nombreRuta) {
-      this.mostrarToastError('Por favor ingresa el nombre de la ruta');
+      this.mostrarToastError('Por favor seleccione el nombre de la ruta');
       return;
     }
 
@@ -313,21 +362,21 @@ export class RutaFormComponent implements OnInit {
       return;
     }
 
-    const puntosDeEntrega = allClients.map((clienteId, index) => ({
+    const clientesIdsDeEntregas = allClients.map((clienteId, index) => ({
       municipio: allMunicipios[index],
       colonia: allColonias[index],
       clienteId: allClients[index]
     }));
 
     
-    console.log("puntosDeEntrega:",puntosDeEntrega)
+    console.log("clientesIdsDeEntregas en rut form:",clientesIdsDeEntregas)
     
-    const RUTA: Ruta = {
-      nombreRuta: nombreRuta,
+    const RUTA: DetalleEntregaSchema = {
+      rutaId: nombreRuta,
       repartidorId: selectedRepartidor,
       vehiculoId: selectedVehiculo,
       estado: 'pendiente',
-      puntosDeEntrega: puntosDeEntrega,
+      clientesIdsDeEntregas: clientesIdsDeEntregas,
       diasAsignados: diasAsignados
     }
 

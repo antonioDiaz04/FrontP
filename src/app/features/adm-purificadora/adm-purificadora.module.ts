@@ -49,6 +49,9 @@ import { RutaDetalleComponent } from './commons/components/ruta-detalle/ruta-det
 import { StepperModule } from 'primeng/stepper';
 import { SalidaView } from './view/salida/salida.view';
 import { EntradaView } from './view/entrada/entrada.view';
+import { PanelMenuModule } from 'primeng/panelmenu';
+
+
 const MATERIALS = [
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
 ]
@@ -61,7 +64,7 @@ const MATERIALS = [
   ],
   imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
-    AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule,
+    AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule,
   ],
   providers: [provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService]

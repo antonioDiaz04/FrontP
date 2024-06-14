@@ -31,7 +31,7 @@
             <label for="telefono">Teléfono:</label>
             <input type="text" id="telefono" formControlName="telefono">
         </div>
-   <app-mapa-client-ubicacion></app-mapa-client-ubicacion>
+        <app-mapa-client-ubicacion></app-mapa-client-ubicacion>
 
         <div class="btn-group" role="group">
             <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -40,41 +40,41 @@
 </p-dialog>
 
 <section id="lista">
-            <h2>Listado de Clientes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>telefono</th>
-                        <th>Numero de casa</th>
-                        <th>Municipio</th>
-                        <th>colonia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let cliente of allClients">
-                        <td>{{ cliente.nombre }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>{{ cliente.telefono }}</td>
-                        <td>{{ cliente.numCasa }}</td>
-                        <td>nombre municipio</td>
-                        <td>nombre colonia</td>
-                        <!-- <td>{{ cliente.email }}</td> -->
-                        <!-- <td>{{ cliente.email }}</td> -->
-                        <!-- <td>{{ cliente.estatus }}</td> -->
-                        <td> <!-- Botones de acciones -->
-                            <i (click)="eliminarUsuario(cliente._id)" class="fas fa-trash-can text-danger m-3"></i>
-                            <i (click)="editar(cliente._id)" class="fa-solid fa-pen-to-square m-3 "></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- <div class="map">
+    <h2>Listado de Clientes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>telefono</th>
+                <th>Numero de casa</th>
+                <th>Municipio</th>
+                <th>colonia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cliente of allClients">
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>{{ cliente.numCasa }}</td>
+                <td>nombre municipio</td>
+                <td>nombre colonia</td>
+                <!-- <td>{{ cliente.email }}</td> -->
+                <!-- <td>{{ cliente.email }}</td> -->
+                <!-- <td>{{ cliente.estatus }}</td> -->
+                <td> <!-- Botones de acciones -->
+                    <i (click)="eliminarUsuario(cliente._id)" class="fas fa-trash-can text-danger m-3"></i>
+                    <i (click)="editar(cliente._id)" class="fa-solid fa-pen-to-square m-3 "></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <div class="map">
                 <h2>Ubicación de clientes:
                 </h2>
                 <app-mapa></app-mapa>
             </div> -->
-        <!-- </section> -->
+    <!-- </section> -->
 </section>

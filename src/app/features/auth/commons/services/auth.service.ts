@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   signIn(data: any): Observable<any> {
-    const url = `${environment.api}/usuarios/signIn`;
+    const url = `${environment.api}/autentificacion/signIn`;
     return this.http.post(url, data);
   }
 

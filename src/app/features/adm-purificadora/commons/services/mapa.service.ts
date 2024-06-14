@@ -14,7 +14,10 @@ export class MapaService implements OnInit {
   private ubicacionesSubject = new BehaviorSubject<{ longitud: string, latitud: string }[]>([]);
   ubicaciones$ = this.ubicacionesSubject.asObservable();
 
-  
+  private markers: Map<string, mapboxgl.Marker> = new Map();
+
+
+
   latitudLongitudCambiadas: EventEmitter<{ latitud: number, longitud: number }> = new EventEmitter();
 
   
@@ -22,12 +25,19 @@ export class MapaService implements OnInit {
   setUbicaciones(ubicaciones: { longitud: string, latitud: string }[]) {
     this.ubicacionesSubject.next(ubicaciones);
     console.log("llega a servicio seUbicaciones ", ubicaciones)
-    this.addMarkers(ubicaciones);
+    // this.addMarkers(ubicaciones); 
+    this.updateMarkers(ubicaciones); 
   }
 
+
+
+
+  
   ngOnInit(): void {
     this.buildMap();
   }
+
+
 
   mapbox = (mapboxgl as typeof mapboxgl)
 
@@ -62,26 +72,50 @@ export class MapaService implements OnInit {
         // aqui empieza la de geolocalizacion
         this.map.addControl(new mapboxgl.NavigationControl()); // input de zoom
         this.map.addControl(new mapboxgl.FullscreenControl());
-        
-        
+
+
         this.map.addControl(new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
           },
           trackUserLocation: true
         }));
+// geolocalizacion
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              this.lng = position.coords.longitude;
+               this.lat = position.coords.latitude;
+              this.map.setCenter([this.lng, this.lat]);
 
+              // Añadir marcador en la ubicación actual
+              const marker = new mapboxgl.Marker()
+                .setLngLat([this.lng,this.lat])
+                .addTo(this.map)
+                .setPopup(new mapboxgl.Popup().setHTML('Estás aquí'));
+
+              // Guardar el marcador en el mapa
+              this.markers.set('current-location', marker);
+            },
+            (error) => {
+              console.error('Error al obtener la ubicación: ', error);
+            },
+            { enableHighAccuracy: true }
+          );
+        } else {
+          console.log("La geolocalización no está disponible");
+        }
         // aqui termina la de geolocalizacion
 
-        resolve({
-          map: this.map
-        });
-
-        // Update the map when user moves
-        this.map.on('geolocate', (position) => {
-          const { latitude, longitude } = position.coords;
-          this.map.setCenter([longitude, latitude]);
-        });
+        resolve({ map: this.map });
+        
+        
+        
+        // // Update the map when user moves
+        // this.map.on('geolocate', (position) => {
+        //   const { latitude, longitude } = position.coords;
+        //   this.map.setCenter([longitude, latitude]);
+        // });
 
 
 
@@ -100,22 +134,46 @@ export class MapaService implements OnInit {
       }
     })
   }
-
   addMarker(lat: number, lng: number) {
-    if (this.map) {
-      new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
-    }
+    const marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
+    const key = `${lat}-${lng}`;
+    this.markers.set(key, marker); // Añadimos el marcador al Map usando las coordenadas como clave
   }
 
-  private addMarkers(ubicaciones: { longitud: string, latitud: string }[]) {
-    if (this.map) {
-      ubicaciones.forEach(punto => {
-        const lat = parseFloat(punto.latitud);
-        const lng = parseFloat(punto.longitud);
-        if (!isNaN(lat) && !isNaN(lng)) {
+  removeMarkersNotInList(ubicaciones: { longitud: string, latitud: string }[]) {
+    // Obtener las claves de los marcadores actuales
+    const currentMarkerKeys = Array.from(this.markers.keys());
+
+    // Obtener las claves de las ubicaciones nuevas
+    const newMarkerKeys = ubicaciones.map(p => `${p.latitud}-${p.longitud}`);
+
+    // Encontrar marcadores que ya no están presentes en las nuevas ubicaciones y eliminarlos
+    currentMarkerKeys.forEach(key => {
+      if (!newMarkerKeys.includes(key)) {
+        const marker = this.markers.get(key);
+        if (marker) {
+          marker.remove();
+          this.markers.delete(key);
+        }
+      }
+    });
+  }
+
+  private updateMarkers(ubicaciones: { longitud: string, latitud: string }[]) {
+    // Limpiar marcadores que ya no están presentes
+    this.removeMarkersNotInList(ubicaciones);
+
+    // Añadir nuevos marcadores según las nuevas ubicaciones
+    ubicaciones.forEach(punto => {
+      const lat = parseFloat(punto.latitud);
+      const lng = parseFloat(punto.longitud);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        const key = `${lat}-${lng}`;
+        if (!this.markers.has(key)) {
           this.addMarker(lat, lng);
         }
-      });
-    }
+      }
+    });
   }
+
 }

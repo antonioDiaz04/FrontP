@@ -1,16 +1,15 @@
 
 
 <div  class="container-detalle">
+<div  class="container-detalle">
     <div>
         <h2>Ubicaciones de entrega</h2>
-<div class="map">
-    <app-mapa></app-mapa>
-</div>
 
 
-        <!-- <div class="map-placeholder">
+
+        <div class="map-placeholder">
             <p>Mapa de Ubicaciones (Placeholder)</p>
-        </div> -->
+        </div>
 
     </div>
 
@@ -88,8 +87,7 @@
                 <td>{{ punto.colonia }}</td>
                 <td>{{ punto.clienteId?.nombre }}</td>
                 <td>
-                    <button type="input" (click)="eliminarPuntoUbicacion(punto._id)" class="remove">
-                    <!-- <button type="input" (click)="eliminarPuntoUbicacion(punto._id, punto.clienteId?.nombre, punto.clienteId?.nombre)" class="remove"> -->
+                    <button type="input" (click)="eliminarPuntoUbicacion(detalleRuta?.clientesIdsDeEntregas?._id)" class="remove">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
@@ -113,12 +111,12 @@
                     placeholder="Selecciona una colonia">
                 </p-dropdown>
             </div>
-            <div class="custom-dropdown">
+            <!-- <div class="custom-dropdown">
                 <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedClient" opctionValue="_id" [options]="allClients"
                     optionLabel="nombre" [filter]="true" (onChange)="onClientSelectionChange($event)" [showClear]="true"
                     placeholder="Selecciona un cliente">
                 </p-dropdown>
-            </div>
+            </div> -->
             <div class="btn-group" role="group">
                 <button type="submit" class="btn btn-primary">Agregar</button>
             </div>

@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { RutaService } from '../../../../../shared/services/ruta.service';
 // import { Ruta } from '../../../../../shared/models/ruta.model';
 import { Repartidor } from '../../../../../shared/models/repartidor.model';
-import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
+import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
+// import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
 // import { Repartidor } from '../../interfaces/repartidores/repartidores.interface';
 
 @Component({
@@ -12,19 +13,20 @@ import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
   styleUrl: './ruta-listado.component.css'
 })
 export class RutaListadoComponent  implements OnInit{
-  // getRutas
-
-
-  allRutas?: Ruta[]=[];
-  constructor(private rutaS: RutaService, private router:Router) {
-    
+  allRutas?: DetalleEntregaInterface[]=[];
+ 
+ 
+ 
+  constructor(private rutaS: RutaService, private router: Router) {
   }
+
+
 ngOnInit(): void {
   this.obtenerRutas();   
 }
 
   obtenerRutas() {
-    this.rutaS.getRutas().subscribe(
+    this.rutaS.getDetallesEntregasRutas().subscribe(
       data => {
         this.allRutas = data;
         // this.allRepartidorData = data.repartidorId;

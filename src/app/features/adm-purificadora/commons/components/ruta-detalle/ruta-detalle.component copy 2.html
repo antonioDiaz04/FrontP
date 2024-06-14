@@ -4,7 +4,12 @@
 
 
     <div class="map-placeholder">
-        <p>Mapa de Ubicaciones (Placeholder)</p>
+        <!-- <div class="map">
+            <h2>Ubicación de clientes:
+            </h2>
+            <app-mapa></app-mapa>
+        </div> -->
+        <!-- <p>Mapa de Ubicaciones (Placeholder)</p> -->
     </div>
 
     <h2>Detalles de la Ruta</h2>
@@ -54,7 +59,7 @@
                 <p-stepperPanel header="Detalles de los Domicilios">
                     <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
                         <div class="flex flex-column h-12rem">
-                            <div *ngFor="let punto of detalleRuta.puntosDeEntrega"   class="accordion-content">
+                            <div *ngFor="let punto of detalleRuta.puntosDeEntrega" class="accordion-content">
                                 <p>{{detalleRuta.puntosDeEntrega}}</p>
                                 <!-- *ngFor="let punto of detalleRuta.puntosDeEntrega" -->
                                 <h3>Municipio </h3>
