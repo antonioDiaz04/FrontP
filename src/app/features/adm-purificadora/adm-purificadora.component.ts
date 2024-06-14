@@ -12,9 +12,6 @@ export class AdmPurificadoraComponent {
   constructor(private router: Router) { }
 
   redirectTo(route: string): void {
-    // this.sidebarVisible = false;
     this.router.navigate(['/purificadoraAdm', route]); // Utiliza la navegación de Angular
   }
-
-  
 }

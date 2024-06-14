@@ -10,7 +10,7 @@ import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detall
 @Component({
   selector: 'app-ruta-listado',
   templateUrl: './ruta-listado.component.html',
-  styleUrl: './ruta-listado.component.css'
+  styleUrl: '../../../adm-purificadora.component.css',
 })
 export class RutaListadoComponent  implements OnInit{
   allRutas?: DetalleEntregaInterface[]=[];

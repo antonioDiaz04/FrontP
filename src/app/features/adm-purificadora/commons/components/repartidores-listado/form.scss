@@ -1,17 +1,8 @@
 .formulario {
     display: flex;
     flex-direction: column;
-        /* Ajusta el ancho máximo del formulario según tu preferencia */
+    /* Ajusta el ancho máximo del formulario según tu preferencia */
 }
-
-
-
-
-// .form-title {
-//     margin-bottom: 2rem;
-//     font-size: 1.5rem;
-//     font-weight: bold;
-// }
 
 .form-group {
     width: 100%;
@@ -60,16 +51,24 @@
 
 label {
     margin-bottom: 5px;
-    /* Espacio entre el label y el input */
 }
 
 input {
     width: 100%;
-    /* Los inputs ocuparán todo el ancho disponible */
     padding: 8px;
-    /* Espaciado interno */
     border: 1px solid #ccc;
-    /* Borde del input */
     border-radius: 5px;
-    /* Bordes redondeados */
+}
+
+.p-paginator {
+    background: none;
+    border: solid #f3f4f6;
+    border-width: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.p-link {
+    cursor: default;
+    color: #182433;
 }

@@ -20,10 +20,8 @@ export class ClienteFormComponent implements OnInit {
   registroForm: FormGroup;
   allMuncipioXEstado: any;
   allColoniaXMuncipio: any;
-
   selectedMunicipio: any
   selectedColonia: any
-
 
   constructor(private consultasCOPOMEX: ConsultasCOPOMEXService,private render2: Renderer2,private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
     this.registroForm = this.formBuilder.group({
@@ -35,12 +33,10 @@ export class ClienteFormComponent implements OnInit {
       numCasa: ['', Validators.required],
       selectedColonia: ['', Validators.required],
       selectedMunicipio: ['', Validators.required],
-
     });
   }
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
-  
   
   onMunicipioSelectionChange(event: any) {
     this.selectedMunicipio = event.target.value;
@@ -58,12 +54,7 @@ export class ClienteFormComponent implements OnInit {
     this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
       this.registroForm.get('latitud')?.setValue(latitud);
       this.registroForm.get('longitud')?.setValue(longitud);
-      
     });
-
-
-
-    
 
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {

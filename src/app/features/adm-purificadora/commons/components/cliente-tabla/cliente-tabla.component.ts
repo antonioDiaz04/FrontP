@@ -19,7 +19,8 @@ import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle
 @Component({
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
-  styleUrls: ['./cliente-tabla.component.css', './form.scss', './p-dialog.scss'],
+  // styleUrls: ['./cliente-tabla.component.css', './form.scss', './p-dialog.scss'],
+  styleUrls: ['../../../adm-purificadora.component.css', './form.scss', './p-dialog.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteTablaComponent implements OnInit {

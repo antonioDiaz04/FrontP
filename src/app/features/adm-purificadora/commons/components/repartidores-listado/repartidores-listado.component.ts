@@ -7,15 +7,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-repartidores-listado',
   templateUrl: './repartidores-listado.component.html',
-  styleUrls: ['./repartidores-listado.component.scss', './form.scss']
+  // styleUrls: ['../../../adm-purificadora.component.css']
 })
 export class RepartidoresListadoComponent implements OnInit {
   visible: boolean = false;
   isVisible = false;
   id!: string | null
-  allRepartidores?: Repartidor[];
+  allRepartidores: Repartidor[]=[];
   listRepartidor?: Repartidor;
   idRepartidor!: string
+
+  // 
+  paginatedRepartidores: Repartidor[] = []
+  totalRecords: number = 0;
+  rows: number = 5; // Número de registros por página
+  first: number = 0; // Índice del primer registro de la página actual
+
   usuarioForm!: FormGroup;
   reparitorForm!: FormGroup;
   constructor(private fb: FormBuilder, private repService: RepartidoresService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) {
@@ -30,6 +37,7 @@ export class RepartidoresListadoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRepartidores();
+    this.updatePaginatedRepartidores();
   }
 
   editar(id: any) {
@@ -64,7 +72,6 @@ export class RepartidoresListadoComponent implements OnInit {
 
   eliminarUsuario(id: any) {
     this.repService.eliminarRepartidores(id).subscribe(data => {
-      console.log("eliminado")
       this.getRepartidores();
     }, error => {
       console.log("ocurrio un error", error)
@@ -75,11 +82,25 @@ export class RepartidoresListadoComponent implements OnInit {
     this.repService.getRepartidores().subscribe(
       data => {
         this.allRepartidores = data;
-        console.log(this.allRepartidores);
+        this.totalRecords = this.allRepartidores.length;
+        this.updatePaginatedRepartidores()
+        
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);
       }
     );
   }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedRepartidores();
+  }
+
+  updatePaginatedRepartidores() {
+    this.paginatedRepartidores = this.allRepartidores.slice(this.first, this.first + this.rows);
+  }
+
+
 }

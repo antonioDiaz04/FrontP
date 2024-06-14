@@ -1,7 +1,7 @@
 <head>
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible"
     [style]="{ width: '29rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
     <form [formGroup]="usuarioForm" (ngSubmit)="actualizarCliente(listRepartidor._id)" class="form-container">
@@ -33,7 +33,7 @@
     <table>
         <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Nombre completo</th>
                 <th>Teléfono</th>
                 <th>Email</th>
                 <th>Fecha de Contratación</th>
@@ -42,7 +42,7 @@
         </thead>
         <tbody>
 
-            <tr *ngFor="let repartidor of allRepartidores">
+            <tr *ngFor="let repartidor of paginatedRepartidores">
                 <td>{{repartidor.nombre}}</td>
                 <td>{{repartidor.telefono}}</td>
                 <td>{{repartidor.email}}</td>
@@ -54,4 +54,39 @@
             </tr>
         </tbody>
     </table>
+        <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+        </p-paginator>
 </section>
+
+<style>
+    
+
+button {
+    padding: 10px 20px;
+    background-color: #abc3dd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.p-paginator {
+    background: none;
+    border: solid #f3f4f6;
+    border-width: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.p-link {
+    cursor: default;
+    color: #182433;
+}
+</style>

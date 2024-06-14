@@ -7,7 +7,7 @@ import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 @Component({
   selector: 'app-vehiculo-listado',
   templateUrl: './vehiculo-listado.component.html',
-  styleUrls: ['./vehiculo-listado.component.css','./form.scss']
+  styleUrls: ['../../../adm-purificadora.component.css','./form.scss']
 })
 export class VehiculoListadoComponent {
   visible: boolean = false;
