@@ -72,27 +72,13 @@ export class MapaService implements OnInit {
         // aqui empieza la de geolocalizacion
         this.map.addControl(new mapboxgl.NavigationControl()); // input de zoom
         this.map.addControl(new mapboxgl.FullscreenControl());
-        
-        
         this.map.addControl(new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
           },
           trackUserLocation: true
         }));
-
-
         resolve({ map: this.map });
-        
-        
-        
-        // Update the map when user moves
-        this.map.on('geolocate', (position) => {
-          const { latitude, longitude } = position.coords;
-          this.map.setCenter([longitude, latitude]);
-        });
-
-        // aqui termina lo de mostrar coordenadas
         // input buscador de direcciones
         const geocoder = new MapboxGeocoder({
           accessToken: environment.mapPk,
@@ -102,11 +88,42 @@ export class MapaService implements OnInit {
           map: this.map,
           geocoder
         })
+        this.initGeolocation();
+
       } catch (error) {
         reject(error)
       }
     })
   }
+
+
+  private initGeolocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.lng = position.coords.longitude;
+          this.lat = position.coords.latitude;
+          this.map.setCenter([this.lng, this.lat]);
+
+          // Añadir marcador en la ubicación actual
+          const marker = new mapboxgl.Marker()
+            .setLngLat([this.lng, this.lat])
+            .addTo(this.map)
+            .setPopup(new mapboxgl.Popup().setHTML('Estás aquí'));
+
+          // Guardar el marcador en el mapa
+          this.markers.set('current-location', marker);
+        },
+        (error) => {
+          console.error('Error al obtener la ubicación: ', error);
+        },
+        { enableHighAccuracy: true }
+      );
+    } else {
+      console.log("La geolocalización no está disponible");
+    }
+  }
+  
   addMarker(lat: number, lng: number) {
     const marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
     const key = `${lat}-${lng}`;
@@ -149,6 +166,5 @@ export class MapaService implements OnInit {
     });
   }
 
-  
   
 }

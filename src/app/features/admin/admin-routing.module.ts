@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdmHomeView } from './view/adm-home/adm-home.view';
 import { AdminComponent } from './admin.component';
-import { ProductoView } from './view/producto/producto.view';
 import { InicioView } from './view/inicio/inicio.view';
 import { UsuarioView } from './view/usuario/usuario.view';
 import { ComentariosView } from './view/comentarios/comentarios.view';
-import { PedidosView } from './view/pedidos/pedidos.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
@@ -44,11 +42,7 @@ const routes: Routes = [
         path: 'comentarios',
         component: ComentariosView,
       },
-      {
-        // path: 'detail/:id',
-        path: 'pedidos',
-        component: PedidosView,
-      },
+     
       {
         // path: 'detail/:id',
         path: 'mapa-entregas',

@@ -9,6 +9,8 @@ export interface Cliente {
     latitud: string;
     telefono: string;
     numCasa: string;
+    municipio:string;
+    colonia: string;
     rol: string;
     estatus: string;
 }

@@ -11,7 +11,6 @@ export class UsuariosclientesService {
   constructor(private http:HttpClient) { }
 
   getUsuarios():Observable<any>{
-
     return this.http.get(`${environment.api}/usuarios/getUsuarios`)
   }
 

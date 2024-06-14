@@ -15,14 +15,12 @@ export class ClientesService {
 
   // !mover a otro servicio
   obtenerPurificadoras(): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/getPuricadoras`;
-    return this.http.get(url);
+    return this.http.get( `${environment.api}/purificadoraAdmin/getPuricadoras`);
   }
 
   // http://localhost:4000/usuarios/getUsuarios
   obtenerCLientes(): Observable<any> {
-    const url = `${environment.api}/usuarios/getUsuarios`
-    return this.http.get(url)
+    return this.http.get(`${environment.api}/usuarios/getUsuarios`)
 
   }
 

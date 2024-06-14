@@ -19,7 +19,7 @@ import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle
 @Component({
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
-  styleUrls: ['./cliente-tabla.component.css', './form.scss','./p-dialog.scss'],
+  styleUrls: ['./cliente-tabla.component.css', './form.scss', './p-dialog.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteTablaComponent implements OnInit {
@@ -30,18 +30,18 @@ export class ClienteTablaComponent implements OnInit {
   clienteForm!: FormGroup;
 
   allClients: Cliente[] = []
-  // puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
-  ngOnInit(): void {
-    this.getUsers();
-    // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
-  }
+  paginatedClients: Cliente[] = []
+  totalRecords: number = 0;
+  rows: number = 5; // Número de registros por página
+  first: number = 0; // Índice del primer registro de la página actual
+
   visible: boolean = false;
   isVisible = false;
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
 
 
-  constructor(private render2:Renderer2,private mapService: MapaClientDetailUbacionService,private fb: FormBuilder, private mapaService: MapaService, private UserS: ClientesService, private router: ActivatedRoute, private rou: Router) {
+  constructor(private render2: Renderer2, private mapService: MapaClientDetailUbacionService, private fb: FormBuilder, private mapaService: MapaService, private UserS: ClientesService, private router: ActivatedRoute, private rou: Router) {
     this.clienteForm = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -51,9 +51,10 @@ export class ClienteTablaComponent implements OnInit {
     });
     this.id = this.router.snapshot.paramMap.get('id');
   }
-
-
-
+  ngOnInit(): void {
+    this.getUsers();
+    this.updatePaginatedClients();
+  }
   redirectToAdmin(route: string): void {
     console.log(route)
     if (route === 'login') {
@@ -63,34 +64,19 @@ export class ClienteTablaComponent implements OnInit {
     }
   }
 
-  
   editar(id: any) {
-    this.mapService.buildMap()
-      .then(({ geocoder, map }) => {
-        this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));
-        console.log('Perfecto |');
-      })
-      .catch((err) => {
-        console.log('Error *** ', err);
-      });
-    this.mapService.cbAddress.subscribe((getPoint) => {
-
-      console.log('*** getPoint', getPoint)
-    })
-
     this.visible = true;
-      this.idCliente = this.router.snapshot.params['id'];
+    this.idCliente = this.router.snapshot.params['id'];
     if (id !== null) {
-    console.log("actualizar....")
+      console.log("actualizar....")
       this.UserS.detalleClienteById(id).subscribe((data) => {
-            this.listUsuario = data;
+        this.listUsuario = data;
         this.clienteForm.setValue({
           nombre: data.nombre,
           email: data.email,
           estatus: data.estatus,
           numCasa: data.numCasa,
           telefono: data.telefono
-          // imagen: data.imagen
         });
       });
     }
@@ -100,7 +86,7 @@ export class ClienteTablaComponent implements OnInit {
     if (this.clienteForm.valid) {
       this.UserS.updateUsuario(id, this.clienteForm.value)
         .subscribe(response => {
-          this.getUsers()
+          this.getUsers();
           this.visible = false;
           console.log('Usuario actualizado:', response);
         }, error => {
@@ -109,19 +95,12 @@ export class ClienteTablaComponent implements OnInit {
     }
   }
 
-
-
-
   getUsers() {
     this.UserS.obtenerCLientes().subscribe(
-      (data: Cliente[]) => {
+      data=> {
         this.allClients = data;
-        // this.puntosClientesUbicaciones = data.map(cliente => ({
-        //   longitud: cliente.longitud,
-        //   latitud: cliente.latitud
-        // }));
-        // console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
-        // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
+        this.totalRecords = this.allClients.length;
+        this.updatePaginatedClients();
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);
@@ -129,44 +108,25 @@ export class ClienteTablaComponent implements OnInit {
     );
   }
 
-  
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedClients();
+  }
+
+  updatePaginatedClients() {
+    this.paginatedClients = this.allClients.slice(this.first, this.first + this.rows);
+  }
+
+
 
   eliminarUsuario(id: any) {
     this.UserS.eliminarCliente(id).subscribe(data => {
       console.log("eliminado")
       this.getUsers();
-      // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
-
     }, error => {
       console.log("ocurrio un error", error)
     })
   }
 
-  
-  
-  
-  iniciarMapa() {
-   
-   
-    this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
-      this.clienteForm.get('latitud')?.setValue(latitud);
-      this.clienteForm.get('longitud')?.setValue(longitud);
-    });
-
-    
-    this.mapService.buildMap()
-      .then(({ geocoder, map }) => {
-        this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));
-        console.log('Perfecto |');
-      })
-      .catch((err) => {
-        console.log('Error *** ', err);
-      });
-    this.mapService.cbAddress.subscribe((getPoint) => {
-
-      console.log('*** getPoint', getPoint)
-    })
-
-
-  }
 }

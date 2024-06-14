@@ -1,3 +1,4 @@
+import { PaginatorModule } from 'primeng/paginator';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdmPurificadoraRoutingModule } from './adm-purificadora-routing.module';
@@ -53,7 +54,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 
 
 const MATERIALS = [
-  AvatarModule, AvatarGroupModule, DialogModule, ModalModule
+  AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
 ]
 @NgModule({
   declarations: [

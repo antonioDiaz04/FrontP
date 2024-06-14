@@ -46,7 +46,7 @@ const routes: Routes = [
         children: [
 
           {
-            path: 'lista-clientes&ubicaciones',
+            path: 'lista-clientes',
             component: ClienteTablaComponent,
           },
           {
@@ -55,7 +55,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: 'lista-clientes&ubicaciones', 
+            redirectTo: 'lista-clientes', 
             pathMatch: 'full',
           }
         ]

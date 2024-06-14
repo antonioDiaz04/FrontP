@@ -42,7 +42,6 @@ export class RepartidoresListadoComponent implements OnInit {
         this.usuarioForm.setValue({
           nombre: data.nombre,
           email: data.email,
-          // estatus: data.estatus,
           numCasa: data.numCasa,
           telefono: data.telefono
         });

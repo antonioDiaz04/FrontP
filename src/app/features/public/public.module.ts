@@ -7,7 +7,6 @@ import { HomeView } from './view/home/home.view';
 import { HttpClientModule } from '@angular/common/http';
 import { RegitroPurificadoraView } from './view/regitro-purificadora/regitro-purificadora.view';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ClientesService } from '../../shared/services/clientes.service';
 import { SignupService } from '../../shared/services/signup.service';
 // DialogModule, ButtonModule
 
@@ -29,6 +28,6 @@ HomeView
     PublicRoutingModule, FormsModule, ReactiveFormsModule
   ],
   providers: [
-    SignupService, ClientesService]
+    SignupService]
 })
 export class PublicModule { }
