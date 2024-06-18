@@ -12,7 +12,6 @@ import { SignupService } from '../../shared/services/signup.service';
 
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { AnuncioView } from './view/anuncio/anuncio.view';
 const VIEW_COMPONENTS = [
     RegitroPurificadoraView,
 HomeView
@@ -21,7 +20,6 @@ HomeView
 @NgModule({
   declarations: [VIEW_COMPONENTS,
     ComponentsComponent,
-    AnuncioView,
   ],
   imports: [
     CommonModule, HttpClientModule, DialogModule, ButtonModule,

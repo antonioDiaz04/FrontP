@@ -37,21 +37,41 @@
                 <th>Ruta</th>
                 <th>Repartidor</th>
                 <th>Vehiculo</th>
+                <th>Municipio</th>
+                <th>Colonia</th>
+                <th>Cliente</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let ruta of allRutas">
-                <td>{{ruta.rutaId?.nombreRuta}}</td>
-                <td>{{ruta.repartidorId?.nombre}}</td>
-                <td>{{ruta.vehiculoId?.marca}}</td>
-                <td>{{ruta.estado}}</td>
-                <td>
-                    <i (click)="eliminarRuta(ruta._id)" class="fas fa-trash-can text-danger m-3"></i>
-                    <i (click)="detalleById(ruta._id)" class="fas fa-solid fa-book-open"></i>
-                </td>
+        <tbody>
+            <tr *ngFor="let ruta of paginatedRutasDetalles">
+                <!-- <ng-container *ngFor="let cliente of ruta.clientesIdsDeEntregas"> -->
+                    <!-- <tr> -->
+                        <td>{{ ruta.rutaId?.nombreRuta }}</td>
+                        <td>{{ ruta.repartidorId?.nombre }}</td>
+                        <td>{{ ruta.vehiculoId?.marca }}</td>
+                        <td>{{ ruta?.clienteId?.municipio }}</td>
+                        <td>{{ ruta?.clienteId?.colonia }}</td>
+                        <td>{{ ruta?.clienteId?.nombre }}</td>
+                        <td>
+                            <p [ngClass]="ruta.estado === 'finalizada' ? 'entregado' : 'pendiente'">{{ ruta.estado }}
+                            </p>
+                        </td>
+                        <td>
+                            <button type="input" (click)="eliminarRuta(ruta._id)" class="remove">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button type="input" (click)="detalleById(ruta._id)" class="read">
+                                <i class="fas fa-book-reader"></i>
+                            </button>
+                        </td>
+                    <!-- </tr> -->
+                <!-- </ng-container> -->
             </tr>
         </tbody>
     </table>
+    <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
 </section>

@@ -1,14 +1,16 @@
-<div class="container-detalle">
+
+
+<div  class="container-detalle">
     <div>
         <h2>Ubicaciones de entrega</h2>
-        <div class="map">
-            <app-mapa></app-mapa>
-        </div>
+<div class="map">
+    <app-mapa></app-mapa>
+</div>
     </div>
 
-    <section class="section">
+    <section  class="section">
         <h4>Nombre de la Ruta:{{detalleRuta?.rutaId?.nombreRuta}}</h4>
-        <div class="card">
+         <div class="card">
             <h2>Repartidor</h2>
             <div class="card-content">
                 <p><strong>{{detalleRuta?.repartidorId?.nombre}}</strong></p>
@@ -35,8 +37,35 @@
     </section>
 </div>
 
+
+
+<h1>Filtrado de Datos</h1>
+
+<div class="filter-container">
+    <div class="filter">
+        <label for="municipio">Filtrar por Municipio:</label>
+        <select id="municipio" class="form-control">
+            <option value="">Todos</option>
+            <option value="Municipio 1">Municipio 1</option>
+            <option value="Municipio 2">Municipio 2</option>
+            <option value="Municipio 3">Municipio 3</option>
+            <!-- Añadir más opciones según sea necesario -->
+        </select>
+    </div>
+    <div class="filter">
+        <label for="colonia">Filtrar por Colonia:</label>
+        <select id="colonia" class="form-control">
+            <option value="">Todas</option>
+            <option value="Colonia 1">Colonia 1</option>
+            <option value="Colonia 2">Colonia 2</option>
+            <option value="Colonia 3">Colonia 3</option>
+        </select>
+    </div>
+</div>
+
+<input type="text" id="search" class="form-control" placeholder="Buscar...">
 <section id="lista">
-    <h2>Informacion cliente</h2>
+    <h2>Listado de Clientes</h2>
     <table>
         <thead>
             <tr>
@@ -47,13 +76,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>{{ detalleRuta?.clienteId?.municipio }}</td>
-                <td>{{ detalleRuta?.clienteId?.colonia }}</td>
-                <td>{{ detalleRuta?.clienteId?.nombre }}</td>
+            <tr *ngFor="let punto of detalleRuta?.clienteId">
+                <td>{{ punto.municipio }}</td>
+                <td>{{ punto.colonia }}</td>
+                <td>{{ punto.nombre }}</td>
                 <td>
-                    <button type="input" (click)="eliminarPuntoUbicacion(detalleRuta?.clienteId?._id)" class="remove">
-                        <i class="fas fa-user-edit"></i>
+                    <button type="input" (click)="eliminarPuntoUbicacion(punto._id)" class="remove">
+                    <!-- <button type="input" (click)="eliminarPuntoUbicacion(punto._id, punto.clienteId?.nombre, punto.clienteId?.nombre)" class="remove"> -->
+                        <i class="fas fa-trash"></i>
                     </button>
                 </td>
             </tr>
@@ -63,23 +93,23 @@
 
     <p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible"
         [style]="{ width: '25rem' , height: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-
+    
         <form [formGroup]="clienteFormAdd" (ngSubmit)="agregarClienteEnRuta()">
             <div class="custom-dropdown">
-                <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio"
-                    [options]="allMunicipioXEstado" placeholder="Selecciona un municipio">
+                <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio" [options]="allMunicipioXEstado"
+                    placeholder="Selecciona un municipio">
                 </p-dropdown>
             </div>
             <div class="custom-dropdown">
-                <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedColonia"
-                    [options]="allColoniaXMuncipio" [filter]="true" (onChange)="onColoniaSelectionChange($event)"
-                    [showClear]="true" placeholder="Selecciona una colonia">
+                <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedColonia" [options]="allColoniaXMuncipio"
+                    [filter]="true" (onChange)="onColoniaSelectionChange($event)" [showClear]="true"
+                    placeholder="Selecciona una colonia">
                 </p-dropdown>
             </div>
             <div class="custom-dropdown">
-                <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedClient" opctionValue="_id"
-                    [options]="allClients" optionLabel="nombre" [filter]="true"
-                    (onChange)="onClientSelectionChange($event)" [showClear]="true" placeholder="Selecciona un cliente">
+                <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedClient" opctionValue="_id" [options]="allClients"
+                    optionLabel="nombre" [filter]="true" (onChange)="onClientSelectionChange($event)" [showClear]="true"
+                    placeholder="Selecciona un cliente">
                 </p-dropdown>
             </div>
             <div class="btn-group" role="group">
@@ -87,6 +117,11 @@
             </div>
         </form>
     </p-dialog>
+    <button type="button" (click)="agregarCliente()" class="btn btn-success mb-3" id="addRowBtn"><i
+            class="fas fa-plus"></i>
+        <!-- <button type="button" (click)="agregarFila()" class="btn btn-success mb-3" id="addRowBtn"><i class="fas fa-plus"></i> -->
+        Agregar
+        cliente</button>
 
 </section>
 

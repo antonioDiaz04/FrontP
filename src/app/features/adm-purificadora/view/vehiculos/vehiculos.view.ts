@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-vehiculos',
   templateUrl: './vehiculos.view.html',
-  styleUrl: './vehiculos.view.css'
+  styleUrl: './vehiculos.view.scss'
 })
 export class VehiculosView {
 

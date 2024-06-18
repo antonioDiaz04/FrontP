@@ -1,19 +1,15 @@
-/* Estilos para la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-/* Estilos para las celdas de la tabla */
 th,
 td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
-
-/* Estilos para el encabezado de la tabla */
 table thead th {
     background-color: #343a40;
     color: #ffffff;
@@ -34,11 +30,9 @@ table tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-// /* Estilos para las filas impares */
 tbody {
     background-color: #f9f9f9;
 
-    /* Estilos para el botón */
     button {
         margin: 0;
     }
@@ -48,17 +42,13 @@ tbody {
 
 
 
-    // button:hover,
     .remove {
 
         color: rgb(192, 2, 2);
         background-color: #ffffff;
         border: 1px solid #d60000;
 
-        // .material-symbols-outlined {
-        //     color: rgb(255, 255, 255);
-
-        // }
+        
     }
 
     .remove:hover {
@@ -67,15 +57,8 @@ tbody {
         background-color: #d60000;
         border: 1px solid #ffffff;
 
-        // .material-symbols-outlined {
-        //     color: rgb(255, 255, 255);
-
-        // }
     }
 
-
-
-    // button:hover,
 
 
 
@@ -91,8 +74,6 @@ button[type="button"]:hover {
     }
 }
 
-
-/* Estilos para el botón */
 button,
 input[type="button"] {
     margin-top: 10px;

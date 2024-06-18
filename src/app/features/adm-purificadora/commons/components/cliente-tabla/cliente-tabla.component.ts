@@ -20,7 +20,7 @@ import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
   // styleUrls: ['./cliente-tabla.component.css', './form.scss', './p-dialog.scss'],
-  styleUrls: ['../../../adm-purificadora.component.css', './form.scss', './p-dialog.scss'],
+  styleUrls: ['../../../adm-purificadora.component.scss', './form.scss', './p-dialog.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteTablaComponent implements OnInit {
@@ -59,9 +59,9 @@ export class ClienteTablaComponent implements OnInit {
   redirectToAdmin(route: string): void {
     console.log(route)
     if (route === 'login') {
-      this.rou.navigate(['/auth/login']) // Navegación hacia la página de inicio de sesión
+      this.rou.navigate(['/auth/login'])
     } else {
-      this.rou.navigate(['/purificadoraAdm', route]) // Navegación hacia otras páginas públicas
+      this.rou.navigate(['/purificadoraAdm', route])
     }
   }
 
@@ -69,7 +69,6 @@ export class ClienteTablaComponent implements OnInit {
     this.visible = true;
     this.idCliente = this.router.snapshot.params['id'];
     if (id !== null) {
-      console.log("actualizar....")
       this.UserS.detalleClienteById(id).subscribe((data) => {
         this.listUsuario = data;
         this.clienteForm.setValue({

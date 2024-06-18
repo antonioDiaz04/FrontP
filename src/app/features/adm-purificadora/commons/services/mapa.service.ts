@@ -4,62 +4,37 @@ import * as mapboxgl from 'mapbox-gl';
 import { environment } from '../../../../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class MapaService implements OnInit {
 
-  
   private ubicacionesSubject = new BehaviorSubject<{ longitud: string, latitud: string }[]>([]);
   ubicaciones$ = this.ubicacionesSubject.asObservable();
 
   private markers: Map<string, mapboxgl.Marker> = new Map();
 
-
-
   latitudLongitudCambiadas: EventEmitter<{ latitud: number, longitud: number }> = new EventEmitter();
 
-  
-  
-  setUbicaciones(ubicaciones: { longitud: string, latitud: string }[]) {
-    this.ubicacionesSubject.next(ubicaciones);
-    console.log("llega a servicio seUbicaciones ", ubicaciones)
-    // this.addMarkers(ubicaciones); 
-    this.updateMarkers(ubicaciones); 
+  mapbox = (mapboxgl as typeof mapboxgl);
+  map!: mapboxgl.Map;
+
+  cbAddress: EventEmitter<any> = new EventEmitter<any>();
+
+  style = 'mapbox://styles/mapbox/satellite-streets-v12';
+  lat = 21.096391850541213;
+  lng = -98.46080933099502;
+  zoom = 5;
+
+  constructor() {
+    console.log(environment.mapPk);
   }
 
-
-
-
-  
   ngOnInit(): void {
     this.buildMap();
   }
 
-
-
-  mapbox = (mapboxgl as typeof mapboxgl)
-
-  map!: mapboxgl.Map;
-
-
-  cbAddress: EventEmitter<any> = new EventEmitter<any>();
-
-  style = 'mapbox://styles/mapbox/satellite-streets-v12'
-  lat = 21.096391850541213;
-  lng = -98.46080933099502;
-  zoom = 15;
-  //coordenadas de hidalgo: 21.096391850541213, -98.46080933099502
-  constructor() {
-    // this.mapbox.accessToken = environment.mapPk;
-    console.log(environment.mapPk)
-  }
-
-
-
   buildMap(): Promise<any> {
-    // todo aqui construimos el mapa
     return new Promise((resolve, reject) => {
       try {
         this.map = new mapboxgl.Map({
@@ -68,12 +43,10 @@ export class MapaService implements OnInit {
           style: this.style,
           zoom: this.zoom,
           center: [this.lng, this.lat]
-        })
-        // aqui empieza la de geolocalizacion
-        this.map.addControl(new mapboxgl.NavigationControl()); // input de zoom
+        });
+        this.map.addControl(new mapboxgl.NavigationControl());
         this.map.addControl(new mapboxgl.FullscreenControl());
-        
-        
+
         this.map.addControl(new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
@@ -81,46 +54,42 @@ export class MapaService implements OnInit {
           trackUserLocation: true
         }));
 
-
-        resolve({ map: this.map });
-        
-        
-        
-        // Update the map when user moves
         this.map.on('geolocate', (position) => {
           const { latitude, longitude } = position.coords;
           this.map.setCenter([longitude, latitude]);
         });
 
-        // aqui termina lo de mostrar coordenadas
-        // input buscador de direcciones
         const geocoder = new MapboxGeocoder({
           accessToken: environment.mapPk,
           mapboxgl
-        })
+        });
         resolve({
           map: this.map,
           geocoder
-        })
+        });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
+    });
   }
+
+  setUbicaciones(ubicaciones: { longitud: string, latitud: string }[]) {
+    this.ubicacionesSubject.next(ubicaciones);
+    console.log("llega a servicio setUbicaciones", ubicaciones);
+    this.updateMarkers(ubicaciones);
+    this.centrarMapa(ubicaciones);
+  }
+
   addMarker(lat: number, lng: number) {
     const marker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
     const key = `${lat}-${lng}`;
-    this.markers.set(key, marker); // Añadimos el marcador al Map usando las coordenadas como clave
+    this.markers.set(key, marker);
   }
 
   removeMarkersNotInList(ubicaciones: { longitud: string, latitud: string }[]) {
-    // Obtener las claves de los marcadores actuales
     const currentMarkerKeys = Array.from(this.markers.keys());
-
-    // Obtener las claves de las ubicaciones nuevas
     const newMarkerKeys = ubicaciones.map(p => `${p.latitud}-${p.longitud}`);
 
-    // Encontrar marcadores que ya no están presentes en las nuevas ubicaciones y eliminarlos
     currentMarkerKeys.forEach(key => {
       if (!newMarkerKeys.includes(key)) {
         const marker = this.markers.get(key);
@@ -133,10 +102,7 @@ export class MapaService implements OnInit {
   }
 
   private updateMarkers(ubicaciones: { longitud: string, latitud: string }[]) {
-    // Limpiar marcadores que ya no están presentes
     this.removeMarkersNotInList(ubicaciones);
-
-    // Añadir nuevos marcadores según las nuevas ubicaciones
     ubicaciones.forEach(punto => {
       const lat = parseFloat(punto.latitud);
       const lng = parseFloat(punto.longitud);
@@ -149,6 +115,18 @@ export class MapaService implements OnInit {
     });
   }
 
-  
-  
+  private centrarMapa(ubicaciones: { longitud: string, latitud: string }[]) {
+    if (ubicaciones.length > 0) {
+      const bounds = new mapboxgl.LngLatBounds();
+      ubicaciones.forEach(punto => {
+        const lat = parseFloat(punto.latitud);
+        const lng = parseFloat(punto.longitud);
+        if (!isNaN(lat) && !isNaN(lng)) {
+          bounds.extend([lng, lat]);
+        }
+      });
+      const center = bounds.getCenter();
+      this.map.flyTo({ center: [center.lng, center.lat], zoom: 10 });
+    }
+  }
 }

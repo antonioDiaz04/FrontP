@@ -21,6 +21,8 @@ import { ClienteTablaComponent } from './commons/components/cliente-tabla/client
 import { RutaDetalleComponent } from './commons/components/ruta-detalle/ruta-detalle.component';
 import { SalidaView } from './view/salida/salida.view';
 import { EntradaView } from './view/entrada/entrada.view';
+import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
+import { SalidaEditComponent } from './commons/components/salida-edit/salida-edit.component';
 
 const routes: Routes = [
   {
@@ -63,6 +65,21 @@ const routes: Routes = [
       {
         path: 'salida',
         component: SalidaView,
+        children: [
+          {
+            path: 'edit-salida/:id',
+            component: SalidaEditComponent,
+          },
+          {
+            path: 'salida-listado',
+            component: SalidaListaComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'salida-listado', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
       },
       {
         path: 'entrada',

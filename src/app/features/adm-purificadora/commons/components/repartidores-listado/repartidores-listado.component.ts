@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-repartidores-listado',
   templateUrl: './repartidores-listado.component.html',
-  // styleUrls: ['../../../adm-purificadora.component.css']
+  styleUrls: ['../../../adm-purificadora.component.scss']
 })
 export class RepartidoresListadoComponent implements OnInit {
   visible: boolean = false;

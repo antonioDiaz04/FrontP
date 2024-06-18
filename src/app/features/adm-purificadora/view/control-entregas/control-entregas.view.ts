@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-control-entregas',
   templateUrl: './control-entregas.view.html',
-  styleUrl: '../../adm-purificadora.component.css',
+  styleUrl: '../../adm-purificadora.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class ControlEntregasView {

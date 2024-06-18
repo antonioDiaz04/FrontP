@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-adm-purificadora',
   templateUrl: './adm-purificadora.component.html',
-  styleUrl: './adm-purificadora.component.css'
+  styleUrl: './adm-purificadora.component.scss'
 })
 export class AdmPurificadoraComponent {
 

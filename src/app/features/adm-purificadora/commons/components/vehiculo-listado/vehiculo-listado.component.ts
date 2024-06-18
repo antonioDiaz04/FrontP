@@ -7,17 +7,24 @@ import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 @Component({
   selector: 'app-vehiculo-listado',
   templateUrl: './vehiculo-listado.component.html',
-  styleUrls: ['../../../adm-purificadora.component.css','./form.scss']
+  styleUrls: ['../../../adm-purificadora.component.scss','./form.scss']
 })
 export class VehiculoListadoComponent {
   visible: boolean = false;
   isVisible = false;
   id!: string | null
-  allRepartidores?: Vehiculo[];
+  allRepartidores: Vehiculo[] =[];
   dataVehiculo?: Vehiculo;
   idRepartidor!: string
   vehiculoForm!: FormGroup;
   // reparitorForm!: FormGroup;
+
+
+  paginatedClients: Vehiculo[] = []
+  totalRecords: number = 0;
+  rows: number = 5; // Número de registros por página
+  first: number = 0; // Índice del primer registro de la página actual
+
   constructor(private fb: FormBuilder, private repService: VehiculoService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) {
     this.vehiculoForm = this.fb.group({
       marca: ['', Validators.required],
@@ -30,7 +37,9 @@ export class VehiculoListadoComponent {
 
   ngOnInit(): void {
     this.getVehiculos();
+    this.updatePaginatedClients();
   }
+
 
   editar(id: any) {
     this.visible = true;
@@ -71,11 +80,25 @@ export class VehiculoListadoComponent {
     })
   }
 
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedClients();
+  }
+
+  updatePaginatedClients() {
+    this.paginatedClients = this.allRepartidores.slice(this.first, this.first + this.rows);
+  }
+
+
+  
   getVehiculos() {
     this.repService.getVehiculos().subscribe(
       data => {
         this.allRepartidores = data;
-        console.log(this.allRepartidores);
+        this.totalRecords = this.allRepartidores.length;
+        this.updatePaginatedClients();
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);

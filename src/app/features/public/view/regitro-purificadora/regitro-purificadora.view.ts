@@ -13,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-regitro-purificadora',
   templateUrl: './regitro-purificadora.view.html',
-  styleUrl: './regitro-purificadora.view.css',
+  styleUrl: './regitro-purificadora.view.scss',
   encapsulation: ViewEncapsulation.None,
   // standalone: true,
   // imports: [DialogModule, ButtonModule]

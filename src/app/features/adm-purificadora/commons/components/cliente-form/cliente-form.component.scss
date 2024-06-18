@@ -1,24 +1,17 @@
-/* Estilos para el formulario */
 .Primer-seccion {
   display: block ruby;
   grid-template-columns: max-content 1fr;
-  /* Columna de etiquetas y columna de inputs/selects */
   grid-row-gap: 10px;
-  /* Espacio entre filas */
 
-  /*  */
 
   label {
     grid-column: 1;
     margin: 10px;
-    /* Las etiquetas en la primera columna */
   }
 
   input[type="text"] {
     width: 20%;
-    /* Los inputs y selects ocupan todo el ancho de su contenedor */
     grid-column: 2;
-    /* Los inputs y selects en la segunda columna */
   }
 
   .custom-dropdown select {
@@ -55,12 +48,8 @@ form {
   box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
   border: 1px solid #e8e7e7;
   width: 100%;
-  /* Ajusta el ancho del formulario según tus necesidades */
-  /* margin: 20px auto;.] */
-  /* Centra el formulario en la página */
   display: flex;
   flex-wrap: wrap;
-  /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
 }
 
 form fieldset label {
@@ -69,9 +58,7 @@ form fieldset label {
 
 .form-column {
   width: calc(50% - 20px);
-  /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
   margin-right: 20px;
-  /* Espacio entre las columnas */
 }
 
 fieldset {
@@ -133,7 +120,6 @@ input[type="email"],
 input[type="number"],
 input[type="password"] {
   width: calc(100% - 18px);
-  /* Ajusta el ancho del input para evitar que se desborde por el borde */
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -149,14 +135,12 @@ button[type="submit"] {
   cursor: pointer;
   font-size: 16px;
   margin-top: 10px;
-  /* Espacio superior al botón */
 }
 
 button[type="submit"]:hover {
   background-color: #45a049;
 }
 
-/* mapa} */
 #coordenadas {
   display: block;
   position: relative;
@@ -176,13 +160,10 @@ button[type="submit"]:hover {
 #map {
   width: 450px;
   height: 250px;
-  /* Ajusta la altura según tus necesidades */
   margin-left: 20px;
-  /* Agrega márgenes de 20px */
   border-radius: 5px;
   border: 5px solid #ffffff;
   box-shadow: 0 5px 10px #8b8b8b;
-  /* Agrega un borde punteado de color #083088 */
 }
 
 .wrapper {

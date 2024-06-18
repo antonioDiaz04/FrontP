@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-adm-home',
   templateUrl: './adm-home.view.html',
-  styleUrls:[ './adm-home.view.css','./menuLateral.scss'],
+  styleUrls:[ './adm-home.view.scss','./menuLateral.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class AdmHomeView {

@@ -1,3 +1,7 @@
+body {
+    background: #e0e0e0;
+}
+
 h1 {
     text-align: center;
     margin-bottom: 20px;
@@ -10,8 +14,6 @@ h1 {
     align-items: center;
     margin-bottom: 20px;
 }
-
-
 
 .add-entry-btn {
     background-color: #4cafa2;
@@ -37,8 +39,6 @@ h1 {
 }
 
 .filter-container {
-
-
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -62,26 +62,6 @@ select {
     border-radius: 5px;
     box-sizing: border-box;
 }
-
-/* 
-button {
-    padding: 5px 10px;
-    background-color: #fcfcfc;
-    color: rgb(0, 0, 0);
-    border:solid black;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 15px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-} */
-
-
-
-
 
 
 @media (max-width: 600px) {
@@ -135,9 +115,6 @@ section#lista {
 
         >thead {
             >tr {
-
-
-
                 >th {
                     padding: 12px 15px;
                     text-align: left;
@@ -157,9 +134,33 @@ section#lista {
                     border-bottom: 1px solid #ddd;
                     color: rgb(76, 76, 76);
 
->p{
+
+                    >p {
                         text-align: center;
-}
+                    }
+
+                    .disabled-button {
+                        cursor: not-allowed;
+                        /* Cambia el cursor a "no permitido" cuando está deshabilitado */
+                    }
+
+                    .enable-button {
+                        cursor: pointer;
+                        /* Cambia el cursor a "no permitido" cuando está deshabilitado */
+                    }
+
+                    .disabled-button {
+                        cursor: not-allowed;
+                        /* Cambia el cursor a "no permitido" cuando está deshabilitado */
+                    }
+
+                    >.asignar {
+                        color: #f49f00;
+                        background: #eeffbd;
+                        padding: 5px 5px;
+                        border-radius: 5px;
+                    }
+
 
                     >.entregado {
                         color: #4ca87a;
@@ -175,6 +176,49 @@ section#lista {
                         padding: 5px 5px;
                     }
 
+                    .remove {
+                        color: rgb(192, 2, 2);
+                        background-color: #ffffff;
+                        border: 1px solid #d60000;
+                    }
+
+                    .remove:hover {
+                        color: rgb(255, 255, 255);
+                        background-color: #d60000;
+                        border: 1px solid #ffffff;
+                    }
+
+                    .read {
+                        color: #02a4c0;
+                        background-color: #ffffff;
+                        border: 1px solid #02a4c0;
+                    }
+
+                    .read:hover {
+                        color: rgb(255, 255, 255);
+                        background-color: #02a4c0;
+                        border: 1px solid #ffffff;
+                    }
+
+                    .edit {
+                        color: #0bc002;
+                        background-color: #ffffff;
+                        border: 1px solid #35c002;
+                    }
+
+                    .edit:hover {
+                        color: rgb(255, 255, 255);
+                        background-color: #0bc002;
+                        border: 1px solid #ffffff;
+                    }
+
+                    button,
+                    input[type="button"] {
+                        margin-top: 10px;
+                        padding: 10px 20px;
+                        border-radius: 4px;
+                        /* cursor: pointer; */
+                    }
                 }
             }
         }
@@ -182,10 +226,8 @@ section#lista {
 }
 
 table {
-
     >tbody {
         >tr {
-
             >td {
                 span.material-symbols-outlined {
                     cursor: pointer;
@@ -198,3 +240,17 @@ table {
         }
     }
 }
+
+/* 
+.p-paginator {
+    background: none;
+    border: solid #f3f4f6;
+    border-width: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.p-link {
+    cursor: default;
+    color: #182433;
+} */

@@ -56,15 +56,11 @@
                 <td>
                                             <i (click)="eliminarUsuario(repartidor._id)" class="fas fa-trash-can text-danger m-3"></i>
                                             <i (click)="editar(repartidor._id)" class="fa-solid fa-pen-to-square m-3 "></i>
- 
-                    <!-- <span (click)="eliminarUsuario(repartidor._id)" class="material-symbols-outlined">
-                        delete
-                    </span>
-                    <span (click)="editar(repartidor._id)" class="material-symbols-outlined">
-                        surgical
-                    </span> -->
                 </td>
             </tr>
         </tbody>
     </table>
+<p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+</p-paginator>
+
 </section>

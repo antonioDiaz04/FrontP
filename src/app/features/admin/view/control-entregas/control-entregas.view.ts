@@ -4,7 +4,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 @Component({
   selector: 'app-control-entregas',
   templateUrl: './control-entregas.view.html',
-  styleUrl: './control-entregas.view.css',
+  styleUrl: './control-entregas.view.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class ControlEntregasView implements OnInit{

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-entrada',
   templateUrl: './entrada.view.html',
-  styleUrl: './entrada.view.css'
+  styleUrls: ['../../adm-purificadora.component.scss']
 })
 export class EntradaView {
  deliveries = [
@@ -32,4 +32,7 @@ export class EntradaView {
     // Aquí puedes implementar la lógica para ver los detalles de la entrega
     console.log('Detalles de la entrega:', delivery);
   }
+
+
+  
 }

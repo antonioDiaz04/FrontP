@@ -8,7 +8,7 @@ import { MapaClientDetailUbacionService } from '../../commons/services/mapaClien
 @Component({
   selector: 'app-mapa-client-ubicacion',
   templateUrl: './mapa.view.html',
-  styleUrl: './mapa.view.css',
+  styleUrl: './mapa.view.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class MapaClientUbicacionView implements OnInit{

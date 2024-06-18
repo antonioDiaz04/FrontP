@@ -8,7 +8,7 @@ import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 @Component({
   selector: 'app-vehiculo-form',
   templateUrl: './vehiculo-form.component.html',
-  styleUrl: './vehiculo-form.component.css'
+  styleUrl: './vehiculo-form.component.scss'
 })
 export class VehiculoFormComponent {
   

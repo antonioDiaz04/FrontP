@@ -6,20 +6,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    /* flex-direction: espace; */
 }
 
 .tarjeta {
     width: calc(50% - 20px);
-    /* Ancho de la tarjeta (50% del contenedor) con espacio entre tarjetas */
     margin-bottom: 20px;
-    /* Espacio entre las filas */
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
-    /* Para posicionar los botones dentro de la tarjeta */
 }
 
 .tarjeta img {
@@ -31,22 +27,17 @@
 
 .tarjeta ul {
     list-style-type: none;
-    /* Quita los puntos de la lista */
     padding: 0;
-    /* Elimina el relleno predeterminado */
     margin: 0;
-    /* Elimina el margen predeterminado */
 }
 
 .tarjeta ul li {
     padding: 5px 0;
     border-bottom: 1px solid #ddd;
-    /* Línea divisoria entre descripciones */
 }
 
 .tarjeta ul li:last-child {
     border-bottom: none;
-    /* Elimina la línea divisoria del último elemento */
 }
 
 .botones {
@@ -58,12 +49,9 @@
 .boton-editar,
 .boton-eliminar {
     background-color: #4CAF50;
-    /* Color de fondo */
     border: none;
     color: white;
-    /* Color del texto */
     padding: 10px 20px;
-    /* Espaciado interno */
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -72,13 +60,10 @@
     cursor: pointer;
     border-radius: 8px;
     transition: all 0.3s ease;
-    /* Transición para el efecto 3D */
 }
 
 .boton-editar:hover,
 .boton-eliminar:hover {
     background-color: #45a049;
-    /* Cambia el color de fondo al pasar el mouse */
     transform: translateY(-2px);
-    /* Efecto de elevación */
 }

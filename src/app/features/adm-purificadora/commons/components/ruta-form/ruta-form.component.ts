@@ -17,7 +17,7 @@ import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
 @Component({
   selector: 'app-ruta-form',
   templateUrl: './ruta-form.component.html',
-  styleUrls: ['./ruta-form.component.css', './checkbox.scss', './tabla.scss']
+  styleUrls: ['./ruta-form.component.scss', './checkbox.scss', './tabla.scss']
 })
 export class RutaFormComponent implements OnInit {
   allClients: Cliente[] = []
@@ -42,7 +42,6 @@ export class RutaFormComponent implements OnInit {
 
   guardarNombre() {
     console.log('Nombre guardado:', this.nombre);
-    // Aquí puedes agregar la lógica para guardar el nombre
   }
 
   
@@ -163,25 +162,6 @@ export class RutaFormComponent implements OnInit {
   }
 
 
-  // onRutaNombreSelectionChange(event: any, index: number) {
-  //   const filaFormGroup = this.filas.at(index) as FormGroup;
-  //   const selectedColoniaValue = filaFormGroup.get('selectedRepartidor')?.value;
-  //   console.log('Colonia seleccionado:', selectedColoniaValue);
-  //   if (selectedColoniaValue === null) {
-  //     return "No ha seleccionado ninguna colonia!"; // Retorna una matriz vacía si el valor seleccionado es nulo
-  //   }
-  //   let filtered: any[] = [];
-  //   for (let colonia of this.allColoniaXMuncipio) {
-  //     if (colonia.toLowerCase().indexOf(selectedColoniaValue.toLowerCase()) == 0) {
-  //       filtered.push(colonia);
-  //     }
-  //   }
-  //   return filtered;
-  // }
-
-
-
-
 
 
   onColoniaSelectionChange(event: any, index: number) {
@@ -207,12 +187,6 @@ export class RutaFormComponent implements OnInit {
 
 
 
-  //!esto seria lo mismo que la de abajo
-  //!pero esto es particular de uno
-  // onMunicipioSelectionChange(event: any) {
-  //   this.selectedMunicipio = event.target.value;
-  //   console.log('Municipio seleccionado:', this.selectedMunicipio);
-  // }
 
   onMunicipioSelectionChange(event: any, index: number) {
     const filaFormGroup = this.filas.at(index) as FormGroup;
@@ -316,12 +290,7 @@ export class RutaFormComponent implements OnInit {
     const clientesSeleccionados = this.filas.controls.map(fila => fila.get('selectedClient')?.value);
     return clientesSeleccionados;
   }
-
   AgregarClienteRuta() {
-    const allMunicipios = this.obtenerTodosLosMunicipios();
-    console.log('Municipios seleccionados:', allMunicipios);
-    const allColonias = this.obtenerTodosLasColonias();
-    console.log('Colonias seleccionados:', allColonias);
     const allClients = this.obtenerTodosLasClientes();
     console.log("Clientes seleccionados", allClients);
 
@@ -329,79 +298,71 @@ export class RutaFormComponent implements OnInit {
     const selectedVehiculo = this.registroRuta.get('selectedVehiculo')?.value;
     const selectedRepartidor = this.registroRuta.get('selectedRepartidor')?.value;
     const diasAsignados = this.diasSeleccionados;
+
     if (!nombreRuta) {
       this.mostrarToastError('Por favor seleccione el nombre de la ruta');
       return;
     }
 
     if (!selectedRepartidor) {
-      this.mostrarToastError('Seleccione un repartidor')
-      return;
-    }
-    if (!selectedVehiculo) {
-      this.mostrarToastError('Selecciona un vehiculo')
+      this.mostrarToastError('Seleccione un repartidor');
       return;
     }
 
-    if (!allColonias) {
-      this.mostrarToastError('Por favor ingresa tu colonia :AgregarClienteRuta ')
+    if (!selectedVehiculo) {
+      this.mostrarToastError('Selecciona un vehiculo');
       return;
     }
 
     if (allClients.length === 0) {
-      this.mostrarToastError('No ha seleccionado ningun cliente!')
-      console.log("No ha seleccionado ningun cliente!")
+      this.mostrarToastError('No ha seleccionado ningún cliente');
+      console.log("No ha seleccionado ningún cliente");
       return;
     }
-    if (!allMunicipios) {
-      this.mostrarToastError('Por favor ingresa tu municipio')
-      return;
-    }
+
     if (!diasAsignados) {
-      this.mostrarToastError('selecciona los dias')
+      this.mostrarToastError('Selecciona los días');
       return;
     }
 
-    const clientesIdsDeEntregas = allClients.map((clienteId, index) => ({
-      municipio: allMunicipios[index],
-      colonia: allColonias[index],
-      clienteId: allClients[index]
-    }));
+    // Iterar sobre cada cliente y enviarlo por separado
+    allClients.forEach(clienteId => {
+      const rutaDetalle: DetalleEntregaSchema = {
+        rutaId: nombreRuta,
+        repartidorId: selectedRepartidor,
+        vehiculoId: selectedVehiculo,
+        estado: 'pendiente',
+        clienteId: clienteId,  // Asignar el clienteId actual del ciclo
+        diasAsignados: diasAsignados  // Utilizar los días asignados comunes a todos los clientes
+      };
 
-    
-    console.log("clientesIdsDeEntregas en rut form:",clientesIdsDeEntregas)
-    
-    const RUTA: DetalleEntregaSchema = {
-      rutaId: nombreRuta,
-      repartidorId: selectedRepartidor,
-      vehiculoId: selectedVehiculo,
-      estado: 'pendiente',
-      clientesIdsDeEntregas: clientesIdsDeEntregas,
-      diasAsignados: diasAsignados
-    }
+      console.log("Detalle de entrega:", rutaDetalle);
 
-    console.log(RUTA)
-    this.rutaService.addRuta(RUTA).subscribe(response => {
-      this.visible = false;
-      Swal.fire({
-        title: '¡Perfecto!',
-        text: 'Se ha agregado correctamente.',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
-        toast: false,
-        // position: 'top-end'
-      });
-
-    }, (error) => {
-      console.error(error); // Imprime el error en la consola para depuración
-      let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
-      if (error && error.error && error.error.message) {
-        errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
-      }
-      Swal.fire("Error", errorMessage, 'error'); // Mostramos el mensaje de error en la alerta
-    })
+      // Llamar al servicio para agregar la ruta
+      this.rutaService.addRuta(rutaDetalle).subscribe(
+        response => {
+          console.log("Ruta agregada correctamente:", response);
+          Swal.fire({
+            title: '¡Perfecto!',
+            text: 'Se ha agregado correctamente.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+            toast: false,
+          });
+        },
+        error => {
+          console.error("Error al agregar la ruta:", error);
+          let errorMessage = "Error desconocido";
+          if (error && error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          Swal.fire("Error", errorMessage, 'error');
+        }
+      );
+    });
   }
+
 
   getMunicipioPorExtado() {
     this.consultasCOPOMEX.getMunicipioXEstado().subscribe(

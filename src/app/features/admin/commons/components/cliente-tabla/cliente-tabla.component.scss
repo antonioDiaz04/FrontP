@@ -1,7 +1,6 @@
 .body-panel {
     font-family: Arial, sans-serif;
     margin-left: 40px;
-    /* padding: 20px; */
 }
 
 .heeader {
@@ -38,27 +37,13 @@ table {
 
 td {
     padding: 10px 5px 10px 0;
-    // padding-right: auto;
 }
-
-/* th,
-td {
-    padding: 10px;
-    border: 1px solid #464646;
-} */
 
 .map {
     width: 100%;
 
 }
 
-/* 
-.map img {
-    width: 100%;
-    height: auto;
-} */
-
-/* Estilos para los botones */
 .buttons {
     margin-top: 20px;
 }
@@ -68,12 +53,10 @@ td {
 }
 
 
-/*  */
 .button-container {
     position: fixed;
     top: 50%;
     right: 20px;
-    /* Ajusta el valor según sea necesario */
     transform: translateY(-50%);
 }
 
@@ -98,7 +81,6 @@ td {
     background: rgb(255, 204, 204);
     color: red;
 }
-
 
 
 

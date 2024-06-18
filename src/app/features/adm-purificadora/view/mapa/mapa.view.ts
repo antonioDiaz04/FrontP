@@ -7,7 +7,7 @@ import { ClipboardService } from 'ngx-clipboard';
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.view.html',
-  styleUrl: './mapa.view.css',
+  styleUrl: './mapa.view.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class MapaView implements OnInit{

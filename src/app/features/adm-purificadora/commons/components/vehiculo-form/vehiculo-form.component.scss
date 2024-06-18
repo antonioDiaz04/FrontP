@@ -1,4 +1,3 @@
-/* Estilos para el formulario */
 form {
     background: white;
     padding: 20px;
@@ -6,12 +5,8 @@ form {
     box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
     border: 1px solid #e8e7e7;
     width: 100%;
-    /* Ajusta el ancho del formulario según tus necesidades */
-    /* margin: 20px auto;.] */
-    /* Centra el formulario en la página */
     display: flex;
     flex-wrap: wrap;
-    /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
 }
 
 form fieldset label {
@@ -20,9 +15,7 @@ form fieldset label {
 
 .form-column {
     width: calc(50% - 20px);
-    /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
     margin-right: 20px;
-    /* Espacio entre las columnas */
 }
 
 fieldset {
@@ -49,7 +42,6 @@ input[type="email"],
 input[type="number"],
 input[type="password"] {
     width: calc(100% - 18px);
-    /* Ajusta el ancho del input para evitar que se desborde por el borde */
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -65,7 +57,6 @@ button[type="submit"] {
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
-    /* Espacio superior al botón */
 }
 
 button[type="submit"]:hover {

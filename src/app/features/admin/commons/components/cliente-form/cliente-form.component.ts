@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-cliente-form',
   templateUrl: './cliente-form.component.html',
-  styleUrls: ['./cliente-form.component.css'],
+  styleUrls: ['./cliente-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteFormComponent {

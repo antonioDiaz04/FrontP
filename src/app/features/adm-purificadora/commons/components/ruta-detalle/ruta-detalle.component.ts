@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RutaService } from '../../../../../shared/services/ruta.service';
-import { DetalleEntregaInterface, PuntoDeEntrega } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
+import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
 import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
 import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
@@ -70,7 +70,6 @@ export class RutaDetalleComponent implements OnInit {
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio()
     this.getUsers()
-
   }
 
 
@@ -78,7 +77,6 @@ export class RutaDetalleComponent implements OnInit {
 
 
   todo() {
-
     this.rutaService.detalleRutaById(this.idRuta).subscribe((data: DetalleEntregaInterface) => {
       this.detalleRuta = data;
       this.enviarUbicacionesMapa(this.detalleRuta)
@@ -89,29 +87,26 @@ export class RutaDetalleComponent implements OnInit {
   }
 
 
-  enviarUbicacionesMapa(detalleRuta:any){
+  enviarUbicacionesMapa(detalleRuta: any) {
     this.visitCount++;
     console.log(`Visitado por: ${this.visitCount}`);
-    const entregas = detalleRuta.clientesIdsDeEntregas;
 
-    console.log("clientesIdsDeEntregas en enviarUbicacionesMapa:", entregas);
-    if (Array.isArray(entregas) && entregas.length > 0) {
-      // Accede a las longitudes y latitudes de los clientes
-      this.puntosClientesUbicaciones = entregas.map(entrega => {
-        console.log("clienteId:", entrega.clienteId);
-        return {
-          longitud: entrega.clienteId?.longitud,
-          latitud: entrega.clienteId?.latitud
-        };
-      }).filter(ubicacion => ubicacion.longitud && ubicacion.latitud);
+    // Extraer el cliente del detalleRuta
+    const cliente = detalleRuta.clienteId;
+
+    if (cliente && cliente.longitud && cliente.latitud) {
+      // Crear el punto de ubicación con longitud y latitud
+      this.puntosClientesUbicaciones = [{
+        longitud: cliente.longitud,
+        latitud: cliente.latitud
+      }];
 
       console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
       this.mapaService.setUbicaciones(this.puntosClientesUbicaciones);
-
     } else {
-      // En caso de que no haya puntos de entrega o el array esté vacío, limpia los marcadores
+      // En caso de que no haya puntos de entrega válidos, limpia los marcadores
       this.mapaService.setUbicaciones([]);
-      console.log("No se encontraron puntos de entrega o el array está vacío.");
+      console.log("No se encontraron coordenadas válidas en el cliente.");
     }
   }
 
@@ -144,10 +139,6 @@ export class RutaDetalleComponent implements OnInit {
     function generateUniqueId() {
       return Math.random().toString(36).substr(2, 9);
     }
-
-
-
-
     const newPuntosDeEntrega = {
       municipio: selectedMunicipio,
       colonia: selectedColonia,

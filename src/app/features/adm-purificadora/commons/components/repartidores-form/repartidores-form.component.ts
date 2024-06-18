@@ -8,7 +8,7 @@ import { Repartidor } from '../../../../../shared/models/repartidor.model';
 @Component({
   selector: 'app-repartidores-form',
   templateUrl: './repartidores-form.component.html',
-  styleUrls:  ['./repartidores-form.component.css']
+  styleUrls:  ['./repartidores-form.component.scss']
 })
 export class RepartidoresFormComponent {
 

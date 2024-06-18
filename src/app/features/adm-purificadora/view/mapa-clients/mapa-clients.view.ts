@@ -3,7 +3,7 @@ import { MapaService } from '../../../../shared/services/mapa.service';
 @Component({
   selector: 'app-mapa-clients',
   templateUrl: './mapa-clients.view.html',
-  styleUrls: ['./mapa-clients.view.css','./card.scss'],
+  styleUrls: ['./mapa-clients.view.scss','./card.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class MapaClientsView implements OnInit {
