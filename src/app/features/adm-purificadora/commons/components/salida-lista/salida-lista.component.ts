@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
 import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,14 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss']
 
 })
-export class SalidaListaComponent {
+export class SalidaListaComponent implements  OnInit{
 
   visible: boolean = false
 
   allRutas: DetalleEntregaInterface[] = [];
   date2: Date | undefined;
-  frmEditarEntrega: FormGroup
-
   paginatedRutasDetalles: DetalleEntregaInterface[] = []
   clientAll!: DetalleEntregaInterface;
   totalRecords: number = 0;
@@ -29,17 +27,10 @@ export class SalidaListaComponent {
 
   ngOnInit(): void {
     this.obtenerRutas();
+    this.updatePaginatedRutasDetalles();
   }
 
-  constructor(private repService: RepartidoresService, private rutaS: RutaService, private router: Router, private fb: FormBuilder) {
-    this.frmEditarEntrega = this.fb.group({
-      nombre: ['', Validators.required],
-      email: ['', Validators.required],
-      numCasa: ['', Validators.required],
-      selectedRepartidor: ['', Validators.required],
-      telefono: ['', Validators.required],
-    })
-  }
+  constructor(private repService: RepartidoresService, private rutaS: RutaService, private router: Router, private fb: FormBuilder) {}
 
   obtenerRutas() {
     this.rutaS.getDetallesEntregasRutas().subscribe(
@@ -73,10 +64,6 @@ export class SalidaListaComponent {
     );
   }
 
-  onRepartidorSelectionChange() {
-    const selectedId = this.frmEditarEntrega.get('selectedRepartidor')?.value;
-    console.log('ID del repartidor seleccionado:', selectedId);
-  }
 
   eliminarRuta(id: any) {
     this.rutaS.eliminarRuta(id).subscribe(data => {
@@ -93,11 +80,14 @@ export class SalidaListaComponent {
       // console.log("ocurrio un error", error)
     // })
   }
-  // editar() {
-  //   this.visible = true
-  // }
 
-
-
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedClients();
+  }
+   updatePaginatedClients() {
+     this.paginatedRutasDetalles = this.allRutas.slice(this.first, this.first + this.rows);
+  }
 
 }

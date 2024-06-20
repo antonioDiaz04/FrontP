@@ -55,8 +55,13 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { CalendarModule } from 'primeng/calendar';
 import { SalidaEditComponent } from './commons/components/salida-edit/salida-edit.component';
 import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { EntradaListaComponent } from './commons/components/entrada-lista/entrada-lista.component';
+import { EntradaEditComponent } from './commons/components/entrada-edit/entrada-edit.component';
+import { ResultadosListadoComponent } from './commons/components/resultados-listado/resultados-listado.component';
+import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega.view';
 
-const MATERIALS = [CalendarModule,
+const MATERIALS = [CalendarModule, InputNumberModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
 ]
 @NgModule({
@@ -64,7 +69,7 @@ const MATERIALS = [CalendarModule,
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaEditComponent, SalidaListaComponent,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaEditComponent, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView,
   ],
   imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,

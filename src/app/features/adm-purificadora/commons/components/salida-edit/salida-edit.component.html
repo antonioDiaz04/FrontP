@@ -1,23 +1,60 @@
+<section id="registro">
+    <form [formGroup]="registroRepartidores" (ngSubmit)="actualizarEntrega()">
+        <div class="form-column">
+            <fieldset>
+                <legend>Información Básica</legend>
+                <label for="descripcion">Cambiar de Ruta:</label>
+                <div class="custom-dropdown">
+                    <select formControlName="nombreRuta" (change)="onRutaNombreSelectionChange()">
+                        <option *ngFor="let rutaData of allNombreRuta" [value]="rutaData._id"
+                            [selected]="rutaData._id === listDetalle?.rutaId?._id">
+                            {{ rutaData.nombreRuta }}
+                        </option>
+                    </select>
+                </div>
+                <label for="repartidorId">Cambiar Repartidor:</label>
+                <div class="custom-dropdown">
+                    <select formControlName="selectedRepartidor" (change)="onRepartidorSelectionChange()">
+                        <option *ngFor="let repartidor of allRepartidores" [value]="repartidor._id"
+                            [selected]="repartidor._id === listDetalle?.repartidorId?._id">
+                            {{ repartidor.nombre }}
+                        </option>
+                    </select>
+                </div>
 
-    <div class="container">
-        <h2>Formulario Personalizado</h2>
-        <form>
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required>
-            </div>
-            <div class="form-group">
-                <label for="mensaje">Mensaje:</label>
-                <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
-            </div>
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+                <label for="vehiculoId">Cambiar Vehiculo:</label>
+                <div class="custom-dropdown">
+                    <select formControlName="selectedVehiculo" (change)="onVehiculoSelectionChange()">
+                        <option *ngFor="let vehiculo of allVehiculos" [value]="vehiculo._id"
+                            [selected]="vehiculo._id === listDetalle?.vehiculoId?._id">
+                            {{ vehiculo.placas }}
+                        </option>
+                    </select>
+                </div>
+            </fieldset>
+        </div>
+        <div class="form-column">
+            <fieldset>
+                <legend>Información direccion</legend>
+                <label for="fechaActual">Fecha actual:</label>
+                <div *ngIf="listDetalle?.fechaInicio == null">
+                    <p [ngClass]="{'asignar': listDetalle?.fechaInicio == null}">por asignar</p>
+                </div>
+                <div *ngIf="listDetalle?.fechaInicio!=null">
+                    {{ listDetalle?.fechaInicio }}
+                </div>
+                <label for="nuevaFecha">Programar nueva fecha:</label>
+                <p-calendar formControlName="fecha" [iconDisplay]="'input'" [showIcon]="true"
+                    inputId="icondisplay"></p-calendar>
+                <br>
+                <label for="cantidadPedido">cantidad pedido: {{ listDetalle?.cantidadBotellas }}</label>
+                <label for="cantidadPedido">Ingresar cantidad:</label>
+                <p-inputNumber formControlName="cantidadPedido" [showButtons]="true" buttonLayout="horizontal"
+                    inputId="horizontal" spinnerMode="horizontal" [step]="1" [min]="0"
+                    decrementButtonClass="decrement-button p-button" incrementButtonClass="increment-button p-button"
+                    incrementButtonIcon="fas fa-plus" decrementButtonIcon="fas fa-minus"></p-inputNumber>
+            </fieldset>
+        </div>
+        <button type="submit">Registrar Cliente</button>
+    </form>
+</section>

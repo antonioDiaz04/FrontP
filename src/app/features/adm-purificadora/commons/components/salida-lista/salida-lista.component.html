@@ -2,7 +2,6 @@
 
     <h1>Gestión de salida</h1>
     <div class="top-bar">
-        <button class="add-entry-btn">Añadir Entrada</button>
         <input type="text" id="searchBar" placeholder="Buscar...">
     </div>
     <div class="filter-container">
@@ -10,41 +9,33 @@
             <label for="date">Días Programada la Salida:</label>
             <select id="date" name="date">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de fechas -->
             </select>
         </div>
-        <div class="filter-group">
-            <label for="vehicle">Vehículo:</label>
-            <select id="vehicle" name="vehicle">
-                <option value="">Seleccione...</option>
-            </select>
-        </div>
+
         <div class="filter-group">
             <label for="repartidor">Repartidor:</label>
             <select id="repartidor" name="repartidor">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de repartidores -->
             </select>
         </div>
+
         <div class="filter-group">
             <label for="route">Ruta:</label>
             <select id="route" name="route">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de rutas -->
             </select>
         </div>
+
         <div class="filter-group">
-            <label for="municipality">Municipios:</label>
+            <label for="municipality">Estado:</label>
             <select id="municipality" name="municipality">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de municipios -->
             </select>
         </div>
         <div class="filter-group">
-            <label for="colony">Colonias:</label>
+            <label for="colony">Catidad:</label>
             <select id="colony" name="colony">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de colonias -->
             </select>
         </div>
     </div>
@@ -54,8 +45,9 @@
                 <th>Ruta</th>
                 <th>Repartidor</th>
                 <th>Cliente</th>
-                <th>Estado</th>
+                <th>Dia disponble</th>
                 <th>Fecha Programada</th>
+                <th>Estado</th>
                 <th>Cantidad</th>
                 <th>Acciones</th>
             </tr>
@@ -67,18 +59,27 @@
                 <td>{{ ruta.repartidorId?.nombre }}</td>
                 <td>{{ ruta?.clienteId?.nombre }}</td>
                 <td>
-                    <p [ngClass]="ruta.estado === 'finalizada' ? 'entregado' : 'pendiente'">{{ ruta.estado }}
-                    </p>
+                    {{ ruta.diasAsignados }}
                 </td>
                 <td *ngIf="ruta.fechaInicio==null">
-
-
                     <p [ngClass]="{'asignar': ruta.fechaInicio == null}">
                         por asignar
-                        <!-- <p-calendar [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" /> -->
-
                     </p>
+                </td>
+                <td *ngIf="ruta.fechaInicio!=null">
 
+                    {{ ruta?.fechaInicio }}
+
+                </td>
+                <td>
+                <p [ngClass]="{
+                    'pendiente': ruta.estado === 'pendiente',
+                    'parcialmente-entregado': ruta.estado === 'parcialmente_entregado',
+                    'en_curso': ruta.estado === 'en_curso',
+                    'finalizada': ruta.estado === 'finalizada'
+                }">
+                    {{ ruta.estado }}
+                </p>
 
                 </td>
                 <td>{{ ruta.cantidadBotellas }}</td>
@@ -86,46 +87,13 @@
                     <button type="input" (click)="eliminarRuta(ruta._id)" class="remove enable-button">
                         <i class="fas fa-trash"></i>
                     </button>
-                    <!-- <button [disabled]="true" [ngClass]="{ 'disabled-button': true }" type="input"
-                        (click)="detalleById(ruta._id)" class="read">
-                        <i class="fas fa-book-reader"></i>
-                    </button> -->
-
                     <button type="buttom" class="edit" (click)="editar(ruta._id)">
                         <i class="fas fa-pen    "></i>
                     </button>
-
                 </td>
             </tr>
-            <!-- Aquí irían las filas de datos -->
         </tbody>
     </table>
+    <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
 </section>
-<!-- 
-<p-dialog [(visible)]="visible" header="Editar datos" [modal]="true" [style]="{ width: '35rem' }"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-    <form [formGroup]="frmEditarEntrega">
-        <div class="custom-dropdown">
-            <label for="nombre">Asingar fecha:</label>
-            <p-calendar [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
-
-        </div>
-
-        <div class="custom-dropdown">
-            <select formControlName="selectedRepartidor" (change)="onRepartidorSelectionChange()">
-                <option value="" disabled selected>Selecciona un Repartidor</option>
-                <option *ngFor="let repartidor of allRepartidores" [value]="repartidor._id">{{
-                    repartidor.nombre }}</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="email">Asignar cantidad:</label>
-            <input formControlName="cantidad">
-        </div>
-
-        <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </div>
-    </form>
-</p-dialog> -->

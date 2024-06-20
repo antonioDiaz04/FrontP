@@ -56,8 +56,15 @@
                         <td>{{ ruta?.clienteId?.colonia }}</td>
                         <td>{{ ruta?.clienteId?.nombre }}</td>
                         <td>
-                            <p [ngClass]="ruta.estado === 'finalizada' ? 'entregado' : 'pendiente'">{{ ruta.estado }}
+                            <p [ngClass]="{
+                                                'pendiente': ruta.estado === 'pendiente',
+                                                'parcialmente-entregado': ruta.estado === 'parcialmente_entregado',
+                                                'en_curso': ruta.estado === 'en_curso',
+                                                'finalizada': ruta.estado === 'finalizada'
+                                            }">
+                                {{ ruta.estado }}
                             </p>
+
                         </td>
                         <td>
                             <button type="input" (click)="eliminarRuta(ruta._id)" class="remove">

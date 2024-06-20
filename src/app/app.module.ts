@@ -19,7 +19,9 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     SigninComponent,
     PublicComponent,
   ],
-  imports: [SidebarModule,
+  imports: [
+    
+    SidebarModule,
     BrowserModule, ButtonModule, BrowserAnimationsModule,
     AppRoutingModule
   ],

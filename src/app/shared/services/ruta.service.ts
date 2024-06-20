@@ -29,6 +29,10 @@ export class RutaService {
     const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id
     return this.http.put(url, cliente)
   }
+  updateRutaEntregaDetalle(id: string, cliente: any): Observable<any> {
+    const url = `${environment.api}/ruta/updateRutaDetalle/` + id
+    return this.http.put(url, cliente)
+  }
 
   eliminarRuta(id: string): Observable<any> {
     const url = `${environment.api}/ruta/deleteRuta/` + id

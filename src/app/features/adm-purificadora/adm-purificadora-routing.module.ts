@@ -23,6 +23,11 @@ import { SalidaView } from './view/salida/salida.view';
 import { EntradaView } from './view/entrada/entrada.view';
 import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
 import { SalidaEditComponent } from './commons/components/salida-edit/salida-edit.component';
+import { EntradaEditComponent } from './commons/components/entrada-edit/entrada-edit.component';
+import { EntradaListaComponent } from './commons/components/entrada-lista/entrada-lista.component';
+import { NotificacionesView } from './view/notificaciones/notificaciones.view';
+import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega.view';
+import { ResultadosListadoComponent } from './commons/components/resultados-listado/resultados-listado.component';
 
 const routes: Routes = [
   {
@@ -57,7 +62,7 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: 'lista-clientes', 
+            redirectTo: 'lista-clientes',
             pathMatch: 'full',
           }
         ]
@@ -81,14 +86,45 @@ const routes: Routes = [
           }
         ]
       },
+
+      {
+        path: 'resultado',
+        component: ResultadoEntregaView,
+        children: [
+          {
+            path: 'resultadoListadoEntrega',
+            component: ResultadosListadoComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'resultadoListadoEntrega',
+            pathMatch: 'full',
+          }
+        ]
+      },
       {
         path: 'entrada',
         component: EntradaView,
+        children: [
+          {
+            path: 'edit-entrada/:id',
+            component: EntradaEditComponent,
+          },
+          {
+            path: 'entrada-listado',
+            component: EntradaListaComponent,
+          },
+          {
+            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: 'entrada-listado', // Redirigir a lista-repartidores por defecto
+            pathMatch: 'full',
+          }
+        ]
       },
       {
         // path: 'detail/:id',
-        path: 'pedidos',
-        component: PedidosView,
+        path: 'notificaciones',
+        component: NotificacionesView,
       },
 
       {

@@ -53,7 +53,7 @@ h1 {
 
 label {
     margin-bottom: 5px;
-    color: #666;
+    color: #454545;
 }
 
 select {
@@ -155,16 +155,29 @@ section#lista {
                     }
 
                     >.asignar {
-                        color: #f49f00;
-                        background: #eeffbd;
+                        color: #7e7e7e;
+                        background: #e5e5e5;
                         padding: 5px 5px;
                         border-radius: 5px;
                     }
 
 
-                    >.entregado {
+                    >.finalizada {
                         color: #4ca87a;
                         background: #bdffde;
+                        padding: 5px 5px;
+                        border-radius: 5px;
+                    }
+                    >.en_curso {
+                        color: #0045f3;
+                        background: #70c1fa;
+                        padding: 5px 5px;
+                        border-radius: 5px;
+                    }
+
+                    >.parcialmente-entregado {
+                        color: #ff9d00;
+                        background: #ffeebd;
                         padding: 5px 5px;
                         border-radius: 5px;
                     }
