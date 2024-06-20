@@ -331,7 +331,6 @@ export class RutaFormComponent implements OnInit {
         rutaId: nombreRuta,
         repartidorId: selectedRepartidor,
         vehiculoId: selectedVehiculo,
-        estado: 'pendiente',
         clienteId: clienteId,  // Asignar el clienteId actual del ciclo
         diasAsignados: diasAsignados  // Utilizar los días asignados comunes a todos los clientes
       };

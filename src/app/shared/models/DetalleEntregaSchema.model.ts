@@ -4,7 +4,7 @@ export class DetalleEntregaSchema {
     repartidorId!: string; // Identificador del repartidor asociado a la ruta
     vehiculoId!: string;
     // fechaFin?: Date; // Fecha de finalización de la ruta (opcional si la ruta aún está en curso)
-    estado!: 'pendiente' | 'en_curso' | 'finalizada'; // Estado actual de la ruta
+    estado?:'ninguno' | 'pendiente' | 'en_curso' | 'finalizada'; // Estado actual de la ruta
     clienteId!: string[]
     diasAsignados!: string[];
 

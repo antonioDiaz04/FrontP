@@ -96,7 +96,7 @@ const routes: Routes = [
             component: ResultadosListadoComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
+            path: '',
             redirectTo: 'resultadoListadoEntrega',
             pathMatch: 'full',
           }

@@ -57,6 +57,7 @@
                         <td>{{ ruta?.clienteId?.nombre }}</td>
                         <td>
                             <p [ngClass]="{
+                              'ninguno': ruta.estado === 'ninguno',
                                                 'pendiente': ruta.estado === 'pendiente',
                                                 'parcialmente-entregado': ruta.estado === 'parcialmente_entregado',
                                                 'en_curso': ruta.estado === 'en_curso',

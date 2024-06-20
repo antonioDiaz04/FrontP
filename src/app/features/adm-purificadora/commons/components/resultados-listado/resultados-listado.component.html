@@ -49,9 +49,10 @@
                 <th>Ruta</th>
                 <th>Fecha Programada</th>
                 <th>Repartidor</th>
-                <th>Cliente</th>
-                <th>Cant salida</th>
-                <th>Cant entrada</th>
+                <th>Destinario</th>
+                <th>Cant asignada</th>
+                <th>Cant entregado</th>
+                <th>Cant pendiente</th>
                 <th>Estatus</th>
                 <th>Acciones</th>
             </tr>
@@ -65,8 +66,10 @@
                 <td>{{ data?.clienteId?.nombre }}</td>
                 <td>{{ data?.cantidadBotellas }}</td>
                 <td>{{ data?.cantidadBotellasEntregados }}</td>
+                <td>{{ data?.cantidadBotellasPendientes }}</td>
                 <td>
                     <p [ngClass]="{
+                                        'ninguno': data.estado === 'ninguno',
                                         'pendiente': data.estado === 'pendiente',
                                         'parcialmente-entregado': data.estado === 'parcialmente_entregado',
                                         'en_curso': data.estado === 'en_curso',

@@ -11,7 +11,7 @@ export interface DetalleEntregaInterface {
     vehiculoId?: Vehiculo;
     fechaInicio?: Date;
     fechaFin?: Date;
-    estado?: 'pendiente' | 'en_curso' | 'finalizada' | 'parcialmente_entregado';
+    estado?: 'ninguno'| 'pendiente' | 'en_curso' | 'finalizada' | 'parcialmente_entregado';
     clienteId: string[] | any;
     diasAsignados?: string[];
     cantidadBotellasEntregados: Number;
