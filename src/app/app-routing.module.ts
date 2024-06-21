@@ -8,7 +8,6 @@ const routes: Routes = [
     redirectTo: 'public',
     pathMatch: 'full',
   },
-
   {
     path: 'public',
     loadChildren: () =>

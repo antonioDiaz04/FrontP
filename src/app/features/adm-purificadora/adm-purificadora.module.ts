@@ -60,6 +60,7 @@ import { EntradaListaComponent } from './commons/components/entrada-lista/entrad
 import { EntradaEditComponent } from './commons/components/entrada-edit/entrada-edit.component';
 import { ResultadosListadoComponent } from './commons/components/resultados-listado/resultados-listado.component';
 import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega.view';
+import { MiPerfilView } from './view/mi-perfil/mi-perfil.view';
 
 const MATERIALS = [CalendarModule, InputNumberModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
@@ -69,7 +70,7 @@ const MATERIALS = [CalendarModule, InputNumberModule,
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaEditComponent, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaEditComponent, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
   ],
   imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,

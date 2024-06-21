@@ -5,10 +5,11 @@
 <body>
 
   <div class="sidebar">
-    <h2>Menú</h2>
+    <div class="logo">
+      <h1>Purificadora</h1>
+    </div>
     <ul class="nav flex-column">
       <li class="nav-item">
-
       </li>
       <li class="nav-item">
         <a tabindex="0" (click)="redirectToAdminPurificadora('Home')" class="nav-link">
@@ -34,7 +35,6 @@
           Vehículos
         </a>
       </li>
-
       <li class="nav-item">
         <a tabindex="0" (click)="redirectToAdminPurificadora('rutas')" class="nav-link">
           <span data-feather="users"></span>
@@ -47,12 +47,6 @@
           Salida
         </a>
       </li>
-      <!-- <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('entrada')">
-          <span data-feather="layers"></span>
-          Entrada
-        </a>
-      </li> -->
       <li class="nav-item">
         <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('resultado')">
           <span data-feather="layers"></span>
@@ -66,17 +60,14 @@
         </a>
       </li>
       <li class="nav-item">
-        <a tabindex="0" class="nav-link">
+        <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('miPerfil')">
           <span data-feather="layers"></span>
           Mi perfil
         </a>
       </li>
     </ul>
-
   </div>
-
   <div class="content">
     <router-outlet></router-outlet>
   </div>
-
 </body>

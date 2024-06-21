@@ -28,6 +28,7 @@ import { EntradaListaComponent } from './commons/components/entrada-lista/entrad
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega.view';
 import { ResultadosListadoComponent } from './commons/components/resultados-listado/resultados-listado.component';
+import { MiPerfilView } from './view/mi-perfil/mi-perfil.view';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
             pathMatch: 'full',
           }
         ]
+      },
+      {
+        path: 'miPerfil',
+        component: MiPerfilView,
       },
       {
         path: 'salida',
