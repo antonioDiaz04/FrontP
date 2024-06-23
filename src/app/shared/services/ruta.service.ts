@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-  
+
 export class RutaService {
 
   constructor(private http: HttpClient) { }

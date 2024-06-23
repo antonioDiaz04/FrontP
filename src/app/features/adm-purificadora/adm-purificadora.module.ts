@@ -53,7 +53,6 @@ import { EntradaView } from './view/entrada/entrada.view';
 import { PanelMenuModule } from 'primeng/panelmenu';
 
 import { CalendarModule } from 'primeng/calendar';
-import { SalidaEditComponent } from './commons/components/salida-edit/salida-edit.component';
 import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { EntradaListaComponent } from './commons/components/entrada-lista/entrada-lista.component';
@@ -70,7 +69,7 @@ const MATERIALS = [CalendarModule, InputNumberModule,
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaEditComponent, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
   ],
   imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,

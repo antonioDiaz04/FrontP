@@ -22,7 +22,6 @@ import { RutaDetalleComponent } from './commons/components/ruta-detalle/ruta-det
 import { SalidaView } from './view/salida/salida.view';
 import { EntradaView } from './view/entrada/entrada.view';
 import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
-import { SalidaEditComponent } from './commons/components/salida-edit/salida-edit.component';
 import { EntradaEditComponent } from './commons/components/entrada-edit/entrada-edit.component';
 import { EntradaListaComponent } from './commons/components/entrada-lista/entrada-lista.component';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
@@ -76,10 +75,7 @@ const routes: Routes = [
         path: 'salida',
         component: SalidaView,
         children: [
-          {
-            path: 'edit-salida/:id',
-            component: SalidaEditComponent,
-          },
+          
           {
             path: 'salida-listado',
             component: SalidaListaComponent,

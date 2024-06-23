@@ -72,15 +72,15 @@
 
                 </td>
                 <td>
-                <p [ngClass]="{
+                    <p [ngClass]="{
                     'ninguno': ruta.estado === 'ninguno',
                     'pendiente': ruta.estado === 'pendiente',
                     'parcialmente-entregado': ruta.estado === 'parcialmente_entregado',
                     'en_curso': ruta.estado === 'en_curso',
                     'finalizada': ruta.estado === 'finalizada'
                 }">
-                    {{ ruta.estado }}
-                </p>
+                        {{ ruta.estado }}
+                    </p>
 
                 </td>
                 <td>{{ ruta.cantidadBotellas }}</td>
@@ -98,3 +98,57 @@
     <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
     </p-paginator>
 </section>
+
+<div class="card flex justify-content-center">
+    <p-dialog header="Header" [modal]="true" [(visible)]="visible" [style]="{ width: '34rem',height:'80rem' }"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" [draggable]="false"
+        [resizable]="false" [dismissableMask]="true">
+        <form [formGroup]="salidaForm" class="modal-content"   (ngSubmit)="guardarCambios()">
+            <div class="inputs-container">
+
+                <label for="">Cambiar ruta</label>
+                <select   formControlName="nombreRuta" (click)="onRutaNombreSelectionChange()">
+                    <option *ngFor="let ruta of allNombreRuta"   [ngValue]="ruta" [selected]="ruta._id === selectedNombreRuta?._id" >
+                        {{ ruta.nombreRuta }}
+                    </option>
+                </select>
+
+
+                <label for="">Cambiar Repartidor</label>
+
+
+
+                <select formControlName="selectedRepartidor" (click)="onRepartidorSelectionChange()">
+                    <option  *ngFor="let repartidor of allRepartidores"  [ngValue]="repartidor"
+                        [selected]="repartidor._id === selectedRepartidor?._id">
+                        {{ repartidor.nombre }}
+                    </option>
+                </select>
+
+
+                <label for="">Cambiar vehiculo</label>
+                <select formControlName="selectedVehiculo" (click)="onVehiculoSelectionChange()">
+                    <option *ngFor="let vehiculo of allVehiculos"  [ngValue]="vehiculo" [selected]="vehiculo._id === selectedVehiculo?._id">
+                        {{ vehiculo.placas }}
+                    </option>
+                </select>
+                <!-- <div class="contieneInput"> -->
+                    
+                    <input type="date" id="start" name="trip-start" formControlName="fecha" />
+                   <br>
+                   
+                    <p-inputNumber [style]="{ width: '31rem' }" class="inptNumber"
+                        [(ngModel)]="salidaForm.controls['cantidadBotellas'].value" formControlName="cantidadBotellas" [showButtons]="true"
+                        buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" [min]="0"
+                        decrementButtonClass="decrement-button p-button" incrementButtonClass="increment-button p-button"
+                        incrementButtonIcon="fas fa-plus" decrementButtonIcon="fas fa-minus">
+                    </p-inputNumber>
+                <!-- </div> -->
+
+            </div>
+
+
+            <button type="submit">Guardar cambios</button>
+        </form>
+    </p-dialog>
+</div>

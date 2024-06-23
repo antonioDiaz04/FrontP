@@ -16,15 +16,15 @@ export class RutaView {
 
   rutaForm!: FormGroup;
 
-  constructor(private router: Router, private rutaService:RutaService,private fb:FormBuilder) {
+  constructor(private router: Router, private rutaService: RutaService, private fb: FormBuilder) {
     this.rutaForm = this.fb.group({
-      nombreRuta:['',Validators.required]
+      nombreRuta: ['', Validators.required]
     })
-   }
+  }
 
-  
 
-  showAlert(title:any,text:any,icon:any) {
+
+  showAlert(title: any, text: any, icon: any) {
     Swal.fire({
       title: title,
       text: text,
@@ -35,27 +35,27 @@ export class RutaView {
       position: 'top-end'
     });
   }
-  
-  
+
+
   showModal() {
-    this.visible=true
+    this.visible = true
   }
 
   // guardarRuta(){
-  guardarRuta(){
+  guardarRuta() {
 
 
     const nombre = this.rutaForm.get('nombreRuta')?.value;
 
     if (!nombre) {
-      this.showAlert('¡Error!', 'Completa correctamente los campos.','sucess')
+      this.showAlert('¡Error!', 'Completa correctamente los campos.', 'sucess')
     }
 
     const RutaData: Ruta = {
-      nombreRuta:nombre
+      nombreRuta: nombre
     }
-    
-    this.rutaService.addNombreRuta(RutaData).subscribe(response=>{
+
+    this.rutaService.addNombreRuta(RutaData).subscribe(response => {
       this.visible = false
       this.showAlert('¡Correcto!', 'se agregó correctamente .', 'sucess')
     }, (error) => {

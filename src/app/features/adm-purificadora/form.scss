@@ -15,6 +15,7 @@ label {
     /* Espacio entre el label y el input */
 }
 
+
 input {
     width: 100%;
     /* Los inputs ocuparán todo el ancho disponible */
@@ -25,6 +26,13 @@ input {
     border-radius: 5px;
     /* Bordes redondeados */
 }
+
+// input[type="date"] {
+//     width: 40%;
+//     /* Los inputs ocuparán todo el ancho disponible */
+//     padding: 8px;
+   
+// }
 
 .btn-group {
     margin-top: 20px;
