@@ -51,7 +51,6 @@ const routes: Routes = [
         path: 'clientes',
         component: ControlEntregasView,
         children: [
-
           {
             path: 'lista-clientes',
             component: ClienteTablaComponent,
@@ -75,14 +74,14 @@ const routes: Routes = [
         path: 'salida',
         component: SalidaView,
         children: [
-          
+
           {
             path: 'salida-listado',
             component: SalidaListaComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
-            redirectTo: 'salida-listado', // Redirigir a lista-repartidores por defecto
+            path: '',
+            redirectTo: 'salida-listado',
             pathMatch: 'full',
           }
         ]
@@ -116,8 +115,8 @@ const routes: Routes = [
             component: EntradaListaComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
-            redirectTo: 'entrada-listado', // Redirigir a lista-repartidores por defecto
+            path: '',
+            redirectTo: 'entrada-listado',
             pathMatch: 'full',
           }
         ]
@@ -179,8 +178,8 @@ const routes: Routes = [
             component: RepartidoresListadoComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
-            redirectTo: 'lista-repartidores', // Redirigir a lista-repartidores por defecto
+            path: '',
+            redirectTo: 'lista-repartidores',
             pathMatch: 'full',
           }
         ]
@@ -202,29 +201,12 @@ const routes: Routes = [
             component: RutaDetalleComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de rutas (opcional)
-            redirectTo: 'lista-rutas', // Redirigir a lista-repartidores por defecto
+            path: '',
+            redirectTo: 'lista-rutas',
             pathMatch: 'full',
           }
         ]
       },
-
-
-      // {
-      //   title:"404",
-      //   path: 'not-found',
-      //   component: NotFondViews,
-      // },
-      // {
-      //   title:"500",
-      //   path: 'unknown',
-      //   component: UnknownView ,
-      // },
-      // {
-      //   title:"404",
-      //   path: '**',
-      //   component: NotFondViews,
-      // },
     ],
   },
 ];

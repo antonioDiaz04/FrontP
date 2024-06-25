@@ -1,3 +1,4 @@
+
 import { Component, ViewEncapsulation } from '@angular/core';
 // import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -82,7 +83,10 @@ export class IniciarSesionView {
               this.router.navigate(['purificadoraAdm/Home'])
                 .then(() => window.location.reload());
             } else if (this.userROL === ERol.REPARTIDOR) {//repartidor
-              this.router.navigate(['/']).then(() => window.location.reload());
+              this.router.navigate(['repartidor/Home'])
+                .then(() => window.location.reload());
+
+              // this.router.navigate(['/']).then(() => window.location.reload());
             }
           }
         }

@@ -1,73 +1,112 @@
 <head>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-
-  <div class="sidebar">
+  <div class="sidenav">
     <div class="logo">
-      <h1>Purificadora</h1>
+      <span class="logo-icon"><i class="fas fa-water"></i></span>
+      <span class="logo-text">Purificadora</span>
     </div>
     <ul class="nav flex-column">
+      <li><a tabindex="0" (click)="redirectToAdminPurificadora('Home')" class="nav-link"><i class="fas fa-home"></i>
+          <span class="link-text">Dashboard</span></a></li>
+
+
+
       <li class="nav-item">
+        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('clientes-submenu')">
+          <i class="fas fa-user"></i>
+          <span class="link-text">Clientes</span>
+          <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'clientes-submenu'"></i>
+        </a>
+        <ul *ngIf="openSubmenu === 'clientes-submenu'" class="submenu" id="clientes-submenu">
+          <li><a tabindex="0" (click)="redirectToCotrolClientes('lista-clientes')" class="nav-link">Listar clientes</a></li>
+          <li><a tabindex="0" (click)="redirectToCotrolClientes('agregar-cliente')" class="nav-link">Agregar cliente</a></li>
+        </ul>
       </li>
+
       <li class="nav-item">
-        <a tabindex="0" (click)="redirectToAdminPurificadora('Home')" class="nav-link">
-          <span data-feather="file"></span>
-          Inicio
+        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('repartidores-submenu')">
+          <i class="fas fa-truck"></i>
+          <span class="link-text">Repartidores</span>
+          <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'repartidores-submenu'"></i>
+        </a>
+        <ul *ngIf="openSubmenu === 'repartidores-submenu'" class="submenu" id="repartidores-submenu">
+          <li><a tabindex="0" (click)="redirectToCotrolRepartidores('lista-repartidores')" class="nav-link">Listar
+              repartidores</a>
+          </li>
+          <li><a tabindex="0" (click)="redirectToCotrolRepartidores('agregar-repartidor')" class="nav-link">Agregar
+              repartidores </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('vehiculo-submenu')">
+          <i class="fas fa-car"></i>
+          <span class="link-text">Vehículos</span>
+          <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'vehiculo-submenu'"></i>
+        </a>
+        <ul *ngIf="openSubmenu === 'vehiculo-submenu'" class="submenu" id="vehiculo-submenu">
+          <li><a tabindex="0" (click)="redirectToCotrolVehiculo('lista-vehiculo')" class="nav-link">Listar Vehículos</a>
+          </li>
+          <li><a tabindex="0" (click)="redirectToCotrolVehiculo('agregar-vehiculo')" class="nav-link">Agregar Vehículo</a>
+          </li>
+        </ul>
+      </li>
+
+
+      <li class="nav-item">
+        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('rutas-submenu')">
+          <i class="fas fa-route"></i>
+          <span class="link-text">Rutas</span>
+          <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'rutas-submenu'"></i>
+        </a>
+        <ul *ngIf="openSubmenu === 'rutas-submenu'" class="submenu" id="rutas-submenu">
+          <li><a tabindex="0" (click)="redirectToCotrolRutas('lista-rutas')" class="nav-link">Listar ruta</a>
+          </li>
+          <li><a tabindex="0" (click)="redirectToCotrolRutas('agregar-ruta')" class="nav-link">Agregar ruta</a>
+          </li>
+        </ul>
+      </li>
+
+
+
+
+
+
+
+
+
+
+
+      <li class="nav-item">
+        <a tabindex="0" (click)="redirectToAdminPurificadora('salida')" class="nav-link">
+          <i class="fas fa-arrow-right"></i> <span class="link-text">Salida</span>
         </a>
       </li>
       <li class="nav-item">
-        <a tabindex="0" (click)="redirectToAdminPurificadora('clientes')" class="nav-link">
-          <span data-feather="shopping-cart"></span>
-          Clientes
+        <a tabindex="0" (click)="redirectToAdminPurificadora('resultado')" class="nav-link">
+          <i class="fas fa-arrow-left"></i> <span class="link-text">Entrada</span>
         </a>
       </li>
       <li class="nav-item">
-        <a tabindex="0" (click)="redirectToAdminPurificadora('repartidores')" class="nav-link">
-          <span data-feather="users"></span>
-          Repartidores
+        <a tabindex="0" (click)="redirectToAdminPurificadora('notificaciones')" class="nav-link">
+          <i class="fas fa-bell"></i> <span class="link-text">Notificaciones</span>
         </a>
       </li>
       <li class="nav-item">
-        <a tabindex="0" (click)="redirectToAdminPurificadora('vehiculo')" class="nav-link">
-          <span data-feather="users"></span>
-          Vehículos
-        </a>
-      </li>
-      <li class="nav-item">
-        <a tabindex="0" (click)="redirectToAdminPurificadora('rutas')" class="nav-link">
-          <span data-feather="users"></span>
-          Rutas
-        </a>
-      </li>
-      <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('salida')">
-          <span data-feather="layers"></span>
-          Salida
-        </a>
-      </li>
-      <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('resultado')">
-          <span data-feather="layers"></span>
-          Entrada
-        </a>
-      </li>
-      <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('notificaciones')">
-          <span data-feather="layers"></span>
-          notificaciones
-        </a>
-      </li>
-      <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="redirectToAdminPurificadora('miPerfil')">
-          <span data-feather="layers"></span>
-          Mi perfil
+        <a tabindex="0" (click)="redirectToAdminPurificadora('miPerfil')" class="nav-link">
+          <i class="fas fa-user-circle"></i> <span class="link-text">Mi perfil</span>
         </a>
       </li>
     </ul>
+    <button class="toggle-btn" onclick="toggleSidenav()">Toggle</button>
   </div>
   <div class="content">
     <router-outlet></router-outlet>
   </div>
+
 </body>

@@ -1,3 +1,4 @@
+import { InicioView } from './features/admin/view/inicio/inicio.view';
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +11,9 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { RepartidorComponent } from './features/repartidor/repartidor.component';
+
+
 
 @NgModule({
   declarations: [

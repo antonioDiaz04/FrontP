@@ -150,7 +150,7 @@ export class SalidaListaComponent implements OnInit {
           cantidadBotellas: data.cantidadBotellas
 
         });
-
+ 
         if (data.fechaInicio !== null && data.fechaInicio !== undefined) {
           let fechaInicioDate = data.fechaInicio instanceof Date ? data.fechaInicio : new Date(data.fechaInicio);
           const fechaFormateada = fechaInicioDate.toISOString().substring(0, 10);
@@ -199,13 +199,6 @@ export class SalidaListaComponent implements OnInit {
       cantidadBotellas: cantidadBotellas,
       fechaInicio: fecha
     };
-    // Crear un objeto FormData y agregar los datos del producto
-    // const formData = new FormData();
-    // formData.append('nombreRuta', nombreRuta._id);
-    // formData.append('selectedRepartidor', selectedRepartidor._id);
-    // formData.append('selectedVehiculo', selectedVehiculo._id);
-    // formData.append('cantidadBotellas', cantidadBotellas);
-    // formData.append('fecha', fecha);
 
     console.log(data)
 

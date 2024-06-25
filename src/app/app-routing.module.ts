@@ -24,10 +24,29 @@ const routes: Routes = [
       import('./features/adm-purificadora/adm-purificadora.module').then((m) => m.AdmPurificadoraModule),
   },
   {
+    path: 'repartidor',
+    loadChildren: () =>
+      import('./features/repartidor/repartidor.module').then((m) => m.RepartidorModule),
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
   // {
   //   title: "404",
   //   path: 'not-found',

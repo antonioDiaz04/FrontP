@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class ControlEntregasView {
   constructor(private router: Router) { }
 
-
   redirectToCotrolClientes(route: string): void {
     console.log(route)
     if (route === 'login') {

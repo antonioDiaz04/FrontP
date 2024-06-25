@@ -42,7 +42,7 @@ export class RutaDetalleComponent implements OnInit {
   selectedMunicipio: any
   selectedColonia: any
   selectedClient: any;
-  visitCount: number= 0;
+  visitCount: number = 0;
   isLoading = true;//variable rastreador de carga de producto
   constructor(private router: ActivatedRoute,
     private rutaService: RutaService,
@@ -80,7 +80,6 @@ export class RutaDetalleComponent implements OnInit {
     this.rutaService.detalleRutaById(this.idRuta).subscribe((data: DetalleEntregaInterface) => {
       this.detalleRuta = data;
       this.enviarUbicacionesMapa(this.detalleRuta)
-      console.log(this.detalleRuta);
     }, error => {
       console.log("ocurrio un error", error)
     })
@@ -110,7 +109,7 @@ export class RutaDetalleComponent implements OnInit {
     }
   }
 
-  
+
 
   agregarCliente() {
 
@@ -184,9 +183,6 @@ export class RutaDetalleComponent implements OnInit {
     this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
       data => {
         this.allColoniaXMuncipio = data.Colonias;
-        console.log("colonias=>", this.allColoniaXMuncipio)
-        // console.log(allColonias);
-        console.log("objeto=>", data)
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -199,7 +195,6 @@ export class RutaDetalleComponent implements OnInit {
     this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
       data => {
         this.allMunicipioXEstado = data.municipios;
-        console.log(this.allMunicipioXEstado);
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -264,7 +259,6 @@ export class RutaDetalleComponent implements OnInit {
       console.log("eliminarPuntoUbicacion")
       this.todo()
       // this.enviarUbicacionesMapa(this.detalleRuta)
-      console.log(this.detalleRuta);
     }, error => {
       console.log("ocurrio un error", error)
     })
