@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Title</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="card flex justify-content-center">
+    <p-sidebar [(visible)]="sidebarVisible" styleClass="ui-sidebar-md">
+       
+        <h3>Menú de Acciones</h3>
+        <ul class="actions-list">
+            <li>
+                <a routerLink="/inicio">
+                    <i class="fa fa-home"></i> Inicio
+                </a>
+            </li>
+            <li>
+                <a routerLink="/mis-entregas">
+                    <i class="fa fa-truck"></i> Mis Entregas
+                </a>
+            </li>
+            <li>
+                <a routerLink="/entregas-programadas">
+                    <i class="fa fa-calendar-alt"></i> Entregas Programadas
+                </a>
+            </li>
+            <li>
+                <a routerLink="/clientes">
+                    <i class="fa fa-users"></i> Clientes
+                </a>
+            </li>
+            <li>
+                <a routerLink="/perfil">
+                    <i class="fa fa-user"></i> Perfil
+                </a>
+            </li>
+            <li>
+                <a routerLink="/configuracion">
+                    <i class="fa fa-cogs"></i> Configuración
+                </a>
+            </li>
+            <li>
+                <a routerLink="/configuracion">
+                    <i class="fa fa-cogs"></i> Cerrar sesión
+                </a>
+            </li>
+        </ul>
+    </p-sidebar>
+    <button (click)="sidebarVisible = true" class="hamburger-button">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+</div>
+<main>
+    <router-outlet></router-outlet>
+</main>
+
+</body>
+
+</html>

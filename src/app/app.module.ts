@@ -11,10 +11,6 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { RepartidorComponent } from './features/repartidor/repartidor.component';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +18,7 @@ import { RepartidorComponent } from './features/repartidor/repartidor.component'
     HeaderComponent,
     SigninComponent,
     PublicComponent,
+    // RepartidorHomeView,
   ],
   imports: [
     

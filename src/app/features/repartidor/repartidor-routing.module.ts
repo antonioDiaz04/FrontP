@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepartidorComponent } from './repartidor.component';
-import { InicioView } from './commons/view/inicio/inicio.view';
+import { InicioView } from './view/inicio/inicio.view';
+import { RepartidorHomeView } from './view/repartidor-home/repartidor-home.view';
 
 const routes: Routes = [
 
@@ -17,7 +18,11 @@ const routes: Routes = [
       {
         path: 'Home',
         component: InicioView,
-      }
+      },
+      {
+        path: 'repartidor-home',
+        component: RepartidorHomeView,
+      },
     ]
   }
 
