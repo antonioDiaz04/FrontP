@@ -2,7 +2,6 @@
 
     <h1>Resultados de entregas</h1>
     <div class="top-bar">
-        <!-- <button class="add-entry-btn">Añadir Entrada</button> -->
         <input type="text" id="searchBar" placeholder="Buscar...">
     </div>
     <div class="filter-container">
@@ -10,35 +9,30 @@
             <label for="date">Días Programada la Salida:</label>
             <select id="date" name="date">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de fechas -->
             </select>
         </div>
         <div class="filter-group">
             <label for="vehicle">Vehículo:</label>
             <select id="vehicle" name="vehicle">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de vehículos -->
             </select>
         </div>
         <div class="filter-group">
             <label for="repartidor">Repartidor:</label>
             <select id="repartidor" name="repartidor">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de repartidores -->
             </select>
         </div>
         <div class="filter-group">
             <label for="route">data:</label>
             <select id="route" name="route">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de rutas -->
             </select>
         </div>
         <div class="filter-group">
             <label for="estatus">Estatus:</label>
             <select id="estatus" name="estatus">
                 <option value="">Seleccione...</option>
-                <!-- Opciones de municipios -->
             </select>
         </div>
 
@@ -57,7 +51,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <!-- <tbody>
             <tr *ngFor="let data of paginatedRutasDetalles">
                 <td>{{ data.rutaId?.nombreRuta }}</td>
                 <td>{{ data?.fechaInicio }}</td>
@@ -81,7 +75,7 @@
                     <button type="button" class="add-entry-btn" disabled>detalles</button>
                 </td>
             </tr>
-        </tbody>
+        </tbody> -->
     </table>
 
 

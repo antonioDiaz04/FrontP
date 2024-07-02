@@ -40,7 +40,7 @@ export class SalidaListaComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerRutas();
     this.getRepartidores();
-    this.getAllNombresRutas();
+    // this.getAllNombresRutas();
     this.getVehiculos();
     this.updatePaginatedRutasDetalles();
   }
@@ -225,16 +225,16 @@ export class SalidaListaComponent implements OnInit {
     });
 
   }
-  getAllNombresRutas() {
-    this.rutaS.getNombreRutas().subscribe(
-      (data: Ruta[]) => {
-        this.allNombreRuta = data;
-      },
-      error => {
-        console.log("Ocurrió un error al obtener la información", error);
-      }
-    );
-  }
+  // getAllNombresRutas() {
+  //   this.rutaS.getNombreRutas().subscribe(
+  //     (data: Ruta[]) => {
+  //       this.allNombreRuta = data;
+  //     },
+  //     error => {
+  //       console.log("Ocurrió un error al obtener la información", error);
+  //     }
+  //   );
+  // }
 
 
   getVehiculos() {

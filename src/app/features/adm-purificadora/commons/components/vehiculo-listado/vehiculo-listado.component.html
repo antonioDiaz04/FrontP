@@ -5,8 +5,8 @@
 
 
 
-<p-dialog *ngIf="dataVehiculo"   [(visible)]="visible"  header="Información del vehiculo" [modal]="true" [style]="{ width: '35rem' }"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+<p-dialog *ngIf="dataVehiculo" [(visible)]="visible" header="Información del vehiculo" [modal]="true"
+    [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
     <!-- <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible" -->
     <form [formGroup]="vehiculoForm" (ngSubmit)="actualizarVehiculo(dataVehiculo._id)">
         <h3>Detalles del vehiculo</h3>
@@ -48,19 +48,24 @@
         </thead>
         <tbody>
 
-            <tr *ngFor="let repartidor of allRepartidores">
-                <td>{{repartidor.marca}}</td>
-                <td>{{repartidor.modelo}}</td>
-                <td>{{repartidor.anio}}</td>
-                <td>{{repartidor.placas}}</td>
+            <tr *ngFor="let data of allVehiculos">
+                <td>{{data.marca}}</td>
+                <td>{{data.modelo}}</td>
+                <td>{{data.anio}}</td>
+                <td>{{data.placas}}</td>
                 <td>
-                                            <i (click)="eliminarUsuario(repartidor._id)" class="fas fa-trash-can text-danger m-3"></i>
-                                            <i (click)="editar(repartidor._id)" class="fa-solid fa-pen-to-square m-3 "></i>
+                    <button class="custom-btn custom-btn-danger" (click)="eliminar(data._id)">
+                        <i class="fas fa-trash-can"></i> Eliminar
+                    </button>
+                  
+                    <button class="custom-btn custom-btn-primary" (click)="editar(data._id)">
+                        <i class="fa-solid fa-pen-to-square"></i> Editar
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
-<p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
-</p-paginator>
+    <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
 
 </section>

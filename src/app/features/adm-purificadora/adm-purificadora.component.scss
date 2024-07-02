@@ -1,9 +1,9 @@
-body {
-    background: #e0e0e0;
-}
+// body {
+//     background: #e0e0e0;
+// }
 
 h1 {
-    text-align: center;
+    text-align: start;
     margin-bottom: 20px;
     color: #333;
 }
@@ -114,12 +114,14 @@ section#lista {
         box-shadow: 0 0 5px 7px rgba(0, 0, 0, 0.1);
 
         >thead {
+            border-radius: 10px 10px;
+
             >tr {
                 >th {
                     padding: 12px 15px;
                     text-align: left;
                     border-bottom: 1px solid #ddd;
-                    background-color: #a6a4ff38;
+                    background-color: #ffffff;
                     // color: #383838;
                     color: rgb(0, 0, 0);
                 }
@@ -127,12 +129,60 @@ section#lista {
         }
 
         >tbody {
+            border-radius: 10px 10px;
+
             >tr {
+                >.custom-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 0.5rem 1rem;
+                    border: none;
+                    border-radius: 0.25rem;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                    font-size: 0.8rem;
+                }
+
+                .custom-btn i {
+                    margin-right: 0.5rem;
+                }
+
+                .custom-btn-detail:hover {
+                    background-color: #5c35dc;
+                    color: #fff;
+                }
+
+                .custom-btn-detail {
+                    background-color: #c035dc;
+                    color: #fff;
+                }
+
+                .custom-btn-danger {
+                    background-color: #dc3545;
+                    color: #fff;
+                }
+
+                .custom-btn-danger:hover {
+                    background-color: #c82333;
+                }
+
+                .custom-btn-primary {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+
+                .custom-btn-primary:hover {
+                    background-color: #0056b3;
+                }
+
+
+
                 >td {
                     padding: 12px 15px;
                     text-align: left;
                     border-bottom: 1px solid #ddd;
-                    color: rgb(83, 83, 83);
+                    color: rgb(100, 100, 100);
 
 
                     >p {
@@ -162,18 +212,21 @@ section#lista {
                         padding: 5px 5px;
                         border-radius: 5px;
                     }
-                    >.ninguno{
+
+                    >.ninguno {
                         color: #7e7e7e;
                         background: #e5e5e5;
                         padding: 5px 5px;
                         border-radius: 5px;
                     }
+
                     >.finalizada {
                         color: #4ca87a;
                         background: #bdffde;
                         padding: 5px 5px;
                         border-radius: 5px;
                     }
+
                     >.en_curso {
                         color: #0045f3;
                         background: #70c1fa;

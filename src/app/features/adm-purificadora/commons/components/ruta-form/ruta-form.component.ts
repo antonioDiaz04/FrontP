@@ -1,26 +1,39 @@
-import { DetalleEntregaInterface } from './../../../../../shared/interfaces/detalle-entrega-schema.interface';
-import { DetalleEntregaSchema } from './../../../../../shared/models/DetalleEntregaSchema.model';
 import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RutaService } from '../../../../../shared/services/ruta.service';
+import { Ruta } from '../../../../../shared/models/ruta.model';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
+
+
+
 import { Repartidor } from '../../../../../shared/models/repartidor.model';
 import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle.service';
 import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
 import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
+
+
 import { ClientesService } from '../../../../../shared/services/clientes.service';
 import { Cliente } from '../../../../../shared/interfaces/client.interface';
-import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
+import { Toast } from '../../../../../shared/services/toast.service';
+
 @Component({
   selector: 'app-ruta-form',
   templateUrl: './ruta-form.component.html',
-  styleUrls: ['./ruta-form.component.scss', './checkbox.scss', './tabla.scss']
+  styleUrls: ['./ruta-form.component.css', './checkbox.scss', './tabla.scss']
 })
 export class RutaFormComponent implements OnInit {
   allClients: Cliente[] = []
+  titulo = 'Registro de  ruta';
+  btnTitle = 'Registrar';
+  accion = 'Seleccionar';
+  detalleRuta?: DetalleEntregaInterface;
+  clienteFormAdd!: FormGroup
+  id: any;
   checked: boolean = true;
   visible: boolean = false;
   showOverlay: boolean = false;
@@ -31,20 +44,19 @@ export class RutaFormComponent implements OnInit {
   selectedClients: any[] = [];
   allRepartidores: Repartidor[] = [];
   allVehiculos: Vehiculo[] = [];
-  allNombreRuta: Ruta[] = [];
-  selectedRepartidor: any;
+  selectedRepartidor: Repartidor | null = null;
+  selectedVehiculo: Vehiculo | null = null;
+
+  diasAsignados: { [key: string]: boolean } = {};
+
   allMunicipioXEstado: any;
   allColoniaXMuncipio: any;
   filas!: FormArray;
   registroRuta!: FormGroup;
 
-  nombre: string = '';
 
-  guardarNombre() {
-    console.log('Nombre guardado:', this.nombre);
-  }
 
-  
+
   customDropdownStyle = {
     'width': '300px',
     'border': '1px solid #ccc',
@@ -53,9 +65,7 @@ export class RutaFormComponent implements OnInit {
     'color': '#333'
   };
   customDropdownClass = 'custom-dropdown'; // Agrega tus clases de estilo personalizadas aquí
-  constructor(private UserS: ClientesService,
-    private rutaSe:RutaService,
-    private consultasCOPOMEX: ConsultasCOPOMEXService, private vehiculoService: VehiculoService, private repService: RepartidoresService, private rutaService: RutaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private mapService: MapaClientDetailUbacionService) {
+  constructor(private toast: Toast, private aRouter: ActivatedRoute, private router: Router, private UserS: ClientesService, private consultasCOPOMEX: ConsultasCOPOMEXService, private vehiculoService: VehiculoService, private repService: RepartidoresService, private rutaService: RutaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private mapService: MapaClientDetailUbacionService) {
     this.registroRuta = this.formBuilder.group({
       nombreRuta: ['', Validators.required],
       fechaInicio: ['', Validators.required],
@@ -64,13 +74,19 @@ export class RutaFormComponent implements OnInit {
       diasAsignados: this.formBuilder.array([]),
       filas: this.formBuilder.array([])
     });
+
+    this.clienteFormAdd = this.formBuilder.group({
+      selectedMunicipio: ['', Validators.required],
+      selectedColonia: ['', Validators.required],
+      selectedClientAdd: ['', Validators.required],
+    });
+
+ this.diasSeleccionados = [];
+    this.id = this.aRouter.snapshot.paramMap.get('id');
+
     this.filas = this.registroRuta.get('filas') as FormArray;
   }
 
-  onRutaNombreSelectionChange() {
-    const selectedId = this.registroRuta.get('nombreRuta')?.value;
-    console.log('ID del ruta seleccionado:', selectedId);
-  }
   onRepartidorSelectionChange() {
     const selectedId = this.registroRuta.get('selectedRepartidor')?.value;
     console.log('ID del repartidor seleccionado:', selectedId);
@@ -86,30 +102,14 @@ export class RutaFormComponent implements OnInit {
     console.log("presionado atras")
   }
 
-  @ViewChild('asGeocoder') asGeocoder!: ElementRef;
-
-  iniciarMapa() {
-    this.mapService.buildMap()
-      .then(({ geocoder, map }) => {
-        this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));
-        console.log('Perfecto |');
-      })
-      .catch((err) => {
-        console.log('Error *** ', err);
-      });
-    this.mapService.cbAddress.subscribe((getPoint) => {
-      console.log('*** getPoint', getPoint)
-    })
-  }
-
   ngOnInit(): void {
-    this.iniciarMapa()
+    this.esEditar();
+    this.todo()
     this.getRepartidores();
     this.getVehiculos()
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio()
     this.getUsers()
-    this.getAllNombresRutas()
   }
 
   getRepartidores() {
@@ -123,19 +123,6 @@ export class RutaFormComponent implements OnInit {
       }
     );
   }
-
-  getAllNombresRutas() {
-    this.rutaSe.getNombreRutas().subscribe(
-      (data: DetalleEntregaInterface[]) => {
-        this.allNombreRuta = data;
-        console.log(this.allNombreRuta);
-      },
-      error => {
-        console.log("Ocurrió un error al obtener la información", error);
-      }
-    );
-  }
-
   getVehiculos() {
     this.vehiculoService.getVehiculos().subscribe(
       (data: Vehiculo[]) => {
@@ -162,12 +149,9 @@ export class RutaFormComponent implements OnInit {
   }
 
 
-
-
   onColoniaSelectionChange(event: any, index: number) {
 
     const filaFormGroup = this.filas.at(index) as FormGroup;
-
     // Obtén el valor seleccionado de selectedColonia en esa fila
     const selectedColoniaValue = filaFormGroup.get('selectedColonia')?.value;
 
@@ -184,10 +168,6 @@ export class RutaFormComponent implements OnInit {
     }
     return filtered;
   }
-
-
-
-
   onMunicipioSelectionChange(event: any, index: number) {
     const filaFormGroup = this.filas.at(index) as FormGroup;
 
@@ -209,27 +189,331 @@ export class RutaFormComponent implements OnInit {
     return filtered;
   }
 
+
+
   onClientSelectionChange(event: any) {
     this.selectedClients = event.value;
+    // if (this.selectedClients.length === 0) {
+    //   this.toast.showToastSwalError('No ha seleccionado ningun cliente!')
+    // } else {
+    //   console.log('Clientes seleccionados:', this.selectedClients);
+    // }
+  }
 
-    if (this.selectedClients.length === 0) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'No ha seleccionado ningun cliente!',
-        icon: 'error',
-        position: 'bottom-left',
 
-        toast: true, // Hacer que el alerta sea tipo toast
-        timer: 2000 // Duración en milisegundos antes de que el alerta se cierre automáticamente
-      });
-      console.log("No ha seleccionado ningun cliente!")// Retorna una matriz vacía si el valor seleccionado es nulo
-      // Aquí puedes mostrar un mensaje de error en tu aplicación
-    } else {
-      console.log('Clientes seleccionados:', this.selectedClients);
-      //  console.log('¡No ha seleccionado ningún usuario!');
-      // Realiza cualquier operación adicional aquí con los valores seleccionados
+
+
+  getColoniaPorMunicipio() {
+    this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
+      data => {
+        this.allColoniaXMuncipio = data.Colonias;
+        console.log("colonias=>", this.allColoniaXMuncipio)
+        // console.log(allColonias);
+        console.log("objeto=>", data)
+      },
+      error => {
+        console.log("Ocurrió un error al obtener la información", error);
+      }
+    )
+  }
+
+
+
+  obtenerTodosLosMunicipios() {
+    const municipiosSeleccionados = this.filas.controls.map(fila => fila.get('selectedMunicipio')?.value);
+    return municipiosSeleccionados;
+  }
+
+  obtenerTodosLasColonias() {
+    const coloniasSeleccionados = this.filas.controls.map(fila => fila.get('selectedColonia')?.value);
+    return coloniasSeleccionados;
+  }
+  obtenerTodosLasClientes() {
+
+    const clientesSeleccionados = this.filas.controls.map(fila => fila.get('selectedClient')?.value);
+
+    return clientesSeleccionados;
+  }
+
+  AgregarClienteRuta() {
+
+
+
+
+    const allMunicipios = this.obtenerTodosLosMunicipios();
+    console.log('Municipios seleccionados:', allMunicipios);
+    const allColonias = this.obtenerTodosLasColonias();
+    console.log('Colonias seleccionados:', allColonias);
+    const allClients = this.obtenerTodosLasClientes();
+    console.log("Clientes seleccionados", allClients);
+
+    const nombreRuta = this.registroRuta.get('nombreRuta')?.value;
+    const selectedVehiculo = this.registroRuta.get('selectedVehiculo')?.value;
+    const selectedRepartidor = this.registroRuta.get('selectedRepartidor')?.value;
+    
+    
+    
+    const diasAsignados = this.diasSeleccionados;
+
+    console.log("dias en registro", diasAsignados)
+
+    if (!nombreRuta) {
+      this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
+      return;
     }
-    // Realiza cualquier operación adicional aquí con los valores seleccionados
+
+    if (!selectedRepartidor) {
+      this.toast.showToastPmNgWarn('Seleccione un repartidor')
+      return;
+    }
+    if (!selectedVehiculo) {
+      this.toast.showToastPmNgWarn('Selecciona un vehiculo')
+      return;
+    }
+
+    if (!allColonias) {
+      this.toast.showToastPmNgWarn('Por favor ingresa tu colonia :AgregarClienteRuta ')
+      return;
+    }
+
+    if (this.id == null) {
+      if (allClients.length === 0) {
+        this.toast.showToastPmNgWarn('No ha seleccionado ningun cliente!')
+        console.log("No ha seleccionado ningun cliente!")
+        return;
+      }
+    }
+    if (!allMunicipios) {
+      this.toast.showToastPmNgWarn('Por favor ingresa tu municipio')
+      return;
+    }
+    if (!diasAsignados) {
+      this.toast.showToastPmNgWarn('selecciona los dias')
+      return;
+    }
+
+
+
+
+
+
+
+    const puntosDeEntrega = allClients.map((clienteId, index) => ({
+      municipio: allMunicipios[index],
+      colonia: allColonias[index],
+      clienteId: allClients
+    }));
+    const RUTA: Ruta = {
+      nombreRuta: nombreRuta,
+      repartidorId: selectedRepartidor,
+      vehiculoId: selectedVehiculo,
+      estado: 'pendiente',
+      puntosDeEntrega: puntosDeEntrega,
+      diasAsignados: diasAsignados
+    }
+
+
+
+    if (this.id !== null) {
+      // Si es una edición, llamar al método editarProducto con el ID y el objeto formData
+      this.rutaService.updateRuta(this.id, RUTA).subscribe(
+        () => {
+          this.toast.showToastSwalSuccess('Ruta actualizado con éxito!')
+          this.router.navigate(['/purificadoraAdm/rutas/lista-rutas']) // Navegación hacia otras páginas públicas
+        }, error => {
+
+          console.log("Ocurrió un error al actualizar", error);
+          // Muestra el error usando el servicio de notificación
+          this.toast.showToastSwalError('Error al actualizar la ruta: ' + (error.error.message || 'Error desconocido'))
+        }
+
+      );
+      this.todo()
+    } else {
+      console.log(RUTA)
+      this.rutaService.addRuta(RUTA).subscribe(response => {
+        this.visible = false;
+        this.toast.showToastSwalSuccess('Se ha agregado correctamente.')
+      }, (error) => {
+        console.error(error); // Imprime el error en la consola para depuración
+        let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
+        if (error && error.error && error.error.message) {
+          errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
+        }
+        this.toast.showToastSwalError(errorMessage)// Mostramos el mensaje de error en la alerta
+      })
+    }
+  }
+
+  getMunicipioPorExtado() {
+    this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
+      data => {
+        this.allMunicipioXEstado = data.municipios;
+        console.log(this.allMunicipioXEstado);
+      },
+      error => {
+        console.log("Ocurrió un error al obtener la información", error);
+      }
+    );
+  }
+
+  agregarFila() {
+    this.filas.push(this.formBuilder.group({
+      selectedMunicipio: [''], // Aquí deberías inicializar los valores según tus necesidades
+      selectedColonia: [''],
+      selectedClient: ['']
+    }));
+  }
+
+  eliminarFila(index: number) {
+    (this.registroRuta.get('filas') as FormArray).removeAt(index);
+  }
+
+
+  esEditar() {
+    if (this.id !== null) {
+      this.titulo = 'Editar Producto';
+      this.btnTitle = 'Actualizar';
+      this.accion = 'Cambiar';
+      this.rutaService.detalleRutaById(this.id).subscribe((data) => {
+        let selectedNombreRuta = data.nombreRuta;
+        this.selectedRepartidor = data.repartidorId;
+        this.selectedVehiculo = data.vehiculoId;
+
+        this.registroRuta.patchValue({
+          nombreRuta: selectedNombreRuta,
+          selectedRepartidor: data.repartidorId,
+          selectedVehiculo: data.vehiculoId,
+        });
+      })
+    }
+  }
+
+  eliminarPuntoUbicacion(id: any) {
+    this.rutaService.eliminarPuntoEntrega(id).subscribe(data => {
+      this.todo()
+      console.log(this.detalleRuta);
+    }, error => {
+      console.log("ocurrio un error", error)
+    })
+  }
+
+  todo(): void {
+    if (this.id !== null) {
+      this.rutaService.detalleRutaById(this.id).subscribe((data: DetalleEntregaInterface) => {
+        this.detalleRuta = data;
+        if (this.detalleRuta.diasAsignados) {
+          this.diasAsignados = this.convertArrayToDiasAsignados(this.detalleRuta.diasAsignados);
+          this.diasSeleccionados = [...this.detalleRuta.diasAsignados]; // Initialize the selected days array
+        } else {
+          this.diasAsignados = this.initializeDiasAsignados();
+        }
+        console.log("dias=>", this.diasAsignados);
+      }, error => {
+        console.log("ocurrio un error", error);
+      });
+    }
+  }
+
+  onColoniaSelectionChangeId(event: any) {
+    const selectedColoniaValue = event.value;
+    console.log('Colonia seleccionado:', selectedColoniaValue);
+    if (selectedColoniaValue === null) {
+      return "No ha seleccionado ninguna colonia!"; // Retorna una matriz vacía si el valor seleccionado es nulo
+    }
+    let filtered: any[] = [];
+    for (let colonia of this.allColoniaXMuncipio) {
+      if (colonia.toLowerCase().indexOf(selectedColoniaValue.toLowerCase()) == 0) {
+        filtered.push(colonia);
+      }
+    }
+    return filtered;
+  }
+
+
+
+  agregarCliente() {
+    this.visible = true;
+    if (this.visible) {
+      this.clienteFormAdd.reset({
+        selectedMunicipio: '',
+        selectedColonia: '',
+        selectedClientAdd: '',
+      });
+
+    }
+  }
+
+  agregarClienteEnRuta() {
+    this.visible = true;
+    const selectedClientAdd = this.clienteFormAdd.get('selectedClientAdd')?.value;
+    if (!selectedClientAdd) {
+      this.toast.showToastPmNgWarn('Selecciona el cliente');
+      return;
+    }
+    function generateUniqueId() {
+      return Math.random().toString(36).substr(2, 9);
+    }
+
+    const newPuntosDeEntrega = {
+      clienteId: selectedClientAdd._id,
+      _id: generateUniqueId()
+    }
+
+    this.rutaService.addPuntoEntregaRutaById(this.id, newPuntosDeEntrega).subscribe(response => {
+      this.visible = false;
+      this.toast.showToastSwalSuccess('Se ha agregado correctamente.')
+      this.todo()
+    }, (error) => {
+      console.error(error); // Imprime el error en la consola para depuración
+      let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
+      if (error && error.error && error.error.message) {
+        errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
+      }
+      this.toast.showToastSwalError(errorMessage)
+    })
+  }
+  convertArrayToDiasAsignados(dias: string[]): { [key: string]: boolean } {
+    const diasAsignados: { [key: string]: boolean } = {};
+    const allDias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+    allDias.forEach(dia => {
+      diasAsignados[dia] = dias.includes(dia);
+    });
+    return diasAsignados;
+  }
+
+  initializeDiasAsignados(): { [key: string]: boolean } {
+    const diasAsignados: { [key: string]: boolean } = {};
+    const allDias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+    allDias.forEach(dia => {
+      diasAsignados[dia] = false;
+    });
+    return diasAsignados;
+  }
+ 
+ 
+  onDiaSeleccionadoupdate(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const isChecked = input.checked;
+    const dia = input.value;
+
+    this.diasAsignados[dia] = isChecked;
+
+    if (isChecked) {
+      this.diasSeleccionados.push(dia);
+    } else {
+      const index = this.diasSeleccionados.indexOf(dia);
+      if (index > -1) {
+        this.diasSeleccionados.splice(index, 1);
+      }
+    }
+    console.log("dias en seleccion",this.diasSeleccionados);
+  }
+
+
+
+  getSelectedDias(): string[] {
+    return Object.keys(this.diasAsignados).filter(dia => this.diasAsignados[dia]);
   }
 
 
@@ -249,163 +533,6 @@ export class RutaFormComponent implements OnInit {
   }
 
 
-  getColoniaPorMunicipio() {
-    this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
-      data => {
-        this.allColoniaXMuncipio = data.Colonias;
-        console.log("colonias=>", this.allColoniaXMuncipio)
-        // console.log(allColonias);
-        console.log("objeto=>", data)
-      },
-      error => {
-        console.log("Ocurrió un error al obtener la información", error);
-      }
-    )
-  }
 
-
-  mostrarToastError(text: string) {
-    Swal.fire({
-      title: 'Error',
-      text: text,
-      icon: 'error',
-      position: 'bottom-left', // Mostrar el alerta en la parte superior
-      toast: true, // Hacer que el alerta sea tipo toast
-      timer: 2000 // Duración en milisegundos antes de que el alerta se cierre automáticamente
-    });
-    // return;
-  }
-
-
-  obtenerTodosLosMunicipios() {
-    const municipiosSeleccionados = this.filas.controls.map(fila => fila.get('selectedMunicipio')?.value);
-    return municipiosSeleccionados;
-  }
-
-  obtenerTodosLasColonias() {
-    const coloniasSeleccionados = this.filas.controls.map(fila => fila.get('selectedColonia')?.value);
-    return coloniasSeleccionados;
-  }
-  obtenerTodosLasClientes() {
-    const clientesSeleccionados = this.filas.controls.map(fila => fila.get('selectedClient')?.value);
-    return clientesSeleccionados;
-  }
-  AgregarClienteRuta() {
-    const allClients = this.obtenerTodosLasClientes();
-    console.log("Clientes seleccionados", allClients);
-
-    const nombreRuta = this.registroRuta.get('nombreRuta')?.value;
-    const selectedVehiculo = this.registroRuta.get('selectedVehiculo')?.value;
-    const selectedRepartidor = this.registroRuta.get('selectedRepartidor')?.value;
-    const diasAsignados = this.diasSeleccionados;
-
-    if (!nombreRuta) {
-      this.mostrarToastError('Por favor seleccione el nombre de la ruta');
-      return;
-    }
-
-    if (!selectedRepartidor) {
-      this.mostrarToastError('Seleccione un repartidor');
-      return;
-    }
-
-    if (!selectedVehiculo) {
-      this.mostrarToastError('Selecciona un vehiculo');
-      return;
-    }
-
-    if (allClients.length === 0) {
-      this.mostrarToastError('No ha seleccionado ningún cliente');
-      console.log("No ha seleccionado ningún cliente");
-      return;
-    }
-
-    if (!diasAsignados) {
-      this.mostrarToastError('Selecciona los días');
-      return;
-    }
-
-    // Iterar sobre cada cliente y enviarlo por separado
-    allClients.forEach(clienteId => {
-      const rutaDetalle: DetalleEntregaSchema = {
-        rutaId: nombreRuta,
-        repartidorId: selectedRepartidor,
-        vehiculoId: selectedVehiculo,
-        clienteId: clienteId,  // Asignar el clienteId actual del ciclo
-        diasAsignados: diasAsignados  // Utilizar los días asignados comunes a todos los clientes
-      };
-
-      console.log("Detalle de entrega:", rutaDetalle);
-
-      // Llamar al servicio para agregar la ruta
-      this.rutaService.addRuta(rutaDetalle).subscribe(
-        response => {
-          console.log("Ruta agregada correctamente:", response);
-          Swal.fire({
-            title: '¡Perfecto!',
-            text: 'Se ha agregado correctamente.',
-            icon: 'success',
-            timer: 2000,
-            showConfirmButton: false,
-            toast: false,
-          });
-        },
-        error => {
-          console.error("Error al agregar la ruta:", error);
-          let errorMessage = "Error desconocido";
-          if (error && error.error && error.error.message) {
-            errorMessage = error.error.message;
-          }
-          Swal.fire("Error", errorMessage, 'error');
-        }
-      );
-    });
-  }
-
-
-  getMunicipioPorExtado() {
-    this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
-      data => {
-        this.allMunicipioXEstado = data.municipios;
-        console.log(this.allMunicipioXEstado);
-      },
-      error => {
-        console.log("Ocurrió un error al obtener la información", error);
-      }
-    );
-  }
-
-  // getColoniaPorMunicipio() {
-  //   this.consultasCOPOMEX.getColoniaXMunicipio(this.selectedMunicipio).subscribe(
-  //     data => {
-  //       this.allColoniaXMuncipio = data.response.colonia;
-  //       console.log(this.allColoniaXMuncipio)
-  //     },
-  //     error => {
-  //       console.log("Ocurrió un error al obtener la información", error);
-  //     }
-  //   )
-  // } 
-  // getMunicipioPorExtado() {
-  //   this.consultasCOPOMEX.getMunicipioXEstado('Hidalgo').subscribe(
-  //     data => {
-  //       this.allMunicipioXEstado = data;
-  //       console.log(this.allMunicipioXEstado)
-  //     },
-  //     error => {
-  //       console.log("Ocurrió un error al obtener la información", error);
-  //     }
-  //   )
-  // }
-
-  agregarFila() {
-    this.filas.push(this.formBuilder.group({
-      selectedMunicipio: [''], // Aquí deberías inicializar los valores según tus necesidades
-      selectedColonia: [''],
-      selectedClient: ['']
-    }));
-  }
-  eliminarFila(index: number) {
-    (this.registroRuta.get('filas') as FormArray).removeAt(index);
-  }
 }
+

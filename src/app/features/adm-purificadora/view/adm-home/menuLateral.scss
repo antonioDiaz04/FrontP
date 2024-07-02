@@ -7,21 +7,12 @@ body {
 }
 
 
-
-
-// .sidebar ul li a:focus,
-
-// .sidebar ul li a:active {
-//     color: rgb(0, 160, 107);
-//     background: beige;
-// }
-
-
 .sidenav {
     width: 250px;
     height: 100vh;
-    background-color: #252e4a;
-    color: #fff;
+    background-color: #ffffff;
+    color: #1d2d3a;
+    box-shadow: 0 0 3px #d5d5d5;
     position: fixed;
     top: 0;
     left: 0;
@@ -30,6 +21,7 @@ body {
     align-items: center;
     padding: 20px 0;
     transition: width 0.3s;
+    z-index: 100;
 
     &.collapsed {
         width: 80px;
@@ -81,24 +73,44 @@ body {
             width: 100%;
             margin-bottom: 10px;
 
+            // transition: opacity 0.3s ease;
 
-// .rotate{
-  
+            // .rotate{
 
+            // .nav-link {
+            // }
+
+            // .nav-link.selected {
+            //     opacity: 0.5;
+            //     /* Ajusta la opacidad al 50% cuando está seleccionado */
+            // }
 
             a {
                 text-decoration: none;
-                color: #b8b9bf;
+                color: #58585b;
                 padding: 10px 20px;
                 display: flex;
+                cursor: pointer;
                 align-items: center;
                 border-radius: 4px;
                 transition: background 0.3s;
+                transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s ease;
+                opacity: 0.9;
 
                 &:hover {
-                            background-color: #ffffff;
-                            color: #1a1d24;
+                    opacity: 1;
+                    transform: scale(0.9);
+                    /* Aumenta el tamaño al 110% */
+                    box-shadow: 0 8px 16px rgba(85, 85, 85, 0.475);
+                    background-color: #ffffff;
+                    color: #192953;
                 }
+
+                // a.selected {
+                //     background-color: #ffcc00;
+                //     /* Color de fondo cuando está seleccionado */
+                //     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                // }
 
                 i {
                     margin-right: 10px;
@@ -111,11 +123,12 @@ body {
                 .submenu-toggle {
                     margin-left: auto;
                 }
-                
+
                 .submenu-toggle.open {
-            transform: rotate(180deg);
-        }
-// }
+                    transform: rotate(180deg);
+                }
+
+                // }
             }
 
             .submenu {
@@ -145,7 +158,7 @@ body {
 
         &:hover {
             background-color: #ffffff;
-            color:#1a1d24;
+            color: #1a1d24;
         }
     }
 }

@@ -1,9 +1,10 @@
-
+<p-toast />
 <section id="registro">
-    <form [formGroup]="registroRepartidores"(ngSubmit)="registroRepartidor()" method="post">
+    <form [formGroup]="registroRepartidores" (ngSubmit)="registroRepartidor()" method="post">
+        <!-- <h2>REGISTRO DE REPARTIDOR</h2> -->
         <div class="form-column">
             <fieldset>
-                <legend>Información Básica</legend>
+                <legend>Información del repartidor</legend>
                 <label for="nombre">Nombre Completo:</label>
                 <input type="text" id="nombre" formControlName="nombre">
 
@@ -19,9 +20,46 @@
 
         <div class="form-column">
             <fieldset>
-                <legend>Información Laboral</legend>
                 <label for="horario">passwor de Trabajo:</label>
                 <input type="text" id="horario" formControlName="password1">
+                <label>Asignación de días </label>
+                <div class="checkbox-container">
+                    <div class="checkbox-item">
+                        <span for="lunes">Lunes</span>
+                        <input type="checkbox" id="lunes" formcontr="Lunes" value="lunes"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                    <div class="checkbox-item">
+                        <span for="martes">Martes</span>
+                        <input type="checkbox" id="martes" name="Martes" value="martes"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                    <div class="checkbox-item">
+                        <span for="miercoles">Miércoles</span>
+                        <input type="checkbox" id="miercoles" name="Miércoles" value="miercoles"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                    <div class="checkbox-item">
+                        <span for="jueves">Jueves</span>
+                        <input type="checkbox" id="jueves" name="Jueves" value="jueves"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                    <div class="checkbox-item">
+                        <span for="viernes">Viernes</span>
+                        <input type="checkbox" id="viernes" name="Viernes" value="viernes"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                    <div class="checkbox-item">
+                        <span for="sabado">Sábado</span>
+                        <input type="checkbox" id="sabado" name="Sábado" value="sabado"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                    <div class="checkbox-item">
+                        <span for="domingo">Domingo</span>
+                        <input type="checkbox" id="domingo" name="Domingo" value="domingo"
+                            (change)="onDiaSeleccionado($event)">
+                    </div>
+                </div>
             </fieldset>
         </div>
 

@@ -5,14 +5,14 @@ export class Repartidor {
     telefono: string;
     numCasa: string;
     password1: string;
-    // fechaDeAgregacion: string;
+    diasAsignados!: string[];
 
-    constructor(nombre: string, email: string, telefono: string, numCasa: string, password1:string) {
+    constructor(nombre: string, email: string, telefono: string, numCasa: string, password1: string, diasAsignados:string[]) {
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
         this.numCasa = numCasa;
         this.password1 = password1;
-        // this.fechaDeAgregacion = fechaDeAgregacion;
+        this.diasAsignados= diasAsignados;
     }
 }

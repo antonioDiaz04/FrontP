@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
-import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
-import { PedidosView } from './view/pedidos/pedidos.view';
-import { ComentariosView } from './view/comentarios/comentarios.view';
 import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
 import { InicioView } from './view/inicio/inicio.view';
 import { AdmPurificadoraComponent } from './adm-purificadora.component';
@@ -74,7 +71,6 @@ const routes: Routes = [
         path: 'salida',
         component: SalidaView,
         children: [
-
           {
             path: 'salida-listado',
             component: SalidaListaComponent,
@@ -86,7 +82,6 @@ const routes: Routes = [
           }
         ]
       },
-
       {
         path: 'resultado',
         component: ResultadoEntregaView,
@@ -122,11 +117,9 @@ const routes: Routes = [
         ]
       },
       {
-        // path: 'detail/:id',
         path: 'notificaciones',
         component: NotificacionesView,
       },
-
       {
         path: 'repartidores',
         component: RepartidoresView,
@@ -197,9 +190,14 @@ const routes: Routes = [
             component: RutaListadoComponent,
           },
           {
+            path: 'editarByIdRutaFrom/:id',
+            component: RutaFormComponent,
+          },
+          {
             path: 'detalleByIdRutaFrom/:id',
             component: RutaDetalleComponent,
           },
+
           {
             path: '',
             redirectTo: 'lista-rutas',

@@ -12,19 +12,18 @@ export class RutaService {
 
   constructor(private http: HttpClient) { }
   
-  getNombreRutas(): Observable<any> {
-    return this.http.get(`${environment.api}/ruta/getNombreRutas`);
-  }
+  // getNombreRutas(): Observable<any> {
+  //   return this.http.get(`${environment.api}/purificadoraAdm/getNombreRutas`);
+  // }
 
   getDetallesEntregasRutas(): Observable<any> {
-    return this.http.get(`${environment.api}/ruta/getDetallesEntregasRutas`);
+    return this.http.get(`${environment.api}/purificadoraAdm/getDetallesEntregasRutas`);
   }
 
   detalleRutaById(id: string): Observable<any> {
-    const url = `${environment.api}/ruta/getDetallesRutaById/` + id
+    const url = `${environment.api}/purificadoraAdmin/getDetallesRutaById/` + id
     return this.http.get(url)
   }
-
   updateRepartidora(id: string, cliente: any): Observable<any> {
     const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id
     return this.http.put(url, cliente)
@@ -33,29 +32,56 @@ export class RutaService {
     const url = `${environment.api}/ruta/updateRutaDetalle/` + id
     return this.http.put(url, cliente)
   }
+  updateRuta(id: string, cliente: any): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/updateRuta/` + id
+    return this.http.put(url, cliente)
+  }
 
   eliminarRuta(id: string): Observable<any> {
-    const url = `${environment.api}/ruta/deleteRuta/` + id
+    const url = `${environment.api}/purificadoraAdmin/deleteRuta/` + id
     return this.http.delete(url)
   }
 
   eliminarPuntoEntrega(id: string): Observable<any> {
-    const url = `${environment.api}/ruta/deletePuntoEntrega/` + id
+    const url = `${environment.api}/purificadoraAdmin/deletePuntoEntrega/` + id
     return this.http.delete(url)
   }
 
-  addNombreRuta(data: any): Observable<any> {
-    const url = `${environment.api}/ruta/crearNombreRuta/`
-    return this.http.post(url, data)
-  }
   addRuta(data: any): Observable<any> {
-    const url = `${environment.api}/ruta/crearProgramadoEntregaRuta/`
+    const url = `${environment.api}/purificadoraAdmin/crearRuta/`
     return this.http.post(url, data)
   }
   addPuntoEntregaRutaById(id:string,data: any): Observable<any> {
-    const url = `${environment.api}/ruta/crearPuntoCliente/` + id
+    const url = `${environment.api}/purificadoraAdmin/crearPuntoCliente/` + id
     return this.http.post(url, data)
   }
+
+  
+
+
+  getRutas(): Observable<any> {
+    return this.http.get(`${environment.api}/purificadoraAdmin/getRutas`);
+  }
+
+  // detalleRutaById(id: string): Observable<any> {
+  //   const url = `${environment.api}/purificadoraAdmin/getDetallesRutaById/` + id
+  //   return this.http.get(url)
+  // }
+
+  // updateRepartidora(id: string, cliente: any): Observable<any> {
+  //   const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id
+  //   return this.http.put(url, cliente)
+  // }
+
+  // eliminarRuta(id: string): Observable<any> {
+  //   const url = `${environment.api}/purificadoraAdmin/deleteRuta/` + id
+  //   return this.http.delete(url)
+  // }
+
+  // eliminarPuntoEntrega(id: string): Observable<any> {
+  //   const url = `${environment.api}/purificadoraAdmin/deletePuntoEntrega/` + id
+  //   return this.http.delete(url)
+  // }
 
 
 }

@@ -41,36 +41,6 @@ export class RutaView {
     this.visible = true
   }
 
-  // guardarRuta(){
-  guardarRuta() {
-
-
-    const nombre = this.rutaForm.get('nombreRuta')?.value;
-
-    if (!nombre) {
-      this.showAlert('¡Error!', 'Completa correctamente los campos.', 'sucess')
-    }
-
-    const RutaData: Ruta = {
-      nombreRuta: nombre
-    }
-
-    this.rutaService.addNombreRuta(RutaData).subscribe(response => {
-      this.visible = false
-      this.showAlert('¡Correcto!', 'se agregó correctamente .', 'sucess')
-    }, (error) => {
-      console.error(error); // Imprime el error en la consola para depuración
-      // let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
-      // if (error && error.error && error.error.message) {
-      //   // errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
-      // }
-      Swal.fire("Error", error.error.msg, 'error'); // Mostramos el mensaje de error en la alerta
-    })
-
-
-
-
-  }
   redirectToAdminPurificadora(route: string): void {
     console.log(route)
     if (route === 'login') {

@@ -1,4 +1,6 @@
 import { PaginatorModule } from 'primeng/paginator';
+import { ToastModule } from 'primeng/toast';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdmPurificadoraRoutingModule } from './adm-purificadora-routing.module';
@@ -60,22 +62,24 @@ import { EntradaEditComponent } from './commons/components/entrada-edit/entrada-
 import { ResultadosListadoComponent } from './commons/components/resultados-listado/resultados-listado.component';
 import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega.view';
 import { MiPerfilView } from './view/mi-perfil/mi-perfil.view';
+import { MessageService } from 'primeng/api';
+import { Toast } from '../../shared/services/toast.service';
 
-const MATERIALS = [CalendarModule, InputNumberModule,
+const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
 ]
 @NgModule({
   declarations: [
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
-    AdmDashboardView, VentasComponent, InicioView, PedidosComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent, RutaDetalleComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
+    AdmDashboardView, VentasComponent, InicioView, PedidosComponent, RutaDetalleComponent,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
   ],
   imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
     AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule,
   ],
-  providers: [provideClientHydration(), [provideHttpClient(withFetch())],
+  providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService]
 })
 export class AdmPurificadoraModule { 

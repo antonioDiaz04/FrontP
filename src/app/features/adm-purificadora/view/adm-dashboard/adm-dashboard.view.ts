@@ -1,4 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ClientesService } from '../../../../shared/services/clientes.service';
+import { Cliente } from '../../../../shared/interfaces/client.interface';
+import { RepartidoresService } from '../../../../shared/services/rapartidores.service';
+import { Repartidor } from '../../../../shared/interfaces/repartidor.interface';
 
 @Component({
   selector: 'app-adm-dashboard',
@@ -13,7 +17,8 @@ export class AdmDashboardView {
   basicOptions: any;
 
   ngOnInit() {
-
+    this.getUsers();
+    this.getRepartidores();
 
     if (typeof document !== 'undefined') {
       const documentStyle = getComputedStyle(document.documentElement);
@@ -77,5 +82,31 @@ export class AdmDashboardView {
 
     
     }
+  }
+  allClients: Cliente[] = []
+  allRepartidores: Repartidor[] = [];
+
+
+  constructor(private UserS: ClientesService, private repService: RepartidoresService){}
+
+  getUsers() {
+    this.UserS.obtenerCLientes().subscribe(
+      (data: Cliente[]) => {
+        this.allClients = data;
+      },
+      error => {
+        console.log("ocurrió un error al obtener la información", error);
+      }
+    );
+  }
+  getRepartidores() {
+    this.repService.getRepartidores().subscribe(
+      data => {
+        this.allRepartidores = data;
+      },
+      error => {
+        console.log("ocurrió un error al obtener la información", error);
+      }
+    );
   }
 }

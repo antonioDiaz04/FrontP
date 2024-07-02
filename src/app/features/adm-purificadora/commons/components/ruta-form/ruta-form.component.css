@@ -1,25 +1,34 @@
+/* Estilos para el formulario */
 .Primer-seccion {
     display: block ruby;
     grid-template-columns: max-content 1fr;
+    /* Columna de etiquetas y columna de inputs/selects */
     grid-row-gap: 10px;
+    /* Espacio entre filas */
 
     /*  */
 
     label {
         grid-column: 1;
         margin: 10px;
+        /* Las etiquetas en la primera columna */
     }
 
     input[type="text"] {
         width: 20%;
+        /* Los inputs y selects ocupan todo el ancho de su contenedor */
         grid-column: 2;
+        /* Los inputs y selects en la segunda columna */
     }
 
     .custom-dropdown select {
         grid-row-gap: 20px;
 
         width: 100%;
+        /* Los inputs y selects ocupan todo el ancho de su contenedor */
         grid-column: 2;
+        /* Los inputs y selects en la segunda columna */
+        /* Alinear los dropdowns a la derecha */
     }
 }
 
@@ -30,8 +39,12 @@
     box-shadow: 0 0 15px #4f4f4fb7;
     border: 1px solid #aeaeae;
     width: 100%;
+    /* Ajusta el ancho del .form-registro-rutaulario según tus necesidades */
+    /* margin: 20px auto;.] */
+    /* Centra el .form-registro-rutaulario en la página */
     display: flex;
     flex-wrap: wrap;
+    /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
 }
 
 .form-registro-ruta fieldset label {
@@ -42,7 +55,9 @@
 
 .form-column {
     width: calc(100% - 20px);
+    /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
     margin-right: 20px;
+    /* Espacio entre las columnas */
 }
 
 fieldset {
@@ -83,6 +98,7 @@ input {
 
 button[type="submit"] {
     background-color: #4cafa2;
+    /* color: #000000; */
     color: white;
     padding: 10px 15px;
     border: none;

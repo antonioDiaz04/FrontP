@@ -3,7 +3,6 @@ body {
     margin: 0;
 }
 
-
 .wave-container {
     height: 40vh;
     background-color: #2073b2;
@@ -35,6 +34,22 @@ body {
 
     font-family: 'Questrial', sans-serif;
     color: #ffffff;
+    animation: fadeIn 3s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .overlay-container {
+        top: 20%;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+    }
 }
 
 
@@ -177,7 +192,7 @@ div>div>h2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
+
     gap: 20px;
 }
 

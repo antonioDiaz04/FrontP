@@ -48,45 +48,47 @@
                 <td>{{repartidor.email}}</td>
                 <td>{{repartidor.fechaDeAgregacion}}</td>
                 <td>
-                            <i (click)="eliminarUsuario(repartidor._id)" class="fas fa-trash-can text-danger m-3"></i>
-                            <i (click)="editar(repartidor._id)" class="fa-solid fa-pen-to-square m-3"></i>
+                    <button class="custom-btn custom-btn-danger" (click)="eliminarUsuario(repartidor._id)">
+                        <i class="fas fa-trash-can"></i> Eliminar
+                    </button>
+                    <button class="custom-btn custom-btn-primary" (click)="editar(repartidor._id)">
+                        <i class="fa-solid fa-pen-to-square"></i> Editar
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
-        <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
-        </p-paginator>
+    <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
 </section>
 
 <style>
-    
+    button {
+        padding: 10px 20px;
+        background-color: #abc3dd;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+    }
 
-button {
-    padding: 10px 20px;
-    background-color: #abc3dd;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
+    button:hover {
+        background-color: #0056b3;
+    }
 
-button:hover {
-    background-color: #0056b3;
-}
+    .p-paginator {
+        background: none;
+        border: solid #f3f4f6;
+        border-width: 0;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+    }
 
-.p-paginator {
-    background: none;
-    border: solid #f3f4f6;
-    border-width: 0;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-}
-
-.p-link {
-    cursor: default;
-    color: #182433;
-}
+    .p-link {
+        cursor: default;
+        color: #182433;
+    }
 </style>

@@ -44,15 +44,14 @@
             <tr>
                 <th>Ruta</th>
                 <th>Repartidor</th>
-                <th>Cliente</th>
-                <th>Dia disponble</th>
-                <th>Fecha Programada</th>
+                <th>Vehiculo</th>
+                <th>Dia programado</th>
                 <th>Estado</th>
                 <th>Cantidad</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <!-- <tbody>
             <tr *ngFor="let ruta of paginatedRutasDetalles">
                 <td>{{ ruta.rutaId?.nombreRuta }}</td>
 
@@ -93,7 +92,7 @@
                     </button>
                 </td>
             </tr>
-        </tbody>
+        </tbody> -->
     </table>
     <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
     </p-paginator>
@@ -144,7 +143,6 @@
                         decrementButtonClass="decrement-button p-button" incrementButtonClass="increment-button p-button"
                         incrementButtonIcon="fas fa-plus" decrementButtonIcon="fas fa-minus">
                     </p-inputNumber>
-                <!-- </div> -->
 
             </div>
 

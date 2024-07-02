@@ -1,20 +1,6 @@
 <main>
-    <div class="header">
-        <h1>Ruta  Entrega</h1>
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <!-- <ul>
-                    <li><a tabindex="0" (click)="redirectToAdminPurificadora('agregar-ruta')">Agregar ruta & entrega</a>
-                    </li>
-                    <li><a tabindex="0" (click)="redirectToAdminPurificadora('lista-rutas')">Listado
-                            de rutas</a></li>
-                </ul> -->
-                <button type="button" (click)="showModal()" class="btn btn-success mb-3" id="addRowBtn"><i
-                        class="fas fa-plus"></i>
-                    Agregar Ruta
-                    </button>
-            </div>
-        </div>
+    <div>
+        <h1>Ruta Entrega</h1>
     </div>
 
     <main>
@@ -22,17 +8,3 @@
     </main>
 
 </main>
-
-
-<p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible" [style]="{ width: '29rem' }"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-    <form [formGroup]="rutaForm" (ngSubmit)="guardarRuta()" class="form-container">
-        <div class="form-group">
-            <label for="nombre" class="form-label">Nombre de la ruta:</label>
-            <input type="text" id="nombre" formControlName="nombreRuta" class="form-control">
-        </div>
-        <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </div>
-    </form>
-</p-dialog>

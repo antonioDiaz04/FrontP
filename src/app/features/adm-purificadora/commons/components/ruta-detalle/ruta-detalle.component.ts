@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
 import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle.service';
 import { MapaService } from '../../services/mapa.service';
+import { Toast } from '../../../../../shared/services/toast.service';
 @Component({
   selector: 'app-ruta-detalle',
   templateUrl: './ruta-detalle.component.html',
@@ -27,8 +28,6 @@ export class RutaDetalleComponent implements OnInit {
   puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
 
   detalleRuta?: DetalleEntregaInterface;
-  // dataReponse: Ruta[]=[];
-  // detalleVehiculo?: Vehiculo;
   detalleRepartidor?: Repartidor;
 
   puntosEntrega?: any[] = [];
@@ -42,9 +41,11 @@ export class RutaDetalleComponent implements OnInit {
   selectedMunicipio: any
   selectedColonia: any
   selectedClient: any;
-  visitCount: number = 0;
+  visitCount: number= 0;
   isLoading = true;//variable rastreador de carga de producto
-  constructor(private router: ActivatedRoute,
+  constructor(
+    private toast:Toast,
+    private router: ActivatedRoute,
     private rutaService: RutaService,
     private repartidoresService: RepartidoresService,
     private vehiculoService: VehiculoService,
@@ -70,46 +71,50 @@ export class RutaDetalleComponent implements OnInit {
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio()
     this.getUsers()
+
   }
 
 
 
-
-
   todo() {
+
     this.rutaService.detalleRutaById(this.idRuta).subscribe((data: DetalleEntregaInterface) => {
       this.detalleRuta = data;
       this.enviarUbicacionesMapa(this.detalleRuta)
+      console.log(this.detalleRuta);
     }, error => {
       console.log("ocurrio un error", error)
     })
   }
 
 
-  enviarUbicacionesMapa(detalleRuta: any) {
+  enviarUbicacionesMapa(detalleRuta:any){
     this.visitCount++;
     console.log(`Visitado por: ${this.visitCount}`);
+    const entregas = detalleRuta.clientesIdsDeEntregas;
 
-    // Extraer el cliente del detalleRuta
-    const cliente = detalleRuta.clienteId;
-
-    if (cliente && cliente.longitud && cliente.latitud) {
-      // Crear el punto de ubicación con longitud y latitud
-      this.puntosClientesUbicaciones = [{
-        longitud: cliente.longitud,
-        latitud: cliente.latitud
-      }];
+    console.log("clientesIdsDeEntregas en enviarUbicacionesMapa:", entregas);
+    if (Array.isArray(entregas) && entregas.length > 0) {
+      // Accede a las longitudes y latitudes de los clientes
+      this.puntosClientesUbicaciones = entregas.map(entrega => {
+        console.log("clienteId:", entrega.clienteId);
+        return {
+          longitud: entrega.clienteId?.longitud,
+          latitud: entrega.clienteId?.latitud
+        };
+      }).filter(ubicacion => ubicacion.longitud && ubicacion.latitud);
 
       console.log("longitudes y latitudes =>", this.puntosClientesUbicaciones);
       this.mapaService.setUbicaciones(this.puntosClientesUbicaciones);
+
     } else {
-      // En caso de que no haya puntos de entrega válidos, limpia los marcadores
+      // En caso de que no haya puntos de entrega o el array esté vacío, limpia los marcadores
       this.mapaService.setUbicaciones([]);
-      console.log("No se encontraron coordenadas válidas en el cliente.");
+      console.log("No se encontraron puntos de entrega o el array está vacío.");
     }
   }
 
-
+  
 
   agregarCliente() {
 
@@ -119,43 +124,23 @@ export class RutaDetalleComponent implements OnInit {
 
   agregarClienteEnRuta() {
     this.visible = true;
-    const selectedMunicipio = this.clienteFormAdd.get('selectedMunicipio')?.value;
-    const selectedColonia = this.clienteFormAdd.get('selectedColonia')?.value;
     const selectedClient = this.clienteFormAdd.get('selectedClient')?.value;
-
-    if (!selectedMunicipio) {
-      this.mostrarToastError('Selecciona el municipio');
-      return;
-    }
-    if (!selectedColonia) {
-      this.mostrarToastError('Selecciona la colonia');
-      return;
-    }
     if (!selectedClient) {
-      this.mostrarToastError('Selecciona el cliente');
+      this.toast.showToastSwalError('Selecciona el cliente');
       return;
     }
     function generateUniqueId() {
       return Math.random().toString(36).substr(2, 9);
     }
+
     const newPuntosDeEntrega = {
-      municipio: selectedMunicipio,
-      colonia: selectedColonia,
       clienteId: selectedClient._id,
       _id: generateUniqueId()
     }
 
     this.rutaService.addPuntoEntregaRutaById(this.idRuta, newPuntosDeEntrega).subscribe(response => {
       this.visible = false;
-      Swal.fire({
-        title: '¡Perfecto!',
-        text: 'Se ha agregado correctamente.',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
-        toast: false,
-        // position: 'top-end'
-      });
+      this.toast.showToastSwalSuccess('Se ha agregado correctamente.')
       this.todo()
     }, (error) => {
       console.error(error); // Imprime el error en la consola para depuración
@@ -163,26 +148,18 @@ export class RutaDetalleComponent implements OnInit {
       if (error && error.error && error.error.message) {
         errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
       }
-      Swal.fire("Error", errorMessage, 'error'); // Mostramos el mensaje de error en la alerta
+      this.toast.showToastSwalError(errorMessage)
     })
   }
 
-  mostrarToastError(text: string) {
-    Swal.fire({
-      title: 'Error',
-      text: text,
-      icon: 'error',
-      position: 'bottom-left',
-      toast: true,
-      timer: 2000
-    });
-    // return;
-  }
+  
 
   getColoniaPorMunicipio() {
     this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
       data => {
         this.allColoniaXMuncipio = data.Colonias;
+        console.log("colonias=>", this.allColoniaXMuncipio)
+        console.log("objeto=>", data)
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -195,6 +172,7 @@ export class RutaDetalleComponent implements OnInit {
     this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
       data => {
         this.allMunicipioXEstado = data.municipios;
+        console.log(this.allMunicipioXEstado);
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -218,7 +196,7 @@ export class RutaDetalleComponent implements OnInit {
     return filtered;
   }
 
-  onColoniaSelectionChange(event: any) {
+ onColoniaSelectionChange (event: any) {
     const selectedColoniaValue = event.value;
     console.log('Colonia seleccionado:', selectedColoniaValue);
     if (selectedColoniaValue === null) {
@@ -239,17 +217,8 @@ export class RutaDetalleComponent implements OnInit {
     this.selectedClient = selectedId._id;
 
     if (selectedId.length === 0) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'No ha seleccionado ningun cliente!',
-        icon: 'error',
-        position: 'bottom-left',
-        toast: true, // Hacer que el alerta sea tipo toast
-        timer: 2000 // Duración en milisegundos antes de que el alerta se cierre automáticamente
-      });
-      console.log("No ha seleccionado ningun cliente!")// Retorna una matriz vacía si el valor seleccionado es nulo
+      this.toast.showToastSwalError('No ha seleccionado ningun cliente!')
     } else {
-      console.log('Clientes seleccionado:', selectedId._id);
     }
   }
 
@@ -258,7 +227,7 @@ export class RutaDetalleComponent implements OnInit {
     this.rutaService.eliminarPuntoEntrega(id).subscribe(data => {
       console.log("eliminarPuntoUbicacion")
       this.todo()
-      // this.enviarUbicacionesMapa(this.detalleRuta)
+      console.log(this.detalleRuta);
     }, error => {
       console.log("ocurrio un error", error)
     })
@@ -275,7 +244,6 @@ export class RutaDetalleComponent implements OnInit {
       }
     );
   }
-
 
 
 

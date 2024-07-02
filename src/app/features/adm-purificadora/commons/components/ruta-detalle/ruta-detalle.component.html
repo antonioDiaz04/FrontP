@@ -1,13 +1,21 @@
+<p-toast />
 <div class="container-detalle">
     <div>
         <h2>Ubicaciones de entrega</h2>
         <div class="map">
             <app-mapa></app-mapa>
         </div>
+
+
+        <!-- <div class="map-placeholder">
+            <p>Mapa de Ubicaciones (Placeholder)</p>
+        </div> -->
+
     </div>
 
+    <!-- <section class="section"> -->
     <section class="section">
-        <h4>Nombre de la Ruta:{{detalleRuta?.rutaId?.nombreRuta}}</h4>
+        <h4>Nombre de la Ruta:{{detalleRuta?.nombreRuta}}</h4>
         <div class="card">
             <h2>Repartidor</h2>
             <div class="card-content">
@@ -35,8 +43,35 @@
     </section>
 </div>
 
+
+
+<h1>Filtrado de Datos</h1>
+
+<div class="filter-container">
+    <div class="filter">
+        <label for="municipio">Filtrar por Municipio:</label>
+        <select id="municipio" class="form-control">
+            <option value="">Todos</option>
+            <option value="Municipio 1">Municipio 1</option>
+            <option value="Municipio 2">Municipio 2</option>
+            <option value="Municipio 3">Municipio 3</option>
+            <!-- Añadir más opciones según sea necesario -->
+        </select>
+    </div>
+    <div class="filter">
+        <label for="colonia">Filtrar por Colonia:</label>
+        <select id="colonia" class="form-control">
+            <option value="">Todas</option>
+            <option value="Colonia 1">Colonia 1</option>
+            <option value="Colonia 2">Colonia 2</option>
+            <option value="Colonia 3">Colonia 3</option>
+        </select>
+    </div>
+</div>
+
+<input type="text" id="search" class="form-control" placeholder="Buscar...">
 <section id="lista">
-    <h2>Informacion cliente</h2>
+    <h2>Listado de Clientes</h2>
     <table>
         <thead>
             <tr>
@@ -47,13 +82,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>{{ detalleRuta?.clienteId?.municipio }}</td>
-                <td>{{ detalleRuta?.clienteId?.colonia }}</td>
-                <td>{{ detalleRuta?.clienteId?.nombre }}</td>
+            <tr *ngFor="let punto of detalleRuta?.puntosDeEntrega">
+                <td>{{ punto.clienteId?.municipio }}</td>
+                <td>{{ punto.clienteId?.colonia }}</td>
+                <td>{{ punto.clienteId?.nombre }}</td>
                 <td>
-                    <button type="input" (click)="eliminarPuntoUbicacion(detalleRuta?.clienteId?._id)" class="remove">
-                        <i class="fas fa-user-edit"></i>
+                    <button type="input" (click)="eliminarPuntoUbicacion(punto._id)" class="remove">
+                        <!-- <button type="input" (click)="eliminarPuntoUbicacion(punto._id, punto.clienteId?.nombre, punto.clienteId?.nombre)" class="remove"> -->
+                        <i class="fas fa-trash"></i>
                     </button>
                 </td>
             </tr>
@@ -87,6 +123,11 @@
             </div>
         </form>
     </p-dialog>
+    <button type="button" (click)="agregarCliente()" class="btn btn-success mb-3" id="addRowBtn"><i
+            class="fas fa-plus"></i>
+        <!-- <button type="button" (click)="agregarFila()" class="btn btn-success mb-3" id="addRowBtn"><i class="fas fa-plus"></i> -->
+        Agregar
+        cliente</button>
 
 </section>
 
@@ -118,8 +159,9 @@
     }
 
     .card:hover {
+        border: 1px solid #8aebff;
         transform: translateY(-10px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px rgba(98, 157, 206, 0.82);
     }
 
     .card h2 {

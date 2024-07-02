@@ -13,7 +13,7 @@ export class VehiculoListadoComponent {
   visible: boolean = false;
   isVisible = false;
   id!: string | null
-  allRepartidores: Vehiculo[] =[];
+  allVehiculos: Vehiculo[] =[];
   dataVehiculo?: Vehiculo;
   idRepartidor!: string
   vehiculoForm!: FormGroup;
@@ -71,7 +71,7 @@ export class VehiculoListadoComponent {
     }
   }
 
-  eliminarUsuario(id: any) {
+  eliminar(id: any) {
     this.repService.eliminarVehiculo(id).subscribe(data => {
       console.log("eliminado")
       this.getVehiculos();
@@ -88,7 +88,7 @@ export class VehiculoListadoComponent {
   }
 
   updatePaginatedClients() {
-    this.paginatedClients = this.allRepartidores.slice(this.first, this.first + this.rows);
+    this.paginatedClients = this.allVehiculos.slice(this.first, this.first + this.rows);
   }
 
 
@@ -96,8 +96,8 @@ export class VehiculoListadoComponent {
   getVehiculos() {
     this.repService.getVehiculos().subscribe(
       data => {
-        this.allRepartidores = data;
-        this.totalRecords = this.allRepartidores.length;
+        this.allVehiculos = data;
+        this.totalRecords = this.allVehiculos.length;
         this.updatePaginatedClients();
       },
       error => {

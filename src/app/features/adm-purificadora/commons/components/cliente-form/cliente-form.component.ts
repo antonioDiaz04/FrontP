@@ -8,11 +8,13 @@ import { error } from 'console';
 import { Location } from '@angular/common';
 import { MapaClientService } from '../../services/mapaClient.service';
 import { ConsultasCOPOMEXService } from '../../../../../shared/services/consultas-copomex.service';
+import { Router } from '@angular/router';
+import { Toast } from '../../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-cliente-form',
   templateUrl: './cliente-form.component.html',
-  styleUrls: ['./cliente-form.component.scss'],
+  styleUrls: ['./cliente-form.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClienteFormComponent implements OnInit {
@@ -20,10 +22,10 @@ export class ClienteFormComponent implements OnInit {
   registroForm: FormGroup;
   allMuncipioXEstado: any;
   allColoniaXMuncipio: any;
+
   selectedMunicipio: any
   selectedColonia: any
-
-  constructor(private consultasCOPOMEX: ConsultasCOPOMEXService,private render2: Renderer2,private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
+  constructor(private toast:Toast,private router: Router, private consultasCOPOMEX: ConsultasCOPOMEXService, private render2: Renderer2, private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
     this.registroForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -37,7 +39,7 @@ export class ClienteFormComponent implements OnInit {
   }
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
-  
+
   onMunicipioSelectionChange(event: any) {
     this.selectedMunicipio = event.target.value;
     console.log('Municipio seleccionado:', this.selectedMunicipio);
@@ -79,42 +81,39 @@ export class ClienteFormComponent implements OnInit {
     const numCasa = this.registroForm.get('numCasa')?.value;
     const colonia = this.registroForm.get('selectedColonia')?.value;
     const municipio = this.registroForm.get('selectedMunicipio')?.value;
-    // const municipio = this.selectedMunicipio;
-    // const colonia = this.selectedColonia;
 
     if (!municipio) {
-      Swal.fire('Error', 'Por favor ingresa tu municipio', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu municipio');
       return;
     }
     if (!colonia) {
-      Swal.fire('Error', 'Por favor ingresa tu colonia', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu colonia');
       return;
     }
-
     // Aquí puedes realizar las operaciones necesarias con el valor de 'nombre'
     if (!nombre) {
-      Swal.fire('Error', 'Por favor ingresa tu nombre', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu nombre');
       return;
     }
     if (!email) {
-      Swal.fire('Error', 'Por favor ingresa tu email', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu email');
       return;
     }
-   
+
     if (!longitud) {
-      Swal.fire('Error', 'Por favor ingresa tu longitud', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu longitud');
       return;
     }
     if (!latitud) {
-      Swal.fire('Error', 'Por favor ingresa tu latitud', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu latitud');
       return;
     }
     if (!telefono) {
-      Swal.fire('Error', 'Por favor ingresa tu telefono', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu telefono');
       return;
     }
     if (!numCasa) {
-      Swal.fire('Error', 'Por favor ingresa tu numCasa', 'error');
+      this.toast.showToastPmNgWarn('Por favor ingresa tu numCasa');
       return;
     }
 
@@ -131,27 +130,24 @@ export class ClienteFormComponent implements OnInit {
       colonia: this.selectedColonia,
     }
     this.clienteS.signUp(USUARIO).subscribe(response => {
-
-      Swal.fire("Exitoso", "El resgitro fue exitos", 'success')
+      this.toast.showToastSwalSuccess( "El resgitro fue exitos")
+      this.router.navigate(['/purificadoraAdm/clientes/lista-clientes'])
     }, (error) => {
-      console.error(error); // Imprime el error en la consola para depuración
-      let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
+      console.error(error);
+      let errorMessage = "Error desconocido";
       if (error && error.error && error.error.message) {
-        errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
+        errorMessage = error.error.message;
       }
-      
-      Swal.fire("Error", errorMessage, 'error'); // Mostramos el mensaje de error en la alerta
+
+      this.toast.showToastSwalError(errorMessage);
     })
   }
-  
+
 
   volverAtras() {
     this.location.back();
     console.log("presionado atras")
   }
-
-
-
 
 
   getMunicipioPorExtado() {
@@ -164,17 +160,6 @@ export class ClienteFormComponent implements OnInit {
         console.log("Ocurrió un error al obtener la información", error);
       }
     );
-
-    // this.consultasCOPOMEX.getMunicipioXEstado('Hidalgo').subscribe(
-    //   data => {
-    //     // ! lo que hacemos aqui es tomar los valores cuando son obtject[]
-    //     this.allMuncipioXEstado = data;
-    //     console.log(this.allMuncipioXEstado)
-    //   },
-    //   error => {
-    //     console.log("Ocurrió un error al obtener la información", error);
-    //   }
-    // )
   }
 
 
@@ -182,9 +167,6 @@ export class ClienteFormComponent implements OnInit {
     this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
       data1 => {
         this.allColoniaXMuncipio = data1.Colonias;
-        console.log("colonias=>", this.allColoniaXMuncipio)
-        // console.log(allColonias);
-        console.log("objeto=>", data1)
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);

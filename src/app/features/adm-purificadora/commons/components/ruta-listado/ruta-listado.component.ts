@@ -1,39 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RutaService } from '../../../../../shared/services/ruta.service';
-import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
+// import { Ruta } from '../../../../../shared/models/ruta.model';
+import { Repartidor } from '../../../../../shared/models/repartidor.model';
+import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
+// import { Repartidor } from '../../interfaces/repartidores/repartidores.interface';
 
 @Component({
   selector: 'app-ruta-listado',
   templateUrl: './ruta-listado.component.html',
-  styleUrl: '../../../adm-purificadora.component.scss',
+  styleUrl:'../../../adm-purificadora.component.scss'
 })
 export class RutaListadoComponent implements OnInit {
-  allRutas: DetalleEntregaInterface[] = [];
+  // getRutas
 
 
-  paginatedRutasDetalles: DetalleEntregaInterface[] = []
-  clientAll!: DetalleEntregaInterface;
-  totalRecords: number = 0;
-  rows: number = 5; // Número de registros por página
-  first: number = 0; // Índice del primer registro de la página actual
-
+  allRutas?: Ruta[] = [];
   constructor(private rutaS: RutaService, private router: Router) {
+
   }
-
-
   ngOnInit(): void {
     this.obtenerRutas();
-    this.updatePaginatedRutasDetalles();
   }
 
   obtenerRutas() {
-    this.rutaS.getDetallesEntregasRutas().subscribe(
+    this.rutaS.getRutas().subscribe(
       data => {
         this.allRutas = data;
-        this.clientAll = data;
-        this.totalRecords = this.allRutas.length;
-        this.updatePaginatedRutasDetalles()
+        // this.allRepartidorData = data.repartidorId;
+        console.log(this.allRutas);
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);
@@ -43,7 +38,6 @@ export class RutaListadoComponent implements OnInit {
 
   eliminarRuta(id: any) {
     this.rutaS.eliminarRuta(id).subscribe(data => {
-      console.log("eliminado")
       this.obtenerRutas();
     }, error => {
       console.log("ocurrio un error", error)
@@ -59,18 +53,53 @@ export class RutaListadoComponent implements OnInit {
     })
   }
 
-  onPageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
-    this.updatePaginatedRutasDetalles();
-  }
+  editar(_id: any) {
+    this.router.navigate(['/purificadoraAdm/rutas/editarByIdRutaFrom/', _id])
+    // this.id = _id;
+    // console.log("esEditar", _id);
+    // if (_id) {
+    //   this.rutaS.detalleRutaById(this.id).subscribe((data) => {
+    //     this.selectedNombreRuta = data.rutaId;
+    //     this.selectedRepartidor = data.repartidorId;
+    //     this.selectedVehiculo = data.vehiculoId;
 
-  updatePaginatedRutasDetalles() {
-    this.paginatedRutasDetalles = this.allRutas.slice(
-      this.first,
-      this.first + this.rows
-    );
-  }
+    //     this.salidaForm.patchValue({
+    //       nombreRuta: data.rutaId,
+    //       selectedRepartidor: data.repartidorId,
+    //       selectedVehiculo: data.vehiculoId,
+    //       cantidadBotellas: data.cantidadBotellas
 
+    //     });
+
+    //     if (data.fechaInicio !== null && data.fechaInicio !== undefined) {
+    //       let fechaInicioDate = data.fechaInicio instanceof Date ? data.fechaInicio : new Date(data.fechaInicio);
+    //       const fechaFormateada = fechaInicioDate.toISOString().substring(0, 10);
+    //       this.salidaForm.patchValue({
+    //         fecha: fechaFormateada,
+    //       });
+    //     } else {
+    //       this.salidaForm.patchValue({
+    //         fecha: null,
+    //       });
+    //     }
+
+
+
+    //     console.log("Fecha inicio:", data.fechaInicio); // Verifica que el valor es correcto
+
+    //     // Mueve la ruta seleccionada al principio del array
+    //     this.allNombreRuta = this.allNombreRuta.filter(ruta => ruta._id !== data.rutaId._id);
+    //     this.allNombreRuta.unshift(data.rutaId);
+
+    //     this.allRepartidores = this.allRepartidores.filter(repartidor => repartidor._id !== data.repartidorId._id);
+    //     this.allRepartidores.unshift(data.repartidorId);
+
+    //     this.allVehiculos = this.allVehiculos.filter(vehiculo => vehiculo._id !== data.vehiculoId._id);
+    //     this.allVehiculos.unshift(data.vehiculoId);
+
+    //   });
+    // }
+    // this.visible = true;
+  }
 
 }
