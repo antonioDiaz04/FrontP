@@ -10,17 +10,18 @@ export interface PuntoDeEntrega {
 
 
 export interface DetalleEntregaInterface {
-    _id?: string;
-    cantidadBotellas?: Number;
+  _id?: string;
+  cantidadBotellas?: Number;
 
-    nombreRuta?: string;
-    repartidorId?: Repartidor;
-    vehiculoId?: Vehiculo;
-    fechaInicio?: Date;
-    fechaFin?: Date;
-    estado?: 'pendiente' | 'en_curso' | 'finalizada';
-    puntosDeEntrega: PuntoDeEntrega | any;
-    diasAsignados?: string[];
+  nombreRuta?: string;
+  repartidorId?: Repartidor;
+  vehiculoId?: Vehiculo;
+  fechaInicio?: Date;
+  fechaFin?: Date;
+  estado?: 'enviado' | 'pendiente' | 'en_curso' | 'finalizada';
+  puntosDeEntrega: PuntoDeEntrega | any;
+  diasAsignados?: string[];
+  esSalida?: boolean;
 }
 
 

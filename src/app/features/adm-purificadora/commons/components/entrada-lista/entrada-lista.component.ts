@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-entrada-lista',
   templateUrl: './entrada-lista.component.html',
-   styleUrls: ['../../../adm-purificadora.component.scss']
+  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss']
 })
 export class EntradaListaComponent implements  OnInit{
 
@@ -31,7 +31,7 @@ export class EntradaListaComponent implements  OnInit{
   }
 
   obtenerRutas() {
-    this.rutaS.getDetallesEntregasRutas().subscribe(
+    this.rutaS.getRutasSalidas().subscribe(
       data => {
         // Filtrar los datos para solo incluir los que tienen fechaProgramada
         const rutasConFechaProgramada = data.filter((ruta:any) => ruta.fechaInicio);

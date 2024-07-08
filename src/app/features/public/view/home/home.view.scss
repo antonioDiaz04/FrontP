@@ -44,11 +44,50 @@ body {
 }
 
 @media (max-width: 600px) {
+    .wave-container {
+        height: 28vh;
+        background-color: #2073b2;
+        position: relative;
+    }
+
     .overlay-container {
-        top: 20%;
+        top: 22%;
         width: 100%;
-        padding: 0;
         text-align: center;
+        >.content {
+            margin-top: -30px;
+            >p{
+            margin-top: -30px;
+            }
+        }
+    }
+
+
+    .card-title {
+        padding: 0;
+        margin-top: 25%;
+
+        >.container {
+            display: flex;
+            flex-direction: column;
+            margin: 0%;
+            padding: 20px;
+
+            .text-container {
+                justify-content: flex-start;
+                width: 80%;
+            }
+
+
+            .text-container {
+                order: 1;
+            }
+
+            .image-container {
+                order: 2;
+            }
+
+        }
     }
 }
 
@@ -71,6 +110,8 @@ body {
     .wave-container::before {
         height: 65px
     }
+
+
 }
 
 

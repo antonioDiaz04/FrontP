@@ -18,6 +18,11 @@ export class RepartidoresService {
         const url = `${environment.api}/purificadoraRepartidores/getDetalles/` + id
         return this.http.get(url)
     }
+    
+    detalleUsuarioSalidaById(id: string): Observable<any> {
+        const url = `${environment.api}/purificadoraRepartidores/getObtenerSalidaxClienteId/` + id
+        return this.http.get(url)
+    }
     updateRepartidora(id: string, cliente: any): Observable<any> {
         const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id
         return this.http.put(url, cliente)

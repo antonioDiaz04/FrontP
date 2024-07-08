@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
 import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
 import { RutaService } from '../../../../../shared/services/ruta.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,16 +14,23 @@ import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
 import { Vehiculo } from '../../../../../shared/interfaces/vehiculo.interface';
 import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
 import Swal from 'sweetalert2';
-
+import { Toast } from '../../../../../shared/services/toast.service';
+import { Salida } from '../../../../../shared/models/salida.model';
+import { Cliente } from '../../../../../shared/interfaces/client.interface';
 @Component({
   selector: 'app-salida-lista',
   templateUrl: './salida-lista.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', './modal.scss', '../../../form.scss']
+  styleUrls: [
+    '../../../adm-purificadora.component.scss',
+    './modal.scss',
+    '../../../form.scss',
+  ],
 })
 export class SalidaListaComponent implements OnInit {
   visible: boolean = false;
   id!: string;
-  salidaForm!: FormGroup;
+  cantidadForm!: FormGroup;
+  allClients: Cliente[] = [];
   selectedNombreRuta: Ruta | any;
   // selectedNombreRuta: Ruta | null = null;
   selectedVehiculo: Vehiculo | null = null;
@@ -29,19 +41,24 @@ export class SalidaListaComponent implements OnInit {
 
   allRutas: DetalleEntregaInterface[] = [];
   date2: Date | undefined;
-  paginatedRutasDetalles: DetalleEntregaInterface[] = []
+  paginatedRutasDetalles: DetalleEntregaInterface[] = [];
   clientAll!: DetalleEntregaInterface;
   totalRecords: number = 0;
   rows: number = 5; // Número de registros por página
   first: number = 0; // Índice del primer registro de la página actual
   allRepartidores: Repartidor[] = [];
   date: Date[] | undefined;
+  diaTexto: string;
+
+  fecha: string;
+
+  rutaActual: any;
 
   ngOnInit(): void {
     this.obtenerRutas();
-    this.getRepartidores();
+    // this.getRepartidores();
     // this.getAllNombresRutas();
-    this.getVehiculos();
+    // this.getVehiculos();
     this.updatePaginatedRutasDetalles();
   }
 
@@ -51,18 +68,29 @@ export class SalidaListaComponent implements OnInit {
     private vehiculoService: VehiculoService,
     private rutaS: RutaService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toast: Toast
   ) {
-    this.salidaForm = this.fb.group({
-      nombreRuta: ['', Validators.required],
-      selectedRepartidor: ['', Validators.required],
-      selectedVehiculo: ['', Validators.required],
-      cantidadBotellas: ['', Validators.required],
-      fecha: ['', Validators.required]
+    this.cantidadForm = this.fb.group({
+      // nombreRuta: ['', Validators.required],
+      // selectedRepartidor: ['', Validators.required],
+      // selectedVehiculo: ['', Validators.required],
+      cantidadBotellas: [0, Validators.required],
+      // fecha: ['', Validators.required]
     });
+    this.fecha = this.obtenerFechaYYYYMMDD();
+    this.diaTexto = this.obtenerDiaTexto();
     // this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 
+  obtenerFechaYYYYMMDD() {
+    let fecha = new Date();
+    let año = fecha.getFullYear();
+    let mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    let dia = String(fecha.getDate()).padStart(2, '0');
+
+    return `${dia}-${mes}-${año}`;
+  }
 
   mostrarToastError(text: string) {
     Swal.fire({
@@ -71,10 +99,12 @@ export class SalidaListaComponent implements OnInit {
       icon: 'error',
       position: 'bottom-left', // Mostrar el alerta en la parte superior
       toast: true, // Hacer que el alerta sea tipo toast
-      timer: 2000 // Duración en milisegundos antes de que el alerta se cierre automáticamente
+      timer: 2000, // Duración en milisegundos antes de que el alerta se cierre automáticamente
     });
     // return;
   }
+
+  // obtener el dia actual
 
   obtenerFechaYHoraActualFormateada(): string {
     const fecha = new Date();
@@ -84,17 +114,31 @@ export class SalidaListaComponent implements OnInit {
     return `${año}-${mes}-${día}`;
   }
 
+  obtenerDiaTexto() {
+    let diasSemana = [
+      'domingo',
+      'lunes',
+      'martes',
+      'miércoles',
+      'jueves',
+      'viernes',
+      'sábado',
+    ];
+    let fecha = new Date();
+    let diaSemana = diasSemana[fecha.getDay()];
+    return diaSemana;
+  }
+
   obtenerRutas() {
-    console.log(this.obtenerFechaYHoraActualFormateada());
-    this.rutaS.getDetallesEntregasRutas().subscribe(
-      data => {
+    this.rutaS.getRutasSalidas().subscribe(
+      (data) => {
         this.allRutas = data;
         this.clientAll = data;
         this.totalRecords = this.allRutas.length;
         this.updatePaginatedRutasDetalles();
       },
-      error => {
-        console.log("ocurrió un error al obtener la información", error);
+      (error) => {
+        console.log('ocurrió un error al obtener la información', error);
       }
     );
   }
@@ -104,8 +148,8 @@ export class SalidaListaComponent implements OnInit {
       (data: Repartidor[]) => {
         this.allRepartidores = data;
       },
-      error => {
-        console.log("Ocurrió un error al obtener la información", error);
+      (error) => {
+        console.log('Ocurrió un error al obtener la información', error);
       }
     );
   }
@@ -117,146 +161,252 @@ export class SalidaListaComponent implements OnInit {
     );
   }
 
-
-  onRepartidorSelectionChange() {
-    this.selectedRepartidor = this.salidaForm.get('selectedRepartidor')?.value;
-    console.log('ID del repartidor seleccionado:', this.selectedRepartidor);
-  }
-  onVehiculoSelectionChange() {
-    this.selectedVehiculo = this.salidaForm.get('selectedVehiculo')?.value;
-    console.log('ID del vehiculo seleccionado:', this.selectedVehiculo);
-  }
   eliminarRuta(id: any) {
-    this.rutaS.eliminarRuta(id).subscribe(data => {
-      this.obtenerRutas();
-    }, error => {
-      console.log("ocurrio un error", error);
-    });
+    this.rutaS.eliminarRuta(id).subscribe(
+      (data) => {
+        this.obtenerRutas();
+      },
+      (error) => {
+        console.log('ocurrio un error', error);
+      }
+    );
   }
 
-  editar(_id: any) {
-    this.id = _id;
-    console.log("esEditar", _id);
-    if (_id) {
-      this.rutaS.detalleRutaById(this.id).subscribe((data) => {
-        this.selectedNombreRuta = data.rutaId;
-        this.selectedRepartidor = data.repartidorId;
-        this.selectedVehiculo = data.vehiculoId;
-
-        this.salidaForm.patchValue({
-          nombreRuta: data.rutaId,
-          selectedRepartidor: data.repartidorId,
-          selectedVehiculo: data.vehiculoId,
-          cantidadBotellas: data.cantidadBotellas
-
-        });
- 
-        if (data.fechaInicio !== null && data.fechaInicio !== undefined) {
-          let fechaInicioDate = data.fechaInicio instanceof Date ? data.fechaInicio : new Date(data.fechaInicio);
-          const fechaFormateada = fechaInicioDate.toISOString().substring(0, 10);
-          this.salidaForm.patchValue({
-            fecha: fechaFormateada,
-          });
-        } else {
-          this.salidaForm.patchValue({
-            fecha: null,
-          });
-        }
-
-
-
-        console.log("Fecha inicio:", data.fechaInicio); // Verifica que el valor es correcto
-
-        // Mueve la ruta seleccionada al principio del array
-        this.allNombreRuta = this.allNombreRuta.filter(ruta => ruta._id !== data.rutaId._id);
-        this.allNombreRuta.unshift(data.rutaId);
-
-        this.allRepartidores = this.allRepartidores.filter(repartidor => repartidor._id !== data.repartidorId._id);
-        this.allRepartidores.unshift(data.repartidorId);
-
-        this.allVehiculos = this.allVehiculos.filter(vehiculo => vehiculo._id !== data.vehiculoId._id);
-        this.allVehiculos.unshift(data.vehiculoId);
-
-      });
-    }
+  editar(ruta: any) {
+    this.rutaActual = ruta;
+    this.cantidadForm.controls['cantidadBotellas'].setValue(
+      ruta.cantidadBotellas || 0
+    );
     this.visible = true;
   }
 
+  selectToastSwal(ruta: any) {
+    this.getRepartidores();
+    const selectHTML = `
+    <select id="swal-select" class="swal2-input" formControlName="selectedRepartidor" (click)="onVehiculoSelectionChange()">
+      <option value="" disabled selected>Selecciona un Repartidor</option>
+      ${this.allRepartidores
+        .map(
+          (repartidor) => `
+        <option value="${repartidor._id}" ${
+            repartidor._id === ruta.repartidorId?._id ? 'selected' : ''
+          }>
+          ${repartidor.nombre}
+        </option>
+      `
+        )
+        .join('')}
+    </select>
+  `;
 
-  guardarCambios() {
-    // Obtener los valores del formulario
-    const nombreRuta = this.salidaForm.get('nombreRuta')?.value;
-    const selectedRepartidor = this.salidaForm.get('selectedRepartidor')?.value;
-    const selectedVehiculo = this.salidaForm.get('selectedVehiculo')?.value;
-    const cantidadBotellas = this.salidaForm.get('cantidadBotellas')?.value;
-    const fecha = this.salidaForm.get('fecha')?.value;
+    Swal.fire({
+      title: 'Select a Repartidor',
+      html: selectHTML,
+      focusConfirm: false,
+      showCancelButton: true,
+      preConfirm: () => {
+        const selectedValue = (
+          Swal.getPopup()?.querySelector('#swal-select') as HTMLSelectElement
+        ).value;
+        if (!selectedValue) {
+          Swal.showValidationMessage('Please select a repartidor');
+        }
+        return selectedValue;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const selectedRepartidorId = result.value;
+        const selectedRepartidor = this.allRepartidores.find(
+          (repartidor) => repartidor._id === selectedRepartidorId
+        );
 
-  
-    const data = {
-      rutaId: nombreRuta._id,
-      repartidorId: selectedRepartidor._id,
-      vehiculoId: selectedVehiculo._id,
-      cantidadBotellas: cantidadBotellas,
-      fechaInicio: fecha
-    };
+        // Actualiza la ruta con el vehículo seleccionado
+        ruta.repartidorId = selectedRepartidor;
 
-    console.log(data)
+        Swal.fire(`Repartidor seleccionado: ${selectedRepartidor?.nombre}`);
+      }
+    });
+  }
 
-    this.rutaS.updateRutaEntregaDetalle(this.id, data).subscribe(response => {
-      console.log('Update successful', response);
-      this.visible = false;
-      this.obtenerRutas();
+  selectToastCambiarVehiculoSwal(ruta: any) {
+    this.getVehiculos();
+    const selectHTML = `
+    <select id="swal-select" class="swal2-input" formControlName="selectedVehiculo" (click)="onVehiculoSelectionChange()">
+      <option value="" disabled selected>Selecciona el vehiculo</option>
+      ${this.allVehiculos
+        .map(
+          (vehiculo) => `
+        <option value="${vehiculo._id}" ${
+            vehiculo._id === ruta.vehiculoId?._id ? 'selected' : ''
+          }>
+          ${vehiculo.placas}
+        </option>
+      `
+        )
+        .join('')}
+    </select>
+  `;
+    Swal.fire({
+      title: 'Select un vehiculo',
+      html: selectHTML,
+      focusConfirm: false,
+      showCancelButton: true,
+      preConfirm: () => {
+        const selectedValue = (
+          Swal.getPopup()?.querySelector('#swal-select') as HTMLSelectElement
+        ).value;
+        if (!selectedValue) {
+          Swal.showValidationMessage('Por favor selecciona un vehiculo');
+        }
+        return selectedValue;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const selectedVehiculoId = result.value;
+        const selectedVehiculo = this.allVehiculos.find(
+          (vehiculo) => vehiculo._id === selectedVehiculoId
+        );
 
-      Swal.fire({
-        title: '¡Perfecto!',
-        text: 'Se han actualizado los datos correctamente.',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
-        toast: false,
-      });
-    
+        // Actualiza la ruta con el vehículo seleccionado
+        ruta.vehiculoId = selectedVehiculo;
 
+        Swal.fire(`Vehículo seleccionado: ${selectedVehiculo?.placas}`);
+      }
+    });
+  }
 
-    }, error => {
-      this.visible = true;
-        Swal.fire("Error", error, 'error');
-      console.error('Update failed', error);
+  obtenerTodosLosClientes(ruta: any) {
+    // Verifica si la ruta tiene puntos de entrega y es un array
+    if (!Array.isArray(ruta.puntosDeEntrega)) {
+      return [];
+    }
+
+    //   clienteId: allClients
+
+    const clientesSeleccionados = ruta.puntosDeEntrega.map((punto: any) => {
+      const cliente = punto.clienteId;
+
+      return cliente && typeof cliente === 'object' && cliente._id
+        ? cliente._id
+        : cliente;
     });
 
+    // Filtra valores undefined o null
+    return clientesSeleccionados.filter((clienteId: any) => clienteId);
   }
-  // getAllNombresRutas() {
-  //   this.rutaS.getNombreRutas().subscribe(
-  //     (data: Ruta[]) => {
-  //       this.allNombreRuta = data;
-  //     },
-  //     error => {
-  //       console.log("Ocurrió un error al obtener la información", error);
-  //     }
-  //   );
-  // }
 
+  close() {
+    this.visible = false;
+  }
+
+  guardarCambios() {
+    if (this.rutaActual) {
+      this.rutaActual.cantidadBotellas =
+        this.cantidadForm.controls['cantidadBotellas'].value;
+      this.visible = false;
+    }
+  }
+
+  enviar(ruta: any) {
+    if (ruta) {
+      const nombreRuta = ruta.nombreRuta;
+      const selectedRepartidor = ruta.repartidorId;
+      const selectedVehiculo = ruta.vehiculoId;
+      const cantidadBotellas = ruta.cantidadBotellas;
+      const puntosDeEntrega = this.obtenerTodosLosClientes(ruta);
+
+      if (!nombreRuta) {
+        this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
+        return;
+      }
+
+      if (!selectedRepartidor) {
+        this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
+        return;
+      }
+
+      if (!selectedVehiculo) {
+        this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
+        return;
+      }
+
+      if (!cantidadBotellas) {
+        this.toast.showToastPmNgWarn('Por favor ingresa la cantidad');
+        return;
+      }
+
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'swal2-confirm btn-success',
+          cancelButton: 'swal2-cancel btn-danger',
+        },
+        buttonsStyling: false,
+      });
+
+      swalWithBootstrapButtons
+        .fire({
+          title: '¿Estás seguro?',
+          text: '¿Deseas enviar los datos con los cambios realizados?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, enviar!',
+          cancelButtonText: 'No, cancelar!',
+          reverseButtons: true,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            const data: Salida = {
+              nombreRuta: nombreRuta,
+              repartidorId: selectedRepartidor,
+              vehiculoId: selectedVehiculo,
+              cantidadBotellas: cantidadBotellas,
+              puntosDeEntrega: puntosDeEntrega,
+              estado: 'enviado',
+            };
+
+            this.rutaS.addSalida(data).subscribe(
+              (response) => {
+                this.visible = false;
+                this.obtenerRutas();
+                this.toast.showToastSwalSuccess(
+                  'Se ha agregado correctamente.'
+                );
+
+                this.router.navigate([
+                  '/purificadoraAdm/salida/salida-listado',
+                ]); // Navegación hacia otras páginas públicas
+              },
+              (error) => {
+                console.error(error); // Imprime el error en la consola para depuración
+                let errorMessage = 'Error desconocido'; // Mensaje por defecto en caso de que no haya un mensaje de error específico
+                if (error && error.error && error.error.message) {
+                  errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
+                }
+                this.toast.showToastSwalError(errorMessage); // Mostramos el mensaje de error en la alerta
+              }
+            );
+            // Aquí puedes agregar la lógica para enviar los datos al servidor
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+              title: 'Cancelado',
+              text: 'Los cambios no se han enviado.',
+              icon: 'error',
+            });
+          }
+        });
+    }
+  }
 
   getVehiculos() {
     this.vehiculoService.getVehiculos().subscribe(
       (data: Vehiculo[]) => {
         this.allVehiculos = data;
       },
-      error => {
-        console.log("ocurrió un error al obtener la información", error);
+      (error) => {
+        console.log('ocurrió un error al obtener la información', error);
       }
     );
   }
-
-
-
-
-  // this.selectedNombreRuta is undefined
-  onRutaNombreSelectionChange() {
-    this.selectedNombreRuta = this.salidaForm.get('nombreRuta')?.value;
-    console.log('ID del ruta seleccionado:', this.selectedNombreRuta);
-  }
-
 
   onPageChange(event: any) {
     this.first = event.first;
@@ -265,6 +415,9 @@ export class SalidaListaComponent implements OnInit {
   }
 
   updatePaginatedClients() {
-    this.paginatedRutasDetalles = this.allRutas.slice(this.first, this.first + this.rows);
+    this.paginatedRutasDetalles = this.allRutas.slice(
+      this.first,
+      this.first + this.rows
+    );
   }
 }

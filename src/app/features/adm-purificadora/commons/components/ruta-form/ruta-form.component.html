@@ -5,7 +5,7 @@
 
 <p-toast></p-toast>
 <section id="registro">
-    <form class="form-registro-ruta" [formGroup]="registroRuta" (ngSubmit)="AgregarClienteRuta()" method="post">
+    <form class="form-registro" [formGroup]="registroRuta" (ngSubmit)="AgregarClienteRuta()" method="post">
         <h2>{{titulo | uppercase}}</h2>
         <div class="form-column">
             <fieldset>
@@ -54,7 +54,15 @@
             <fieldset>
                 <legend>Segunda sección - Asignación de días </legend>
                 <div *ngIf="id==null" class="checkbox-container">
-                    <div class="checkbox-item">
+                    <!-- <div class="checkbox-container"> -->
+                        <div class="checkbox-item"
+                            *ngFor="let dia of ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']">
+                            <span>{{ dia | titlecase }}</span>
+                            <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                    <!-- </div> -->
+                    <!-- <div class="checkbox-item">
                         <span for="lunes">Lunes</span>
                         <input type="checkbox" id="lunes" formcontr="Lunes" value="lunes"
                             (change)="onDiaSeleccionado($event)">
@@ -88,7 +96,7 @@
                         <span for="domingo">Domingo</span>
                         <input type="checkbox" id="domingo" name="Domingo" value="domingo"
                             (change)="onDiaSeleccionado($event)">
-                    </div>
+                    </div> -->
                 </div>
 
 

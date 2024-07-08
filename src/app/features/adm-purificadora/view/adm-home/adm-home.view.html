@@ -3,16 +3,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body>
+<!-- <body> -->
   <div class="sidenav">
     <div class="logo">
       <span class="logo-text">Administrador</span>
     </div>
     <ul class="nav flex-column">
       <li><a tabindex="0" (click)="redirectToAdminPurificadora('Home')" class="nav-link"><i class="fas fa-home"></i>
-          <span class="link-text">Dashboard</span></a></li>
+          <span class="link-text">Inicio</span></a></li>
       <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('clientes-submenu')">
+        <a tabindex="0" class="nav-link"[class.open]="openSubmenu === 'clientes-submenu'" (click)="toggleSubmenu('clientes-submenu')">
           <i class="fas fa-user"></i>
           <span class="link-text">Clientes</span>
           <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'clientes-submenu'"></i>
@@ -26,7 +26,7 @@
       </li>
 
       <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('repartidores-submenu')">
+        <a tabindex="0" class="nav-link"[class.open]="openSubmenu === 'repartidores-submenu'"  (click)="toggleSubmenu('repartidores-submenu')">
           <i class="fas fa-truck"></i>
           <span class="link-text">Repartidores</span>
           <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'repartidores-submenu'"></i>
@@ -42,7 +42,7 @@
       </li>
 
       <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('vehiculo-submenu')">
+        <a tabindex="0" class="nav-link"  [class.open]="openSubmenu === 'vehiculo-submenu'"  (click)="toggleSubmenu('vehiculo-submenu')">
           <i class="fas fa-car"></i>
           <span class="link-text">Vehículos</span>
           <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'vehiculo-submenu'"></i>
@@ -56,14 +56,8 @@
         </ul>
       </li>
 
-
-
-
-
-
-
       <li class="nav-item">
-        <a tabindex="0" class="nav-link" (click)="toggleSubmenu('rutas-submenu')">
+        <a tabindex="0" class="nav-link" [class.open]="openSubmenu === 'rutas-submenu'"(click)="toggleSubmenu('rutas-submenu')">
           <i class="fas fa-route"></i>
           <span class="link-text">Rutas</span>
           <i class="fas fa-chevron-down submenu-toggle" [class.open]="openSubmenu === 'rutas-submenu'"></i>
@@ -75,16 +69,6 @@
           </li>
         </ul>
       </li>
-
-
-
-
-
-
-
-
-
-
 
       <li class="nav-item">
         <a tabindex="0" (click)="redirectToAdminPurificadora('salida')" class="nav-link">
@@ -107,10 +91,9 @@
         </a>
       </li>
     </ul>
-    <button class="toggle-btn" onclick="toggleSidenav()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar
+    <button class="toggle-btn" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar
       sesión</button>
   </div>
-
 
   <div class="floating-header">
 
@@ -131,87 +114,8 @@
     <router-outlet></router-outlet>
   </div>
 
-</body>
-
+<!-- </body> -->
+<!-- 
 <style>
-  /* .calendar-container {
-  position: relative;
-} */
-
-  /* .round-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-  }
- */
-
-
-
-  .round-button i {
-    line-height: 40px;
-  }
-
-  .p-calendar {
-    /* position: absolute; */
-    left: 0;
-    z-index: 1;
-  }
-
-  .floating-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: transparent;
-    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-    z-index: 0;
-    gap: 5px;
-  }
-
-  .floating-header .notification-button ,.round-button {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-
-
-
-  }
-
-  .floating-header .notification-button:hover ,.round-button:hover {
-    border: 1px #007bff solid;
-    background-color: #ffffff;
-    color: #007bff;
-  }
-
-  .floating-header .notification-button i {
-    font-size: 18px;
-  }
-
-  .floating-header .admin-info {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #343a40;
-  }
-
-  .floating-header .admin-info .date {
-    margin-right: 10px;
-  }
-</style>
+ 
+</style> -->

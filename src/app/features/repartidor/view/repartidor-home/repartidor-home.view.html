@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="card flex justify-content-center">
+        <p-sidebar [(visible)]="sidebarVisible" styleClass="ui-sidebar-md">
+
+            <h3>Menú de Acciones</h3>
+            <ul class="actions-list">
+                <li>
+                    <a (click)="redirectToAdminPurificadora('Home')">
+                        <i class="fa fa-home"></i> Inicio
+                    </a>
+                </li>
+                <li>
+                    <a (click)="redirectToAdminPurificadora('ruta-entrega')">
+                        <i class="fa fa-truck"></i> Mis Entregas
+                    </a>
+                </li>
+                <li>
+                    <a (click)="redirectToAdminPurificadora('clientes')">
+                        <i class="fa fa-users"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a (click)="redirectToAdminPurificadora('perfil')">
+                        <i class="fa fa-user"></i> Perfil
+                    </a>
+                </li>
+            </ul>
+        </p-sidebar>
+
+
+    </div>
+    <header class="nav">
+        <button (click)="sidebarVisible = true" class="hamburger-button">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="search-input">
+            <input type="text" placeholder="Buscar...">
+        </div>
+        <i class="fa-solid fa-user"></i>
+        <!-- <i class="fa-solid fa-arrow-right-from-bracket"></i> -->
+    </header>
+
+    <main class="contiene-all">
+        <router-outlet></router-outlet>
+    </main>
+
+    <footer>
+        <i (click)="redirectToAdminPurificadora('Home')" class="fa-solid fa-home"></i>
+        <i (click)="redirectToAdminPurificadora('ruta-entrega')" class="fa-solid fa-route"></i>
+        <i (click)="redirectToAdminPurificadora('clientes')" class="fa-solid fa-users"></i>
+        <i class="fa-solid fa-bell"></i>
+    </footer>
+    <style>
+     
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #057cb3;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        footer i {
+            font-size: 24px;
+        }
+    </style>
+</body>
+
+</html>

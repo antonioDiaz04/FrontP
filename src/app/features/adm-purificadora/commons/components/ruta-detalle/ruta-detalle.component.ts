@@ -91,11 +91,10 @@ export class RutaDetalleComponent implements OnInit {
   enviarUbicacionesMapa(detalleRuta:any){
     this.visitCount++;
     console.log(`Visitado por: ${this.visitCount}`);
-    const entregas = detalleRuta.clientesIdsDeEntregas;
+    const entregas = detalleRuta.puntosDeEntrega;
 
-    console.log("clientesIdsDeEntregas en enviarUbicacionesMapa:", entregas);
+    console.log("puntosDeEntrega en enviarUbicacionesMapa:", entregas);
     if (Array.isArray(entregas) && entregas.length > 0) {
-      // Accede a las longitudes y latitudes de los clientes
       this.puntosClientesUbicaciones = entregas.map(entrega => {
         console.log("clienteId:", entrega.clienteId);
         return {
@@ -108,7 +107,6 @@ export class RutaDetalleComponent implements OnInit {
       this.mapaService.setUbicaciones(this.puntosClientesUbicaciones);
 
     } else {
-      // En caso de que no haya puntos de entrega o el array esté vacío, limpia los marcadores
       this.mapaService.setUbicaciones([]);
       console.log("No se encontraron puntos de entrega o el array está vacío.");
     }

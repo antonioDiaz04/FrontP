@@ -1,0 +1,81 @@
+<div class="repartidor-home">
+
+    <div class="welcome-card" *ngIf="!tienesSalidaProgramada">
+        <p>No tienes salidas programadas para hoy</p>
+    </div>
+
+    <div class="welcome-card" *ngIf="tienesSalidaProgramada">
+        <!-- <div class="scheduled-message" > -->
+        <pre>
+            {{data|json}}
+                </pre>
+        <p>Tienes programada una salida</p>
+        <h2>Descripción de la Entrega</h2>
+        <div class="info">
+            <p><i style="color: rgb(226, 198, 43);" class="fa-solid fa-user icon-left"></i> Nombre del
+                Repartidor:{{data.repartidorId.nombre}}</p>
+            <div class="details">
+                <div class="left">
+                    <p><i style="color: rgb(43, 61, 226);" class="fa-solid fa-calendar icon-left"></i> Hoy:
+                        2024-07-05
+                    </p>
+                    <p><i style="color: rgb(43, 226, 46);" class="fa-solid fa-route"></i> Ruta: 123</p>
+                    <p><i style="color: rgb(198, 226, 43);" class="fa-solid fa-truck icon-left"></i> Vehículo: 123
+                    </p>
+                    <p><i style="color: rgb(226, 198, 43);" class="fa-solid fa-user icon-left"></i> Cantidad de
+                        Clientes: 10</p>
+                </div>
+            </div>
+        </div>
+
+
+        <button type="submit" class="floating-button" (click)="toggleEditMode()" [style.background-color]="buttonColor">
+            <i class="fas" [ngClass]="editMode ?  'fa-circle-check': 'fa-check'"></i>
+            {{ buttonText }}
+        </button>
+    </div>
+
+    <h2 style="text-align: center;">Ver más</h2>
+
+    <div class="actions">
+        <div class="action-card" *ngIf="!tienesSalidaProgramada">
+            <p><i class="fa fa-truck"></i> No tienes Entregas programadas para hoy</p>
+        </div>
+        <div class="action-card" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('ruta-entrega')">
+
+            <h3> <i class="fa fa-truck"></i> Ir a mis Entregas</h3>
+            <p>Consulta y gestiona tus entregas actuales.</p>
+        </div>
+
+
+        <div class="action-card" *ngIf="!tienesSalidaProgramada">
+            <p><i class="fa fa-calendar-alt"></i>No tienes salidas programadas para hoy</p>
+        </div>
+
+
+        <div class="action-card" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('entregas')">
+            <h3><i class="fa fa-calendar-alt"></i>
+                Entregas Programadas</h3>
+            <p>Revisa tus entregas programadas.</p>
+        </div>
+
+
+
+        <div class="action-card" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('clientes')">
+
+            <h3> <i class="fa fa-users"></i> Clientes</h3>
+            <p>Accede a la lista de clientes y sus detalles.</p>
+        </div>
+        <div class="action-card" (click)="redirectToAdminPurificadora('perfil')">
+
+            <h3><i class="fa fa-user"></i> Perfil</h3>
+            <p>Revisa y actualiza la información de tu perfil.</p>
+        </div>
+    </div>
+
+    <button class="toggle-btn" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar
+        sesión</button>
+
+
+
+</div>

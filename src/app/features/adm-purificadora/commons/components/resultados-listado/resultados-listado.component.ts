@@ -31,7 +31,7 @@ export class ResultadosListadoComponent {
   }
 
   obtenerRutas() {
-    this.rutaS.getDetallesEntregasRutas().subscribe(
+    this.rutaS.getRutasSalidas().subscribe(
       data => {
         // Filtrar los datos para solo incluir los que tienen fechaProgramada
         const rutasConFechaProgramada = data.filter((ruta: any) => ruta.fechaInicio);

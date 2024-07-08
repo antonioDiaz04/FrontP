@@ -11,13 +11,13 @@ import { Observable } from 'rxjs';
 export class RutaService {
 
   constructor(private http: HttpClient) { }
-  
+
   // getNombreRutas(): Observable<any> {
   //   return this.http.get(`${environment.api}/purificadoraAdm/getNombreRutas`);
   // }
 
-  getDetallesEntregasRutas(): Observable<any> {
-    return this.http.get(`${environment.api}/purificadoraAdm/getDetallesEntregasRutas`);
+  getRutasSalidas(): Observable<any> {
+    return this.http.get(`${environment.api}/purificadoraAdmin/getRutasSalidasXdia`);
   }
 
   detalleRutaById(id: string): Observable<any> {
@@ -51,12 +51,16 @@ export class RutaService {
     const url = `${environment.api}/purificadoraAdmin/crearRuta/`
     return this.http.post(url, data)
   }
-  addPuntoEntregaRutaById(id:string,data: any): Observable<any> {
+  addSalida(data: any): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/addSalida/`
+    return this.http.post(url, data)
+  }
+  addPuntoEntregaRutaById(id: string, data: any): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/crearPuntoCliente/` + id
     return this.http.post(url, data)
   }
 
-  
+
 
 
   getRutas(): Observable<any> {

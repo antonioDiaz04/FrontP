@@ -9,7 +9,7 @@ import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
 @Component({
   selector: 'app-ruta-listado',
   templateUrl: './ruta-listado.component.html',
-  styleUrl:'../../../adm-purificadora.component.scss'
+  styleUrls:['../../../adm-purificadora.component.scss', '../../../form.scss']
 })
 export class RutaListadoComponent implements OnInit {
   // getRutas

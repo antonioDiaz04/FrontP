@@ -34,19 +34,6 @@ const routes: Routes = [
       import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
   // {
   //   title: "404",
   //   path: 'not-found',

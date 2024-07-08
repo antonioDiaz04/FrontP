@@ -1,21 +1,63 @@
-form {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
-    border: 1px solid #e8e7e7;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+/* Estilos para el formulario */
+.Primer-seccion {
+    display: block ruby;
+    grid-template-columns: max-content 1fr;
+    /* Columna de etiquetas y columna de inputs/selects */
+    grid-row-gap: 10px;
+    /* Espacio entre filas */
+
+    /*  */
+
+    label {
+        grid-column: 1;
+        margin: 10px;
+        /* Las etiquetas en la primera columna */
+    }
+
+    input[type="text"] {
+        width: 20%;
+        /* Los inputs y selects ocupan todo el ancho de su contenedor */
+        grid-column: 2;
+        /* Los inputs y selects en la segunda columna */
+    }
+
+    .custom-dropdown select {
+        grid-row-gap: 20px;
+
+        width: 100%;
+        /* Los inputs y selects ocupan todo el ancho de su contenedor */
+        grid-column: 2;
+        /* Los inputs y selects en la segunda columna */
+        /* Alinear los dropdowns a la derecha */
+    }
 }
 
-form fieldset label {
-    color: #7a7a7a;
+.form-registro {
+    background: #ffffff;
+    padding: 20px;
+    /* border-radius: 2px; */
+    box-shadow: 0 0 15px #cecece8d;
+    border: 1px solid #d9d9d9;
+    width: 100%;
+    /* Ajusta el ancho del .form-registroulario según tus necesidades */
+    /* margin: 20px auto;.] */
+    /* Centra el .form-registroulario en la página */
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
+}
+
+.form-registro fieldset label {
+
+    color: #595959;
+
 }
 
 .form-column {
-    width: calc(50% - 20px);
+    width: calc(100% - 20px);
+    /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
     margin-right: 20px;
+    /* Espacio entre las columnas */
 }
 
 fieldset {
@@ -35,21 +77,28 @@ label {
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="tel"],
-input[type="email"],
-input[type="number"],
-input[type="password"] {
-    width: calc(100% - 18px);
-    padding: 8px;
-    margin-bottom: 10px;
+
+
+.custom-dropdown select,
+input {
+    width: 30%;
+    padding: 0.5rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #686767;
+    font-size: 16px;
+    outline: none;
+}
+
+
+.form-registro button[type="submit"] {
+    width: 100%;
 }
 
 button[type="submit"] {
     background-color: #4cafa2;
+    /* color: #000000; */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -60,5 +109,5 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #44b07a;
 }

@@ -45,7 +45,7 @@ export class RepartidoresFormComponent {
     }
 
     if (!diasAsignados) {
-      this.toast.showToastPmNgWarn('selecciona los dias')
+      this.toast.showToastPmNgWarn('No tiene ningun dia seleccionado')
       return;
     }
 

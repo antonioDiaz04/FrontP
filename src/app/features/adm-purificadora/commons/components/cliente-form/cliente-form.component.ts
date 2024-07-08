@@ -25,7 +25,7 @@ export class ClienteFormComponent implements OnInit {
 
   selectedMunicipio: any
   selectedColonia: any
-  constructor(private toast:Toast,private router: Router, private consultasCOPOMEX: ConsultasCOPOMEXService, private render2: Renderer2, private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
+  constructor(private toast: Toast, private router: Router, private consultasCOPOMEX: ConsultasCOPOMEXService, private render2: Renderer2, private mapService: MapaClientService, private location: Location, private formBuilder: FormBuilder, private clienteS: SignupService) {
     this.registroForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -50,7 +50,7 @@ export class ClienteFormComponent implements OnInit {
     console.log('Colonia seleccionado:', this.selectedColonia);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio()
     this.mapService.latitudLongitudCambiadas.subscribe(({ latitud, longitud }) => {
@@ -81,7 +81,20 @@ export class ClienteFormComponent implements OnInit {
     const numCasa = this.registroForm.get('numCasa')?.value;
     const colonia = this.registroForm.get('selectedColonia')?.value;
     const municipio = this.registroForm.get('selectedMunicipio')?.value;
+    if (!nombre) {
+      this.toast.showToastPmNgWarn('Por favor ingresa tu nombre');
+      return;
+    }
 
+
+    if (!email) {
+      this.toast.showToastPmNgWarn('Por favor ingresa tu email');
+      return;
+    }
+    if (!telefono) {
+      this.toast.showToastPmNgWarn('Por favor ingresa tu telefono');
+      return;
+    }
     if (!municipio) {
       this.toast.showToastPmNgWarn('Por favor ingresa tu municipio');
       return;
@@ -90,36 +103,17 @@ export class ClienteFormComponent implements OnInit {
       this.toast.showToastPmNgWarn('Por favor ingresa tu colonia');
       return;
     }
-    // Aquí puedes realizar las operaciones necesarias con el valor de 'nombre'
-    if (!nombre) {
-      this.toast.showToastPmNgWarn('Por favor ingresa tu nombre');
-      return;
-    }
-    if (!email) {
-      this.toast.showToastPmNgWarn('Por favor ingresa tu email');
+    if (!longitud && !latitud) {
+      this.toast.showToastPmNgWarn('Por favor selecciona tu ubicación');
       return;
     }
 
-    if (!longitud) {
-      this.toast.showToastPmNgWarn('Por favor ingresa tu longitud');
-      return;
-    }
-    if (!latitud) {
-      this.toast.showToastPmNgWarn('Por favor ingresa tu latitud');
-      return;
-    }
-    if (!telefono) {
-      this.toast.showToastPmNgWarn('Por favor ingresa tu telefono');
-      return;
-    }
     if (!numCasa) {
       this.toast.showToastPmNgWarn('Por favor ingresa tu numCasa');
       return;
     }
 
     const USUARIO: Usuario = {
-
-
       nombre: this.registroForm.get('nombre')?.value,
       email: this.registroForm.get('email')?.value,
       longitud: this.registroForm.get('longitud')?.value,
@@ -130,7 +124,7 @@ export class ClienteFormComponent implements OnInit {
       colonia: this.selectedColonia,
     }
     this.clienteS.signUp(USUARIO).subscribe(response => {
-      this.toast.showToastSwalSuccess( "El resgitro fue exitos")
+      this.toast.showToastSwalSuccess("El resgitro fue exitos")
       this.router.navigate(['/purificadoraAdm/clientes/lista-clientes'])
     }, (error) => {
       console.error(error);
@@ -138,7 +132,6 @@ export class ClienteFormComponent implements OnInit {
       if (error && error.error && error.error.message) {
         errorMessage = error.error.message;
       }
-
       this.toast.showToastSwalError(errorMessage);
     })
   }
@@ -154,7 +147,6 @@ export class ClienteFormComponent implements OnInit {
     this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
       data => {
         this.allMuncipioXEstado = data.municipios;
-        console.log(this.allMuncipioXEstado);
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);

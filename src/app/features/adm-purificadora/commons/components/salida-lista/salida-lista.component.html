@@ -1,7 +1,25 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .quantity {
+            width: 80%;
+        }
+
+        .edit-icon {
+            cursor: pointer;
+            color: #4CAF50;
+            font-size: 18px;
+            right: 10px;
+            top: 50%;
+        }
+    </style>
+</head>
+<p-toast />
+
 <section id="lista">
 
-    <h1>Gestión de salida</h1>
-    <div class="top-bar">
+    <h1>Salidas</h1>
+    <!-- <div class="top-bar">
         <input type="text" id="searchBar" placeholder="Buscar...">
     </div>
     <div class="filter-container">
@@ -38,7 +56,7 @@
                 <option value="">Seleccione...</option>
             </select>
         </div>
-    </div>
+    </div> -->
     <table class="entry-table">
         <thead>
             <tr>
@@ -46,108 +64,81 @@
                 <th>Repartidor</th>
                 <th>Vehiculo</th>
                 <th>Dia programado</th>
-                <th>Estado</th>
                 <th>Cantidad</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <!-- <tbody>
+        <tbody>
             <tr *ngFor="let ruta of paginatedRutasDetalles">
-                <td>{{ ruta.rutaId?.nombreRuta }}</td>
-
+                <td>{{ ruta?.nombreRuta }}</td>
                 <td>{{ ruta.repartidorId?.nombre }}</td>
-                <td>{{ ruta?.clienteId?.nombre }}</td>
+                <td>{{ ruta.vehiculoId?.placas }}</td>
                 <td>
-                    {{ ruta.diasAsignados }}
+                    {{ ruta.diasAsignados?.includes(diaTexto) ? diaTexto : '' }}
                 </td>
-                <td *ngIf="ruta.fechaInicio==null">
-                    <p [ngClass]="{'asignar': ruta.fechaInicio == null}">
-                        por asignar
+
+                <td>
+                    <span style="text-align:center;margin-right: 15px;" class="quantity">{{ ruta.cantidadBotellas !== undefined &&
+                        ruta.cantidadBotellas !== null ?
+                        ruta.cantidadBotellas
+                        : 0 }}</span>
+                    <i *ngIf="!ruta.esSalida" class="fa-regular fa-pen-to-square" (click)="editar(ruta)"></i>
+                </td>
+                <td>
+                    <p style="font-weight: bold;" [ngClass]="{
+                                                                        'enviado': ruta.estado === 'enviado',
+                                                                        'pendiente': ruta.estado === 'pendiente',
+                                                                        'en_curso': ruta.estado === 'en_curso',
+                                                                        'finalizada': ruta.estado === 'finalizada'
+                                                                    }">{{ ruta.estado }}
                     </p>
                 </td>
-                <td *ngIf="ruta.fechaInicio!=null">
-
-                    {{ ruta?.fechaInicio }}
-
-                </td>
                 <td>
-                    <p [ngClass]="{
-                    'ninguno': ruta.estado === 'ninguno',
-                    'pendiente': ruta.estado === 'pendiente',
-                    'parcialmente-entregado': ruta.estado === 'parcialmente_entregado',
-                    'en_curso': ruta.estado === 'en_curso',
-                    'finalizada': ruta.estado === 'finalizada'
-                }">
-                        {{ ruta.estado }}
-                    </p>
-
-                </td>
-                <td>{{ ruta.cantidadBotellas }}</td>
-                <td>
-                    <button type="input" (click)="eliminarRuta(ruta._id)" class="remove enable-button">
-                        <i class="fas fa-trash"></i>
+                    <button *ngIf="!ruta.esSalida" type="input" class="read enable-button" (click)="enviar(ruta)">
+                        <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
                     </button>
-                    <button type="buttom" class="edit" (click)="editar(ruta._id)">
-                        <i class="fas fa-pen    "></i>
+                    <button *ngIf="!ruta.esSalida" type="input" class="read enable-button"
+                        (click)="selectToastSwal(ruta)">
+                        <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar repartidor</span>
+                    </button>
+                    <button *ngIf="!ruta.esSalida" type="input" class="read enable-button"
+                        (click)="selectToastCambiarVehiculoSwal(ruta)">
+                        <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar vehiculo</span>
                     </button>
                 </td>
+
             </tr>
-        </tbody> -->
+        </tbody>
     </table>
     <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
     </p-paginator>
 </section>
 
 <div class="card flex justify-content-center">
-    <p-dialog header="Editar" [modal]="true" [(visible)]="visible" [style]="{ width: '34rem',height:'80rem' }"
-        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" [draggable]="false"
-        [resizable]="false" [dismissableMask]="true">
-        <form [formGroup]="salidaForm" class="modal-content"   (ngSubmit)="guardarCambios()">
+    <p-dialog [modal]="true" [(visible)]="visible" [style]="{width: '28rem',height:'18rem' }">
+        <form [formGroup]="cantidadForm" class="modal-content" (ngSubmit)="guardarCambios()">
             <div class="inputs-container">
-
-                <label for="">Cambiar ruta</label>
-                <select   formControlName="nombreRuta" (click)="onRutaNombreSelectionChange()">
-                    <option *ngFor="let ruta of allNombreRuta"   [ngValue]="ruta" [selected]="ruta._id === selectedNombreRuta?._id" >
-                        {{ ruta.nombreRuta }}
-                    </option>
-                </select>
-
-
-                <label for="">Cambiar Repartidor</label>
-
-
-
-                <select formControlName="selectedRepartidor" (click)="onRepartidorSelectionChange()">
-                    <option  *ngFor="let repartidor of allRepartidores"  [ngValue]="repartidor"
-                        [selected]="repartidor._id === selectedRepartidor?._id">
-                        {{ repartidor.nombre }}
-                    </option>
-                </select>
-
-
-                <label for="">Cambiar vehiculo</label>
-                <select formControlName="selectedVehiculo" (click)="onVehiculoSelectionChange()">
-                    <option *ngFor="let vehiculo of allVehiculos"  [ngValue]="vehiculo" [selected]="vehiculo._id === selectedVehiculo?._id">
-                        {{ vehiculo.placas }}
-                    </option>
-                </select>
-                <!-- <div class="contieneInput"> -->
-                <label for="">Asignar fecha</label>
-                    
-                    <input type="date" id="start" name="trip-start" formControlName="fecha" />
-                   <br>
-                   
-                    <p-inputNumber [style]="{ width: '31rem' }" class="inptNumber"
-                        [(ngModel)]="salidaForm.controls['cantidadBotellas'].value" formControlName="cantidadBotellas" [showButtons]="true"
-                        buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" [min]="0"
-                        decrementButtonClass="decrement-button p-button" incrementButtonClass="increment-button p-button"
-                        incrementButtonIcon="fas fa-plus" decrementButtonIcon="fas fa-minus">
-                    </p-inputNumber>
-
+                <h2>Asignar cantidad</h2>
+                <p-inputNumber [style]="{ width: '25rem' }" class="inptNumber"
+                    [(ngModel)]="cantidadForm.controls['cantidadBotellas'].value" formControlName="cantidadBotellas"
+                    [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"
+                    [step]="1" [min]="0" decrementButtonClass="decrement-button p-button"
+                    incrementButtonClass="increment-button p-button" incrementButtonIcon="fas fa-plus"
+                    decrementButtonIcon="fas fa-minus">
+                </p-inputNumber>
             </div>
 
+            <div class="text-danger"
+                *ngIf="cantidadForm.get('cantidadBotellas')?.hasError('required') && cantidadForm.get('cantidadBotellas')?.touched">
+                <span>La cantidad no es <strong>valida</strong></span>
+            </div>
 
-            <button type="submit">Guardar cambios</button>
+            <div class="contiene-botones">
+
+                <button type="submit">Guardar</button>
+                <button type="button" (click)="close()">Cancelar</button>
+            </div>
         </form>
     </p-dialog>
 </div>

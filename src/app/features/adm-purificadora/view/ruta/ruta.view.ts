@@ -9,7 +9,7 @@ import { response } from 'express';
 @Component({
   selector: 'app-ruta',
   templateUrl: './ruta.view.html',
-  styleUrls: ['ruta.view.scss', './form.scss']
+  styleUrls: ['./form.scss']
 })
 export class RutaView {
   visible: boolean = false

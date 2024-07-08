@@ -1,0 +1,263 @@
+:root {
+  /* Primary Colors */
+  --primary-color: #057cb3;
+  /* Azul principal */
+  --primary-dark: #045a8d;
+  /* Azul oscuro */
+  --primary-light: #5ba4da;
+  /* Azul claro */
+
+  /* Secondary Colors */
+  --secondary-color: #50c4b7;
+  /* Verde agua */
+  --secondary-dark: #379b91;
+  /* Verde oscuro */
+  --secondary-light: #85e1d7;
+  /* Verde claro */
+
+  /* Accent Colors */
+  --accent-color: #ffd700;
+  /* Amarillo dorado */
+  --accent-dark: #b29500;
+  /* Dorado oscuro */
+  --accent-light: #ffe775;
+  /* Dorado claro */
+
+  /* Neutral Colors */
+  --white: #ffffff;
+  --light-gray: #f5f5f5;
+  --gray: #cccccc;
+  --dark-gray: #666666;
+  --black: #000000;
+
+  /* Text Colors */
+  --text-color: #333333;
+  --text-light: #666666;
+  --text-dark: #000000;
+
+  /* Background Colors */
+  --background-color: #f5f5f5;
+  /* Fondo principal */
+  --card-background: #ffffff;
+  /* Fondo de tarjetas */
+  --header-background: #057cb3;
+  /* Fondo del encabezado */
+  --footer-background: #045a8d;
+  /* Fondo del pie de página */
+}
+
+/* body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+} */
+/* 
+.header {
+  background-color: var(--header-background);
+  color: var(--white);
+}
+ */
+
+
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--primary-dark);
+}
+
+.accent {
+  color: var(--accent-color);
+}
+
+.secondary {
+  background-color: var(--secondary-color);
+  color: var(--white);
+}
+
+
+
+.repartidor-home {
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.welcome-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: var(--header-background);
+  color: #fff;
+  border-radius: 8px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.welcome-card h2 {
+  margin-top: 0;
+}
+
+.info {
+  margin-bottom: 10px;
+}
+
+.info h3 {
+  margin: 0;
+}
+
+.details {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.details p {
+  margin-right: 20px;
+}
+
+.map {
+  height: 200px;
+  /* Altura de ejemplo para el mapa */
+  background-color: #ddd;
+  /* Color de fondo para el mapa */
+  border-radius: 8px;
+}
+
+.description-salida {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(114, 112, 112, 0.786);
+}
+
+.description-salida h2 {
+  margin-top: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* animation: fadeIn 1s ease-in-out; */
+}
+
+.action-card {
+  flex: 1 1 calc(25% - 20px);
+  box-sizing: border-box;
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.action-card i {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.action-card h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.action-card p {
+  color: #666;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 1200px) {
+  .action-card {
+    flex: 1 1 calc(33.33% - 20px);
+  }
+
+
+}
+
+@media (max-width: 768px) {
+  .action-card {
+    flex: 1 1 calc(50% - 20px);
+  }
+
+
+
+}
+
+@media (max-width: 600px) {
+
+  .toggle-btn {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #121212;
+    background-color: #e6e6e6;
+  }
+
+  div {
+    .welcome-card {
+      margin-top: 20%;
+      padding: 20px;
+      background-color: #5ba4da;
+      color: #fff;
+      border-radius: 8px;
+      animation: fadeIn 1s ease-in-out;
+
+      > button[type="submit"] {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
+        background-color: #379b91;
+      }
+    }
+  }
+}
+
+
+
+button[type="submit"] {
+  background-color: #4cafa2;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 10rem;
+}

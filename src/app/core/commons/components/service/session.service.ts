@@ -11,6 +11,17 @@ import { Iuser } from '../../../../shared/interfaces/user.interface';
 export class SessionService {
   private helper = new JwtHelperService();
 
+  // private isLocalStorageAvailable(): boolean {
+  //   try {
+  //     const testKey = '__localStorageTest__';
+  //     localStorage.setItem(testKey, testKey);
+  //     localStorage.removeItem(testKey);
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+
   get token(){
     return this.storageService.getToken()
   }
@@ -25,6 +36,11 @@ export class SessionService {
     const userData = this.getUserData();
     // console.log(userData)
     return userData ? userData.rol : 'invitado';
+  }
+  getId(): string {
+    const userData = this.getUserData();
+    // console.log(userData)
+    return userData ? userData._id :'null';
   }
 
   isAutenticated(): boolean {

@@ -90,8 +90,23 @@ export class RutaFormComponent implements OnInit {
   onRepartidorSelectionChange() {
     const selectedId = this.registroRuta.get('selectedRepartidor')?.value;
     console.log('ID del repartidor seleccionado:', selectedId);
-  }
 
+    // Encuentra el repartidor seleccionado en la lista
+    const selectedRepartidor = this.allRepartidores.find(repartidor => repartidor._id === selectedId);
+
+    if (selectedRepartidor) {
+      this.diasAsignados = {};
+      selectedRepartidor.diasAsignados.forEach(dia => {
+        this.diasAsignados[dia] = true;
+
+        console.log(this.diasAsignados[dia])
+      });
+    } else {
+      this.diasAsignados = {};
+    }
+  }
+  // 
+  
   onVehiculoSelectionChange() {
     const selectedId = this.registroRuta.get('selectedVehiculo')?.value;
     console.log('ID del vehiculo seleccionado:', selectedId);
@@ -236,23 +251,16 @@ export class RutaFormComponent implements OnInit {
   }
 
   AgregarClienteRuta() {
-
-
-
-
     const allMunicipios = this.obtenerTodosLosMunicipios();
     console.log('Municipios seleccionados:', allMunicipios);
     const allColonias = this.obtenerTodosLasColonias();
     console.log('Colonias seleccionados:', allColonias);
     const allClients = this.obtenerTodosLasClientes();
     console.log("Clientes seleccionados", allClients);
-
     const nombreRuta = this.registroRuta.get('nombreRuta')?.value;
     const selectedVehiculo = this.registroRuta.get('selectedVehiculo')?.value;
     const selectedRepartidor = this.registroRuta.get('selectedRepartidor')?.value;
-    
-    
-    
+
     const diasAsignados = this.diasSeleccionados;
 
     console.log("dias en registro", diasAsignados)
@@ -292,12 +300,6 @@ export class RutaFormComponent implements OnInit {
       return;
     }
 
-
-
-
-
-
-
     const puntosDeEntrega = allClients.map((clienteId, index) => ({
       municipio: allMunicipios[index],
       colonia: allColonias[index],
@@ -312,8 +314,6 @@ export class RutaFormComponent implements OnInit {
       diasAsignados: diasAsignados
     }
 
-
-
     if (this.id !== null) {
       // Si es una edición, llamar al método editarProducto con el ID y el objeto formData
       this.rutaService.updateRuta(this.id, RUTA).subscribe(
@@ -321,19 +321,18 @@ export class RutaFormComponent implements OnInit {
           this.toast.showToastSwalSuccess('Ruta actualizado con éxito!')
           this.router.navigate(['/purificadoraAdm/rutas/lista-rutas']) // Navegación hacia otras páginas públicas
         }, error => {
-
           console.log("Ocurrió un error al actualizar", error);
           // Muestra el error usando el servicio de notificación
           this.toast.showToastSwalError('Error al actualizar la ruta: ' + (error.error.message || 'Error desconocido'))
         }
-
       );
-      this.todo()
     } else {
       console.log(RUTA)
       this.rutaService.addRuta(RUTA).subscribe(response => {
         this.visible = false;
         this.toast.showToastSwalSuccess('Se ha agregado correctamente.')
+        this.router.navigate(['/purificadoraAdm/rutas/lista-rutas']) // Navegación hacia otras páginas públicas
+
       }, (error) => {
         console.error(error); // Imprime el error en la consola para depuración
         let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
@@ -440,7 +439,6 @@ export class RutaFormComponent implements OnInit {
         selectedColonia: '',
         selectedClientAdd: '',
       });
-
     }
   }
 
@@ -516,21 +514,25 @@ export class RutaFormComponent implements OnInit {
     return Object.keys(this.diasAsignados).filter(dia => this.diasAsignados[dia]);
   }
 
-
   onDiaSeleccionado(event: any) {
-    const isChecked = event.target.checked;
     const dia = event.target.value;
-
-    if (isChecked) {
-      this.diasSeleccionados.push(dia);
-    } else {
-      const index = this.diasSeleccionados.indexOf(dia);
-      if (index > -1) {
-        this.diasSeleccionados.splice(index, 1);
-      }
-    }
-    console.log(this.diasSeleccionados);
+    this.diasAsignados[dia] = event.target.checked;
   }
+
+  // onDiaSeleccionado(event: any) {
+  //   const isChecked = event.target.checked;
+  //   const dia = event.target.value;
+
+  //   if (isChecked) {
+  //     this.diasSeleccionados.push(dia);
+  //   } else {
+  //     const index = this.diasSeleccionados.indexOf(dia);
+  //     if (index > -1) {
+  //       this.diasSeleccionados.splice(index, 1);
+  //     }
+  //   }
+  //   console.log(this.diasSeleccionados);
+  // }
 
 
 

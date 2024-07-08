@@ -9,17 +9,19 @@ import { IToken } from '../../../../shared/interfaces/token.interface';
 // import { IToken } from '../../../../shared/interfaces/token.interface';
 
   @Injectable({
-    providedIn: AuthServicesModule
+    providedIn: AuthServicesModule,
   })
   export class SignInService {
+    constructor(private http: HttpClient) {}
 
-    constructor(
-      private http:HttpClient
-    ) { }
-
-    signIn(request:ISingInRequest): Observable<IToken>{
+    signIn(request: ISingInRequest): Observable<IToken> {
       // debugger
-      console.log("hola mundo")
-      return this.http.post<IToken>(`${environment.api}/autentificacion/signIn`, request)
+      console.log('hola mundo');
+      return this.http.post<IToken>(
+        `${environment.api}/autentificacion/signIn`,
+        request
+      );
     }
+
+   
   }

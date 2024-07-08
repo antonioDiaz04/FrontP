@@ -32,22 +32,22 @@
     }
 }
 
-.form-registro-ruta {
-    background: #fff5ec;
+.form-registro {
+    background: #ffffff;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 15px #4f4f4fb7;
-    border: 1px solid #aeaeae;
+    /* border-radius: 2px; */
+    box-shadow: 0 0 15px #cecece8d;
+    border: 1px solid #d9d9d9;
     width: 100%;
-    /* Ajusta el ancho del .form-registro-rutaulario según tus necesidades */
+    /* Ajusta el ancho del .form-registroulario según tus necesidades */
     /* margin: 20px auto;.] */
-    /* Centra el .form-registro-rutaulario en la página */
+    /* Centra el .form-registroulario en la página */
     display: flex;
     flex-wrap: wrap;
     /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
 }
 
-.form-registro-ruta fieldset label {
+.form-registro fieldset label {
 
         color: #595959;
 
@@ -92,7 +92,7 @@ input {
 }
 
 
-.form-registro-ruta button[type="submit"] {
+.form-registro button[type="submit"] {
     width: 100%;
 }
 

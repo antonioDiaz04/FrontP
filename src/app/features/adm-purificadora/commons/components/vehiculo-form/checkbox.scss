@@ -1,0 +1,35 @@
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.checkbox-item {
+    margin-bottom: 0.5rem;
+}
+
+:host ::ng-deep .ui-dropdown-panel ul {
+    padding-left: 0;
+}
+
+
+
+// select 
+
+
+.custom-dropdown select:hover,
+.custom-dropdown select:focus {
+    border-color: #ccc;
+}
+
+span {
+    font-size: 15px;
+    color: #51a47b;
+}
+
+span.strike-through {
+    cursor: not-allowed;
+
+    color: #d06868;
+    text-decoration: line-through;
+}

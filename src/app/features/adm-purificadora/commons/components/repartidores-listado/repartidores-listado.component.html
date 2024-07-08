@@ -4,7 +4,7 @@
 
 <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible"
     [style]="{ width: '29rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-    <form [formGroup]="usuarioForm" (ngSubmit)="actualizarCliente(listRepartidor._id)" class="form-container">
+    <form [formGroup]="usuarioForm" (ngSubmit)="actualizarCliente(listRepartidor._id)">
         <div class="form-group">
             <label for="nombre" class="form-label">Nombre:</label>
             <input type="text" id="nombre" formControlName="nombre" class="form-control">
@@ -21,7 +21,6 @@
             <label for="telefono" class="form-label">Teléfono:</label>
             <input type="text" id="telefono" formControlName="telefono" class="form-control">
         </div>
-        <app-mapa-client-ubicacion></app-mapa-client-ubicacion>
         <div class="btn-group" role="group">
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
@@ -36,6 +35,7 @@
                 <th>Nombre completo</th>
                 <th>Teléfono</th>
                 <th>Email</th>
+                <th>Días disponibles</th>
                 <th>Fecha de Contratación</th>
                 <th>Acciones</th>
             </tr>
@@ -46,6 +46,9 @@
                 <td>{{repartidor.nombre}}</td>
                 <td>{{repartidor.telefono}}</td>
                 <td>{{repartidor.email}}</td>
+                <td>{{repartidor.diasAsignados && repartidor.diasAsignados.length > 0
+                    ? repartidor.diasAsignados.join(', ')
+                    : 'ninguno'}}</td>
                 <td>{{repartidor.fechaDeAgregacion}}</td>
                 <td>
                     <button class="custom-btn custom-btn-danger" (click)="eliminarUsuario(repartidor._id)">
@@ -61,34 +64,3 @@
     <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
     </p-paginator>
 </section>
-
-<style>
-    button {
-        padding: 10px 20px;
-        background-color: #abc3dd;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 50%;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-
-    .p-paginator {
-        background: none;
-        border: solid #f3f4f6;
-        border-width: 0;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-    }
-
-    .p-link {
-        cursor: default;
-        color: #182433;
-    }
-</style>

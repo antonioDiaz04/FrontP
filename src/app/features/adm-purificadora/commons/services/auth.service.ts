@@ -20,6 +20,7 @@ export class AuthService {
     const url = `${environment.api}/autentificacion/signIn`;
     return this.http.post(url, data);
   }
+  
 
   verifyEmail(token: string): Observable<any> {
     const url = `${environment.api}/auth/verify/${token}`;

@@ -1,0 +1,228 @@
+
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-entry-btn {
+    background-color: #4cafa2;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.add-entry-btn:hover {
+    background-color: #44b07a;
+}
+
+#searchBar {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Cambiado para ser responsivo */
+    max-width: 300px;
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    color: #454545;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+section#lista {
+    h2 {
+        color: rgb(185, 158, 123);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 5px 7px rgba(0, 0, 0, 0.1);
+    }
+
+    thead tr th {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        background-color: #a6a4ff38;
+        color: rgb(0, 0, 0);
+    }
+
+    tbody tr td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        color: rgb(83, 83, 83);
+    }
+
+    tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    td .asignar,
+    td .ninguno,
+    td .finalizada,
+    td .en_curso,
+    td .parcialmente-entregado,
+    td .pendiente {
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    td .asignar,
+    td .ninguno {
+        color: #7e7e7e;
+        background: #e5e5e5;
+    }
+
+    td .finalizada {
+        color: #4ca87a;
+        background: #bdffde;
+    }
+
+    td .en_curso {
+        color: #0045f3;
+        background: #70c1fa;
+    }
+
+    td .parcialmente-entregado {
+        color: #ff9d00;
+        background: #ffeebd;
+    }
+
+    td .pendiente {
+        color: #b86060;
+        background: #fbcccc;
+    }
+
+    td .remove {
+        color: rgb(192, 2, 2);
+        background-color: #ffffff;
+        border: 1px solid #d60000;
+    }
+
+    td .remove:hover {
+        color: rgb(255, 255, 255);
+        background-color: #d60000;
+        border: 1px solid #ffffff;
+    }
+
+    td .read {
+        color: #02a4c0;
+        background-color: #ffffff;
+        border: 1px solid #02a4c0;
+    }
+
+    td .read:hover {
+        color: rgb(255, 255, 255);
+        background-color: #02a4c0;
+        border: 1px solid #ffffff;
+    }
+
+    td .edit {
+        color: #0bc002;
+        background-color: #ffffff;
+        border: 1px solid #35c002;
+    }
+
+    td .edit:hover {
+        color: rgb(255, 255, 255);
+        background-color: #0bc002;
+        border: 1px solid #ffffff;
+    }
+
+    button,
+    input[type="button"] {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border-radius: 4px;
+    }
+
+    span.material-symbols-outlined {
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 600px) {
+    .top-bar {
+        flex-direction: column;
+    }
+
+    .add-entry-btn {
+        width: 100%; /* Ajuste para ancho completo en móvil */
+        margin-top: 10px;
+    }
+
+    #searchBar {
+        width: 100%; /* Ajuste para ancho completo en móvil */
+        margin-top: 10px;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 10px;
+    }
+
+    td {
+        padding: 10px;
+        text-align: right;
+        position: relative;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+}

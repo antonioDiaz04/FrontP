@@ -1,6 +1,6 @@
 export interface Iuser {
   email: string;
-  id: string;
+  _id: string;
   name: string;
   lastname: string;
   rol: string;

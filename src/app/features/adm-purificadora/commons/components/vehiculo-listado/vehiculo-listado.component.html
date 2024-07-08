@@ -26,8 +26,6 @@
             <label for="telefono">Placa:</label>
             <input type="text" id="telefono" formControlName="placas">
         </div>
-        <!-- <app-mapa-client-ubicacion></app-mapa-client-ubicacion> -->
-
         <div class="btn-group" role="group">
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
@@ -41,7 +39,7 @@
             <tr>
                 <th>marca</th>
                 <th>modelo</th>
-                <th>anio</th>
+                <th>Dia disponibilidad</th>
                 <th>placa</th>
                 <th>Acciones</th>
             </tr>
@@ -51,13 +49,15 @@
             <tr *ngFor="let data of allVehiculos">
                 <td>{{data.marca}}</td>
                 <td>{{data.modelo}}</td>
-                <td>{{data.anio}}</td>
+                <td>{{data.diasAsignados && data.diasAsignados.length > 0
+                    ? data.diasAsignados.join(', ')
+                    : 'ninguno'}}</td>
                 <td>{{data.placas}}</td>
                 <td>
                     <button class="custom-btn custom-btn-danger" (click)="eliminar(data._id)">
                         <i class="fas fa-trash-can"></i> Eliminar
                     </button>
-                  
+
                     <button class="custom-btn custom-btn-primary" (click)="editar(data._id)">
                         <i class="fa-solid fa-pen-to-square"></i> Editar
                     </button>

@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="datas">
+        <h2>Perfil de Trabajador</h2>
+        <div class="profile-group">
+            <label for="nombre">Nombre:</label>
+            <p id="nombre">{{ data.nombre }}</p>
+        </div>
+        <div class="profile-group">
+            <label for="email">Correo Electrónico:</label>
+            <p id="email">{{ data.email }}</p>
+        </div>
+        <div class="profile-group">
+            <label for="telefono">Teléfono:</label>
+            <p id="telefono">{{ data.telefono }}</p>
+        </div>
+        <div class="profile-group">
+            <label for="direccion">Rol:</label>
+            <p id="direccion">{{ data.rol }}</p>
+        </div>
+    </div>
+    <button class="floating-button" (click)="toggleEditMode()">
+        <i class="fas" [ngClass]="editMode ? 'fa-save' : 'fa-edit'"></i>
+    </button>
+</div>
