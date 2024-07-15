@@ -1,61 +1,85 @@
 <head>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-
 </head>
-<!-- <p-dialog  header="Información del Usuario" [modal]="true"
-    [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
 
-    <form>
-        <h3>Detalles Personales</h3>
+<style>
+    .container-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        color: #555;
+    }
 
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" formControlName="nombre">
-        </div>
+    .icon {
+        font-size: 100px;
+        color: #aaa;
+        animation:floatUpDown 3s infinite alternate, rotate 1s infinite alternate;
+    }
 
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" formControlName="email">
-        </div>
+    @keyframes rotate {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-20px) rotateY(180deg);
+        }
+    }
+@keyframes floatUpDown {
+    0% {
+        transform: translateY(50%);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
+    .message {
+        font-size: 24px;
+        margin: 20px 0;
+    }
 
-        <div>
-            <label for="numCasa">Número de casa:</label>
-            <input type="text" id="numCasa" formControlName="numCasa">
-        </div>
+    .add-button {
+        background-color: #33d089;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
 
-        <div>
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" formControlName="telefono">
-        </div>
-        <app-mapa-client-ubicacion></app-mapa-client-ubicacion>
+    .add-button:hover {
+        background-color: #00a24e;
+    }
+</style>
 
-        <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </div>
-    </form>
-</p-dialog> -->
+<div *ngIf="allRutas?.length==0" class="container-info">
+    <div class="icon">?</div>
+    <div class="message">No hay ninguna ruta por el momento</div>
+    <a class="add-button">Agregar Ruta</a>
+</div>
 
-<section id="lista">
-    <h1>Lista de rutas</h1>
+<section *ngIf="allRutas && allRutas?.length>0" id="lista">
+    <h1>Listado de rutas</h1>
     <table>
         <thead>
             <tr>
                 <th>Ruta</th>
                 <th>Repartidor</th>
                 <th>Vehiculo</th>
-                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let ruta of allRutas">
-
                 <td>{{ruta.nombreRuta}}</td>
                 <td>{{ruta.repartidorId?.nombre}}</td>
                 <td>{{ruta.vehiculoId?.marca}}</td>
-                <td>{{ruta.estado}}</td>
                 <td>
                     <button class="custom-btn custom-btn-danger" (click)="eliminarRuta(ruta._id)">
                         <i class="fas fa-trash-can"></i> Eliminar

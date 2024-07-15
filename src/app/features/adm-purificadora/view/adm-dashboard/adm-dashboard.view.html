@@ -60,32 +60,81 @@
             cursor: pointer;
         }
 
-        .btn-green {
-            background-color: #28a745;
-        }
 
-        .btn-blue {
-            background-color: #007bff;
-        }
 
-        .btn-orange {
-            background-color: #fd7e14;
-        }
+
+
 
         .target-green {
             background-color: #d8ffe9;
             border-left: 1px solid#28a745;
+
+            div {
+
+                .target-title,
+                i {
+                    color: #28a745;
+                }
+            }
+
+            .btn-green {
+                background-color: #28a745;
+            }
         }
 
         .target-blue {
             border-left: 1px solid#007bff;
             background-color: #d1e7fd;
+
+            div {
+
+                .target-title,
+                i {
+                    color: #007bff;
+                }
+            }
+
+            .btn-blue {
+                background-color: #007bff;
+            }
+
         }
 
         .target-orange {
             border-left: 1px solid#fd7e14;
 
             background-color: #ffecd9;
+
+
+            div {
+
+                .target-title,
+                i {
+                    color: #fd7e14;
+                }
+            }
+
+            .btn-orange {
+                background-color: #fd7e14;
+            }
+        }
+
+        .target-morado {
+            border-left: 1px solid#8814fd;
+
+            background-color: #ecceff;
+
+            div {
+
+                .target-title,
+                i {
+                    color: #8814fd;
+                }
+            }
+
+            .btn-morado {
+                background-color: #8000ff;
+            }
         }
     </style>
 </head>
@@ -105,7 +154,8 @@
                 <span class="target-title">Cantidad de Clientes</span>
             </div>
             <div class="target-content">
-                <p>{{allClients.length}} Clientes</p>
+                <p> Sólo tiene <strong>{{allClients.length}}</strong> clientes registrados</p>
+                <!-- <p>{{allClients.length}} Clientes</p> -->
             </div>
             <button class="btn btn-green">Ver detalles</button>
         </div>
@@ -113,10 +163,10 @@
         <div class="target target-blue">
             <div class="target-header">
                 <i class="fas fa-truck"></i>
-                <span class="target-title">Repartidores</span>
+                <span class="target-title">Cantidad de Repartidores</span>
             </div>
             <div class="target-content">
-                <p>{{allRepartidores.length}} Repartidores</p>
+                <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> repartidores registrados</p>
             </div>
             <button class="btn btn-blue">Ver detalles</button>
         </div>
@@ -130,6 +180,19 @@
                 <p>Ruta 5 - 200 ventas</p>
             </div>
             <button class="btn btn-orange">Ver detalles</button>
+        </div>
+
+
+
+        <div class="target target-morado">
+            <div class="target-header">
+                <i class="fas fa-route"></i>
+                <span class="target-title">Rutas con más ventas</span>
+            </div>
+            <div class="target-content">
+                <p>Ruta 5 - 200 ventas</p>
+            </div>
+            <button class="btn btn-morado">Ver detalles</button>
         </div>
     </div>
     <h1>Gráfico de ventas</h1>

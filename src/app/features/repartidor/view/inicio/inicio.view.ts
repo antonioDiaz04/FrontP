@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Salida } from '../../../../shared/models/salida.model';
 import { StorageService } from '../../../../core/commons/components/service/storage.service';
 import { SessionService } from '../../../../core/commons/components/service/session.service';
 import { RepartidoresService } from '../../../../shared/services/rapartidores.service';
@@ -10,12 +11,12 @@ import { RepartidoresService } from '../../../../shared/services/rapartidores.se
   styleUrl: './inicio.view.css'
 })
 export class InicioView implements OnInit {
-  data: any = {};
+  @Input() data!: Salida[]; // data es un array de Salida
   id!: string;
   editMode: boolean = false;
   buttonText: string = 'Recibir';
   buttonColor: string = '#379b91';
-  tienesSalidaProgramada!: boolean ;
+  tienesSalidaProgramada!: boolean;
   constructor(private router: Router, private ngxService: NgxUiLoaderService,
     private repService: RepartidoresService,
     private storageService: StorageService,
@@ -70,21 +71,23 @@ export class InicioView implements OnInit {
     if (userData) {
       this.id = userData;
       if (this.id) {
-        this.repService.detalleUsuarioSalidaById(this.id).subscribe(data => {
-          this.data = data;
+        this.repService.detalleUsuarioSalidaById(this.id).subscribe(
+          data => {
+            this.data = data;
+            console.log(data)
 
 
+            if (this.data == null) {
+              this.tienesSalidaProgramada = false;
+            } else {
 
-          if (this.data == null) {
-            this.tienesSalidaProgramada = false;
-          } else {
+              this.tienesSalidaProgramada = true;
+            }
+
             
-            this.tienesSalidaProgramada = true;
-          }
-
-        }, error => {
-          console.error('Error al actualizar el usuario:', error);
-        });
+          }, error => {
+            console.error('Error al actualizar el usuario:', error);
+          });
       }
     }
   }

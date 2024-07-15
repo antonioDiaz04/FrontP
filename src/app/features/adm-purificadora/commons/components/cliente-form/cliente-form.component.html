@@ -64,9 +64,17 @@
                 <input formControlName="longitud" type="hidden">
 
                 <input formControlName="latitud" type="hidden">
+                
+                <div style="text-align:center">
+                    <h1>
+                        Welcome to QR Code Generator in Angular 17 Applications!
+                    </h1>
+                    <qrcode [qrdata]="myAngularxQrCode"  [errorCorrectionLevel]="'M'"></qrcode>
+                </div>
 
                 <!-- <input type="submit" ="Register" class="button"> -->
-                <input type="button" (click)="volverAtras()" value="Atras" class="button">           </fieldset>
+                <input type="button" (click)="volverAtras()" value="Atras" class="button">
+            </fieldset>
         </div>
 
         <button type="submit">Registrar Cliente</button>

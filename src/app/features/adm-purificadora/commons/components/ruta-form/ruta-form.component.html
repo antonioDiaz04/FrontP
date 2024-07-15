@@ -4,6 +4,36 @@
 </head>
 
 <p-toast></p-toast>
+
+
+<p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible"
+    [style]="{ width: '25rem' , height: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+
+    <form [formGroup]="clienteFormAdd" (ngSubmit)="agregarClienteEnRuta()">
+        <div class="custom-dropdown">
+            <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio" [options]="allMunicipioXEstado"
+                placeholder="Selecciona un municipio">
+            </p-dropdown>
+        </div>
+        <div class="custom-dropdown">
+            <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedColonia" [options]="allColoniaXMuncipio"
+                [filter]="true" (onChange)="onColoniaSelectionChangeId($event)" [showClear]="true"
+                placeholder="Selecciona una colonia">
+            </p-dropdown>
+        </div>
+        <div class="custom-dropdown">
+            <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedClientAdd" opctionValue="_id"
+                [options]="allClients" optionLabel="nombre" [filter]="true" (onChange)="onClientSelectionChange($event)"
+                [showClear]="true" placeholder="Selecciona un cliente">
+            </p-dropdown>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+    </form>
+</p-dialog>
+
+
 <section id="registro">
     <form class="form-registro" [formGroup]="registroRuta" (ngSubmit)="AgregarClienteRuta()" method="post">
         <h2>{{titulo | uppercase}}</h2>
@@ -22,6 +52,8 @@
                             <option *ngFor="let repartidor of allRepartidores" [value]="repartidor._id">{{
                                 repartidor.nombre }}</option>
                         </select>
+
+
                         <select *ngIf="id!=null" formControlName="selectedRepartidor"
                             (click)="onRepartidorSelectionChange()">
                             <option *ngFor="let repartidor of allRepartidores" [ngValue]="repartidor"
@@ -29,16 +61,23 @@
                                 {{ repartidor.nombre }}
                             </option>
                         </select>
-                    </div>
 
+
+                    </div>
                     <label for="repartidorId">{{accion}} Vehículo:</label>
                     <div class="custom-dropdown">
+
                         <select *ngIf="id==null" formControlName="selectedVehiculo"
                             (change)="onVehiculoSelectionChange()">
                             <option value="" disabled selected>Selecciona un vehículo</option>
                             <option *ngFor="let vehiculo of allVehiculos" [value]="vehiculo._id">{{ vehiculo.placas
                                 }}</option>
                         </select>
+
+
+                        <!--<div *ngIf="selectedVehiculo">
+                            Vehículo seleccionado: {{ selectedVehiculo._id }}
+                        </div> -->
                         <select *ngIf="id!=null" formControlName="selectedVehiculo"
                             (click)="onVehiculoSelectionChange()">
                             <option *ngFor="let vehiculo of allVehiculos" [ngValue]="vehiculo"
@@ -46,69 +85,43 @@
                                 {{ vehiculo.placas }}
                             </option>
                         </select>
+
                     </div>
                 </section>
             </fieldset>
         </div>
+
         <div class="form-column">
             <fieldset>
                 <legend>Segunda sección - Asignación de días </legend>
-                <div *ngIf="id==null" class="checkbox-container">
-                    <!-- <div class="checkbox-container"> -->
-                        <div class="checkbox-item"
-                            *ngFor="let dia of ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']">
-                            <span>{{ dia | titlecase }}</span>
-                            <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]"
-                                (change)="onDiaSeleccionado($event)">
-                        </div>
-                    <!-- </div> -->
-                    <!-- <div class="checkbox-item">
-                        <span for="lunes">Lunes</span>
-                        <input type="checkbox" id="lunes" formcontr="Lunes" value="lunes"
-                            (change)="onDiaSeleccionado($event)">
+                <div *ngIf="id == null" class="checkbox-container">
+                    <div class="checkbox-item"
+                        *ngFor="let dia of ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']"
+                        [ngClass]="{'disponibleR': diasDisponiblesR[dia] , 'disponibleV': diasDisponiblesV[dia],  'noDisponible': !diasDisponiblesR[dia] && !diasDisponiblesV[dia]} "
+                        [title]="getAvailabilityMessage(dia)">
+                        <span [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]">{{ dia | titlecase
+                            }}</span>
+                        <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia] || false"
+                            [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
+                            (change)="onDiaSeleccionado($event, dia)">
                     </div>
-                    <div class="checkbox-item">
-                        <span for="martes">Martes</span>
-                        <input type="checkbox" id="martes" name="Martes" value="martes"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="miercoles">Miércoles</span>
-                        <input type="checkbox" id="miercoles" name="Miércoles" value="miercoles"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="jueves">Jueves</span>
-                        <input type="checkbox" id="jueves" name="Jueves" value="jueves"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="viernes">Viernes</span>
-                        <input type="checkbox" id="viernes" name="Viernes" value="viernes"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="sabado">Sábado</span>
-                        <input type="checkbox" id="sabado" name="Sábado" value="sabado"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="domingo">Domingo</span>
-                        <input type="checkbox" id="domingo" name="Domingo" value="domingo"
-                            (change)="onDiaSeleccionado($event)">
-                    </div> -->
                 </div>
-
-
 
                 <div *ngIf="id != null" class="checkbox-container">
                     <div class="checkbox-item"
-                        *ngFor="let dia of ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']">
-                        <span>{{ dia | titlecase }}</span>
-                        <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]" (change)="onDiaSeleccionadoupdate($event)">
+                        *ngFor="let dia of ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']"
+                        [ngClass]="{'disponibleR': diasDisponiblesR[dia] , 'disponibleV': diasDisponiblesV[dia],  'noDisponible': !diasDisponiblesR[dia] && !diasDisponiblesV[dia]} "
+                        [title]="getAvailabilityMessage(dia)">
+                        <span [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]">{{ dia | titlecase
+                            }}</span>
+                        <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia] || false"
+                            [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
+                            (change)="onDiaSeleccionadoupdate($event)">
                     </div>
                 </div>
 
+
+                
             </fieldset>
             <fieldset>
                 <legend>Tercera Sección - Agrega Direcciones:</legend>
@@ -177,35 +190,7 @@
                     id="addRowBtn"><i class="fas fa-plus"></i> Agregar Fila
                 </button>
 
-                <p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible"
-                    [style]="{ width: '25rem' , height: '30rem' }"
-                    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
 
-                    <form [formGroup]="clienteFormAdd" (ngSubmit)="agregarClienteEnRuta()">
-                        <div class="custom-dropdown">
-                            <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio"
-                                [options]="allMunicipioXEstado" placeholder="Selecciona un municipio">
-                            </p-dropdown>
-                        </div>
-                        <div class="custom-dropdown">
-                            <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedColonia"
-                                [options]="allColoniaXMuncipio" [filter]="true"
-                                (onChange)="onColoniaSelectionChangeId($event)" [showClear]="true"
-                                placeholder="Selecciona una colonia">
-                            </p-dropdown>
-                        </div>
-                        <div class="custom-dropdown">
-                            <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedClientAdd"
-                                opctionValue="_id" [options]="allClients" optionLabel="nombre" [filter]="true"
-                                (onChange)="onClientSelectionChange($event)" [showClear]="true"
-                                placeholder="Selecciona un cliente">
-                            </p-dropdown>
-                        </div>
-                        <div class="btn-group" role="group">
-                            <button type="submit" class="btn btn-primary">Agregar</button>
-                        </div>
-                    </form>
-                </p-dialog>
                 <button *ngIf="id!=null" type="button" (click)="agregarCliente()" class="btn btn-success mb-3"
                     id="addRowBtn"><i class="fas fa-plus"></i>
                     Agregar cliente

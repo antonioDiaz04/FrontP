@@ -53,7 +53,8 @@ import { StepperModule } from 'primeng/stepper';
 import { SalidaView } from './view/salida/salida.view';
 import { EntradaView } from './view/entrada/entrada.view';
 import { PanelMenuModule } from 'primeng/panelmenu';
-
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgQrScannerModule } from 'angular2-qrscanner';
 import { CalendarModule } from 'primeng/calendar';
 import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -75,12 +76,12 @@ const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,
     AdmDashboardView, VentasComponent, InicioView, PedidosComponent, RutaDetalleComponent,
     MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
   ],
-  imports: [MATERIALS, HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
+  imports: [MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
     AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule,
   ],
   providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService]
 })
-export class AdmPurificadoraModule { 
+export class AdmPurificadoraModule {
 }

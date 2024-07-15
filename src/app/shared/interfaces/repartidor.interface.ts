@@ -1,5 +1,5 @@
 export interface Repartidor {
-    _id: string;
+    _id?: string;
     nombre: string;
     email: string;
     // password1: string;
@@ -7,8 +7,9 @@ export interface Repartidor {
     // latitud: string;
     telefono: string;
     // numCasa: string;
-    diasAsignados: string[];
+    diasAsignados?: string[];
+    password1: string;
 
-    fechaDeAgregacion: string;
+    fechaDeAgregacion?: string;
     // rol: string;
 }

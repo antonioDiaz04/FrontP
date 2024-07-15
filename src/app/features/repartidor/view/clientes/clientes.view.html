@@ -1,11 +1,13 @@
+<!-- src/app/lista-clientes/lista-clientes.component.html -->
 <section id="lista">
     <h2>Listado de Clientes</h2>
+
     <div class="card-data-container">
         <div class="card-data" *ngFor="let cliente of paginatedClients">
             <p><a (click)="redireccionar()">{{ cliente.nombre }}</a></p>
             <p>Teléfono: {{ cliente.telefono }}</p>
             <p>Colonia: {{ cliente.colonia }}</p>
-            <button (click)="escanearQR(cliente)">
+            <button (click)="escanearQR('qr')">
                 <i class="fas fa-qrcode"></i> Escanear QR
             </button>
             <button (click)="verRuta(cliente)">
@@ -13,4 +15,19 @@
             </button>
         </div>
     </div>
+
+    <div *ngIf="showScanner" class="modal">
+        <div class="modal-content">
+            <span class="close" (click)="closeScanner()">&times;</span>
+
+
+            
+        </div>
+    </div>
+
+    <div *ngIf="scannedData">
+        <h2>Scanned Data:</h2>
+        <p>{{ scannedData }}</p>
+    </div>
+
 </section>

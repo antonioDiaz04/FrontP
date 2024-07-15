@@ -53,7 +53,8 @@ export class RutaFormComponent implements OnInit {
   allColoniaXMuncipio: any;
   filas!: FormArray;
   registroRuta!: FormGroup;
-
+  diasDisponiblesR: { [key: string]: boolean } = {};
+  diasDisponiblesV: { [key: string]: boolean } = {};
 
 
 
@@ -80,36 +81,57 @@ export class RutaFormComponent implements OnInit {
       selectedColonia: ['', Validators.required],
       selectedClientAdd: ['', Validators.required],
     });
-
- this.diasSeleccionados = [];
+    this.diasSeleccionados = [];
     this.id = this.aRouter.snapshot.paramMap.get('id');
-
     this.filas = this.registroRuta.get('filas') as FormArray;
   }
-
   onRepartidorSelectionChange() {
-    const selectedId = this.registroRuta.get('selectedRepartidor')?.value;
-    console.log('ID del repartidor seleccionado:', selectedId);
-
-    // Encuentra el repartidor seleccionado en la lista
+    let selectedId = this.registroRuta.get('selectedRepartidor')?.value;
+    if (selectedId && typeof selectedId === 'object') {
+      selectedId = selectedId._id;
+    } else if (this.selectedRepartidor) {
+      // console.log("idR", this.selectedRepartidor?._id)
+      selectedId = this.selectedRepartidor?._id;
+    }
     const selectedRepartidor = this.allRepartidores.find(repartidor => repartidor._id === selectedId);
-
+    this.diasDisponiblesR = {};
     if (selectedRepartidor) {
-      this.diasAsignados = {};
       selectedRepartidor.diasAsignados.forEach(dia => {
-        this.diasAsignados[dia] = true;
-
-        console.log(this.diasAsignados[dia])
+        this.diasDisponiblesR[dia] = true;
+        // console.log(this.diasDisponiblesR);
+        // console.log(this.diasDisponiblesR[dia]);
       });
     } else {
-      this.diasAsignados = {};
+      this.diasDisponiblesR = {};
     }
   }
-  // 
-  
+
   onVehiculoSelectionChange() {
-    const selectedId = this.registroRuta.get('selectedVehiculo')?.value;
+    let selectedId = this.registroRuta.get('selectedVehiculo')?.value;
     console.log('ID del vehiculo seleccionado:', selectedId);
+
+    if (selectedId && typeof selectedId === 'object') {
+      selectedId = selectedId._id;
+    } else if (this.selectedVehiculo) {
+      selectedId = this.selectedVehiculo?._id;
+      // console.log("idV", selectedId)
+    }
+
+    // Encuentra el repartidor seleccionado en la lista
+    const selectedVehiculo = this.allVehiculos.find(vehiculo => vehiculo._id === selectedId);
+
+
+
+    this.diasDisponiblesV = {};
+    if (selectedVehiculo) {
+      selectedVehiculo.diasAsignados.forEach(dia => {
+        this.diasDisponiblesV[dia] = true;
+        // console.log(this.diasDisponiblesV);
+        // console.log(this.diasDisponiblesV[dia]);
+      });
+    } else {
+      this.diasDisponiblesV = {};
+    }
   }
 
   volverAtras() {
@@ -118,6 +140,7 @@ export class RutaFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.esEditar();
     this.todo()
     this.getRepartidores();
@@ -128,21 +151,33 @@ export class RutaFormComponent implements OnInit {
   }
 
   getRepartidores() {
+    if (!this.id) {
+      this.repService.obtenerRepartidoresSinRutas().subscribe(
+        (data: Repartidor[]) => {
+          this.allRepartidores = data;
+        },
+        error => {
+          console.log("Ocurrió un error al obtener la información", error);
+        }
+      );
+
+    } else {
     this.repService.getRepartidores().subscribe(
       (data: Repartidor[]) => {
         this.allRepartidores = data;
-        console.log(this.allRepartidores);
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
       }
     );
+    }
   }
+
   getVehiculos() {
     this.vehiculoService.getVehiculos().subscribe(
       (data: Vehiculo[]) => {
         this.allVehiculos = data;
-        console.log(this.allVehiculos);
+        // console.log(this.allVehiculos);
       },
       error => {
         console.log("ocurrió un error al obtener la información", error);
@@ -165,11 +200,9 @@ export class RutaFormComponent implements OnInit {
 
 
   onColoniaSelectionChange(event: any, index: number) {
-
     const filaFormGroup = this.filas.at(index) as FormGroup;
     // Obtén el valor seleccionado de selectedColonia en esa fila
     const selectedColoniaValue = filaFormGroup.get('selectedColonia')?.value;
-
     // const selectedColoniaValue = this.registroRuta.get('selectedColonia')?.value; // Obtener el valor seleccionado del formulario
     console.log('Colonia seleccionado:', selectedColoniaValue);
     if (selectedColoniaValue === null) {
@@ -183,12 +216,13 @@ export class RutaFormComponent implements OnInit {
     }
     return filtered;
   }
+
+
+
   onMunicipioSelectionChange(event: any, index: number) {
     const filaFormGroup = this.filas.at(index) as FormGroup;
-
     // Obtén el valor seleccionado de selectedColonia en esa fila
     const selectedMunicipioValue = filaFormGroup.get('selectedMunicipio')?.value;
-
     // const selectedMunicipioValue = this.registroRuta.get('selectedMunicipio')?.value; // Obtener el valor seleccionado del formulario
     console.log('Municipio seleccionado:', selectedMunicipioValue);
     if (selectedMunicipioValue === null) {
@@ -208,11 +242,6 @@ export class RutaFormComponent implements OnInit {
 
   onClientSelectionChange(event: any) {
     this.selectedClients = event.value;
-    // if (this.selectedClients.length === 0) {
-    //   this.toast.showToastSwalError('No ha seleccionado ningun cliente!')
-    // } else {
-    //   console.log('Clientes seleccionados:', this.selectedClients);
-    // }
   }
 
 
@@ -222,9 +251,9 @@ export class RutaFormComponent implements OnInit {
     this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
       data => {
         this.allColoniaXMuncipio = data.Colonias;
-        console.log("colonias=>", this.allColoniaXMuncipio)
+        // console.log("colonias=>", this.allColoniaXMuncipio)
         // console.log(allColonias);
-        console.log("objeto=>", data)
+        // console.log("objeto=>", data)
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -305,6 +334,9 @@ export class RutaFormComponent implements OnInit {
       colonia: allColonias[index],
       clienteId: allClients
     }));
+
+
+
     const RUTA: Ruta = {
       nombreRuta: nombreRuta,
       repartidorId: selectedRepartidor,
@@ -348,7 +380,7 @@ export class RutaFormComponent implements OnInit {
     this.consultasCOPOMEX.getMunicipioXEstado().subscribe(
       data => {
         this.allMunicipioXEstado = data.municipios;
-        console.log(this.allMunicipioXEstado);
+        // console.log(this.allMunicipioXEstado);
       },
       error => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -378,7 +410,6 @@ export class RutaFormComponent implements OnInit {
         let selectedNombreRuta = data.nombreRuta;
         this.selectedRepartidor = data.repartidorId;
         this.selectedVehiculo = data.vehiculoId;
-
         this.registroRuta.patchValue({
           nombreRuta: selectedNombreRuta,
           selectedRepartidor: data.repartidorId,
@@ -401,6 +432,8 @@ export class RutaFormComponent implements OnInit {
     if (this.id !== null) {
       this.rutaService.detalleRutaById(this.id).subscribe((data: DetalleEntregaInterface) => {
         this.detalleRuta = data;
+        this.onVehiculoSelectionChange()
+        this.onRepartidorSelectionChange();
         if (this.detalleRuta.diasAsignados) {
           this.diasAsignados = this.convertArrayToDiasAsignados(this.detalleRuta.diasAsignados);
           this.diasSeleccionados = [...this.detalleRuta.diasAsignados]; // Initialize the selected days array
@@ -428,8 +461,6 @@ export class RutaFormComponent implements OnInit {
     }
     return filtered;
   }
-
-
 
   agregarCliente() {
     this.visible = true;
@@ -473,7 +504,7 @@ export class RutaFormComponent implements OnInit {
   }
   convertArrayToDiasAsignados(dias: string[]): { [key: string]: boolean } {
     const diasAsignados: { [key: string]: boolean } = {};
-    const allDias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+    const allDias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     allDias.forEach(dia => {
       diasAsignados[dia] = dias.includes(dia);
     });
@@ -482,21 +513,18 @@ export class RutaFormComponent implements OnInit {
 
   initializeDiasAsignados(): { [key: string]: boolean } {
     const diasAsignados: { [key: string]: boolean } = {};
-    const allDias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+    const allDias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     allDias.forEach(dia => {
       diasAsignados[dia] = false;
     });
     return diasAsignados;
   }
- 
- 
+
   onDiaSeleccionadoupdate(event: Event): void {
     const input = event.target as HTMLInputElement;
     const isChecked = input.checked;
     const dia = input.value;
-
     this.diasAsignados[dia] = isChecked;
-
     if (isChecked) {
       this.diasSeleccionados.push(dia);
     } else {
@@ -505,36 +533,40 @@ export class RutaFormComponent implements OnInit {
         this.diasSeleccionados.splice(index, 1);
       }
     }
-    console.log("dias en seleccion",this.diasSeleccionados);
+    console.log("dias en seleccion", this.diasSeleccionados);
   }
-
-
 
   getSelectedDias(): string[] {
     return Object.keys(this.diasAsignados).filter(dia => this.diasAsignados[dia]);
   }
 
-  onDiaSeleccionado(event: any) {
-    const dia = event.target.value;
+  onDiaSeleccionado(event: any, dia: string) {
+    // Maneja la selección/deselección de un día por el administrador
     this.diasAsignados[dia] = event.target.checked;
+
+    if (!this.diasSeleccionados.includes(dia)) {
+      this.diasSeleccionados.push(dia);
+    } else {
+      const index = this.diasSeleccionados.indexOf(dia);
+      if (index > -1) {
+        this.diasSeleccionados.splice(index, 1);
+      }
+    }
+
+    console.log(`Día seleccionado: ${dia}, Estado: ${event.target.checked}`);
   }
 
-  // onDiaSeleccionado(event: any) {
-  //   const isChecked = event.target.checked;
-  //   const dia = event.target.value;
-
-  //   if (isChecked) {
-  //     this.diasSeleccionados.push(dia);
-  //   } else {
-  //     const index = this.diasSeleccionados.indexOf(dia);
-  //     if (index > -1) {
-  //       this.diasSeleccionados.splice(index, 1);
-  //     }
-  //   }
-  //   console.log(this.diasSeleccionados);
-  // }
-
-
+  getAvailabilityMessage(dia: string): string {
+    if (this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) {
+      return 'Este día está disponible para el repartidor y el vehículo';
+    } else if (this.diasDisponiblesR[dia]) {
+      return 'Este día está disponible para el repartidor';
+    } else if (this.diasDisponiblesV[dia]) {
+      return 'Este día está disponible para el vehículo';
+    } else {
+      return 'Este día no está disponible para el repartidor ni el vehículo';
+    }
+  }
 
 }
 

@@ -16,17 +16,25 @@ import { PerfilView } from './view/perfil/perfil.view';
 import { EntregasView } from './view/entregas/entregas.view';
 import { OpcionesView } from './view/opciones/opciones.view';
 import { CodigoqrView } from './view/codigoqr/codigoqr.view';
-
+import { ScannerIneModule } from 'ngx-scanner';
+// import { ZXingScannerModule, ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgQrScannerModule } from 'angular2-qrscanner';
+// import { NgQrScannerModule } from 'angular2-qrscanner';
 const MATERIAL = [SidebarModule]
 
+LOAD_WASM().subscribe();
 @NgModule({
-  declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView
-
-  ],
+  declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView],
   imports: [MATERIAL,
-    CommonModule,
+    CommonModule, QRCodeModule, NgxScannerQrcodeModule, NgQrScannerModule,
     RepartidorRoutingModule
   ], providers: [provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService]
 })
+
+  
+  
 export class RepartidorModule { }
+

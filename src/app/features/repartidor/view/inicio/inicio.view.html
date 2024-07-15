@@ -4,27 +4,27 @@
         <p>No tienes salidas programadas para hoy</p>
     </div>
 
-    <div class="welcome-card" *ngIf="tienesSalidaProgramada">
-        <!-- <div class="scheduled-message" > -->
-        <pre>
-            {{data|json}}
-                </pre>
+    <div class="welcome-card" *ngFor="let salida of data">
+
         <p>Tienes programada una salida</p>
         <h2>Descripción de la Entrega</h2>
         <div class="info">
-            <p><i style="color: rgb(226, 198, 43);" class="fa-solid fa-user icon-left"></i> Nombre del
-                Repartidor:{{data.repartidorId.nombre}}</p>
-            <div class="details">
-                <div class="left">
-                    <p><i style="color: rgb(43, 61, 226);" class="fa-solid fa-calendar icon-left"></i> Hoy:
-                        2024-07-05
-                    </p>
-                    <p><i style="color: rgb(43, 226, 46);" class="fa-solid fa-route"></i> Ruta: 123</p>
-                    <p><i style="color: rgb(198, 226, 43);" class="fa-solid fa-truck icon-left"></i> Vehículo: 123
-                    </p>
-                    <p><i style="color: rgb(226, 198, 43);" class="fa-solid fa-user icon-left"></i> Cantidad de
-                        Clientes: 10</p>
-                </div>
+            <p><i style="color: rgb(226, 198, 43);" class="fa-solid fa-user icon-left"></i>
+                Repartidor:{{salida?.repartidorId?.nombre || 'Nombre no disponible'}}</p>
+            <!-- <div class="details"> -->
+            <div class="left">
+                <p>
+                    <i style="color: rgb(43, 61, 226);" class="fa-solid fa-calendar icon-left"></i>
+                    Hoy:{{salida.fechaSalida}}
+                </p>
+                <p><i style="color: rgb(43, 226, 46);" class="fa-solid fa-route"></i> Ruta: {{salida.nombreRuta}}</p>
+                <p><i style="color: rgb(198, 226, 43);" class="fa-solid fa-truck icon-left"></i> Vehículo:
+                    {{salida.vehiculoId.placas}}
+                </p>
+                <p><i style="color: rgb(226, 198, 43);" class="fa-solid fa-user icon-left"></i> Cantidad de
+                    Clientes:{{salida.puntosDeEntrega.length}}</p>
+                <p><i style="color: rgb(43, 226, 183);" class="fa-solid fa-bottle-water icon-left"></i> Cantidad de
+                    Botellas:{{salida.cantidadBotellas}}</p>
             </div>
         </div>
 
@@ -38,14 +38,14 @@
     <h2 style="text-align: center;">Ver más</h2>
 
     <div class="actions">
-        <div class="action-card" *ngIf="!tienesSalidaProgramada">
+        <!-- <div class="action-card" *ngIf="!tienesSalidaProgramada">
             <p><i class="fa fa-truck"></i> No tienes Entregas programadas para hoy</p>
         </div>
         <div class="action-card" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('ruta-entrega')">
 
             <h3> <i class="fa fa-truck"></i> Ir a mis Entregas</h3>
             <p>Consulta y gestiona tus entregas actuales.</p>
-        </div>
+        </div> -->
 
 
         <div class="action-card" *ngIf="!tienesSalidaProgramada">
@@ -55,7 +55,7 @@
 
         <div class="action-card" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('entregas')">
             <h3><i class="fa fa-calendar-alt"></i>
-                Entregas Programadas</h3>
+            Ir a mis Entregas Programadas</h3>
             <p>Revisa tus entregas programadas.</p>
         </div>
 

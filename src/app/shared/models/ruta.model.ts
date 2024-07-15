@@ -7,8 +7,8 @@ export class Ruta {
     fechaFin?: Date; // Fecha de finalización de la ruta (opcional si la ruta aún está en curso)
     estado!: 'pendiente' | 'en_curso' | 'finalizada'; // Estado actual de la ruta
     puntosDeEntrega!: {
-        municipio: string[];
-        colonia: string[];
+        // municipio: string[];
+        // colonia: string[];
         clienteId: string[]
     }[]; 
     diasAsignados!: string[];

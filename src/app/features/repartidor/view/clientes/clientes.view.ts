@@ -44,7 +44,8 @@ export class ClientesView implements OnInit {
     });
     this.id = this.router.snapshot.paramMap.get('id');
   }
-
+  showScanner = false;
+  scannedData!: string;
   ngOnInit(): void {
     this.getUsers();
     this.updatePaginatedClients();
@@ -125,11 +126,22 @@ export class ClientesView implements OnInit {
   redireccionar() {
     this.rou.navigateByUrl('repartidor/Opciones');
   }
+  escanearQR(route:any) {
+    this.showScanner = true;
 
-  escanearQR(cliente: any) {
-    // Lógica para escanear QR
-    console.log('Escanear QR de', cliente.nombre);
+    this.rou.navigate(['/repartidor', route])
   }
+
+  closeScanner() {
+    this.showScanner = false;
+  }
+
+  handleQrCodeResult(result: string): void {
+    this.scannedData = result;
+    console.log('Scanned QR Code Data:', result);
+    this.closeScanner();
+  }
+
 
   verRuta(cliente: any) {
     // Lógica para ver ruta

@@ -11,7 +11,11 @@ export class RepartidoresService {
     constructor(private http: HttpClient) { }
     // !mover a otro servicio
     getRepartidores(): Observable<any> {
-        return this.http.get(`${environment.api}/purificadoraRepartidores/obtenerRepartidores`);
+        return this.http.get(`${environment.api}/purificadoraRepartidores/repartidores`);
+    }
+    obtenerRepartidoresSinRutas(): Observable<any> {
+        const url = `${environment.api}/purificadoraRepartidores/repartidoresExRutas/`
+        return this.http.get(url)
     }
     
     detalleUsuarioById(id: string): Observable<any> {

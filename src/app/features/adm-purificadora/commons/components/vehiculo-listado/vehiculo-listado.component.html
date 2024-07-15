@@ -4,6 +4,7 @@
 </head>
 
 
+<p-toast></p-toast>
 
 <p-dialog *ngIf="dataVehiculo" [(visible)]="visible" header="Información del vehiculo" [modal]="true"
     [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
@@ -18,14 +19,19 @@
             <label for="email">Modelo:</label>
             <input type="email" id="email" formControlName="modelo">
         </div>
-        <div>
-            <label for="numCasa">Año del vehiculo:</label>
-            <input type="text" id="numCasa" formControlName="anio">
-        </div>
+       
         <div>
             <label for="telefono">Placa:</label>
             <input type="text" id="telefono" formControlName="placas">
         </div>
+
+        <div class="checkbox-item" *ngFor="let dia of dias">
+            <span>{{ dia | titlecase }}</span>
+            <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]"
+                (change)="onDiaSeleccionado($event)">
+        </div>
+
+
         <div class="btn-group" role="group">
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>

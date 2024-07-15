@@ -1,6 +1,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+<p-toast></p-toast>
 
 <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible"
     [style]="{ width: '29rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
@@ -21,6 +22,14 @@
             <label for="telefono" class="form-label">Teléfono:</label>
             <input type="text" id="telefono" formControlName="telefono" class="form-control">
         </div>
+      
+      
+        <div class="checkbox-item"
+            *ngFor="let dia of dias">
+            <span>{{ dia | titlecase }}</span>
+            <input  type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]" (change)="onDiaSeleccionado($event)">
+        </div>
+
         <div class="btn-group" role="group">
             <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>

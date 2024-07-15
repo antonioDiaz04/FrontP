@@ -15,20 +15,21 @@ export class ClientesService {
 
   // !mover a otro servicio
   obtenerPurificadoras(): Observable<any> {
-    return this.http.get( `${environment.api}/purificadoraAdmin/getPuricadoras`);
+    return this.http.get(`${environment.api}/purificadoraAdmin/getPuricadoras`);
   }
 
   // http://localhost:4000/usuarios/getUsuarios
   obtenerCLientes(): Observable<any> {
-    return this.http.get(`${environment.api}/usuarios/getUsuarios`)
-
+    return this.http.get(`${environment.api}/usuarios/`)
   }
 
-  detalleClienteById(id:string): Observable<any> {
-    const url = `${environment.api}/usuarios/getDetalles/` + id
+  detalleClienteById(id: string): Observable<any> {
+    const url = `${environment.api}/usuarios/` + id
     return this.http.get(url)
   }
-  
+
+ 
+
   updateUsuario(id: string, cliente: any): Observable<any> {
     const url = `${environment.api}/usuarios/actualiza/` + id
     return this.http.put(url, cliente)
@@ -48,5 +49,5 @@ export class ClientesService {
     return this.http.delete(url)
   }
 
-  
+
 }

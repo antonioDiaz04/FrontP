@@ -19,6 +19,7 @@ import { Toast } from '../../../../../shared/services/toast.service';
 })
 export class ClienteFormComponent implements OnInit {
 
+  public myAngularxQrCode: string = 'hello';
   registroForm: FormGroup;
   allMuncipioXEstado: any;
   allColoniaXMuncipio: any;
@@ -36,7 +37,12 @@ export class ClienteFormComponent implements OnInit {
       selectedColonia: ['', Validators.required],
       selectedMunicipio: ['', Validators.required],
     });
-  }
+    this.myAngularxQrCode = 'Nico Antonio';
+  } 
+  
+  title = 'my-new-app';
+
+ 
 
   @ViewChild('asGeocoder') asGeocoder!: ElementRef;
 
