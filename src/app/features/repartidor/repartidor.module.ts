@@ -28,7 +28,7 @@ LOAD_WASM().subscribe();
 @NgModule({
   declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView],
   imports: [MATERIAL,
-    CommonModule, QRCodeModule, NgxScannerQrcodeModule, NgQrScannerModule,
+    CommonModule, QRCodeModule, NgxScannerQrcodeModule,
     RepartidorRoutingModule
   ], providers: [provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService]
