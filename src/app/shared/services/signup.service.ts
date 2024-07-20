@@ -4,23 +4,17 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SignupService {
-
-  constructor(private http:HttpClient) { }
-
-
-
+  constructor(private http: HttpClient) {}
 
   signUp(data: any): Observable<any> {
-    const url = `${environment.api}/usuarios/signUp`;
+    const url = `${environment.api}/usuarios/cliente`;
     return this.http.post(url, data);
   }
   addPurificadora(data: any): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/agregacionPurificadora`;
     return this.http.post(url, data);
   }
-
-
 }

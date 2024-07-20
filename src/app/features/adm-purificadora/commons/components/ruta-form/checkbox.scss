@@ -1,77 +1,118 @@
 .checkbox-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .checkbox-item {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    .tooltiptext-dia {
+      border: #00e69d solid 2px;
+      visibility: hidden;
+      width: 120px;
+      background-color: #a5e1f4;
+      color: rgb(105, 129, 130);
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      font-size: 14px;
+      transition: visibility 0s, opacity 0.3s;
+    }
+  }
+
+  /* Tooltip arrow */
+}
+
+.checkbox-item .tooltiptext-dia::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffbb0e transparent transparent transparent;
+}
+
+.checkbox-container:hover {
+  .checkbox-item {
+    .tooltiptext-dia {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 }
 
 .checkbox-item {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 :host ::ng-deep .ui-dropdown-panel ul {
-    padding-left: 0;
+  padding-left: 0;
 }
 
-
-
-// select 
-
+// select
 
 .custom-dropdown select:hover,
 .custom-dropdown select:focus {
-    border-color: #ccc;
+  border-color: #ccc;
 }
 
 span {
-    font-size: 15px;
-    color: #51a47b;
+  font-size: 15px;
+  color: #51a47b;
 }
 
 span.strike-through {
-    cursor: not-allowed;
+  cursor: not-allowed;
 
-    color: #d06868;
-    text-decoration: line-through;
+  color: #d06868;
+  text-decoration: line-through;
 }
 
 .checkbox-item.disponibleR {
-    background-color: #d4edda;
-    /* Color de fondo para los días disponibles */
-    border: 1px solid #c3e6cb;
-    /* Bordes para distinguir */
-    padding: 5px;
-    border-radius: 10px;
-    margin-bottom: 5px;
+  background-color: #d4edda;
+  /* Color de fondo para los días disponibles */
+  border: 1px solid #c3e6cb;
+  /* Bordes para distinguir */
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 5px;
 }
 
 .checkbox-item.disponibleV {
-    background-color: #e9d4ed;
-    /* Color de fondo para los días disponibles */
-    border: 1px solid #e2c3e6;
-    /* Bordes para distinguir */
-    padding: 5px;
-    border-radius: 10px;
-    margin-bottom: 5px;
+  background-color: #e9d4ed;
+  /* Color de fondo para los días disponibles */
+  border: 1px solid #e2c3e6;
+  /* Bordes para distinguir */
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 5px;
 }
 
 .checkbox-item.noDisponible {
-    background-color: #e2e2e2;
-    /* Color de fondo para los días disponibles */
-    border: 1px solid #fbfbfb;
-    /* Bordes para distinguir */
-    padding: 5px;
-    border-radius: 10px;
-    margin-bottom: 5px;
-    color: gray;
-    cursor: not-allowed;
-
+  background-color: #e2e2e2;
+  /* Color de fondo para los días disponibles */
+  border: 1px solid #fbfbfb;
+  /* Bordes para distinguir */
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  color: gray;
+  cursor: not-allowed;
 }
 
 .strike {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .checkbox-item {
-    padding: 10px;
-    margin-bottom: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
 }

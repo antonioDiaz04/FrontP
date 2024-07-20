@@ -20,6 +20,7 @@ export interface DetalleEntregaInterface {
   fechaFin?: Date;
   estado?: 'enviado' | 'pendiente' | 'en_curso' | 'finalizada';
   puntosDeEntrega: PuntoDeEntrega | any;
+  cantidadBotellasEntregadas?: Number;
   diasAsignados?: string[];
   esSalida?: boolean;
 }

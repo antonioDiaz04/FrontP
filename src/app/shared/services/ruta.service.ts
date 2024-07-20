@@ -12,10 +12,6 @@ export class RutaService {
 
   constructor(private http: HttpClient) { }
 
-  // getNombreRutas(): Observable<any> {
-  //   return this.http.get(`${environment.api}/purificadoraAdm/getNombreRutas`);
-  // }
-
   getRutasSalidas(): Observable<any> {
     return this.http.get(`${environment.api}/purificadoraAdmin/salidaActual`);
   }
@@ -54,6 +50,11 @@ export class RutaService {
   addSalida(data: any): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/salida/`
     return this.http.post(url, data)
+  }
+  updateSalida(id:string,estado: any): Observable<any> {
+    // `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
+    // const url = `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
+    return this.http.put(`${environment.api}/purificadoraAdmin/salidaActual/${id}`, { estado })
   }
   addPuntoEntregaRutaById(id: string, data: any): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/cliente/` + id

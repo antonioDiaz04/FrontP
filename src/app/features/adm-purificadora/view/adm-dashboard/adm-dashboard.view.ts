@@ -11,7 +11,7 @@ import { Repartidor } from '../../../../shared/interfaces/repartidor.interface';
   encapsulation: ViewEncapsulation.None
 })
 export class AdmDashboardView {
-
+  date: Date[] | undefined;
   basicData: any;
 
   basicOptions: any;

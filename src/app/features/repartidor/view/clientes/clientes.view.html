@@ -13,15 +13,16 @@
             <button (click)="verRuta(cliente)">
                 <i class="fas fa-route"></i> Ver Ruta
             </button>
+            <button (click)="verRuta(cliente)">
+                <i class="fas fa-solid fa-receipt"></i> Entregar
+            </button>
         </div>
     </div>
+    
 
     <div *ngIf="showScanner" class="modal">
         <div class="modal-content">
             <span class="close" (click)="closeScanner()">&times;</span>
-
-
-            
         </div>
     </div>
 
@@ -29,5 +30,4 @@
         <h2>Scanned Data:</h2>
         <p>{{ scannedData }}</p>
     </div>
-
 </section>

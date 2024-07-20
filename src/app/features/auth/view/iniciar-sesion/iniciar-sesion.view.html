@@ -1,49 +1,36 @@
-
-
 <div class="contenedor">
-
-    <!-- <div class="text">
-        <p class="title">
-            Nombre puriicadora
-        </p>
-        <p>Somos una purificadora de agua comprometida con la calidad y la salud de nuestros clientes. Ofrecemos una amplia gama
-            de servicios de purificación de agua para hogares y negocios.</p>
-    </div> -->
-
-
-    <div class="row">
-        <div class="container-login">
-            <form [formGroup]="loginForm" (ngSubmit)="login()" method="post" class="form-login">
-                <h2>Acceso al sistema</h2>
-                <p>Ingrese sus datos correctamente</p>
-                <div class="container-input">
-                    <label for="usuario">Correo electrónico:</label>
-                    <input id="usuario"  formControlName="email" type="text" placeholder="Ingrese su correo" required>
-                    <label for="pass">Contraseña:</label>
-                    <input id="pass" formControlName="password1"  type="password" placeholder="Ingrese su contraseña" required>
-                    <button type="submit"><i class="fa-solid fa-arrow-right-to-bracket"></i>Ingresar</button>
-                </div>
-            </form>
+  <div class="row">
+    <div class="container-login">
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+        method="post"
+        class="form-login"
+      >
+        <h2>Acceso al sistema</h2>
+        <p>Ingrese sus datos correctamente</p>
+        <div class="container-input">
+          <label for="usuario">Correo electrónico:</label>
+          <input
+            id="usuario"
+            formControlName="email"
+            type="text"
+            placeholder="Ingrese su correo"
+            required
+          />
+          <label for="pass">Contraseña:</label>
+          <input
+            id="pass"
+            formControlName="password1"
+            type="password"
+            placeholder="Ingrese su contraseña"
+            required
+          />
+          <button type="submit">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>Ingresar
+          </button>
         </div>
-        <!-- Aquí puedes colocar la imagen que desees -->
-
-        <!-- Aquí puedes colocar la imagen que desees -->
-
-        <!-- <form method="post" [formGroup]="loginForm" (ngSubmit)="login()" class="form-login">
-            <div class="container-input">
-
-                <label for="usuario">Ingrese su correo:</label>
-                <input id="usuario" formControlName="email" pInputText>
-
-                <label for="pass">Ingrese su contraseña:</label>
-                <input id="pass" formControlName="password1" pInputText>
-
-                <button type="submit">Ingresar</button>
-            </div>
-        </form> -->
+      </form>
     </div>
-
-
-
-
+  </div>
 </div>

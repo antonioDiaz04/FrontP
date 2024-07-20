@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -6,7 +13,7 @@ import {
   FormGroup,
   NonNullableFormBuilder,
   ValidatorFn,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -20,23 +27,39 @@ import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
   styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ClienteTablaComponent implements OnInit {
   listUsuario?: Cliente;
-  idCliente!: string
-  id!: string | null
+  idCliente!: string;
+  id!: string | null;
   clienteForm!: FormGroup;
-  allClients: Cliente[] = []
+  allClients: Cliente[] = [];
+  paginatedUser: Cliente[] = [];
+
+  totalRecords: number = 0;
+  rows: number = 5; // Número de registros por página
+  first: number = 0; // Índice del primer registro de la página actual
+
   // puntosClientesUbicaciones: { longitud: string, latitud: string }[] = [];
-  ngOnInit(){
+  ngOnInit() {
     this.getUsers();
+    this.updatePaginatedUser();
+
     // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
   }
   visible: boolean = false;
   isVisible = false;
   // @ViewChild('asGeocoder') asGeocoder!: ElementRef;
-  constructor(private render2: Renderer2, private mapService: MapaClientDetailUbacionService, private fb: FormBuilder, private mapaService: MapaService, private UserS: ClientesService, private router: ActivatedRoute, private rou: Router) {
+  constructor(
+    private render2: Renderer2,
+    private mapService: MapaClientDetailUbacionService,
+    private fb: FormBuilder,
+    private mapaService: MapaService,
+    private UserS: ClientesService,
+    private router: ActivatedRoute,
+    private rou: Router
+  ) {
     this.clienteForm = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -48,20 +71,19 @@ export class ClienteTablaComponent implements OnInit {
   }
 
   redirectToAdmin(route: string): void {
-    console.log(route)
+    console.log(route);
     if (route === 'login') {
-      this.rou.navigate(['/auth/login']) // Navegación hacia la página de inicio de sesión
+      this.rou.navigate(['/auth/login']); // Navegación hacia la página de inicio de sesión
     } else {
-      this.rou.navigate(['/purificadoraAdm', route]) // Navegación hacia otras páginas públicas
+      this.rou.navigate(['/purificadoraAdm', route]); // Navegación hacia otras páginas públicas
     }
   }
 
   editar(id: any) {
-
     this.visible = true;
     this.idCliente = this.router.snapshot.params['id'];
     if (id !== null) {
-      console.log("actualizar....")
+      console.log('actualizar....');
       this.UserS.detalleClienteById(id).subscribe((data) => {
         this.listUsuario = data;
         this.clienteForm.setValue({
@@ -69,7 +91,7 @@ export class ClienteTablaComponent implements OnInit {
           email: data.email,
           estatus: data.estatus,
           numCasa: data.numCasa,
-          telefono: data.telefono
+          telefono: data.telefono,
         });
       });
     }
@@ -77,14 +99,16 @@ export class ClienteTablaComponent implements OnInit {
 
   actualizarCliente(id: any) {
     if (this.clienteForm.valid) {
-      this.UserS.updateUsuario(id, this.clienteForm.value)
-        .subscribe(response => {
-          this.getUsers()
+      this.UserS.updateUsuario(id, this.clienteForm.value).subscribe(
+        (response) => {
+          this.getUsers();
           this.visible = false;
           console.log('Usuario actualizado:', response);
-        }, error => {
+        },
+        (error) => {
           console.error('Error al actualizar el usuario:', error);
-        });
+        }
+      );
     }
   }
 
@@ -92,23 +116,38 @@ export class ClienteTablaComponent implements OnInit {
     this.UserS.obtenerCLientes().subscribe(
       (data: Cliente[]) => {
         this.allClients = data;
-     
+        this.totalRecords = this.allClients.length;
+        this.updatePaginatedUser();
       },
-      error => {
-        console.log("ocurrió un error al obtener la información", error);
+      (error) => {
+        console.log('ocurrió un error al obtener la información', error);
       }
     );
   }
 
   eliminarUsuario(id: any) {
-    this.UserS.eliminarCliente(id).subscribe(data => {
-      console.log("eliminado")
-      this.getUsers();
-      // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
-    }, error => {
-      console.log("ocurrio un error", error)
-    })
+    this.UserS.eliminarCliente(id).subscribe(
+      (data) => {
+        console.log('eliminado');
+        this.getUsers();
+        // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
+      },
+      (error) => {
+        console.log('ocurrio un error', error);
+      }
+    );
   }
 
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedUser();
+  }
 
+  updatePaginatedUser() {
+    this.paginatedUser = this.allClients.slice(
+      this.first,
+      this.first + this.rows
+    );
+  }
 }

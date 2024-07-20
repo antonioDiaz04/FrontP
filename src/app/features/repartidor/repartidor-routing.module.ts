@@ -9,6 +9,7 @@ import { PerfilView } from './view/perfil/perfil.view';
 import { EntregasView } from './view/entregas/entregas.view';
 import { OpcionesView } from './view/opciones/opciones.view';
 import { CodigoqrView } from './view/codigoqr/codigoqr.view';
+import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 
 
 const routes: Routes = [
@@ -27,13 +28,16 @@ const routes: Routes = [
         component: InicioView,
       },
       {
+        path: 'notificaciones',
+        component: NotificacionesView,
+      },
+      {
         path: 'repartidor-home',
         component: RepartidorHomeView,
       },
       {
         path: 'ruta-entrega',
         component: RutaView,
-        
       },
       {
         path: 'clientes',

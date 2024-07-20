@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plantilla Responsive con Mapa y Opciones de Entrega</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .container-descripcion {
+        max-width: 1200px;
+        padding: 20px;
+        margin-top: 50px;
+    }
+
+    .map-container {
+        height: 300px; /* Altura del mapa */
+        background-color: #f2f2f2;
+        margin-bottom: 20px;
+    }
+
+    .options {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .option {
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 10px;
+        width: calc(50% - 20px);
+        max-width: 300px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .option:hover {
+        background-color: #f0f0f0;
+    }
+
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .option {
+            width: calc(100% - 20px);
+        }
+    }
+</style>
+</head>
+<body>
+
+
+
+<div class="container-descripcion">
+    <div class="map-container">
+        <!-- Aquí podría ir el mapa o cualquier contenido relacionado -->
+        <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+            <p>Mapa aquí</p>
+        </div>
+    </div>
+
+    <div class="options">
+        <div class="option">
+            <h2>Opción 1</h2>
+            <p>Descripción de la opción 1.</p>
+        </div>
+        <div class="option">
+            <h2>Opción 2</h2>
+            <p>Descripción de la opción 2.</p>
+        </div>
+        <div class="option">
+            <h2>Opción 3</h2>
+            <p>Descripción de la opción 3.</p>
+        </div>
+        <div class="option">
+            <h2>Opción 4</h2>
+            <p>Descripción de la opción 4.</p>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

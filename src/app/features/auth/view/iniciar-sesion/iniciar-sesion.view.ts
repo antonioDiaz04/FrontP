@@ -1,4 +1,3 @@
-
 import { Component, ViewEncapsulation } from '@angular/core';
 // import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,8 +14,8 @@ import { ERol } from '../../../../shared/constants/rol.enum';
 @Component({
   selector: 'app-iniciar-sesion',
   templateUrl: './iniciar-sesion.view.html',
-  styleUrls: ['./iniciar-sesion.view.css', './frm.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./frm.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class IniciarSesionView {
   loginForm: FormGroup;
@@ -29,11 +28,11 @@ export class IniciarSesionView {
     private storageService: StorageService,
     private sessionService: SessionService,
     private fb: FormBuilder,
-    private router: Router,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
-      password1: ['', Validators.required]
+      password1: ['', Validators.required],
     });
   }
 
@@ -44,7 +43,7 @@ export class IniciarSesionView {
         title: 'Campos incompletos',
         text: 'Por favor, completa todos los campos',
         icon: 'warning',
-        confirmButtonText: 'Entendido'
+        confirmButtonText: 'Entendido',
       });
       return;
     }
@@ -61,7 +60,7 @@ export class IniciarSesionView {
             title: 'Error!',
             text: this.errorMessage,
             icon: 'error',
-            confirmButtonText: 'Ok'
+            confirmButtonText: 'Ok',
           });
           return throwError(this.errorMessage);
         }),
@@ -75,15 +74,21 @@ export class IniciarSesionView {
           const userData = this.sessionService.getUserData();
           if (userData) {
             this.userROL = userData.rol;
-            if (this.userROL === ERol.ADMIN) {//administrador de la pagina 
-              this.router.navigate(['admin/inicio'])
+            if (this.userROL === ERol.ADMIN) {
+              //administrador de la pagina
+              this.router
+                .navigate(['admin/inicio'])
                 .then(() => window.location.reload());
-            } else if (this.userROL === ERol.ADMPRF) {//administrador de purificadora
-              console.log(ERol.ADMPRF)
-              this.router.navigate(['purificadoraAdm/Home'])
+            } else if (this.userROL === ERol.ADMPRF) {
+              //administrador de purificadora
+              console.log(ERol.ADMPRF);
+              this.router
+                .navigate(['purificadoraAdm/Home'])
                 .then(() => window.location.reload());
-            } else if (this.userROL === ERol.REPARTIDOR) {//repartidor
-              this.router.navigate(['repartidor/Home'])
+            } else if (this.userROL === ERol.REPARTIDOR) {
+              //repartidor
+              this.router
+                .navigate(['repartidor/Home'])
                 .then(() => window.location.reload());
             }
           }
@@ -91,4 +96,3 @@ export class IniciarSesionView {
       });
   }
 }
- 

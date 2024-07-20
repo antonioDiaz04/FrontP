@@ -1,80 +1,98 @@
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
 </head>
 
+<p-dialog
+  *ngIf="listUsuario"
+  header="Información del Usuario"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <form
+    [formGroup]="clienteForm"
+    (ngSubmit)="actualizarCliente(listUsuario._id)"
+  >
+    <h3>Detalles Personales</h3>
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" formControlName="nombre" />
+    </div>
 
-<p-dialog *ngIf="listUsuario" header="Información del Usuario" [modal]="true" [(visible)]="visible"
-    [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email" />
+    </div>
 
-    <form [formGroup]="clienteForm" (ngSubmit)="actualizarCliente(listUsuario._id)">
-        <h3>Detalles Personales</h3>
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" formControlName="nombre">
-        </div>
+    <div>
+      <label for="estatus">Status:</label>
+      <input type="text" id="estatus" formControlName="estatus" />
+    </div>
+    <div>
+      <label for="numCasa">Número de casa:</label>
+      <input type="text" id="numCasa" formControlName="numCasa" />
+    </div>
 
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" formControlName="email">
-        </div>
+    <div>
+      <label for="telefono">Teléfono:</label>
+      <input type="text" id="telefono" formControlName="telefono" />
+    </div>
+    <!-- <app-mapa-client-ubicacion></app-mapa-client-ubicacion> -->
 
-        <div>
-            <label for="estatus">Status:</label>
-            <input type="text" id="estatus" formControlName="estatus">
-        </div>
-        <div>
-            <label for="numCasa">Número de casa:</label>
-            <input type="text" id="numCasa" formControlName="numCasa">
-        </div>
-
-        <div>
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" formControlName="telefono">
-        </div>
-        <!-- <app-mapa-client-ubicacion></app-mapa-client-ubicacion> -->
-
-        <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </div>
-    </form>
+    <div class="btn-group" role="group">
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+    </div>
+  </form>
 </p-dialog>
 
 <section id="lista">
-    <h2>Listado de Clientes</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Telefono</th>
-                <th>Municipio</th>
-                <th>Colonia</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let cliente of allClients">
-                <td>{{ cliente.nombre }}</td>
-                <td>{{ cliente.email }}</td>
-                <td>{{ cliente.telefono }}</td>
-                <td>{{ cliente.municipio }}</td>
-                <td>{{ cliente.colonia }}</td>
-                <td> <!-- Botones de acciones -->
-                    <button class="custom-btn custom-btn-danger" (click)="eliminarUsuario(cliente._id)">
-                        <i class="fas fa-trash-can"></i> Eliminar
-                    </button>
-                    <button class="custom-btn custom-btn-primary" (click)="editar(cliente._id)">
-                        <i class="fa-solid fa-pen-to-square"></i> Editar
-                    </button>
-
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- <div class="map">
-                <h2>Ubicación de clientes:
-                </h2>
-                <app-mapa></app-mapa>
-            </div> -->
-    <!-- </section> -->
+  <h2>Listado de Clientes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Telefono</th>
+        <th>Municipio</th>
+        <th>Colonia</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of paginatedUser">
+        <!-- <tr *ngFor="let cliente of allClients | filter:filterProperty:properties"> -->
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.email }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.municipio }}</td>
+        <td>{{ cliente.colonia }}</td>
+        <td>
+          <!-- Botones de acciones -->
+          <button
+            class="custom-btn custom-btn-danger"
+            (click)="eliminarUsuario(cliente._id)"
+          >
+            <i class="fas fa-trash-can"></i> Eliminar
+          </button>
+          <button
+            class="custom-btn custom-btn-primary"
+            (click)="editar(cliente._id)"
+          >
+            <i class="fa-solid fa-pen-to-square"></i> Editar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p-paginator
+    [totalRecords]="totalRecords"
+    [rows]="rows"
+    [first]="first"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
 </section>

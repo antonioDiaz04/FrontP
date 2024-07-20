@@ -13,4 +13,5 @@ export interface Cliente {
     colonia: string;
     rol: string;
     estatus: string;
+[key:string]:any
 }

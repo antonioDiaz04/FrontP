@@ -1,202 +1,342 @@
 <head>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+  />
 </head>
 
 <p-toast></p-toast>
 
-
-<p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible"
-    [style]="{ width: '25rem' , height: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-
-    <form [formGroup]="clienteFormAdd" (ngSubmit)="agregarClienteEnRuta()">
-        <div class="custom-dropdown">
-            <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio" [options]="allMunicipioXEstado"
-                placeholder="Selecciona un municipio">
-            </p-dropdown>
-        </div>
-        <div class="custom-dropdown">
-            <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedColonia" [options]="allColoniaXMuncipio"
-                [filter]="true" (onChange)="onColoniaSelectionChangeId($event)" [showClear]="true"
-                placeholder="Selecciona una colonia">
-            </p-dropdown>
-        </div>
-        <div class="custom-dropdown">
-            <p-dropdown [style]="{ width: '100%'  }" formControlName="selectedClientAdd" opctionValue="_id"
-                [options]="allClients" optionLabel="nombre" [filter]="true" (onChange)="onClientSelectionChange($event)"
-                [showClear]="true" placeholder="Selecciona un cliente">
-            </p-dropdown>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">Agregar</button>
-        </div>
-    </form>
+<p-dialog
+  header="Información del Usuario"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem', height: '30rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <form [formGroup]="clienteFormAdd" (ngSubmit)="agregarClienteEnRuta()">
+    <div class="custom-dropdown">
+      <p-dropdown
+        [style]="{ width: '100%' }"
+        formControlName="selectedMunicipio"
+        [options]="allMunicipioXEstado"
+        placeholder="Selecciona un municipio"
+      >
+      </p-dropdown>
+    </div>
+    <div class="custom-dropdown">
+      <p-dropdown
+        [style]="{ width: '100%' }"
+        formControlName="selectedColonia"
+        [options]="allColoniaXMuncipio"
+        [filter]="true"
+        (onChange)="onColoniaSelectionChangeId($event)"
+        [showClear]="true"
+        placeholder="Selecciona una colonia"
+      >
+      </p-dropdown>
+    </div>
+    <div class="custom-dropdown">
+      <p-dropdown
+        [style]="{ width: '100%' }"
+        formControlName="selectedClientAdd"
+        opctionValue="_id"
+        [options]="allClients"
+        optionLabel="nombre"
+        [filter]="true"
+        (onChange)="onClientSelectionChange($event)"
+        [showClear]="true"
+        placeholder="Selecciona un cliente"
+      >
+      </p-dropdown>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="submit" class="btn btn-primary">Agregar</button>
+    </div>
+  </form>
 </p-dialog>
 
-
 <section id="registro">
-    <form class="form-registro" [formGroup]="registroRuta" (ngSubmit)="AgregarClienteRuta()" method="post">
-        <h2>{{titulo | uppercase}}</h2>
-        <div class="form-column">
-            <fieldset>
-                <legend>Primera sección</legend>
-                <section class="Primer-seccion">
-                    <label for="descripcion">Nombre de la Ruta:</label>
-                    <input type="text" id="descripcion" formControlName="nombreRuta">
+  <form
+    class="form-registro"
+    [formGroup]="registroRuta"
+    (ngSubmit)="AgregarClienteRuta()"
+    method="post"
+  >
+    <h2>{{ titulo | uppercase }}</h2>
+    <div class="form-column">
+      <fieldset>
+        <legend>Primera sección</legend>
+        <section class="Primer-seccion">
+          <label for="descripcion">Nombre de la Ruta:</label>
+          <input type="text" id="descripcion" formControlName="nombreRuta" />
 
-                    <label for="repartidorId">{{accion}} Repartidor:</label>
-                    <div class="custom-dropdown">
-                        <select *ngIf="id==null" formControlName="selectedRepartidor"
-                            (change)="onRepartidorSelectionChange()">
-                            <option value="" disabled selected>Selecciona un Repartidor</option>
-                            <option *ngFor="let repartidor of allRepartidores" [value]="repartidor._id">{{
-                                repartidor.nombre }}</option>
-                        </select>
+          <label for="repartidorId">{{ accion }} Repartidor:</label>
+          <div class="custom-dropdown" id="tooltip">
+            <select
+              *ngIf="id == null"
+              formControlName="selectedRepartidor"
+              (change)="onRepartidorSelectionChange()"
+            >
+              <option value="" disabled selected>
+                Selecciona un Repartidor
+              </option>
+              <option
+                *ngFor="let repartidor of allRepartidores"
+                [value]="repartidor._id"
+              >
+                {{ repartidor.nombre }}
+              </option>
+            </select>
 
+            <span class="tooltiptext"
+              >se listarán unicamente los repartidores sin ruta
+            </span>
 
-                        <select *ngIf="id!=null" formControlName="selectedRepartidor"
-                            (click)="onRepartidorSelectionChange()">
-                            <option *ngFor="let repartidor of allRepartidores" [ngValue]="repartidor"
-                                [selected]="repartidor._id === selectedRepartidor?._id">
-                                {{ repartidor.nombre }}
-                            </option>
-                        </select>
+            <select
+              *ngIf="id != null"
+              formControlName="selectedRepartidor"
+              (click)="onRepartidorSelectionChange()"
+            >
+              <option
+                *ngFor="let repartidor of allRepartidores"
+                [ngValue]="repartidor"
+                [selected]="repartidor._id === selectedRepartidor?._id"
+              >
+                {{ repartidor.nombre }}
+              </option>
+            </select>
+          </div>
 
+          <label for="repartidorId">{{ accion }} Vehículo:</label>
+          <div class="custom-dropdown" id="tooltip">
+            <select
+              *ngIf="id == null"
+              formControlName="selectedVehiculo"
+              (change)="onVehiculoSelectionChange()"
+            >
+              <option value="" disabled selected>Selecciona un vehículo</option>
+              <option
+                *ngFor="let vehiculo of allVehiculos"
+                [value]="vehiculo._id"
+              >
+                {{ vehiculo.placas }}
+              </option>
+            </select>
+            <span class="tooltiptext"
+              >se listarán unicamente los vehiculos sin ruta
+            </span>
+            <select
+              *ngIf="id != null"
+              formControlName="selectedVehiculo"
+              (click)="onVehiculoSelectionChange()"
+            >
+              <option
+                *ngFor="let vehiculo of allVehiculos"
+                [ngValue]="vehiculo"
+                [selected]="vehiculo._id === selectedVehiculo?._id"
+              >
+                {{ vehiculo.placas }}
+              </option>
+            </select>
+          </div>
+        </section>
+      </fieldset>
+    </div>
 
-                    </div>
-                    <label for="repartidorId">{{accion}} Vehículo:</label>
-                    <div class="custom-dropdown">
+    <div class="form-column">
+      <fieldset>
+        <legend>Segunda sección - Asignación de días</legend>
+        <div *ngIf="id == null" class="checkbox-container">
+          <div
+            class="checkbox-item"
+            *ngFor="
+              let dia of [
+                'lunes',
+                'martes',
+                'miercoles',
+                'jueves',
+                'viernes',
+                'sabado',
+                'domingo'
+              ]
+            "
+            [ngClass]="{
+              disponibleR: diasDisponiblesR[dia],
+              disponibleV: diasDisponiblesV[dia],
+              noDisponible: !diasDisponiblesR[dia] && !diasDisponiblesV[dia]
+            }"
+          >
+            <span
+              [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
+              >{{ dia | titlecase }}</span
+            >
 
-                        <select *ngIf="id==null" formControlName="selectedVehiculo"
-                            (change)="onVehiculoSelectionChange()">
-                            <option value="" disabled selected>Selecciona un vehículo</option>
-                            <option *ngFor="let vehiculo of allVehiculos" [value]="vehiculo._id">{{ vehiculo.placas
-                                }}</option>
-                        </select>
-
-
-                        <!--<div *ngIf="selectedVehiculo">
-                            Vehículo seleccionado: {{ selectedVehiculo._id }}
-                        </div> -->
-                        <select *ngIf="id!=null" formControlName="selectedVehiculo"
-                            (click)="onVehiculoSelectionChange()">
-                            <option *ngFor="let vehiculo of allVehiculos" [ngValue]="vehiculo"
-                                [selected]="vehiculo._id === selectedVehiculo?._id">
-                                {{ vehiculo.placas }}
-                            </option>
-                        </select>
-
-                    </div>
-                </section>
-            </fieldset>
+            <span class="tooltiptext-dia">{{
+              getAvailabilityMessage(dia)
+            }}</span>
+            <input
+              type="checkbox"
+              [id]="dia"
+              [value]="dia"
+              [checked]="diasAsignados[dia] || false"
+              [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
+              (change)="onDiaSeleccionado($event, dia)"
+            />
+          </div>
         </div>
 
-        <div class="form-column">
-            <fieldset>
-                <legend>Segunda sección - Asignación de días </legend>
-                <div *ngIf="id == null" class="checkbox-container">
-                    <div class="checkbox-item"
-                        *ngFor="let dia of ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']"
-                        [ngClass]="{'disponibleR': diasDisponiblesR[dia] , 'disponibleV': diasDisponiblesV[dia],  'noDisponible': !diasDisponiblesR[dia] && !diasDisponiblesV[dia]} "
-                        [title]="getAvailabilityMessage(dia)">
-                        <span [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]">{{ dia | titlecase
-                            }}</span>
-                        <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia] || false"
-                            [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
-                            (change)="onDiaSeleccionado($event, dia)">
-                    </div>
-                </div>
-
-                <div *ngIf="id != null" class="checkbox-container">
-                    <div class="checkbox-item"
-                        *ngFor="let dia of ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']"
-                        [ngClass]="{'disponibleR': diasDisponiblesR[dia] , 'disponibleV': diasDisponiblesV[dia],  'noDisponible': !diasDisponiblesR[dia] && !diasDisponiblesV[dia]} "
-                        [title]="getAvailabilityMessage(dia)">
-                        <span [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]">{{ dia | titlecase
-                            }}</span>
-                        <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia] || false"
-                            [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
-                            (change)="onDiaSeleccionadoupdate($event)">
-                    </div>
-                </div>
-
-
-                
-            </fieldset>
-            <fieldset>
-                <legend>Tercera Sección - Agrega Direcciones:</legend>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Municipio</th>
-                            <th>Colonia</th>
-                            <th>Clientes</th>
-                            <th>Quitar</th>
-                        </tr>
-                    </thead>
-
-                    <tbody *ngIf="id==null" formArrayName="filas">
-                        <tr *ngFor="let fila of filas.controls; let i = index" [formGroupName]="i">
-                            <td>
-                                <div class="custom-dropdown">
-                                    <div class="card flex justify-content-center">
-                                        <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio"
-                                            [options]="allMunicipioXEstado" [filter]="true"
-                                            (onChange)="onMunicipioSelectionChange($event,i)" [showClear]="true"
-                                            placeholder="Selecciona un municipio">
-                                        </p-dropdown>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="custom-dropdown">
-                                    <div class="card flex justify-content-center">
-                                        <p-dropdown [style]="{ width: '100%' }" formControlName="selectedColonia"
-                                            [options]="allColoniaXMuncipio" [filter]="true"
-                                            (onChange)="onColoniaSelectionChange($event,i)" [showClear]="true"
-                                            placeholder="Selecciona una colonia">
-                                        </p-dropdown>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p-multiSelect display="chip" [virtualScroll]="true" [virtualScrollItemSize]="30"
-                                    [style]="{ width: '100%' }" [options]="allClients" formControlName="selectedClient"
-                                    (onChange)="onClientSelectionChange($event)" [filter]="true" optionLabel="nombre"
-                                    optionValue="_id" placeholder="Seleccione clientes">
-                                </p-multiSelect>
-                            </td>
-                            <td>
-                                <button type="button" (click)="eliminarFila(i)" class="remove">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngIf="id!=null">
-                        <tr *ngFor="let punto of detalleRuta?.puntosDeEntrega">
-                            <td>{{ punto.clienteId?.municipio }}</td>
-                            <td>{{ punto.clienteId?.colonia }}</td>
-                            <td>{{ punto.clienteId?.nombre }}</td>
-                            <td>
-                                <button type="button" (click)="eliminarPuntoUbicacion(punto._id)" class="remove">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button *ngIf="id==null" type="button" (click)="agregarFila()" class="btn btn-success mb-3"
-                    id="addRowBtn"><i class="fas fa-plus"></i> Agregar Fila
-                </button>
-
-
-                <button *ngIf="id!=null" type="button" (click)="agregarCliente()" class="btn btn-success mb-3"
-                    id="addRowBtn"><i class="fas fa-plus"></i>
-                    Agregar cliente
-                </button>
-            </fieldset>
+        <div *ngIf="id != null" class="checkbox-container">
+          <div
+            class="checkbox-item"
+            *ngFor="
+              let dia of [
+                'lunes',
+                'martes',
+                'miercoles',
+                'jueves',
+                'viernes',
+                'sabado',
+                'domingo'
+              ]
+            "
+            [ngClass]="{
+              disponibleR: diasDisponiblesR[dia],
+              disponibleV: diasDisponiblesV[dia],
+              noDisponible: !diasDisponiblesR[dia] && !diasDisponiblesV[dia]
+            }"
+          >
+            <span
+              [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
+              >{{ dia | titlecase }}</span
+            >
+            <span class="tooltiptext-dia">{{
+              getAvailabilityMessage(dia)
+            }}</span>
+            <input
+              type="checkbox"
+              [id]="dia"
+              [value]="dia"
+              [checked]="diasAsignados[dia] || false"
+              [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
+              (change)="onDiaSeleccionadoupdate($event)"
+            />
+          </div>
         </div>
-        <button type="submit"><i class="fas fa-check"></i> {{btnTitle}} Ruta</button>
-    </form>
+      </fieldset>
+      <fieldset>
+        <legend>Tercera Sección - Agrega Direcciones:</legend>
+        <table>
+          <thead>
+            <tr>
+              <th>Municipio</th>
+              <th>Colonia</th>
+              <th>Clientes</th>
+              <th>Quitar</th>
+            </tr>
+          </thead>
+
+          <tbody *ngIf="id == null" formArrayName="filas">
+            <tr
+              *ngFor="let fila of filas.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <td>
+                <div class="custom-dropdown">
+                  <div class="card flex justify-content-center">
+                    <p-dropdown
+                      [style]="{ width: '100%' }"
+                      formControlName="selectedMunicipio"
+                      [options]="allMunicipioXEstado"
+                      [filter]="true"
+                      (onChange)="onMunicipioSelectionChange($event, i)"
+                      [showClear]="true"
+                      placeholder="Selecciona un municipio"
+                    >
+                    </p-dropdown>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="custom-dropdown">
+                  <div class="card flex justify-content-center">
+                    <p-dropdown
+                      [style]="{ width: '100%' }"
+                      formControlName="selectedColonia"
+                      [options]="allColoniaXMuncipio"
+                      [filter]="true"
+                      (onChange)="onColoniaSelectionChange($event, i)"
+                      [showClear]="true"
+                      placeholder="Selecciona una colonia"
+                    >
+                    </p-dropdown>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p-multiSelect
+                  display="chip"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="30"
+                  [style]="{ width: '100%' }"
+                  [options]="allClients"
+                  formControlName="selectedClient"
+                  (onChange)="onClientSelectionChange($event)"
+                  [filter]="true"
+                  optionLabel="nombre"
+                  optionValue="_id"
+                  placeholder="Seleccione clientes"
+                >
+                </p-multiSelect>
+              </td>
+              <td>
+                <button type="button" (click)="eliminarFila(i)" class="remove">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="id != null">
+            <tr *ngFor="let punto of detalleRuta?.puntosDeEntrega">
+              <td>{{ punto.clienteId?.municipio }}</td>
+              <td>{{ punto.clienteId?.colonia }}</td>
+              <td>{{ punto.clienteId?.nombre }}</td>
+              <td>
+                <button
+                  type="button"
+                  (click)="eliminarPuntoUbicacion(punto._id)"
+                  class="remove"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button
+          *ngIf="id == null"
+          type="button"
+          (click)="agregarFila()"
+          class="btn btn-success mb-3"
+          id="addRowBtn"
+        >
+          <i class="fas fa-plus"></i> Agregar Fila
+        </button>
+
+        <button
+          *ngIf="id != null"
+          type="button"
+          (click)="agregarCliente()"
+          class="btn btn-success mb-3"
+          id="addRowBtn"
+        >
+          <i class="fas fa-plus"></i>
+          Agregar cliente
+        </button>
+      </fieldset>
+    </div>
+    <button type="submit">
+      <i class="fas fa-check"></i> {{ btnTitle }} Ruta
+    </button>
+  </form>
 </section>

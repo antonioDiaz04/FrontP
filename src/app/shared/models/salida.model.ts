@@ -18,6 +18,7 @@ export class Salida {
     puntosDeEntrega: PuntoDeEntrega | any;
     // diasAsignados!: string[];
     cantidadBotellas?: Number;
+    cantidadBotellasEntregadas?: Number;
     fechaSalida?: string;
     esSalida?: boolean;
 

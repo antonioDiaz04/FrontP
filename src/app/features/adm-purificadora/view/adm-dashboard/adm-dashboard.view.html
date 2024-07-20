@@ -9,7 +9,7 @@
             display: flex;
             flex-direction: row;
             gap: 20px;
-            background: white;
+            background: transparent;
             padding: 20px;
             box-shadow: 0 0 6px 1px #dadada;
             border-radius: 10px;
@@ -60,80 +60,77 @@
             cursor: pointer;
         }
 
-
-
-
-
-
         .target-green {
-            background-color: #d8ffe9;
-            border-left: 1px solid#28a745;
+            background-color: #ffffff;
+            border-left: 1px solid#3df3b3;
 
             div {
 
                 .target-title,
                 i {
-                    color: #28a745;
+                    color: #3df3b3;
                 }
             }
 
             .btn-green {
-                background-color: #28a745;
+                background-color: #3df3b3;
             }
         }
 
         .target-blue {
-            border-left: 1px solid#007bff;
-            background-color: #d1e7fd;
+            border-left: 1px solid#6ab2ff;
+            background-color: #ffffff;
 
             div {
 
                 .target-title,
                 i {
-                    color: #007bff;
+                    color: #6ab2ff;
                 }
             }
 
             .btn-blue {
-                background-color: #007bff;
+                background-color: #6ab2ff;
             }
 
         }
 
         .target-orange {
-            border-left: 1px solid#fd7e14;
+            border-left: 1px solid#ffc155;
 
-            background-color: #ffecd9;
+            background-color: #ffffff;
 
 
             div {
 
                 .target-title,
                 i {
-                    color: #fd7e14;
+                    color: #ffc155;
+                    ;
                 }
             }
 
             .btn-orange {
-                background-color: #fd7e14;
+                background-color: #ffc155;
+                ;
             }
         }
 
         .target-morado {
-            border-left: 1px solid#8814fd;
+            border-left: 1px solid#ac5aff;
 
-            background-color: #ecceff;
+            background-color: #ffffff;
 
             div {
 
                 .target-title,
                 i {
-                    color: #8814fd;
+                    color: #ac5aff;
                 }
             }
 
             .btn-morado {
-                background-color: #8000ff;
+                background-color: #ac5aff;
             }
         }
     </style>
@@ -197,7 +194,13 @@
     </div>
     <h1>Gráfico de ventas</h1>
 
-    <div class="card">
-        <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
-    </div>
+    <div class="card flex-container">
+        <div class="chart-container">
+          <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+        </div>
+        <div class="calendar-container">
+          <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>
+        </div>
+      </div>
+      
 </main>

@@ -8,31 +8,44 @@ import { Toast } from '../../../../../shared/services/toast.service';
 @Component({
   selector: 'app-repartidores-listado',
   templateUrl: './repartidores-listado.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss']
+  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
 })
 export class RepartidoresListadoComponent implements OnInit {
   visible: boolean = false;
   isVisible = false;
-  id!: string | null
+  id!: string | null;
   allRepartidores: Repartidor[] = [];
   listRepartidor?: Repartidor;
-  idRepartidor!: string
+  idRepartidor!: string;
   diasSeleccionados: string[] = [];
 
   diasAsignados: { [key: string]: boolean } = {};
 
-  paginatedRepartidores: Repartidor[] = []
+  paginatedRepartidores: Repartidor[] = [];
   totalRecords: number = 0;
   rows: number = 5; // Número de registros por página
   first: number = 0; // Índice del primer registro de la página actual
-  dias: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+  dias: string[] = [
+    'lunes',
+    'martes',
+    'miercoles',
+    'jueves',
+    'viernes',
+    'sabado',
+    'domingo',
+  ];
   // diasAsignados: { [key: string]: boolean } = {};
-
-
 
   usuarioForm!: FormGroup;
   reparitorForm!: FormGroup;
-  constructor(private fb: FormBuilder, private toast: Toast, private repService: RepartidoresService, private render2: Renderer2, private router: ActivatedRoute, private rou: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private toast: Toast,
+    private repService: RepartidoresService,
+    private render2: Renderer2,
+    private router: ActivatedRoute,
+    private rou: Router
+  ) {
     this.usuarioForm = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -47,14 +60,13 @@ export class RepartidoresListadoComponent implements OnInit {
     this.updatePaginatedRepartidores();
   }
 
-  
   editar(id: any) {
     let selectedRepartidor;
     this.visible = true;
     this.idRepartidor = this.router.snapshot.params['id'];
 
     if (id !== null) {
-      console.log("actualizar....")
+      console.log('actualizar....');
 
       this.repService.detalleUsuarioById(id).subscribe((data) => {
         this.listRepartidor = data;
@@ -64,40 +76,29 @@ export class RepartidoresListadoComponent implements OnInit {
           email: data.email,
           numCasa: data.numCasa,
           telefono: data.telefono,
-
         });
 
-
         // Inicializar los checkboxes según los días asignados
-        this.diasAsignados = this.convertArrayToDiasAsignados(data.diasAsignados || []);
+        this.diasAsignados = this.convertArrayToDiasAsignados(
+          data.diasAsignados || []
+        );
         this.diasSeleccionados = [...data.diasAsignados];
       });
     }
   }
 
-
   // marcarCheckboxes(dos: string[]) {
 
   convertArrayToDiasAsignados(dias: string[]): { [key: string]: boolean } {
     const diasAsignados: { [key: string]: boolean } = {};
-    this.dias.forEach(dia => {
+    this.dias.forEach((dia) => {
       diasAsignados[dia] = dias.includes(dia);
     });
     return diasAsignados;
   }
   // }
 
-
   actualizarCliente(id: any) {
-
-
-    const nombre = this.usuarioForm.get('nombre')?.value;
-    const email = this.usuarioForm.get('email')?.value;
-    const telefono = this.usuarioForm.get('telefono')?.value;
-    const numCasa = this.usuarioForm.get('numCasa')?.value;
-    const password1 = this.usuarioForm.get('password1')?.value;
-
-
     const diasAsignados = this.diasSeleccionados;
 
     const REPARTIDOR: Repartidor = {
@@ -105,42 +106,44 @@ export class RepartidoresListadoComponent implements OnInit {
       email: this.usuarioForm.get('email')?.value,
       telefono: this.usuarioForm.get('telefono')?.value,
       password1: this.usuarioForm.get('password1')?.value,
-      diasAsignados: diasAsignados
-    }
+      diasAsignados: diasAsignados,
+    };
 
-
-    this.repService.updateRepartidora(id, REPARTIDOR)
-      .subscribe(response => {
-
+    this.repService.updateRepartidora(id, REPARTIDOR).subscribe(
+      (response) => {
         this.visible = false;
 
-        this.toast.showToastPmNgSuccess("Se guardaron los cambios con exito")
+        this.toast.showToastPmNgSuccess('Se guardaron los cambios con exito');
         // console.log('Usuario actualizado:', response);
-        this.getRepartidores()
-      }, error => {
+        this.getRepartidores();
+      },
+      (error) => {
         console.error('Error al actualizar el usuario:', error);
-      });
+      }
+    );
     // }
   }
 
   eliminarUsuario(id: any) {
-    this.repService.eliminarRepartidores(id).subscribe(data => {
-      this.getRepartidores();
-    }, error => {
-      console.log("ocurrio un error", error)
-    })
+    this.repService.eliminarRepartidores(id).subscribe(
+      (data) => {
+        this.getRepartidores();
+      },
+      (error) => {
+        console.log('ocurrio un error', error);
+      }
+    );
   }
 
   getRepartidores() {
     this.repService.getRepartidores().subscribe(
-      data => {
+      (data) => {
         this.allRepartidores = data;
         this.totalRecords = this.allRepartidores.length;
-        this.updatePaginatedRepartidores()
-
+        this.updatePaginatedRepartidores();
       },
-      error => {
-        console.log("ocurrió un error al obtener la información", error);
+      (error) => {
+        console.log('ocurrió un error al obtener la información', error);
       }
     );
   }
@@ -152,10 +155,11 @@ export class RepartidoresListadoComponent implements OnInit {
   }
 
   updatePaginatedRepartidores() {
-    this.paginatedRepartidores = this.allRepartidores.slice(this.first, this.first + this.rows);
+    this.paginatedRepartidores = this.allRepartidores.slice(
+      this.first,
+      this.first + this.rows
+    );
   }
-
-
 
   onDiaSeleccionado(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -170,8 +174,8 @@ export class RepartidoresListadoComponent implements OnInit {
         this.diasSeleccionados.splice(index, 1);
       }
     }
-    console.log("dias en as", this.diasAsignados[dia]);
-    console.log("dias en seleccion", this.diasSeleccionados);
+    console.log('dias en as', this.diasAsignados[dia]);
+    console.log('dias en seleccion', this.diasSeleccionados);
   }
 
   // onRepartidorSelectionChange() {
@@ -192,5 +196,4 @@ export class RepartidoresListadoComponent implements OnInit {
   //     this.diasAsignados = {};
   //   }
   // }
-
 }

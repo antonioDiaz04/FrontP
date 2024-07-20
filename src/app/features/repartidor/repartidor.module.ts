@@ -18,17 +18,17 @@ import { OpcionesView } from './view/opciones/opciones.view';
 import { CodigoqrView } from './view/codigoqr/codigoqr.view';
 import { ScannerIneModule } from 'ngx-scanner';
 // import { ZXingScannerModule, ZXingScannerComponent } from '@zxing/ngx-scanner';
-import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+// import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanLOAD_WASMner-qrcode';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
+import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 // import { NgQrScannerModule } from 'angular2-qrscanner';
 const MATERIAL = [SidebarModule]
 
-LOAD_WASM().subscribe();
 @NgModule({
-  declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView],
+  declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView, NotificacionesView],
   imports: [MATERIAL,
-    CommonModule, QRCodeModule, NgxScannerQrcodeModule,
+    CommonModule, QRCodeModule,
     RepartidorRoutingModule
   ], providers: [provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService]

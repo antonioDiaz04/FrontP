@@ -56,9 +56,9 @@ export class SalidaListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerRutas();
-    // this.getRepartidores();
+    this.getRepartidores();
     // this.getAllNombresRutas();
-    // this.getVehiculos();
+    this.getVehiculos();
     this.updatePaginatedRutasDetalles();
   }
 
@@ -92,20 +92,6 @@ export class SalidaListaComponent implements OnInit {
     return `${dia}-${mes}-${año}`;
   }
 
-  mostrarToastError(text: string) {
-    Swal.fire({
-      title: 'Error',
-      text: text,
-      icon: 'error',
-      position: 'bottom-left', // Mostrar el alerta en la parte superior
-      toast: true, // Hacer que el alerta sea tipo toast
-      timer: 2000, // Duración en milisegundos antes de que el alerta se cierre automáticamente
-    });
-    // return;
-  }
-
-  // obtener el dia actual
-
   obtenerFechaYHoraActualFormateada(): string {
     const fecha = new Date();
     const año = fecha.getFullYear();
@@ -125,8 +111,7 @@ export class SalidaListaComponent implements OnInit {
       'sábado',
     ];
     let fecha = new Date();
-    let diaSemana = diasSemana[fecha.getDay()];
-    return diaSemana;
+    return diasSemana[fecha.getDay()];
   }
 
   obtenerRutas() {
@@ -181,7 +166,7 @@ export class SalidaListaComponent implements OnInit {
   }
 
   selectToastSwal(ruta: any) {
-    this.getRepartidores();
+    // this.getRepartidores();
     const selectHTML = `
     <select id="swal-select" class="swal2-input" formControlName="selectedRepartidor" (click)="onVehiculoSelectionChange()">
       <option value="" disabled selected>Selecciona un Repartidor</option>
@@ -229,7 +214,7 @@ export class SalidaListaComponent implements OnInit {
   }
 
   selectToastCambiarVehiculoSwal(ruta: any) {
-    this.getVehiculos();
+    // this.getVehiculos();
     const selectHTML = `
     <select id="swal-select" class="swal2-input" formControlName="selectedVehiculo" (click)="onVehiculoSelectionChange()">
       <option value="" disabled selected>Selecciona el vehiculo</option>
@@ -266,10 +251,8 @@ export class SalidaListaComponent implements OnInit {
         const selectedVehiculo = this.allVehiculos.find(
           (vehiculo) => vehiculo._id === selectedVehiculoId
         );
-
         // Actualiza la ruta con el vehículo seleccionado
         ruta.vehiculoId = selectedVehiculo;
-
         Swal.fire(`Vehículo seleccionado: ${selectedVehiculo?.placas}`);
       }
     });

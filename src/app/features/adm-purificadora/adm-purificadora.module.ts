@@ -25,7 +25,7 @@ import { ControlEntregasView } from './view/control-entregas/control-entregas.vi
 import { ComentariosView } from './view/comentarios/comentarios.view';
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
-import { VentasComponent } from './commons/components/ventas/ventas.component';
+// import { VentasComponent } from './commons/components/ventas/ventas.component';
 import { PedidosComponent } from './commons/components/pedidos/pedidos.component';
 import { AdmPurificadoraComponent } from './adm-purificadora.component';
 import { Grafica1Component } from './commons/components/grafica1/grafica1.component';
@@ -65,15 +65,20 @@ import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega
 import { MiPerfilView } from './view/mi-perfil/mi-perfil.view';
 import { MessageService } from 'primeng/api';
 import { Toast } from '../../shared/services/toast.service';
+import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
 ]
+
+
+
+const PIPES=[FilterPipe]
 @NgModule({
-  declarations: [
+  declarations: [PIPES,
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
-    AdmDashboardView, VentasComponent, InicioView, PedidosComponent, RutaDetalleComponent,
+    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,
     MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
   ],
   imports: [MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interfaz del Repartidor - Purificadora de Agua</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+   
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .delivery-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .delivery-item {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .delivery-item h2 {
+        margin-top: 0;
+        font-size: 20px;
+    }
+
+    .delivery-item p {
+        margin-bottom: 5px;
+    }
+
+    .delivery-item .actions {
+        margin-top: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
+
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+
+<div class="container">
+    <ul class="delivery-list">
+        <li class="delivery-item">
+            <h2>Pedido #1</h2>
+            <p><strong>Cliente:</strong> Nombre del Cliente</p>
+            <p><strong>Dirección de Entrega:</strong> Dirección del Cliente</p>
+            <p><strong>Teléfono:</strong> Teléfono del Cliente</p>
+            <div class="actions">
+                <button class="btn">Iniciar Entrega</button>
+            </div>
+        </li>
+        <li class="delivery-item">
+            <h2>Pedido #2</h2>
+            <p><strong>Cliente:</strong> Nombre del Cliente</p>
+            <p><strong>Dirección de Entrega:</strong> Dirección del Cliente</p>
+            <p><strong>Teléfono:</strong> Teléfono del Cliente</p>
+            <div class="actions">
+                <button class="btn">Iniciar Entrega</button>
+            </div>
+        </li>
+        <!-- Más elementos de entrega -->
+    </ul>
+</div>
+</body>
+</html>
