@@ -99,71 +99,189 @@ export class RutaFormComponent implements OnInit {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     this.filas = this.registroRuta.get('filas') as FormArray;
   }
+
+
+
+
+  // en esta parte se agregan los métodos necesarios para cargar y manipular los datos
+  // diagamos que esta funcion equivale a el main que está en c# o java lo cual 
+  // permite inicializar el componente y algunas funciones tan solo entrando al componente 
+  ngOnInit(): void {
+    this.esEditar();
+    this.todo();
+    this.getRepartidores();
+    this.getVehiculos();
+    this.getSelectedDias()
+    this.getMunicipioPorExtado();
+    this.getColoniaPorMunicipio();
+    this.getUsers();
+    this.onRepartidorSelectionChange();
+    this.onVehiculoSelectionChange();
+  }
+
   onRepartidorSelectionChange() {
-    let selectedId = this.registroRuta.get('selectedRepartidor')?.value;
-    if (selectedId && typeof selectedId === 'object') {
-      selectedId = selectedId._id;
-    } else if (this.selectedRepartidor) {
-      // console.log("idR", this.selectedRepartidor?._id)
-      selectedId = this.selectedRepartidor?._id;
-    }
-    const selectedRepartidor = this.allRepartidores.find(
-      (repartidor) => repartidor._id === selectedId
-    );
+  let selectedId = this.registroRuta.get('selectedRepartidor')?.value;
+  if (selectedId && typeof selectedId === 'object') {
+    selectedId = selectedId._id;
+  } else if (this.selectedRepartidor) {
+    selectedId = this.selectedRepartidor?._id;
+  }
+
+  const selectedRepartidor = this.allRepartidores.find(
+    (repartidor) => repartidor._id === selectedId
+  );
+  this.diasDisponiblesR = {};
+  if (selectedRepartidor) {
+    selectedRepartidor.diasAsignados.forEach((dia) => {
+      this.diasDisponiblesR[dia] = true;
+    });
+  } else {
     this.diasDisponiblesR = {};
-    if (selectedRepartidor) {
-      selectedRepartidor.diasAsignados.forEach((dia) => {
-        this.diasDisponiblesR[dia] = true;
-        // console.log(this.diasDisponiblesR);
-        // console.log(this.diasDisponiblesR[dia]);
-      });
-    } else {
-      this.diasDisponiblesR = {};
-    }
   }
 
+  // Actualiza diasAsignados según la disponibilidad
+  for (const dia in this.diasAsignados) {
+    if (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) {
+      this.diasAsignados[dia] = false;
+    }
+  }
+}
+
+//   onRepartidorSelectionChange() {
+//   let selectedId = this.registroRuta.get('selectedRepartidor')?.value;
+
+//   // Obtén el ID del repartidor seleccionado
+//   if (selectedId && typeof selectedId === 'object') {
+//     selectedId = selectedId._id;
+//   } else if (this.selectedRepartidor) {
+//     selectedId = this.selectedRepartidor?._id;
+//   }
+
+//   // Encuentra el repartidor seleccionado en la lista
+//   const selectedRepartidor = this.allRepartidores.find(
+//     (repartidor) => repartidor._id === selectedId
+//   );
+
+//   // Reinicia los días disponibles
+//   this.diasDisponiblesR = {};
+
+//   // Si el repartidor está definido, actualiza los días disponibles
+//   if (selectedRepartidor) {
+//     selectedRepartidor.diasAsignados.forEach((dia) => {
+//       this.diasDisponiblesR[dia] = true;
+//     });
+//   }
+
+//   // Actualiza los días asignados según la disponibilidad
+//   for (const dia in this.diasAsignados) {
+//     // Si el día está marcado pero no está disponible, desmárcalo
+//     if (
+//       this.diasAsignados[dia] &&
+//       !this.diasDisponiblesR[dia] &&
+//       !this.diasDisponiblesV[dia]
+//     ) {
+//       this.diasAsignados[dia] = false;
+//     } 
+    
+//     // Si el día no está marcado pero está disponible, márcalo
+//     else if (
+//       !this.diasAsignados[dia] &&
+//       (this.diasDisponiblesR[dia] || this.diasDisponiblesV[dia])
+//     ) {
+//       this.diasAsignados[dia] = true;
+//     }
+//   }
+// }
+
+
+//   onVehiculoSelectionChange() {
+//   // Obtén el ID del vehículo seleccionado
+//   let selectedId = this.registroRuta.get('selectedVehiculo')?.value;
+//   console.log('ID del vehículo seleccionado:', selectedId);
+
+//   if (selectedId && typeof selectedId === 'object') {
+//     selectedId = selectedId._id;
+//   } else if (this.selectedVehiculo) {
+//     selectedId = this.selectedVehiculo?._id;
+//     // console.log("idV", selectedId);
+//   }
+
+//   // Encuentra el vehículo seleccionado en la lista
+//   const selectedVehiculo = this.allVehiculos.find(
+//     (vehiculo) => vehiculo._id === selectedId
+//   );
+
+//   // Reinicia los días disponibles del vehículo
+//   this.diasDisponiblesV = {};
+//   if (selectedVehiculo) {
+//     // Actualiza los días disponibles según el vehículo seleccionado
+//     selectedVehiculo.diasAsignados.forEach((dia) => {
+//       this.diasDisponiblesV[dia] = true;
+//     });
+//   } else {
+//     this.diasDisponiblesV = {};
+//   }
+
+//   // Actualiza los días asignados según la disponibilidad de repartidor y vehículo
+//   for (const dia in this.diasAsignados) {
+//     // Si el día está marcado pero no está disponible, desmárcalo
+//     if (
+//       this.diasAsignados[dia] &&
+//       !this.diasDisponiblesR[dia] &&
+//       !this.diasDisponiblesV[dia]
+//     ) {
+//       this.diasAsignados[dia] = false;
+//     } 
+    
+//     // Si el día no está marcado pero está disponible, márcalo
+//     else if (
+//       !this.diasAsignados[dia] &&
+//       (this.diasDisponiblesR[dia] || this.diasDisponiblesV[dia])
+//     ) {
+//       this.diasAsignados[dia] = true;
+//     }
+//   }
+// }
   onVehiculoSelectionChange() {
-    let selectedId = this.registroRuta.get('selectedVehiculo')?.value;
-    console.log('ID del vehiculo seleccionado:', selectedId);
+  // Obtén el ID del vehículo seleccionado
+  let selectedId = this.registroRuta.get('selectedVehiculo')?.value;
+  console.log('ID del vehículo seleccionado:', selectedId);
 
-    if (selectedId && typeof selectedId === 'object') {
-      selectedId = selectedId._id;
-    } else if (this.selectedVehiculo) {
-      selectedId = this.selectedVehiculo?._id;
-      // console.log("idV", selectedId)
-    }
+  if (selectedId && typeof selectedId === 'object') {
+    selectedId = selectedId._id;
+  } else if (this.selectedVehiculo) {
+    selectedId = this.selectedVehiculo?._id;
+  }
 
-    // Encuentra el repartidor seleccionado en la lista
-    const selectedVehiculo = this.allVehiculos.find(
-      (vehiculo) => vehiculo._id === selectedId
-    );
+  // Encuentra el vehículo seleccionado en la lista
+  const selectedVehiculo = this.allVehiculos.find(
+    (vehiculo) => vehiculo._id === selectedId
+  );
 
+  // Reinicia los días disponibles del vehículo
+  this.diasDisponiblesV = {};
+  if (selectedVehiculo) {
+    // Actualiza los días disponibles según el vehículo seleccionado
+    selectedVehiculo.diasAsignados.forEach((dia) => {
+      this.diasDisponiblesV[dia] = true;
+    });
+  } else {
     this.diasDisponiblesV = {};
-    if (selectedVehiculo) {
-      selectedVehiculo.diasAsignados.forEach((dia) => {
-        this.diasDisponiblesV[dia] = true;
-        // console.log(this.diasDisponiblesV);
-        // console.log(this.diasDisponiblesV[dia]);
-      });
-    } else {
-      this.diasDisponiblesV = {};
+  }
+
+  // Actualiza diasAsignados según la disponibilidad
+  for (const dia in this.diasAsignados) {
+    if (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) {
+      this.diasAsignados[dia] = false;
     }
   }
+}
 
   volverAtras() {
     this.location.back();
     console.log('presionado atras');
   }
 
-  ngOnInit(): void {
-    this.esEditar();
-    this.todo();
-    this.getRepartidores();
-    this.getVehiculos();
-    this.getMunicipioPorExtado();
-    this.getColoniaPorMunicipio();
-    this.getUsers();
-  }
 
   getRepartidores() {
     if (!this.id) {
@@ -274,9 +392,6 @@ export class RutaFormComponent implements OnInit {
     this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
       (data) => {
         this.allColoniaXMuncipio = data.Colonias;
-        // console.log("colonias=>", this.allColoniaXMuncipio)
-        // console.log(allColonias);
-        // console.log("objeto=>", data)
       },
       (error) => {
         console.log('Ocurrió un error al obtener la información', error);
@@ -583,19 +698,34 @@ export class RutaFormComponent implements OnInit {
     return diasAsignados;
   }
 
-  onDiaSeleccionadoupdate(event: Event): void {
+  onDiaSeleccionadoupdate(event: Event, dia: string): void {
     const input = event.target as HTMLInputElement;
     const isChecked = input.checked;
-    const dia = input.value;
-    this.diasAsignados[dia] = isChecked;
+
+    if (
+      isChecked &&
+      !this.diasDisponiblesR[dia] &&
+      !this.diasDisponiblesV[dia]
+    ) {
+      // Si el día no está disponible y se intenta marcar, desmarcarlo y salir
+      input.checked = false;
+      this.diasAsignados[dia] = false;
+      return;
+    }
+
     if (isChecked) {
+      // Si el día está disponible y se marca
+      this.diasAsignados[dia] = true;
       this.diasSeleccionados.push(dia);
     } else {
+      // Si se desmarca el checkbox
+      this.diasAsignados[dia] = false;
       const index = this.diasSeleccionados.indexOf(dia);
       if (index > -1) {
         this.diasSeleccionados.splice(index, 1);
       }
     }
+
     console.log('dias en seleccion', this.diasSeleccionados);
   }
 
