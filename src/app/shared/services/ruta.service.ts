@@ -37,6 +37,10 @@ export class RutaService {
     const url = `${environment.api}/purificadoraAdmin/ruta/` + id
     return this.http.delete(url)
   }
+  // cancelarSalida(id: string,estado:string): Observable<any> {
+  //   const url = `${environment.api}/purificadoraAdmin/ruta/` + id
+  //   return this.http.put(url,estado)
+  // }
 
   eliminarPuntoEntrega(id: string): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/clienteRuta/` + id
@@ -51,10 +55,15 @@ export class RutaService {
     const url = `${environment.api}/purificadoraAdmin/salida/`
     return this.http.post(url, data)
   }
-  updateSalida(id:string,estado: any): Observable<any> {
+  updateSalida(id:string,data: any): Observable<any> {
     // `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
     // const url = `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
-    return this.http.put(`${environment.api}/purificadoraAdmin/salidaActual/${id}`, { estado })
+    return this.http.put(`${environment.api}/purificadoraAdmin/salida/${id}`, { data })
+  }
+  updateEstadoSalida(id:string,estado: any): Observable<any> {
+    // `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
+    // const url = `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
+    return this.http.put(`${environment.api}/purificadoraAdmin/salidaEstado/${id}`, { estado })
   }
   addPuntoEntregaRutaById(id: string, data: any): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/cliente/` + id

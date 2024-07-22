@@ -4,10 +4,9 @@ import { Cliente } from "./client.interface";
 import { Vehiculo } from "./vehiculo.interface";
 
 export interface PuntoDeEntrega {
-    clienteId?: Cliente;
-    _id: string;
+  clienteId?: Cliente;
+  _id: string;
 }
-
 
 export interface DetalleEntregaInterface {
   _id?: string;
@@ -18,14 +17,12 @@ export interface DetalleEntregaInterface {
   vehiculoId?: Vehiculo;
   fechaInicio?: Date;
   fechaFin?: Date;
-  estado?: 'enviado' | 'pendiente' | 'en_curso' | 'finalizada';
+  estado?: "enviado" | "recibido" | "pendiente" | "en_curso" | "finalizada" | "cancelado";
   puntosDeEntrega: PuntoDeEntrega | any;
   cantidadBotellasEntregadas?: Number;
   diasAsignados?: string[];
   esSalida?: boolean;
 }
-
-
 
 // export interface DetalleEntregaInterface {
 //     _id?: string;
@@ -42,11 +39,6 @@ export interface DetalleEntregaInterface {
 //     cantidadBotellasPendientes: Number;
 // }
 
-
-
-
 // export interface DetalleEntregaSchemaInterface {
 
-    
 // }
-

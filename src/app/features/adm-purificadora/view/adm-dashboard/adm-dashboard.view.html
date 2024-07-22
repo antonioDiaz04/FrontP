@@ -5,28 +5,56 @@
             padding: 20px;
         } */
 
+
+        .row-bienvenida {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            padding: 20px;
+            box-shadow: 0 0 6px 1px #f7f7f7;
+            border-radius: 10px;
+            background-color: #c9f0e8;
+            position: sticky;
+            justify-content: space-between;
+
+
+            .text {
+                display: flex;
+                flex-direction: column;
+
+                .text-bienvenida {
+                    color: #3c5256;
+                    font-size: 30px;
+                    font-weight: bold;
+                    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                }
+            }
+        }
+
         .row {
             display: flex;
             flex-direction: row;
             gap: 20px;
-            background: transparent;
             padding: 20px;
-            box-shadow: 0 0 6px 1px #dadada;
+            /* box-shadow: 0 0 6px 1px #f7f7f7; */
             border-radius: 10px;
+            /* background-color: #c9f0e8; */
+
+
         }
 
         .target {
             align-items: center;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 6px 1px #dadada;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
         }
 
         .target:hover {
             transform: scale(1.05);
+            box-shadow: 1px 11px 30px 9px rgba(141, 141, 141, 0.4);
             /* Escalar el elemento en un 5% */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             /* Sombra más pronunciada */
             transition: transform 0.3s, box-shadow 0.3s;
             /* Transiciones suaves */
@@ -46,9 +74,11 @@
         .target-title {
             font-size: 18px;
             font-weight: bold;
+            color: #565862;
         }
 
         .target-content {
+            color: #808080;
             font-size: 14px;
         }
 
@@ -64,18 +94,16 @@
             background-color: #ffffff;
             border-left: 1px solid#3df3b3;
 
-            div {
 
-                .target-title,
-                i {
-                    color: #3df3b3;
-                }
-            }
-
-            .btn-green {
-                background-color: #3df3b3;
+            i {
+                color: #3df3b3;
             }
         }
+
+        .btn-green {
+            background-color: #3df3b3;
+        }
+
 
         .target-blue {
             border-left: 1px solid#6ab2ff;
@@ -83,7 +111,6 @@
 
             div {
 
-                .target-title,
                 i {
                     color: #6ab2ff;
                 }
@@ -103,7 +130,7 @@
 
             div {
 
-                .target-title,
+
                 i {
                     color: #ffc155;
                     ;
@@ -123,7 +150,7 @@
 
             div {
 
-                .target-title,
+
                 i {
                     color: #ac5aff;
                 }
@@ -143,6 +170,25 @@
         </div>
     </div> -->
     <h1>Dashboard</h1>
+    <div class="row-bienvenida">
+        <div class="text">
+            <p class="text-bienvenida">
+
+                Hola Admin, {{nombre}}
+            </p>
+            <b>Listo para comenzar el día con algunas presentaciones?</b>
+        </div>
+
+        <img style="
+        display: flex;
+justify-content: right;
+  margin-top: -90px;
+  margin-right: 100px;
+  margin-bottom: -55px ;z-index: 999;
+position: relative;width: 30%;height: 30%;"
+            src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1721586139/images/undraw_at_the_park_2e47-removebg-preview_kekvlp.png"
+            alt="" srcset="">
+    </div>
     <div class="row">
 
         <div class="target target-green">
@@ -170,11 +216,11 @@
 
         <div class="target target-orange">
             <div class="target-header">
-                <i class="fas fa-route"></i>
-                <span class="target-title">Rutas con más ventas</span>
+                <i class="fas fa-truck-ramp-box"></i>
+                <span class="target-title">Cantidad de vehiculos</span>
             </div>
             <div class="target-content">
-                <p>Ruta 5 - 200 ventas</p>
+                <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> vehiculos registrados</p>
             </div>
             <button class="btn btn-orange">Ver detalles</button>
         </div>
@@ -196,11 +242,11 @@
 
     <div class="card flex-container">
         <div class="chart-container">
-          <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
         </div>
         <div class="calendar-container">
-          <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>
+            <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>
         </div>
-      </div>
-      
+    </div>
+
 </main>

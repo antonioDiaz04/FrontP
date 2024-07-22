@@ -7,15 +7,19 @@
   /* Espacio entre filas */
 
   /*  */
+  
 
   label {
+    
     grid-column: 1;
     margin: 10px;
     /* Las etiquetas en la primera columna */
   }
-
+  
   input[type="text"] {
-    width: 20%;
+    width: 15%;
+    
+    margin: 10px;
     /* Los inputs y selects ocupan todo el ancho de su contenedor */
     grid-column: 2;
     /* Los inputs y selects en la segunda columna */
@@ -126,6 +130,10 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+}
+label::before{
+content: '*';
+color: red;
 }
 
 .custom-dropdown select,

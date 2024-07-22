@@ -1,14 +1,14 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
-import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Toast } from '../../../../../shared/services/toast.service';
+import { Component, OnInit, Renderer2 } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RepartidoresService } from "../../../../../shared/services/rapartidores.service";
+import { Repartidor } from "../../../../../shared/interfaces/repartidor.interface";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Toast } from "../../../../../shared/services/toast.service";
 
 @Component({
-  selector: 'app-repartidores-listado',
-  templateUrl: './repartidores-listado.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
+  selector: "app-repartidores-listado",
+  templateUrl: "./repartidores-listado.component.html",
+  styleUrls: ["../../../adm-purificadora.component.scss", "../../../form.scss"],
 })
 export class RepartidoresListadoComponent implements OnInit {
   visible: boolean = false;
@@ -26,13 +26,13 @@ export class RepartidoresListadoComponent implements OnInit {
   rows: number = 5; // Número de registros por página
   first: number = 0; // Índice del primer registro de la página actual
   dias: string[] = [
-    'lunes',
-    'martes',
-    'miercoles',
-    'jueves',
-    'viernes',
-    'sabado',
-    'domingo',
+    "lunes",
+    "martes",
+    "miercoles",
+    "jueves",
+    "viernes",
+    "sabado",
+    "domingo",
   ];
   // diasAsignados: { [key: string]: boolean } = {};
 
@@ -47,12 +47,12 @@ export class RepartidoresListadoComponent implements OnInit {
     private rou: Router
   ) {
     this.usuarioForm = this.fb.group({
-      nombre: ['', Validators.required],
-      email: ['', Validators.required],
-      numCasa: ['', Validators.required],
-      telefono: ['', Validators.required],
+      nombre: ["", Validators.required],
+      email: ["", Validators.required],
+      numCasa: ["", Validators.required],
+      telefono: ["", Validators.required],
     });
-    this.id = this.router.snapshot.paramMap.get('id');
+    this.id = this.router.snapshot.paramMap.get("id");
   }
 
   ngOnInit(): void {
@@ -63,10 +63,10 @@ export class RepartidoresListadoComponent implements OnInit {
   editar(id: any) {
     let selectedRepartidor;
     this.visible = true;
-    this.idRepartidor = this.router.snapshot.params['id'];
+    this.idRepartidor = this.router.snapshot.params["id"];
 
     if (id !== null) {
-      console.log('actualizar....');
+      console.log("actualizar....");
 
       this.repService.detalleUsuarioById(id).subscribe((data) => {
         this.listRepartidor = data;
@@ -102,23 +102,23 @@ export class RepartidoresListadoComponent implements OnInit {
     const diasAsignados = this.diasSeleccionados;
 
     const REPARTIDOR: Repartidor = {
-      nombre: this.usuarioForm.get('nombre')?.value,
-      email: this.usuarioForm.get('email')?.value,
-      telefono: this.usuarioForm.get('telefono')?.value,
-      password1: this.usuarioForm.get('password1')?.value,
+      nombre: this.usuarioForm.get("nombre")?.value,
+      email: this.usuarioForm.get("email")?.value,
+      telefono: this.usuarioForm.get("telefono")?.value,
+      password1: this.usuarioForm.get("password1")?.value,
       diasAsignados: diasAsignados,
     };
 
     this.repService.updateRepartidora(id, REPARTIDOR).subscribe(
       (response) => {
         this.visible = false;
-
-        this.toast.showToastPmNgSuccess('Se guardaron los cambios con exito');
-        // console.log('Usuario actualizado:', response);
         this.getRepartidores();
+
+        this.toast.showToastPmNgSuccess("Se guardaron los cambios con exito");
+        // console.log('Usuario actualizado:', response);
       },
       (error) => {
-        console.error('Error al actualizar el usuario:', error);
+        console.error("Error al actualizar el usuario:", error);
       }
     );
     // }
@@ -130,7 +130,7 @@ export class RepartidoresListadoComponent implements OnInit {
         this.getRepartidores();
       },
       (error) => {
-        console.log('ocurrio un error', error);
+        console.log("ocurrio un error", error);
       }
     );
   }
@@ -143,7 +143,7 @@ export class RepartidoresListadoComponent implements OnInit {
         this.updatePaginatedRepartidores();
       },
       (error) => {
-        console.log('ocurrió un error al obtener la información', error);
+        console.log("ocurrió un error al obtener la información", error);
       }
     );
   }
@@ -174,8 +174,8 @@ export class RepartidoresListadoComponent implements OnInit {
         this.diasSeleccionados.splice(index, 1);
       }
     }
-    console.log('dias en as', this.diasAsignados[dia]);
-    console.log('dias en seleccion', this.diasSeleccionados);
+    console.log("dias en as", this.diasAsignados[dia]);
+    console.log("dias en seleccion", this.diasSeleccionados);
   }
 
   // onRepartidorSelectionChange() {

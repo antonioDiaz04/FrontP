@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Salida } from '../../../../shared/models/salida.model';
-import { StorageService } from '../../../../core/commons/components/service/storage.service';
-import { SessionService } from '../../../../core/commons/components/service/session.service';
-import { RepartidoresService } from '../../../../shared/services/rapartidores.service';
-import { RutaService } from '../../../../shared/services/ruta.service';
-import Swal from 'sweetalert2';
+import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { Salida } from "../../../../shared/models/salida.model";
+import { StorageService } from "../../../../core/commons/components/service/storage.service";
+import { SessionService } from "../../../../core/commons/components/service/session.service";
+import { RepartidoresService } from "../../../../shared/services/rapartidores.service";
+import { RutaService } from "../../../../shared/services/ruta.service";
+import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.view.html',
-  styleUrl: './inicio.view.css',
+  selector: "app-inicio",
+  templateUrl: "./inicio.view.html",
+  styleUrl: "./inicio.view.css",
 })
 export class InicioView implements OnInit {
   @Input() data!: Salida[] | any; // data es un array de Salida
@@ -19,9 +19,9 @@ export class InicioView implements OnInit {
   idSalida!: string;
   botellasSobrantes: number = 10;
   editMode: boolean = false;
-  buttonText: string = 'Recibir';
+  buttonText: string = "Recibir";
   enviado!: any;
-  buttonColor: string = '#379b91';
+  buttonColor: string = "#379b91";
   tienesSalidaProgramada!: boolean;
   sidebarVisible: boolean = false;
 
@@ -41,15 +41,15 @@ export class InicioView implements OnInit {
   toggleEditMode(salidaId: string): void {
     if (!this.editMode) {
       this.editMode = !this.editMode;
-      const estado = 'recibido';
-      this.buttonText = 'Recibido';
-      this.salidaService.updateSalida(salidaId, estado).subscribe(
+      const estado = "recibido";
+      this.buttonText = "Recibido";
+      this.salidaService.updateEstadoSalida(salidaId, estado).subscribe(
         (response) => {
-          console.log('Status updated:', response);
+          console.log("Status updated:", response);
           this.getData();
         },
         (error) => {
-          console.error('Error updating status:', error);
+          console.error("Error updating status:", error);
         }
       );
     }
@@ -57,21 +57,21 @@ export class InicioView implements OnInit {
 
   redirectToAdminPurificadora(route: string): void {
     console.log(route);
-    if (route === 'login') {
-      this.router.navigate(['/auth/login']); // Navegación hacia la página de inicio de sesión
+    if (route === "login") {
+      this.router.navigate(["/auth/login"]); // Navegación hacia la página de inicio de sesión
     } else {
-      console.log('Llegaste a purificadoraAdm');
-      this.router.navigate(['/repartidor', route]); // Navegación hacia otras páginas públicas
+      console.log("Llegaste a purificadoraAdm");
+      this.router.navigate(["/repartidor", route]); // Navegación hacia otras páginas públicas
     }
   }
 
   logout() {
-    if (typeof localStorage !== 'undefined') {
+    if (typeof localStorage !== "undefined") {
       // Eliminar el token del almacenamiento
-      localStorage.removeItem('token'); // o sessionStorage.removeItem('token');
+      localStorage.removeItem("token"); // o sessionStorage.removeItem('token');
     }
     // Opcional: hacer una solicitud al backend para manejar cualquier estado del lado del servidor
-    this.router.navigate(['/auth/login']); // Redirigir a la página de inicio de sesión
+    this.router.navigate(["/auth/login"]); // Redirigir a la página de inicio de sesión
   }
 
   getData(): void {
@@ -96,7 +96,7 @@ export class InicioView implements OnInit {
             }
           },
           (error) => {
-            console.error('Error al actualizar el usuario:', error);
+            console.error("Error al actualizar el usuario:", error);
           }
         );
       }
@@ -114,22 +114,21 @@ export class InicioView implements OnInit {
     console.log(`Entrega ${salidaId} terminada`);
   }
 
-  
   enviarEntreada() {
     const selectHTML = `
     <input id="swal-input1" class="swal2-input">
     <input id="swal-input2" class="swal2-input">`;
     Swal.fire({
-      title: 'Multiple inputs',
+      title: "Multiple inputs",
       html: selectHTML,
       focusConfirm: false,
       showCancelButton: true,
       preConfirm: () => {
         const selectedValue = (
-          Swal.getPopup()?.querySelector('#swal-select') as HTMLSelectElement
+          Swal.getPopup()?.querySelector("#swal-select") as HTMLSelectElement
         ).value;
         if (!selectedValue) {
-          Swal.showValidationMessage('Por favor selecciona un vehículo');
+          Swal.showValidationMessage("Por favor selecciona un vehículo");
         }
         return selectedValue;
       },

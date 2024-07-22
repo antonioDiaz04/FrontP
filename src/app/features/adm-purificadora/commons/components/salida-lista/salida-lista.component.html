@@ -83,29 +83,58 @@
                         undefined &&
                         ruta.cantidadBotellas !== null ?
                         ruta.cantidadBotellas
-                        : 0 }}</span>
-                    <i *ngIf="!ruta.esSalida" class="fa-regular fa-pen-to-square" (click)="editar(ruta)"></i>
+                        : 0 }}
+
+
+                    </span>
+                    <i *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" id="tooltip"
+                        class="fa-regular fa-pen-to-square" (click)="editar(ruta)">
+
+                        <span class="tooltiptext">
+                            Asigna o modifica la cantidad dando click aqui.
+                        </span>
+                    </i>
                 </td>
                 <td>
                     <p style="font-weight: bold;" [ngClass]="{
-                                                                        'enviado': ruta.estado === 'enviado',
-                                                                        'pendiente': ruta.estado === 'pendiente',
-                                                                        'en_curso': ruta.estado === 'en_curso',
-                                                                        'finalizada': ruta.estado === 'finalizada'
-                                                                    }">{{ ruta.estado }}
+                    'enviado': ruta.estado === 'enviado',
+                    'pendiente': !ruta.estado || ruta.estado === 'pendiente',
+                    'en_curso': ruta.estado === 'recibido',
+                    'finalizada': ruta.estado === 'finalizada',
+                    'cancelado': ruta.estado === 'cancelado'
+                }">
+                        {{ ruta.estado ? ruta.estado : 'pendiente' }}
                     </p>
+
                 </td>
                 <td>
-                    <button *ngIf="!ruta.esSalida" type="input" class="read enable-button" (click)="enviar(ruta)">
+                    <button *ngIf="!ruta?.esSalida" type="input" class="read enable-button"
+                        (click)="enviar(ruta,ruta.esSalida)">
                         <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
                     </button>
-                    <button *ngIf="!ruta.esSalida" type="input" class="read enable-button"
-                        (click)="selectToastSwal(ruta)">
+
+                    <button *ngIf="ruta.esSalida && ruta.estado === 'cancelado'" type="input" class="read enable-button"
+                        (click)="enviar(ruta._id,ruta.esSalida)">
+                        <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
+                    </button>
+
+
+
+
+
+
+                    <button *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" type="input"
+                        class="read enable-button" (click)="selectToastSwal(ruta)">
                         <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar repartidor</span>
                     </button>
-                    <button *ngIf="!ruta.esSalida" type="input" class="read enable-button"
-                        (click)="selectToastCambiarVehiculoSwal(ruta)">
+                    <button *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" type="input"
+                        class="read enable-button" (click)="selectToastCambiarVehiculoSwal(ruta)">
                         <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar vehiculo</span>
+                    </button>
+
+                    <button *ngIf="ruta.estado !== 'cancelado' && ruta.esSalida" type="input"
+                        class="remove enable-button" (click)="cancelarSalida(ruta._id)">
+                        <i class="fa-regular fa-calendar-xmark"></i><span>Cancelar</span>
                     </button>
                 </td>
 

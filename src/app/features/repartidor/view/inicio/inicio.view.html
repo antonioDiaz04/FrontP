@@ -1,10 +1,10 @@
-
 <div class="repartidor-home">
     <div class="welcome-card" *ngIf="!tienesSalidaProgramada">
         <p class="animated-text">No tienes salidas programadas para hoy</p>
     </div>
     <div class="welcome-card" *ngFor="let salida of data">
-        <p *ngIf="salida.estado === 'enviado'" class="animated-text">Tienes programada una salida hoy</p>
+        <p *ngIf="salida.estado === 'enviado' &&  salida.estado !== 'cancelado'" class="animated-text">Tienes programada
+            una salida hoy</p>
         <h2>Descripción de la Entrega</h2>
         <div class="info">
             <p>

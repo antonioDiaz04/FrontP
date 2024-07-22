@@ -1,59 +1,61 @@
 <section id="registro">
     <form class="form-registro" [formGroup]="vehiculoForm" (ngSubmit)="registroVehiculo()" method="post">
+        <h2>REGISTRO DE VEHICULO</h2>
         <div class="form-column">
             <fieldset class="full-width">
                 <legend>Información del Vehículo</legend>
                 <section class="Primer-seccion">
                     <label for=" marca">Marca del Vehículo:</label>
-                    <input type="text" id="marca" formControlName="marca">
+                    <input placeholder="Ingrese el marca del vehiculo" type="text" id="marca" formControlName="marca">
                     <label for="modelo">Modelo del Vehículo:</label>
-                    <input type="text" id="modelo" formControlName="modelo">
-                    <label for="placas">Placas del Vehículo:</label>
-                    <input type="text" id="placas" formControlName="placas">
+                    <input placeholder="Ingrese el modelo del vehiculo" type="text" id="modelo"
+                        formControlName="modelo">
+                    <label for="placas">Placa del Vehículo:</label>
+                    <input placeholder="Ingrese la placa del vehiculo" type="text" id="placas" formControlName="placas">
                 </section>
             </fieldset>
 
             <fieldset class="full-width">
-                <legend>Asignación de días</legend>
-                <div class="checkbox-container">
-                    <div class="checkbox-item">
-                        <span for="lunes">Lunes</span>
-                        <input type="checkbox" id="lunes" formcontr="Lunes" value="lunes"
-                            (change)="onDiaSeleccionado($event)">
+                <label>Asignación de días</label>
+                    <div class="checkbox-container">
+                        <div class="checkbox-item">
+                            <span for="lunes">Lunes</span>
+                            <input type="checkbox" id="lunes" formcontr="Lunes" value="lunes"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                        <div class="checkbox-item">
+                            <span for="martes">Martes</span>
+                            <input type="checkbox" id="martes" name="Martes" value="martes"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                        <div class="checkbox-item">
+                            <span for="miercoles">Miércoles</span>
+                            <input type="checkbox" id="miercoles" name="Miércoles" value="miercoles"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                        <div class="checkbox-item">
+                            <span for="jueves">Jueves</span>
+                            <input type="checkbox" id="jueves" name="Jueves" value="jueves"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                        <div class="checkbox-item">
+                            <span for="viernes">Viernes</span>
+                            <input type="checkbox" id="viernes" name="Viernes" value="viernes"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                        <div class="checkbox-item">
+                            <span for="sabado">Sábado</span>
+                            <input type="checkbox" id="sabado" name="Sábado" value="sabado"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
+                        <div class="checkbox-item">
+                            <span for="domingo">Domingo</span>
+                            <input type="checkbox" id="domingo" name="Domingo" value="domingo"
+                                (change)="onDiaSeleccionado($event)">
+                        </div>
                     </div>
-                    <div class="checkbox-item">
-                        <span for="martes">Martes</span>
-                        <input type="checkbox" id="martes" name="Martes" value="martes"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="miercoles">Miércoles</span>
-                        <input type="checkbox" id="miercoles" name="Miércoles" value="miercoles"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="jueves">Jueves</span>
-                        <input type="checkbox" id="jueves" name="Jueves" value="jueves"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="viernes">Viernes</span>
-                        <input type="checkbox" id="viernes" name="Viernes" value="viernes"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="sabado">Sábado</span>
-                        <input type="checkbox" id="sabado" name="Sábado" value="sabado"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                    <div class="checkbox-item">
-                        <span for="domingo">Domingo</span>
-                        <input type="checkbox" id="domingo" name="Domingo" value="domingo"
-                            (change)="onDiaSeleccionado($event)">
-                    </div>
-                </div>
+                    <button type="submit" class="full-width">Registrar Vehículo</button>
             </fieldset>
         </div>
-        <button type="submit" class="full-width">Registrar Vehículo</button>
     </form>
 </section>

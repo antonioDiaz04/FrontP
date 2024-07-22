@@ -1,29 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detalle-entrega-schema.interface';
-import { Repartidor } from '../../../../../shared/interfaces/repartidor.interface';
+import { Component, OnInit } from "@angular/core";
+import { DetalleEntregaInterface } from "../../../../../shared/interfaces/detalle-entrega-schema.interface";
+import { Repartidor } from "../../../../../shared/interfaces/repartidor.interface";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from '@angular/forms';
-import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
-import { RutaService } from '../../../../../shared/services/ruta.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
-import { Vehiculo } from '../../../../../shared/interfaces/vehiculo.interface';
-import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
-import Swal from 'sweetalert2';
-import { Toast } from '../../../../../shared/services/toast.service';
-import { Salida } from '../../../../../shared/models/salida.model';
-import { Cliente } from '../../../../../shared/interfaces/client.interface';
+} from "@angular/forms";
+import { RepartidoresService } from "../../../../../shared/services/rapartidores.service";
+import { RutaService } from "../../../../../shared/services/ruta.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Ruta } from "../../../../../shared/interfaces/ruta.interface";
+import { Vehiculo } from "../../../../../shared/interfaces/vehiculo.interface";
+import { VehiculoService } from "../../../../../shared/services/vehiculo.service";
+import Swal from "sweetalert2";
+import { Toast } from "../../../../../shared/services/toast.service";
+import { Salida } from "../../../../../shared/models/salida.model";
+import { Cliente } from "../../../../../shared/interfaces/client.interface";
 @Component({
-  selector: 'app-salida-lista',
-  templateUrl: './salida-lista.component.html',
+  selector: "app-salida-lista",
+  templateUrl: "./salida-lista.component.html",
   styleUrls: [
-    '../../../adm-purificadora.component.scss',
-    './modal.scss',
-    '../../../form.scss',
+    "../../../adm-purificadora.component.scss",
+    "./modal.scss",
+    "../../../form.scss",
   ],
 })
 export class SalidaListaComponent implements OnInit {
@@ -86,8 +86,8 @@ export class SalidaListaComponent implements OnInit {
   obtenerFechaYYYYMMDD() {
     let fecha = new Date();
     let año = fecha.getFullYear();
-    let mes = String(fecha.getMonth() + 1).padStart(2, '0');
-    let dia = String(fecha.getDate()).padStart(2, '0');
+    let mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    let dia = String(fecha.getDate()).padStart(2, "0");
 
     return `${dia}-${mes}-${año}`;
   }
@@ -95,20 +95,20 @@ export class SalidaListaComponent implements OnInit {
   obtenerFechaYHoraActualFormateada(): string {
     const fecha = new Date();
     const año = fecha.getFullYear();
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    const día = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+    const día = fecha.getDate().toString().padStart(2, "0");
     return `${año}-${mes}-${día}`;
   }
 
   obtenerDiaTexto() {
     let diasSemana = [
-      'domingo',
-      'lunes',
-      'martes',
-      'miércoles',
-      'jueves',
-      'viernes',
-      'sábado',
+      "domingo",
+      "lunes",
+      "martes",
+      "miércoles",
+      "jueves",
+      "viernes",
+      "sábado",
     ];
     let fecha = new Date();
     return diasSemana[fecha.getDay()];
@@ -123,7 +123,7 @@ export class SalidaListaComponent implements OnInit {
         this.updatePaginatedRutasDetalles();
       },
       (error) => {
-        console.log('ocurrió un error al obtener la información', error);
+        console.log("ocurrió un error al obtener la información", error);
       }
     );
   }
@@ -134,7 +134,7 @@ export class SalidaListaComponent implements OnInit {
         this.allRepartidores = data;
       },
       (error) => {
-        console.log('Ocurrió un error al obtener la información', error);
+        console.log("Ocurrió un error al obtener la información", error);
       }
     );
   }
@@ -152,14 +152,27 @@ export class SalidaListaComponent implements OnInit {
         this.obtenerRutas();
       },
       (error) => {
-        console.log('ocurrio un error', error);
+        console.log("ocurrio un error", error);
+      }
+    );
+  }
+
+  cancelarSalida(id: any) {
+    const estado = "cancelado";
+    this.rutaS.updateEstadoSalida(id, estado).subscribe(
+      (response) => {
+        console.log("Status updated:", response);
+        this.obtenerRutas();
+      },
+      (error) => {
+        console.error("Error updating status:", error);
       }
     );
   }
 
   editar(ruta: any) {
     this.rutaActual = ruta;
-    this.cantidadForm.controls['cantidadBotellas'].setValue(
+    this.cantidadForm.controls["cantidadBotellas"].setValue(
       ruta.cantidadBotellas || 0
     );
     this.visible = true;
@@ -174,27 +187,27 @@ export class SalidaListaComponent implements OnInit {
         .map(
           (repartidor) => `
         <option value="${repartidor._id}" ${
-            repartidor._id === ruta.repartidorId?._id ? 'selected' : ''
+            repartidor._id === ruta.repartidorId?._id ? "selected" : ""
           }>
           ${repartidor.nombre}
         </option>
       `
         )
-        .join('')}
+        .join("")}
     </select>
   `;
 
     Swal.fire({
-      title: 'Select a Repartidor',
+      title: "Select a Repartidor",
       html: selectHTML,
       focusConfirm: false,
       showCancelButton: true,
       preConfirm: () => {
         const selectedValue = (
-          Swal.getPopup()?.querySelector('#swal-select') as HTMLSelectElement
+          Swal.getPopup()?.querySelector("#swal-select") as HTMLSelectElement
         ).value;
         if (!selectedValue) {
-          Swal.showValidationMessage('Please select a repartidor');
+          Swal.showValidationMessage("Please select a repartidor");
         }
         return selectedValue;
       },
@@ -222,26 +235,26 @@ export class SalidaListaComponent implements OnInit {
         .map(
           (vehiculo) => `
         <option value="${vehiculo._id}" ${
-            vehiculo._id === ruta.vehiculoId?._id ? 'selected' : ''
+            vehiculo._id === ruta.vehiculoId?._id ? "selected" : ""
           }>
           ${vehiculo.placas}
         </option>
       `
         )
-        .join('')}
+        .join("")}
     </select>
   `;
     Swal.fire({
-      title: 'Select un vehiculo',
+      title: "Select un vehiculo",
       html: selectHTML,
       focusConfirm: false,
       showCancelButton: true,
       preConfirm: () => {
         const selectedValue = (
-          Swal.getPopup()?.querySelector('#swal-select') as HTMLSelectElement
+          Swal.getPopup()?.querySelector("#swal-select") as HTMLSelectElement
         ).value;
         if (!selectedValue) {
-          Swal.showValidationMessage('Por favor selecciona un vehiculo');
+          Swal.showValidationMessage("Por favor selecciona un vehiculo");
         }
         return selectedValue;
       },
@@ -269,7 +282,7 @@ export class SalidaListaComponent implements OnInit {
     const clientesSeleccionados = ruta.puntosDeEntrega.map((punto: any) => {
       const cliente = punto.clienteId;
 
-      return cliente && typeof cliente === 'object' && cliente._id
+      return cliente && typeof cliente === "object" && cliente._id
         ? cliente._id
         : cliente;
     });
@@ -285,99 +298,109 @@ export class SalidaListaComponent implements OnInit {
   guardarCambios() {
     if (this.rutaActual) {
       this.rutaActual.cantidadBotellas =
-        this.cantidadForm.controls['cantidadBotellas'].value;
+        this.cantidadForm.controls["cantidadBotellas"].value;
       this.visible = false;
     }
   }
 
-  enviar(ruta: any) {
-    if (ruta) {
-      const nombreRuta = ruta.nombreRuta;
-      const selectedRepartidor = ruta.repartidorId;
-      const selectedVehiculo = ruta.vehiculoId;
-      const cantidadBotellas = ruta.cantidadBotellas;
-      const puntosDeEntrega = this.obtenerTodosLosClientes(ruta);
+  enviar(ruta: any, esSalida: any) {
+    // if (ruta) {
+    const nombreRuta = ruta.nombreRuta;
+    const selectedRepartidor = ruta.repartidorId;
+    const selectedVehiculo = ruta.vehiculoId;
+    const cantidadBotellas = ruta.cantidadBotellas;
+    const puntosDeEntrega = this.obtenerTodosLosClientes(ruta);
 
-      if (!nombreRuta) {
-        this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
-        return;
-      }
+    if (!cantidadBotellas) {
+      this.toast.showToastPmNgWarn("Por favor ingresa la cantidad");
+      return;
+    }
 
-      if (!selectedRepartidor) {
-        this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
-        return;
-      }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "swal2-confirm btn-success",
+        cancelButton: "swal2-cancel btn-danger",
+      },
+      buttonsStyling: false,
+    });
 
-      if (!selectedVehiculo) {
-        this.toast.showToastPmNgWarn('Por favor ingresa el nombre de la ruta');
-        return;
-      }
+    swalWithBootstrapButtons
+      .fire({
+        title: "¿Estás seguro?",
+        text: "¿Deseas enviar los datos con los cambios realizados?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, enviar!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        const data: Salida = {
+          nombreRuta: nombreRuta,
+          repartidorId: selectedRepartidor,
+          vehiculoId: selectedVehiculo,
+          cantidadBotellas: cantidadBotellas,
+          puntosDeEntrega: puntosDeEntrega,
+          estado: "enviado",
+        };
 
-      if (!cantidadBotellas) {
-        this.toast.showToastPmNgWarn('Por favor ingresa la cantidad');
-        return;
-      }
-
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'swal2-confirm btn-success',
-          cancelButton: 'swal2-cancel btn-danger',
-        },
-        buttonsStyling: false,
-      });
-
-      swalWithBootstrapButtons
-        .fire({
-          title: '¿Estás seguro?',
-          text: '¿Deseas enviar los datos con los cambios realizados?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Sí, enviar!',
-          cancelButtonText: 'No, cancelar!',
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            const data: Salida = {
-              nombreRuta: nombreRuta,
-              repartidorId: selectedRepartidor,
-              vehiculoId: selectedVehiculo,
-              cantidadBotellas: cantidadBotellas,
-              puntosDeEntrega: puntosDeEntrega,
-              estado: 'enviado',
-            };
-
+        if (result.isConfirmed) {
+          if (data && esSalida == false) {
             this.rutaS.addSalida(data).subscribe(
               (response) => {
                 this.visible = false;
                 this.obtenerRutas();
                 this.toast.showToastSwalSuccess(
-                  'Se ha agregado correctamente.'
+                  "Se ha agregado correctamente."
                 );
 
                 this.router.navigate([
-                  '/purificadoraAdm/salida/salida-listado',
+                  "/purificadoraAdm/salida/salida-listado",
                 ]); // Navegación hacia otras páginas públicas
               },
               (error) => {
                 console.error(error); // Imprime el error en la consola para depuración
-                let errorMessage = 'Error desconocido'; // Mensaje por defecto en caso de que no haya un mensaje de error específico
+                let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
                 if (error && error.error && error.error.message) {
                   errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
                 }
                 this.toast.showToastSwalError(errorMessage); // Mostramos el mensaje de error en la alerta
               }
             );
-            // Aquí puedes agregar la lógica para enviar los datos al servidor
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire({
-              title: 'Cancelado',
-              text: 'Los cambios no se han enviado.',
-              icon: 'error',
-            });
+          } else if (data && esSalida == true) {
+            this.rutaS.updateSalida(ruta._id,data).subscribe(
+              (response) => {
+                this.visible = false;
+                this.obtenerRutas();
+                this.toast.showToastSwalSuccess(
+                  "Se ha actualizado correctamente."
+                );
+
+                this.router.navigate([
+                  "/purificadoraAdm/salida/salida-listado",
+                ]); // Navegación hacia otras páginas públicas
+              },
+              (error) => {
+                console.error(error); // Imprime el error en la consola para depuración
+                let errorMessage = "Error desconocido"; // Mensaje por defecto en caso de que no haya un mensaje de error específico
+                if (error && error.error && error.error.message) {
+                  errorMessage = error.error.message; // Si hay un mensaje de error específico, lo usamos
+                }
+                this.toast.showToastSwalError(errorMessage); // Mostramos el mensaje de error en la alerta
+              }
+            );
           }
-        });
-    }
+
+          // Aquí puedes agregar la lógica para enviar los datos al servidor
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "Los cambios no se han enviado.",
+            icon: "error",
+          });
+        }
+      });
+    // }
   }
 
   getVehiculos() {
@@ -386,7 +409,7 @@ export class SalidaListaComponent implements OnInit {
         this.allVehiculos = data;
       },
       (error) => {
-        console.log('ocurrió un error al obtener la información', error);
+        console.log("ocurrió un error al obtener la información", error);
       }
     );
   }

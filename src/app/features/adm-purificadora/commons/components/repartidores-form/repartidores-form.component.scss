@@ -1,12 +1,12 @@
 form {
-    background: #fff5ec;
+    // background: #fff5ec;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
-    border: 1px solid #e8e7e7;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
+     flex-direction: column;
+    justify-content:flex-start;
+    // flex-wrap: wrap;
 }
 
 form fieldset label {
@@ -20,13 +20,20 @@ form fieldset label {
 
 fieldset {
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 0;
     border-radius: 5px;
+    border: none;
+
 }
 
 legend {
     font-weight: bold;
     color: #565756;
+}
+
+label::before{
+  content: '*';
+  color: red;
 }
 
 label {
@@ -41,14 +48,18 @@ input[type="tel"],
 input[type="email"],
 input[type="number"],
 input[type="password"] {
-    width: calc(100% - 18px);
-    padding: 8px;
+    // width: calc(100% - 20px);
+    padding: 12px;
+    width: 100%;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #dbdbdb;
     border-radius: 4px;
+    box-shadow: 0 0 10px rgba(227, 227, 227, 0.656);
+
 }
 
 button[type="submit"] {
+    width: 100%;
     background-color: #4cafa2;
     color: white;
     padding: 10px 15px;

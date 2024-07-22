@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-vehiculo-form',
   templateUrl: './vehiculo-form.component.html',
-  styleUrls:[ './vehiculo-form.component.scss','./checkbox.scss']
+  styleUrls:[ './vehiculo-form.component.scss']
 })
 export class VehiculoFormComponent {
   diasSeleccionados: string[] = [];

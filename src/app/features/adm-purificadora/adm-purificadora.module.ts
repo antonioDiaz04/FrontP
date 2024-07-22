@@ -37,6 +37,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { RepartidoresService } from '../../shared/services/rapartidores.service';
 import { RutaFormComponent } from './commons/components/ruta-form/ruta-form.component';
 import { RutaListadoComponent } from './commons/components/ruta-listado/ruta-listado.component';
+// import { RutaListadoComponent } from './commons/components/ruta-listado/ruta-listado.component';
 import { RutaView } from './view/ruta/ruta.view';
 import { VehiculosView } from './view/vehiculos/vehiculos.view';
 import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehiculo-form.component';

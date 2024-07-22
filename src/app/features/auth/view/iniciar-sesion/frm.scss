@@ -35,6 +35,11 @@
   color: rgb(93, 98, 104);
   margin-bottom: 10px;
 }
+ label::before{
+  content: '*';
+  color: red;
+}
+
 
 .form-login input[type="text"],
 .form-login input[type="password"] {

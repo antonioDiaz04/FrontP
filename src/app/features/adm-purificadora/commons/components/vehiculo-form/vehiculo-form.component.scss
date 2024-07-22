@@ -1,69 +1,31 @@
-/* Estilos para el formulario */
-.Primer-seccion {
-    display: block ruby;
-    grid-template-columns: max-content 1fr;
-    /* Columna de etiquetas y columna de inputs/selects */
-    grid-row-gap: 10px;
-    /* Espacio entre filas */
-
-    /*  */
-
-    label {
-        grid-column: 1;
-        margin: 10px;
-        /* Las etiquetas en la primera columna */
-    }
-
-    input[type="text"] {
-        width: 20%;
-        /* Los inputs y selects ocupan todo el ancho de su contenedor */
-        grid-column: 2;
-        /* Los inputs y selects en la segunda columna */
-    }
-
-    .custom-dropdown select {
-        grid-row-gap: 20px;
-
-        width: 100%;
-        /* Los inputs y selects ocupan todo el ancho de su contenedor */
-        grid-column: 2;
-        /* Los inputs y selects en la segunda columna */
-        /* Alinear los dropdowns a la derecha */
-    }
-}
-
-.form-registro {
-    background: #ffffff;
+form {
+    // background: #fff5ec;
     padding: 20px;
-    /* border-radius: 2px; */
-    box-shadow: 0 0 15px #cecece8d;
-    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    // box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
+    // border: 1px solid #e8e7e7;
     width: 100%;
-    /* Ajusta el ancho del .form-registroulario según tus necesidades */
-    /* margin: 20px auto;.] */
-    /* Centra el .form-registroulario en la página */
     display: flex;
-    flex-wrap: wrap;
-    /* Permite que los fieldsets se envuelvan cuando no haya suficiente espacio */
+     flex-direction: column;
+    justify-content:flex-start;
+    // flex-wrap: wrap;
 }
 
-.form-registro fieldset label {
-
-    color: #595959;
-
+form fieldset label {
+    color: #7a7a7a;
 }
 
 .form-column {
-    width: calc(100% - 20px);
-    /* Calcula el ancho de las columnas (50% del formulario menos el espacio entre columnas) */
+    width: calc(50% - 20px);
     margin-right: 20px;
-    /* Espacio entre las columnas */
 }
 
 fieldset {
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 0;
     border-radius: 5px;
+    border: none;
+
 }
 
 legend {
@@ -76,29 +38,31 @@ label {
     margin-bottom: 5px;
     font-weight: bold;
 }
-
-
-
-.custom-dropdown select,
-input {
-    width: 30%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #686767;
-    font-size: 16px;
-    outline: none;
+label::before{
+  content: '*';
+  color: red;
 }
 
 
-.form-registro button[type="submit"] {
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+    // width: calc(100% - 20px);
+    padding: 12px;
     width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(227, 227, 227, 0.656);
+
 }
 
 button[type="submit"] {
+    width: 100%;
     background-color: #4cafa2;
-    /* color: #000000; */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -109,5 +73,22 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #44b07a;
+    background-color: #45a049;
+}
+
+
+
+// :checked]
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.checkbox-item {
+    margin-bottom: 0.5rem;
+}
+
+:host ::ng-deep .ui-dropdown-panel ul {
+    padding-left: 0;
 }

@@ -66,6 +66,7 @@ select {
 }
 
 @media (max-width: 600px) {
+
   table,
   thead,
   tbody,
@@ -106,22 +107,22 @@ section#lista {
   background-color: white;
   box-shadow: 0 0 5px 7px rgba(218, 218, 218, 0.251);
 
-  > h2 {
+  >h2 {
     color: rgb(158, 158, 158);
   }
 
-  > table {
+  >table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     background-color: white;
     // border-radius: 10px 10px;
 
-    > thead {
+    >thead {
       border-radius: 10px 10px;
 
-      > tr {
-        > th {
+      >tr {
+        >th {
           padding: 12px 15px;
           text-align: left;
           border-bottom: 1px solid #ddd;
@@ -132,22 +133,24 @@ section#lista {
       }
     }
 
-    > tbody {
+    >tbody {
       border-radius: 10px 10px;
 
-      > tr {
-        > .custom-btn {
+      >tr {
+        >.custom-btn {
           display: inline-flex;
-        justify-content: space-between;
-        align-items: center; /* Alineación centrada verticalmente */
-        flex-wrap: wrap;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        font-size: 0.8rem;
-        gap: 0.5rem; /* Espacio entre los elementos hijos */
+          justify-content: space-between;
+          align-items: center;
+          /* Alineación centrada verticalmente */
+          flex-wrap: wrap;
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 0.25rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          font-size: 0.8rem;
+          gap: 0.5rem;
+          /* Espacio entre los elementos hijos */
         }
 
         .custom-btn i {
@@ -191,13 +194,13 @@ section#lista {
           color: #fff;
         }
 
-        > td {
+        >td {
           padding: 12px 15px;
           text-align: left;
           border-bottom: 1px solid #ddd;
           color: rgb(100, 100, 100);
 
-          > p {
+          >p {
             text-align: center;
           }
 
@@ -216,43 +219,50 @@ section#lista {
             /* Cambia el cursor a "no permitido" cuando está deshabilitado */
           }
 
-          > .enviado {
+          >.enviado {
             color: #ff9900;
             background: #fffc9f;
             padding: 5px 5px;
             border-radius: 5px;
           }
 
-          > .ninguno {
+          >.ninguno {
             color: #7e7e7e;
             background: #e5e5e5;
             padding: 5px 5px;
             border-radius: 5px;
           }
 
-          > .finalizada {
+          >.finalizada {
             color: #4ca87a;
             background: #bdffde;
             padding: 5px 5px;
             border-radius: 5px;
           }
 
-          > .en_curso {
+          >.en_curso {
             color: #0045f3;
             background: #70c1fa;
             padding: 5px 5px;
             border-radius: 5px;
           }
 
-          > .parcialmente-entregado {
+          >.parcialmente-entregado {
             color: #ff9d00;
-            background: #ffeebd;
+            background: #fff6da;
             padding: 5px 5px;
             border-radius: 5px;
           }
 
-          > .pendiente {
-            color: #b86060;
+          >.pendiente {
+            color: #ffbd5b;
+            background: #ffefe0;
+            border-radius: 5px;
+            padding: 5px 5px;
+          }
+
+          >.cancelado {
+            color: #cd6262;
             background: #fbcccc;
             border-radius: 5px;
             padding: 5px 5px;
@@ -310,16 +320,69 @@ section#lista {
 }
 
 table {
-  > tbody {
-    > tr {
-      > td {
+  >tbody {
+    >tr {
+
+
+
+
+
+      >td {
+
+        #tooltip {
+          cursor: pointer;
+          position: relative;
+          display: inline-block;
+          border-bottom: 1px dotted black;
+          /* If you want dots under the hoverable text */
+
+        }
+
+        #tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: rgb(0, 169, 187);
+          color: #ffffff;
+          text-align: center;
+          padding: 5px 0;
+          border-radius: 6px;
+          position: absolute;
+          z-index: 1;
+          margin-top: -10px;
+          margin-left: 10px;
+          font-family: arial;
+        }
+
+        #tooltip:hover .tooltiptext {
+          visibility: visible;
+        }
+
+        #tooltip .tooltiptext::after {
+          content: " ";
+          position: absolute;
+          top: 50%;
+          right: 100%;
+          /* To the left of the tooltip */
+          margin-top: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: transparent rgb(42, 129, 149) transparent transparent;
+
+        }
+
+
+
+
+
+
+
         span.material-symbols-outlined {
           cursor: pointer;
         }
       }
     }
 
-    > tr:hover {
+    >tr:hover {
       background-color: #f5f5f5;
     }
   }

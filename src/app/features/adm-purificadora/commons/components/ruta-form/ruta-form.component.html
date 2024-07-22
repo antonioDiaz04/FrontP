@@ -5,13 +5,8 @@
   />
 </head>
 
-
-<!-- etiqueta de primeNg que nos permitira mostrar el alerta o toast  -->
 <p-toast></p-toast>
 
-
-
-<!-- pdialog es una etiqueta de primeNg ,la cual es un dialogo o modal -->
 <p-dialog
   header="Información del Usuario"
   [modal]="true"
@@ -94,8 +89,11 @@
               </option>
             </select>
 
-            <span class="tooltiptext"
+            <span *ngIf="!id" class="tooltiptext"
               >se listarán unicamente los repartidores sin ruta
+            </span>
+            <span *ngIf="id" class="tooltiptext"
+              >se listarán unicamente los repartidores sin ruta y el seleccionado
             </span>
 
             <select
@@ -128,8 +126,11 @@
                 {{ vehiculo.placas }}
               </option>
             </select>
-            <span class="tooltiptext"
+            <span  *ngIf="!id" class="tooltiptext"
               >se listarán unicamente los vehiculos sin ruta
+            </span>
+            <span  *ngIf="id" class="tooltiptext"
+              >se listarán unicamente los vehiculos sin ruta y el seleccionado
             </span>
             <select
               *ngIf="id != null"
@@ -177,9 +178,13 @@
               >{{ dia | titlecase }}</span
             >
 
-            <span class="tooltiptext-dia">{{
+
+            <!-- solucionar esto digamos que si no se ha seleccionada nada que muestre seeleccione  -->
+            <!-- mostrar el mensage de que si hay una seleccion  -->
+        <span class="tooltiptext-dia">{{
               getAvailabilityMessage(dia)
             }}</span>
+
             <input
               type="checkbox"
               [id]="dia"
@@ -190,11 +195,8 @@
             />
           </div>
         </div>
-<!-- en esta parte digamos es lo que se muestra cuando damos en editar -->
-<!-- ya que nos permite reutilizar codigo y de alguna manera el uso de directivas la funcionalidad de hacer posible esto  -->
-<div *ngIf="id != null" class="checkbox-container">
-          <!-- en esta parte   [ngClass] permite declara clases la cual hace pruebas de algunos datos-->
-          <!--[ngClass] se agregará de manera que este valor sea true diasDisponiblesR[dia], -->
+
+        <div *ngIf="id != null" class="checkbox-container">
           <div
             class="checkbox-item"
             *ngFor="
@@ -208,33 +210,27 @@
                 'domingo'
               ]
             "
-
             [ngClass]="{
               disponibleR: diasDisponiblesR[dia],
               disponibleV: diasDisponiblesV[dia],
               noDisponible: !diasDisponiblesR[dia] && !diasDisponiblesV[dia]
             }"
           >
-
-          <!-- Lo que hace aqui es agregar los titulos osea la semana por lo tanto sirve para tachar  -->
             <span
               [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
               >{{ dia | titlecase }}</span
             >
-
-            <!-- y esto es para el tooltip mostrará el mensaje de disponiblidad    -->
+         
             <span class="tooltiptext-dia">{{
               getAvailabilityMessage(dia)
             }}</span>
-
-            <!-- esto permitirá hacer el check en cuanto sea assignado y el dia disponible -->
             <input
               type="checkbox"
               [id]="dia"
               [value]="dia"
               [checked]="diasAsignados[dia] || false"
               [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
-              (change)="onDiaSeleccionadoupdate($event, dia)"
+              (change)="onDiaSeleccionadoupdate($event)"
             />
           </div>
         </div>
