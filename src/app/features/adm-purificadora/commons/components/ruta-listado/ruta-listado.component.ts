@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RutaService } from '../../../../../shared/services/ruta.service';
-import { Repartidor } from '../../../../../shared/models/repartidor.model';
-import { Ruta } from '../../../../../shared/interfaces/ruta.interface';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { RutaService } from "../../../../../shared/services/ruta.service";
+import { Repartidor } from "../../../../../shared/models/repartidor.model";
+import { Ruta } from "../../../../../shared/interfaces/ruta.interface";
 
 @Component({
-  selector: 'app-ruta-listado',
-  templateUrl: './ruta-listado.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
+  selector: "app-ruta-listado",
+  templateUrl: "./ruta-listado.component.html",
+  styleUrls: ["../../../adm-purificadora.component.scss", "../../../form.scss"],
 })
 export class RutaListadoComponent implements OnInit {
   // getRutas
@@ -25,7 +25,7 @@ export class RutaListadoComponent implements OnInit {
         console.log(this.allRutas);
       },
       (error) => {
-        console.log('ocurrió un error al obtener la información', error);
+        console.log("ocurrió un error al obtener la información", error);
       }
     );
   }
@@ -36,7 +36,7 @@ export class RutaListadoComponent implements OnInit {
         this.obtenerRutas();
       },
       (error) => {
-        console.log('ocurrio un error', error);
+        console.log("ocurrio un error", error);
       }
     );
   }
@@ -44,19 +44,23 @@ export class RutaListadoComponent implements OnInit {
   detalleById(id: any) {
     this.rutaS.detalleRutaById(id).subscribe(
       (data) => {
-        console.log('detallado...');
+        console.log("detallado...");
         this.router.navigate([
-          '/purificadoraAdm/rutas/detalleByIdRutaFrom/',
+          "/purificadoraAdm/ruta/detalleByIdRutaFrom/",
           id,
         ]);
       },
       (error) => {
-        console.log('ocurrio un error', error);
+        console.log("ocurrio un error", error);
       }
     );
   }
 
+  redirecTo(route: string): void {
+    this.router.navigate(["/purificadoraAdm/ruta/", route]);
+  }
+
   editar(_id: any) {
-    this.router.navigate(['/purificadoraAdm/rutas/editarByIdRutaFrom/', _id]);
+    this.router.navigate(["/purificadoraAdm/ruta/editarByIdRutaFrom/", _id]);
   }
 }

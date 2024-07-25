@@ -7,35 +7,64 @@
   /* Espacio entre filas */
 
   /*  */
-  
 
-  label {
-    
-    grid-column: 1;
-    margin: 10px;
-    /* Las etiquetas en la primera columna */
-  }
-  
-  input[type="text"] {
-    width: 15%;
-    
-    margin: 10px;
-    /* Los inputs y selects ocupan todo el ancho de su contenedor */
-    grid-column: 2;
-    /* Los inputs y selects en la segunda columna */
-  }
 
-  .custom-dropdown {
-    select {
-      grid-row-gap: 20px;
 
-      width: 100%;
-      /* Los inputs y selects ocupan todo el ancho de su contenedor */
-      grid-column: 2;
-      /* Los inputs y selects en la segunda columna */
-      /* Alinear los dropdowns a la derecha */
+  .content-text-input {
+    display: grid;
+
+    .content-data {
+      display: flex;
+      flex-direction: row;
+
+      label {
+        margin-top: auto;
+        margin-bottom: auto;
+        grid-column: 1;
+        margin: 10px;
+      }
+
+      input[type="text"] {
+        width: 50%;
+        grid-column: 2;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+
+      .custom-dropdown {
+
+        select {
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #fff;
+          color: #686767;
+          font-size: 16px;
+          outline: none;
+        }
+
+        select {
+          grid-row-gap: 20px;
+          grid-column: 2;
+        }
+      }
     }
+
+    .text-danger {
+      display: flex;
+      color: red;
+      font-weight: bold;
+      font-size: small;
+      justify-content: right;
+      /* margin-top: 5px; */
+    }
+
   }
+
+
+
 
   #tooltip {
     position: relative;
@@ -131,22 +160,12 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
-label::before{
-content: '*';
-color: red;
+
+label::before {
+  content: '*';
+  color: red;
 }
 
-.custom-dropdown select,
-input {
-  width: 30%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #686767;
-  font-size: 16px;
-  outline: none;
-}
 
 .form-registro button[type="submit"] {
   width: 100%;

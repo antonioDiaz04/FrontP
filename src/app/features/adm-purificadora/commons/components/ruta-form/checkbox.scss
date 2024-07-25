@@ -6,13 +6,21 @@
   .checkbox-item {
     position: relative;
     display: inline-block;
-    cursor: pointer;
+    border: #57bc9c solid 1px;
+
+    // cursor: pointer;
     .tooltiptext-dia {
-      border: #00e69d solid 2px;
+
+
+
+      border: #e67700 solid 2px;
+      background-color: #d4cb3a;
+      color: rgb(22, 22, 22);
+      // border: #00e69d solid 2px;
       visibility: hidden;
       width: 120px;
-      background-color: #a5e1f4;
-      color: rgb(105, 129, 130);
+      // background-color: #a5e1f4;
+      // color: rgb(105, 129, 130);
       text-align: center;
       border-radius: 6px;
       padding: 5px 0;
@@ -76,14 +84,27 @@ span.strike-through {
   text-decoration: line-through;
 }
 
-.checkbox-item.disponibleR {
+
+.checkbox-item {
   background-color: #d4edda;
-  /* Color de fondo para los días disponibles */
   border: 1px solid #c3e6cb;
-  /* Bordes para distinguir */
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 5px;
+
+  .disponible {
+    /* Color de fondo para los días disponibles */
+    /* Bordes para distinguir */
+    cursor: pointer;
+  }
+}
+
+.checkbox-item.noDisponible::before {
+  // position: relative;
+  content: '✘';
+  color: red;
+  cursor: not-allowed;
+  /* Ajusta el tamaño según sea necesario */
 }
 
 .checkbox-item.disponibleV {
@@ -106,6 +127,8 @@ span.strike-through {
   margin-bottom: 5px;
   color: gray;
   cursor: not-allowed;
+
+
 }
 
 .strike {
@@ -113,6 +136,5 @@ span.strike-through {
 }
 
 .checkbox-item {
-  padding: 10px;
   margin-bottom: 5px;
 }

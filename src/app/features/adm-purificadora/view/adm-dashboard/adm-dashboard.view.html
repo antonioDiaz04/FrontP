@@ -163,12 +163,6 @@
     </style>
 </head>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <!-- <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Gráfico de ventas</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-        </div>
-    </div> -->
     <h1>Dashboard</h1>
     <div class="row-bienvenida">
         <div class="text">
@@ -198,9 +192,8 @@ position: relative;width: 30%;height: 30%;"
             </div>
             <div class="target-content">
                 <p> Sólo tiene <strong>{{allClients.length}}</strong> clientes registrados</p>
-                <!-- <p>{{allClients.length}} Clientes</p> -->
             </div>
-            <button class="btn btn-green">Ver detalles</button>
+            <button (click)="redirecto('cliente')" class="btn btn-green">Ver detalles</button>
         </div>
 
         <div class="target target-blue">
@@ -211,7 +204,7 @@ position: relative;width: 30%;height: 30%;"
             <div class="target-content">
                 <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> repartidores registrados</p>
             </div>
-            <button class="btn btn-blue">Ver detalles</button>
+            <button (click)="redirecto('repartidor')" class="btn btn-blue">Ver detalles</button>
         </div>
 
         <div class="target target-orange">
@@ -222,7 +215,7 @@ position: relative;width: 30%;height: 30%;"
             <div class="target-content">
                 <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> vehiculos registrados</p>
             </div>
-            <button class="btn btn-orange">Ver detalles</button>
+            <button (click)="redirecto('vehiculo')" class="btn btn-orange">Ver detalles</button>
         </div>
 
 
@@ -230,12 +223,12 @@ position: relative;width: 30%;height: 30%;"
         <div class="target target-morado">
             <div class="target-header">
                 <i class="fas fa-route"></i>
-                <span class="target-title">Rutas con más ventas</span>
+                <span class="target-title">Rutas</span>
             </div>
             <div class="target-content">
-                <p>Ruta 5 - 200 ventas</p>
+                <p>cantidad de ruta <strong>{{allRutas.length}}</strong> </p>
             </div>
-            <button class="btn btn-morado">Ver detalles</button>
+            <button (click)="redirecto('ruta')" class="btn btn-morado">Ver detalles</button>
         </div>
     </div>
     <h1>Gráfico de ventas</h1>

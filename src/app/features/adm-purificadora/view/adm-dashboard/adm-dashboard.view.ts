@@ -3,7 +3,9 @@ import { ClientesService } from "../../../../shared/services/clientes.service";
 import { Cliente } from "../../../../shared/interfaces/client.interface";
 import { RepartidoresService } from "../../../../shared/services/rapartidores.service";
 import { Repartidor } from "../../../../shared/interfaces/repartidor.interface";
-
+import { Router } from "@angular/router";
+import { Ruta } from "../../../../shared/interfaces/ruta.interface";
+import { RutaService } from "../../../../shared/services/ruta.service";
 @Component({
   selector: "app-adm-dashboard",
   templateUrl: "./adm-dashboard.view.html",
@@ -16,9 +18,14 @@ export class AdmDashboardView {
 
   basicOptions: any;
   nombre: string = "Andrea";
+
+  // constructor(cpriv){}
+
   ngOnInit() {
     this.getUsers();
     this.getRepartidores();
+
+    this.obtenerRutas();
 
     if (typeof document !== "undefined") {
       const documentStyle = getComputedStyle(document.documentElement);
@@ -114,12 +121,25 @@ export class AdmDashboardView {
   }
   allClients: Cliente[] = [];
   allRepartidores: Repartidor[] = [];
+  allRutas?: Ruta[] | any = [];
 
   constructor(
+    private rutaS: RutaService,
+    private router: Router,
     private UserS: ClientesService,
     private repService: RepartidoresService
   ) {}
-
+  obtenerRutas() {
+    this.rutaS.getRutas().subscribe(
+      (data) => {
+        this.allRutas = data;
+        console.log(this.allRutas);
+      },
+      (error) => {
+        console.log("ocurrió un error al obtener la información", error);
+      }
+    );
+  }
   getUsers() {
     this.UserS.obtenerCLientes().subscribe(
       (data: Cliente[]) => {
@@ -139,5 +159,9 @@ export class AdmDashboardView {
         console.log("ocurrió un error al obtener la información", error);
       }
     );
+  }
+
+  redirecto(param: string): void {
+    this.router.navigate(["/purificadoraAdm/", param]);
   }
 }

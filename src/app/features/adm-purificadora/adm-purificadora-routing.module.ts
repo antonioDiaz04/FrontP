@@ -1,209 +1,209 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
-import { ControlEntregasView } from './view/control-entregas/control-entregas.view';
-import { InicioView } from './view/inicio/inicio.view';
-import { AdmPurificadoraComponent } from './adm-purificadora.component';
-import { AdmHomeView } from './view/adm-home/adm-home.view';
-import { RepartidoresFormComponent } from './commons/components/repartidores-form/repartidores-form.component';
-import { RepartidoresListadoComponent } from './commons/components/repartidores-listado/repartidores-listado.component';
-import { RepartidoresView } from './view/repartidores/repartidores.view';
-import { RutaView } from './view/ruta/ruta.view';
-import { RutaFormComponent } from './commons/components/ruta-form/ruta-form.component';
-import { RutaListadoComponent } from './commons/components/ruta-listado/ruta-listado.component';
-import { VehiculosView } from './view/vehiculos/vehiculos.view';
-import { VehiculoFormComponent } from './commons/components/vehiculo-form/vehiculo-form.component';
-import { VehiculoListadoComponent } from './commons/components/vehiculo-listado/vehiculo-listado.component';
-import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
-import { RutaDetalleComponent } from './commons/components/ruta-detalle/ruta-detalle.component';
-import { SalidaView } from './view/salida/salida.view';
-import { EntradaView } from './view/entrada/entrada.view';
-import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
-import { EntradaEditComponent } from './commons/components/entrada-edit/entrada-edit.component';
-import { EntradaListaComponent } from './commons/components/entrada-lista/entrada-lista.component';
-import { NotificacionesView } from './view/notificaciones/notificaciones.view';
-import { ResultadoEntregaView } from './view/resultado-entrega/resultado-entrega.view';
-import { ResultadosListadoComponent } from './commons/components/resultados-listado/resultados-listado.component';
-import { MiPerfilView } from './view/mi-perfil/mi-perfil.view';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ClienteFormComponent } from "./commons/components/cliente-form/cliente-form.component";
+import { ControlEntregasView } from "./view/control-entregas/control-entregas.view";
+import { InicioView } from "./view/inicio/inicio.view";
+import { AdmPurificadoraComponent } from "./adm-purificadora.component";
+import { AdmHomeView } from "./view/adm-home/adm-home.view";
+import { RepartidoresFormComponent } from "./commons/components/repartidores-form/repartidores-form.component";
+import { RepartidoresListadoComponent } from "./commons/components/repartidores-listado/repartidores-listado.component";
+import { RepartidoresView } from "./view/repartidores/repartidores.view";
+import { RutaView } from "./view/ruta/ruta.view";
+import { RutaFormComponent } from "./commons/components/ruta-form/ruta-form.component";
+import { RutaListadoComponent } from "./commons/components/ruta-listado/ruta-listado.component";
+import { VehiculosView } from "./view/vehiculos/vehiculos.view";
+import { VehiculoFormComponent } from "./commons/components/vehiculo-form/vehiculo-form.component";
+import { VehiculoListadoComponent } from "./commons/components/vehiculo-listado/vehiculo-listado.component";
+import { ClienteTablaComponent } from "./commons/components/cliente-tabla/cliente-tabla.component";
+import { RutaDetalleComponent } from "./commons/components/ruta-detalle/ruta-detalle.component";
+import { SalidaView } from "./view/salida/salida.view";
+import { EntradaView } from "./view/entrada/entrada.view";
+import { SalidaListaComponent } from "./commons/components/salida-lista/salida-lista.component";
+import { EntradaEditComponent } from "./commons/components/entrada-edit/entrada-edit.component";
+import { EntradaListaComponent } from "./commons/components/entrada-lista/entrada-lista.component";
+import { NotificacionesView } from "./view/notificaciones/notificaciones.view";
+import { ResultadoEntregaView } from "./view/resultado-entrega/resultado-entrega.view";
+import { ResultadosListadoComponent } from "./commons/components/resultados-listado/resultados-listado.component";
+import { MiPerfilView } from "./view/mi-perfil/mi-perfil.view";
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'Home',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "Home",
+    pathMatch: "full",
   },
   {
-    path: '',
+    path: "",
     component: AdmPurificadoraComponent,
     children: [
       {
-        path: 'Home',
+        path: "Home",
         component: InicioView,
       },
       {
-        path: 'admin-home',
+        path: "admin-home",
         component: AdmHomeView,
       },
       {
-        path: 'clientes',
+        path: "cliente",
         component: ControlEntregasView,
         children: [
           {
-            path: 'lista-clientes',
+            path: "lista-clientes",
             component: ClienteTablaComponent,
           },
           {
-            path: 'agregar-cliente',
+            path: "agregar-cliente",
             component: ClienteFormComponent,
           },
           {
-            path: '',
-            redirectTo: 'lista-clientes',
-            pathMatch: 'full',
-          }
-        ]
+            path: "",
+            redirectTo: "lista-clientes",
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'miPerfil',
+        path: "miPerfil",
         component: MiPerfilView,
       },
       {
-        path: 'salida',
+        path: "salida",
         component: SalidaView,
         children: [
           {
-            path: 'salida-listado',
+            path: "salida-listado",
             component: SalidaListaComponent,
           },
           {
-            path: '',
-            redirectTo: 'salida-listado',
-            pathMatch: 'full',
-          }
-        ]
+            path: "",
+            redirectTo: "salida-listado",
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'resultado',
+        path: "resultado",
         component: ResultadoEntregaView,
         children: [
           {
-            path: 'resultadoListadoEntrega',
+            path: "resultadoListadoEntrega",
             component: ResultadosListadoComponent,
           },
           {
-            path: '',
-            redirectTo: 'resultadoListadoEntrega',
-            pathMatch: 'full',
-          }
-        ]
+            path: "",
+            redirectTo: "resultadoListadoEntrega",
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'entrada',
+        path: "entrada",
         component: EntradaView,
         children: [
           {
-            path: 'edit-entrada/:id',
+            path: "edit-entrada/:id",
             component: EntradaEditComponent,
           },
           {
-            path: 'entrada-listado',
+            path: "entrada-listado",
             component: EntradaListaComponent,
           },
           {
-            path: '',
-            redirectTo: 'entrada-listado',
-            pathMatch: 'full',
-          }
-        ]
+            path: "",
+            redirectTo: "entrada-listado",
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'notificaciones',
+        path: "notificaciones",
         component: NotificacionesView,
       },
       {
-        path: 'repartidores',
+        path: "repartidore",
         component: RepartidoresView,
         children: [
           {
-            path: 'agregar-repartidor',
+            path: "agregar-repartidor",
             component: RepartidoresFormComponent,
           },
           {
-            path: 'lista-repartidores',
+            path: "lista-repartidores",
             component: RepartidoresListadoComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
-            redirectTo: 'lista-repartidores', // Redirigir a lista-repartidores por defecto
-            pathMatch: 'full',
-          }
-        ]
+            path: "", // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: "lista-repartidores", // Redirigir a lista-repartidores por defecto
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'vehiculo',
+        path: "vehiculo",
         component: VehiculosView,
         children: [
           {
-            path: 'agregar-vehiculo',
+            path: "agregar-vehiculo",
             component: VehiculoFormComponent,
           },
           {
-            path: 'lista-vehiculo',
+            path: "lista-vehiculo",
             component: VehiculoListadoComponent,
           },
           {
-            path: '', // Ruta por defecto dentro de repartidores (opcional)
-            redirectTo: 'lista-vehiculo', // Redirigir a lista-repartidores por defecto
-            pathMatch: 'full',
-          }
-        ]
+            path: "", // Ruta por defecto dentro de repartidores (opcional)
+            redirectTo: "lista-vehiculo", // Redirigir a lista-repartidores por defecto
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'repartidores',
+        path: "repartidor",
         component: RepartidoresView,
         children: [
           {
-            path: 'agregar-repartidor',
+            path: "agregar-repartidor",
             component: RepartidoresFormComponent,
           },
           {
-            path: 'lista-repartidores',
+            path: "lista-repartidores",
             component: RepartidoresListadoComponent,
           },
           {
-            path: '',
-            redirectTo: 'lista-repartidores',
-            pathMatch: 'full',
-          }
-        ]
+            path: "",
+            redirectTo: "lista-repartidores",
+            pathMatch: "full",
+          },
+        ],
       },
       {
-        path: 'rutas',
+        path: "ruta",
         component: RutaView,
         children: [
           {
-            path: 'agregar-ruta',
+            path: "agregar-ruta",
             component: RutaFormComponent,
           },
           {
-            path: 'lista-rutas',
+            path: "lista-rutas",
             component: RutaListadoComponent,
           },
           {
-            path: 'editarByIdRutaFrom/:id',
+            path: "editarByIdRutaFrom/:id",
             component: RutaFormComponent,
           },
           {
-            path: 'detalleByIdRutaFrom/:id',
+            path: "detalleByIdRutaFrom/:id",
             component: RutaDetalleComponent,
           },
 
           {
-            path: '',
-            redirectTo: 'lista-rutas',
-            pathMatch: 'full',
-          }
-        ]
+            path: "",
+            redirectTo: "lista-rutas",
+            pathMatch: "full",
+          },
+        ],
       },
     ],
   },
@@ -211,6 +211,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdmPurificadoraRoutingModule { }
+export class AdmPurificadoraRoutingModule {}

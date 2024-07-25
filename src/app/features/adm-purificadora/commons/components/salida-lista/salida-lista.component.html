@@ -114,13 +114,9 @@
                     </button>
 
                     <button *ngIf="ruta.esSalida && ruta.estado === 'cancelado'" type="input" class="read enable-button"
-                        (click)="enviar(ruta._id,ruta.esSalida)">
+                        (click)="enviar(ruta,ruta.esSalida)">
                         <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
                     </button>
-
-
-
-
 
 
                     <button *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" type="input"

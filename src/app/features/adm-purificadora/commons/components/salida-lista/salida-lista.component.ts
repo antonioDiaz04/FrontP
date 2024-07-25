@@ -303,13 +303,13 @@ export class SalidaListaComponent implements OnInit {
     }
   }
 
-  enviar(ruta: any, esSalida: any) {
+  enviar(data: any, esSalida: any) {
     // if (ruta) {
-    const nombreRuta = ruta.nombreRuta;
-    const selectedRepartidor = ruta.repartidorId;
-    const selectedVehiculo = ruta.vehiculoId;
-    const cantidadBotellas = ruta.cantidadBotellas;
-    const puntosDeEntrega = this.obtenerTodosLosClientes(ruta);
+    const nombreRuta = data.nombreRuta;
+    const selectedRepartidor = data.repartidorId;
+    const selectedVehiculo = data.vehiculoId;
+    const cantidadBotellas = data.cantidadBotellas;
+    const puntosDeEntrega = this.obtenerTodosLosClientes(data);
 
     if (!cantidadBotellas) {
       this.toast.showToastPmNgWarn("Por favor ingresa la cantidad");
@@ -335,18 +335,19 @@ export class SalidaListaComponent implements OnInit {
         reverseButtons: true,
       })
       .then((result) => {
-        const data: Salida = {
-          nombreRuta: nombreRuta,
-          repartidorId: selectedRepartidor,
-          vehiculoId: selectedVehiculo,
-          cantidadBotellas: cantidadBotellas,
-          puntosDeEntrega: puntosDeEntrega,
-          estado: "enviado",
-        };
-
         if (result.isConfirmed) {
-          if (data && esSalida == false) {
-            this.rutaS.addSalida(data).subscribe(
+          if (data && !esSalida) {
+            const SALIDA: Salida = {
+              nombreRuta: nombreRuta,
+              repartidorId: selectedRepartidor,
+              vehiculoId: selectedVehiculo,
+              cantidadBotellas: cantidadBotellas,
+              puntosDeEntrega: puntosDeEntrega,
+              estado: "enviado",
+            };
+            console.log("no es salida");
+
+            this.rutaS.addSalida(SALIDA).subscribe(
               (response) => {
                 this.visible = false;
                 this.obtenerRutas();
@@ -367,8 +368,18 @@ export class SalidaListaComponent implements OnInit {
                 this.toast.showToastSwalError(errorMessage); // Mostramos el mensaje de error en la alerta
               }
             );
-          } else if (data && esSalida == true) {
-            this.rutaS.updateSalida(ruta._id,data).subscribe(
+          } else if (data && esSalida) {
+            console.log("es salida");
+
+            const SALIDAUPDATE: Salida = {
+              nombreRuta: nombreRuta,
+              repartidorId: selectedRepartidor,
+              vehiculoId: selectedVehiculo,
+              cantidadBotellas: cantidadBotellas,
+              puntosDeEntrega: puntosDeEntrega,
+              estado: "enviado",
+            };
+            this.rutaS.updateSalida(data._id, SALIDAUPDATE).subscribe(
               (response) => {
                 this.visible = false;
                 this.obtenerRutas();

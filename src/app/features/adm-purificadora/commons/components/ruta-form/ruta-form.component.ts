@@ -84,8 +84,8 @@ export class RutaFormComponent implements OnInit {
     this.registroRuta = this.formBuilder.group({
       nombreRuta: ["", Validators.required],
       fechaInicio: ["", Validators.required],
-      selectedRepartidor: ["", Validators.required],
-      selectedVehiculo: ["", Validators.required],
+      selectedRepartidor: [0],
+      selectedVehiculo: [0],
       diasAsignados: this.formBuilder.array([]),
       filas: this.formBuilder.array([]),
     });
@@ -99,49 +99,153 @@ export class RutaFormComponent implements OnInit {
     this.id = this.aRouter.snapshot.paramMap.get("id");
     this.filas = this.registroRuta.get("filas") as FormArray;
   }
-  onRepartidorSelectionChange() {
-    //1- lo que permitirá que el usuario seleccione un repartidor
+  // onRepartidorSelectionChange() {
+  //   //1- lo que permitirá que el usuario seleccione un repartidor
+  //   let selectedId = this.registroRuta.get("selectedRepartidor")?.value;
+  //   if (selectedId && typeof selectedId === "object") {
+  //     selectedId = selectedId._id;
+  //   }
+  //   //2- o mantener el anterior seleccionado
+  //   else if (this.selectedRepartidor) {
+  //     selectedId = this.selectedRepartidor?._id;
+  //   }
+
+  //   //3- lo que hace aqui es filtrar los datos del repartidor con el id seleccionado
+  //   const selectedRepartidor = this.allRepartidores.find(
+  //     (repartidor) => repartidor._id === selectedId
+  //   );
+  //   this.diasDisponiblesR = {};
+  //   //4-lo cual no permitirá acceder a los dias disponibles que tiene dicho repartidor seleccionado
+  //   if (selectedRepartidor) {
+  //     // 4.1- setear los dias disponibles para el repartidor seleccionado
+  //     selectedRepartidor.diasAsignados.forEach((dia) => {
+  //       this.diasDisponiblesR[dia] = true;
+  //     });
+  //   } else {
+  //     this.diasDisponiblesR = {};
+  //   }
+
+  //   this.diasSeleccionados = [];
+  //   // Actualiza diasAsignados según la disponibilidad
+  //   for (let dia in this.diasAsignados) {
+  //     if (
+  //       this.diasAsignados[dia] &&
+  //       (this.diasDisponiblesR[dia] || this.diasDisponiblesV[dia])
+  //     ) {
+  //       this.diasSeleccionados.push(dia);
+  //     } else {
+  //       this.diasAsignados[dia] = false;
+  //     }
+  //   }
+  // }
+
+  onRepartidorSelectionChange(): void {
     let selectedId = this.registroRuta.get("selectedRepartidor")?.value;
     if (selectedId && typeof selectedId === "object") {
       selectedId = selectedId._id;
-    }
-    //2- o mantener el anterior seleccionado
-    else if (this.selectedRepartidor) {
+    } else if (this.selectedRepartidor) {
       selectedId = this.selectedRepartidor?._id;
     }
 
-    //3- lo que hace aqui es filtrar los datos del repartidor con el id seleccionado
     const selectedRepartidor = this.allRepartidores.find(
       (repartidor) => repartidor._id === selectedId
     );
-    this.diasDisponiblesR = {};
-    //4-lo cual no permitirá acceder a los dias disponibles que tiene dicho repartidor seleccionado
+
     if (selectedRepartidor) {
-      // 4.1- setear los dias disponibles para el repartidor seleccionado
-      selectedRepartidor.diasAsignados.forEach((dia) => {
-        this.diasDisponiblesR[dia] = true;
-      });
+      this.rutaService.getRutasByRepartidor(selectedId).subscribe(
+        (diasOcupados: string[]) => {
+          const diasOcupadosSet = new Set(diasOcupados);
+
+          // Setear los días disponibles excluyendo los días ocupados
+          this.diasDisponiblesR = selectedRepartidor.diasAsignados.reduce(
+            (acc, dia) => {
+              acc[dia] = !diasOcupadosSet.has(dia);
+              return acc;
+            },
+            {} as { [key: string]: boolean }
+          );
+
+          // Actualiza diasAsignados y diasSeleccionados según la disponibilidad
+          this.diasSeleccionados = [];
+          for (let dia in this.diasAsignados) {
+            if (this.diasAsignados[dia] && this.diasDisponiblesR[dia]) {
+              this.diasSeleccionados.push(dia);
+            } else {
+              this.diasAsignados[dia] = false;
+            }
+          }
+        },
+        (error) => {
+          console.error(
+            "Error al obtener los días ocupados del repartidor:",
+            error
+          );
+        }
+      );
     } else {
       this.diasDisponiblesR = {};
     }
-
-    this.diasSeleccionados = [];
-    // Actualiza diasAsignados según la disponibilidad
-    for (let dia in this.diasAsignados) {
-      if (
-        this.diasAsignados[dia] &&
-        (this.diasDisponiblesR[dia] || this.diasDisponiblesV[dia])
-      ) {
-        this.diasSeleccionados.push(dia);
-      } else {
-        this.diasAsignados[dia] = false;
-      }
-    }
   }
+
+  // onRepartidorSelectionChange() {
+  //   let selectedRepartidorId =
+  //     this.registroRuta.get("selectedRepartidor")?.value;
+
+  //   // Filtrar repartidor seleccionado
+  //   const selectedRepartidor = this.allRepartidores.find(
+  //     (repartidor) => repartidor._id === selectedRepartidorId
+  //   );
+
+  //   if (selectedRepartidor) {
+  //     console.log("entro aqui");
+  //     // Obtener las rutas asociadas al repartidor
+  //     this.rutaService.getRutasByRepartidor(selectedRepartidorId).subscribe(
+  //       (rutas: any[]) => {
+  //         const diasAsignados = new Set<string>();
+
+  //         console.log("entro aqui 2");
+  //         // Agregar los días asignados en las rutas
+  //         rutas.forEach((ruta) => {
+  //           console.log("entro aqui 3");
+
+  //           ruta.diasAsignados.forEach((dia: string) => {
+  //             diasAsignados.add(dia);
+  //           });
+  //         });
+
+  //         this.diasDisponiblesR = {};
+
+  //         // Marcar días asignados como no disponibles
+  //         diasAsignados.forEach((dia) => {
+  //           this.diasDisponiblesR[dia] = false;
+  //         });
+
+  //         // Actualiza días seleccionados según la disponibilidad
+  //         this.diasSeleccionados = [];
+  //         for (let dia in this.diasAsignados) {
+  //           if (this.diasAsignados[dia] && !this.diasDisponiblesR[dia]) {
+  //             this.diasSeleccionados.push(dia);
+  //           }
+  //         }
+  //       },
+  //       (error) => {
+  //         console.log(
+  //           "Ocurrió un error al obtener las rutas del repartidor",
+  //           error
+  //         );
+  //       }
+  //     );
+  //   } else {
+  //     this.diasDisponiblesR = {};
+  //     this.diasSeleccionados = [];
+  //   }
+  // }
 
   onVehiculoSelectionChange() {
     let selectedId = this.registroRuta.get("selectedVehiculo")?.value;
-    console.log("ID del vehiculo seleccionado:", selectedId);
+    // let selectedId = this.registroRuta.get("selectedVehiculo")?.value;
+
+    // console.log("ID del vehiculo seleccionado:", selectedId);
 
     if (selectedId && typeof selectedId === "object") {
       selectedId = selectedId._id;
@@ -155,26 +259,40 @@ export class RutaFormComponent implements OnInit {
       (vehiculo) => vehiculo._id === selectedId
     );
 
-    this.diasDisponiblesV = {};
+    // this.diasDisponiblesV = {};
     if (selectedVehiculo) {
-      selectedVehiculo.diasAsignados.forEach((dia) => {
-        this.diasDisponiblesV[dia] = true;
-      });
+      this.rutaService.getRutasByVehiculo(selectedId).subscribe(
+        (diasOcupados: string[]) => {
+          const diasOcupadosSet = new Set(diasOcupados);
+
+          // Setear los días disponibles excluyendo los días ocupados
+          this.diasDisponiblesV = selectedVehiculo.diasAsignados.reduce(
+            (acc, dia) => {
+              acc[dia] = !diasOcupadosSet.has(dia);
+              return acc;
+            },
+            {} as { [key: string]: boolean }
+          );
+
+          // Actualiza diasAsignados y diasSeleccionados según la disponibilidad
+          this.diasSeleccionados = [];
+          for (let dia in this.diasAsignados) {
+            if (this.diasAsignados[dia] && this.diasDisponiblesV[dia]) {
+              this.diasSeleccionados.push(dia);
+            } else {
+              this.diasAsignados[dia] = false;
+            }
+          }
+        },
+        (error) => {
+          console.error(
+            "Error al obtener los días ocupados del repartidor:",
+            error
+          );
+        }
+      );
     } else {
       this.diasDisponiblesV = {};
-    }
-
-    this.diasSeleccionados = [];
-    // Actualiza diasAsignados según la disponibilidad
-    for (let dia in this.diasAsignados) {
-      if (
-        this.diasAsignados[dia] &&
-        (this.diasDisponiblesR[dia] || this.diasDisponiblesV[dia])
-      ) {
-        this.diasSeleccionados.push(dia);
-      } else {
-        this.diasAsignados[dia] = false;
-      }
     }
   }
 
@@ -196,53 +314,27 @@ export class RutaFormComponent implements OnInit {
   }
 
   getRepartidores() {
-    if (!this.id) {
-      this.repService.obtenerRepartidoresSinRutas().subscribe(
-        (data: Repartidor[]) => {
-          this.allRepartidores = data;
-        },
-        (error) => {
-          console.log("Ocurrió un error al obtener la información", error);
-        }
-      );
-    }
-    // solucionar de que muestre unicamente los datos del repartidor que no tiene rutas y del que está selecionado en esta ruta
-    else {
-      this.repService.getRepartidores().subscribe(
-        (data: Repartidor[]) => {
-          this.allRepartidores = data;
-        },
-        (error) => {
-          console.log("Ocurrió un error al obtener la información", error);
-        }
-      );
-    }
+    this.repService.getRepartidores().subscribe(
+      (data: Repartidor[]) => {
+        this.allRepartidores = data;
+      },
+      (error) => {
+        console.log("Ocurrió un error al obtener la información", error);
+      }
+    );
+    // }
   }
 
   getVehiculos() {
-    if (!this.id) {
-      this.vehiculoService.getVehiculosSinRuta().subscribe(
-        (data: Vehiculo[]) => {
-          this.allVehiculos = data;
-          // console.log(this.allVehiculos);
-        },
-        (error) => {
-          console.log("ocurrió un error al obtener la información", error);
-        }
-      );
-    }
-    // solucionar de que muestre unicamente los datos del vehiculo que no tiene rutas y del que está selecionado en esta ruta
-    else {
-      this.vehiculoService.getVehiculos().subscribe(
-        (data: Vehiculo[]) => {
-          this.allVehiculos = data;
-          // console.log(this.allVehiculos);
-        },
-        (error) => {
-          console.log("ocurrió un error al obtener la información", error);
-        }
-      );
-    }
+    this.vehiculoService.getVehiculos().subscribe(
+      (data: Vehiculo[]) => {
+        this.allVehiculos = data;
+        // console.log(this.allVehiculos);
+      },
+      (error) => {
+        console.log("ocurrió un error al obtener la información", error);
+      }
+    );
   }
 
   getUsers() {
@@ -287,7 +379,6 @@ export class RutaFormComponent implements OnInit {
       return "No ha seleccionado ningun Municipio!"; // Retorna una matriz vacía si el valor seleccionado es nulo
     }
     let filtered: any[] = [];
-    // let query = event.query;
     for (let municipios of this.allMunicipioXEstado) {
       if (
         municipios
@@ -354,11 +445,11 @@ export class RutaFormComponent implements OnInit {
       return;
     }
 
-    if (!selectedRepartidor) {
+    if (!selectedRepartidor || selectedRepartidor == 0) {
       this.toast.showToastPmNgWarn("Seleccione un repartidor");
       return;
     }
-    if (!selectedVehiculo) {
+    if (!selectedVehiculo || selectedVehiculo == 0) {
       this.toast.showToastPmNgWarn("Selecciona un vehiculo");
       return;
     }
@@ -406,7 +497,7 @@ export class RutaFormComponent implements OnInit {
       this.rutaService.updateRuta(this.id, RUTA).subscribe(
         () => {
           this.toast.showToastSwalSuccess("Ruta actualizado con éxito!");
-          this.router.navigate(["/purificadoraAdm/rutas/lista-rutas"]); // Navegación hacia otras páginas públicas
+          this.router.navigate(["/purificadoraAdm/ruta/lista-rutas"]); // Navegación hacia otras páginas públicas
         },
         (error) => {
           console.log("Ocurrió un error al actualizar", error);
@@ -423,7 +514,7 @@ export class RutaFormComponent implements OnInit {
         (response) => {
           this.visible = false;
           this.toast.showToastSwalSuccess("Se ha agregado correctamente.");
-          this.router.navigate(["/purificadoraAdm/rutas/lista-rutas"]); // Navegación hacia otras páginas públicas
+          this.router.navigate(["/purificadoraAdm/ruta/lista-rutas"]); // Navegación hacia otras páginas públicas
         },
         (error) => {
           console.error(error); // Imprime el error en la consola para depuración
@@ -661,34 +752,41 @@ export class RutaFormComponent implements OnInit {
       return "Seleccione un repartidor o un vehículo.";
     }
 
+
     if (repartidor && vehiculo) {
       if (this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) {
         return "Este día está disponible para el repartidor y el vehículo.";
       } else if (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) {
         return "Este día no está disponible ni para el repartidor ni para el vehículo.";
-      } else if (!this.diasDisponiblesR[dia]) {
+      } else if (!this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) {
+        return "Este día no está disponible para el repartidor, pero sí para el vehículo.";
+      } else if (!this.diasDisponiblesV[dia] && this.diasDisponiblesR[dia]) {
+        return "Este día no está disponible para el vehículo, pero sí para el repartidor.";
+      }
+    }
+
+    if (repartidor && !vehiculo) {
+      if (this.diasDisponiblesR[dia]) {
+        return "Este día está disponible para el repartidor.";
+      } else {
         return "Este día no está disponible para el repartidor.";
-      } else if (!this.diasDisponiblesV[dia]) {
+      }
+    }
+
+    if (vehiculo && !repartidor) {
+      if (this.diasDisponiblesV[dia]) {
+        return "Este día está disponible para el vehículo.";
+      } else {
         return "Este día no está disponible para el vehículo.";
       }
     }
 
-    if (repartidor && this.diasDisponiblesR[dia]) {
-      return "Este día está disponible para el repartidor.";
-    }
-
-    if (vehiculo && this.diasDisponiblesV[dia]) {
-      return "Este día está disponible para el vehículo.";
-    }
-
-    if (repartidor && !this.diasDisponiblesR[dia]) {
-      return "Este día no está disponible para el repartidor.";
-    }
-
-    if (vehiculo && !this.diasDisponiblesV[dia]) {
-      return "Este día no está disponible para el vehículo.";
-    }
-
     return "";
   }
+    isDiaNoDisponible(dia: string): boolean {
+    return (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) ||
+           (!this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) ||
+           (this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]);
+  }
+
 }

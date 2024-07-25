@@ -7,8 +7,12 @@ export class StorageService {
   private keyToken: string = 'token';
 
   constructor() { }
+
   private isLocalStorageAvailable(): boolean {
     try {
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return false;
+      }
       const testKey = '__localStorageTest__';
       localStorage.setItem(testKey, testKey);
       localStorage.removeItem(testKey);
@@ -19,10 +23,20 @@ export class StorageService {
   }
 
   setToken(token: string): void {
-    localStorage.setItem(this.keyToken, JSON.stringify(token));
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem(this.keyToken, JSON.stringify(token));
+    } else {
+      console.error('LocalStorage is not available.');
+    }
   }
 
-  getToken(): string {
-    return localStorage.getItem(this.keyToken)! ///// verificar despues por  el "!" le puse para evitar el error
+  getToken(): string | null {
+    if (this.isLocalStorageAvailable()) {
+      const token = localStorage.getItem(this.keyToken);
+      return token ? JSON.parse(token) : null;
+    } else {
+      console.error('LocalStorage is not available.');
+      return null;
+    }
   }
 }

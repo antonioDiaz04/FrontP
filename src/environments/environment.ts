@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  api: "http://172.31.99.3:4000",
+  api: "http://192.168.0.107:4000",
   apiCOPOMEX: "https://api.copomex.com/query/",
   tokenCOPOMEX: "e5c85720-9a02-4f1b-9175-9d922653ae7e",
   mapPk:
