@@ -17,6 +17,10 @@ import { MapaClientService } from "../../services/mapaClient.service";
 import { ConsultasCOPOMEXService } from "../../../../../shared/services/consultas-copomex.service";
 import { Router } from "@angular/router";
 import { Toast } from "../../../../../shared/services/toast.service";
+import {
+  Colonia,
+  Municipio,
+} from "../../../../../shared/models/DireccionSchema.model";
 
 @Component({
   selector: "app-cliente-form",
@@ -29,6 +33,9 @@ export class ClienteFormComponent implements OnInit {
   registroForm: FormGroup;
   allMuncipioXEstado: any;
   allColoniaXMuncipio: any;
+
+  municipio!: Municipio[];
+  colonias!: Colonia[];
 
   selectedMunicipio: any;
   selectedColonia: any;
@@ -89,7 +96,7 @@ export class ClienteFormComponent implements OnInit {
         console.log("Perfecto |");
       })
       .catch((err) => {
-        console.log("Error *** ", err);
+        // console.log("Error *** ", err);
       });
     this.mapService.cbAddress.subscribe((getPoint) => {
       console.log("*** getPoint", getPoint);
@@ -148,7 +155,7 @@ export class ClienteFormComponent implements OnInit {
     this.clienteS.signUp(USUARIO).subscribe(
       (response) => {
         this.toast.showToastSwalSuccess("El resgitro fue exitos");
-        this.router.navigate(["/purificadoraAdm/clientes/lista-clientes"]);
+        this.router.navigate(["/purificadoraAdm/cliente/lista-clientes"]);
       },
       (error) => {
         console.error(error);

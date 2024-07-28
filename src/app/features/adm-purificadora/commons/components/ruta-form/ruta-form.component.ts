@@ -23,6 +23,7 @@ import { Cliente } from "../../../../../shared/interfaces/client.interface";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DetalleEntregaInterface } from "../../../../../shared/interfaces/detalle-entrega-schema.interface";
 import { Toast } from "../../../../../shared/services/toast.service";
+import { Message, MessageService } from "primeng/api";
 
 @Component({
   selector: "app-ruta-form",
@@ -30,6 +31,7 @@ import { Toast } from "../../../../../shared/services/toast.service";
   styleUrls: ["./ruta-form.component.css", "./checkbox.scss", "./tabla.scss"],
 })
 export class RutaFormComponent implements OnInit {
+  messages!: Message[];
   allClients: Cliente[] = [];
   titulo = "Registro de  ruta";
   btnTitle = "Registrar";
@@ -79,7 +81,8 @@ export class RutaFormComponent implements OnInit {
     private render2: Renderer2,
     private location: Location,
     private formBuilder: FormBuilder,
-    private mapService: MapaClientDetailUbacionService
+    private mapService: MapaClientDetailUbacionService,
+    private messageService: MessageService // private toas
   ) {
     this.registroRuta = this.formBuilder.group({
       nombreRuta: ["", Validators.required],
@@ -311,12 +314,27 @@ export class RutaFormComponent implements OnInit {
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio();
     this.getUsers();
+
+    this.messages = [
+      // { severity: "success", summary: "Success", detail: "Message Content" },
+      { severity: "info", summary: "Info", detail: "Message Content" },
+    ];
+  }
+
+  // this.toas.add({ severity: "success", summary: "Success", detail: "Message Content" });
+  show(): void {
+    console.log("1222");
+    this.toast.showToastPmNgInfo(
+      "selecciona el repartidor y el vehiculo para que se habiliten los dias"
+    );
+    return;
   }
 
   getRepartidores() {
     this.repService.getRepartidores().subscribe(
       (data: Repartidor[]) => {
         this.allRepartidores = data;
+        // this.show();
       },
       (error) => {
         console.log("Ocurrió un error al obtener la información", error);
@@ -330,6 +348,12 @@ export class RutaFormComponent implements OnInit {
       (data: Vehiculo[]) => {
         this.allVehiculos = data;
         // console.log(this.allVehiculos);
+        if (data) {
+          this.toast.showToastPmNgInfo(
+            "selecciona el repartidor y el vehiculo para habilitar los dias"
+          );
+          return;
+        }
       },
       (error) => {
         console.log("ocurrió un error al obtener la información", error);
@@ -441,7 +465,7 @@ export class RutaFormComponent implements OnInit {
     console.log("dias en registro", diasAsignados);
 
     if (!nombreRuta) {
-      this.toast.showToastPmNgWarn("Por favor ingresa el nombre de la ruta");
+      this.toast.showToastPmNgWarn("Ingresa el nombre de la ruta");
       return;
     }
 
@@ -455,9 +479,7 @@ export class RutaFormComponent implements OnInit {
     }
 
     if (!allColonias) {
-      this.toast.showToastPmNgWarn(
-        "Por favor ingresa tu colonia :AgregarClienteRuta "
-      );
+      this.toast.showToastPmNgWarn("Ingresa tu colonia :AgregarClienteRuta ");
       return;
     }
 
@@ -752,7 +774,6 @@ export class RutaFormComponent implements OnInit {
       return "Seleccione un repartidor o un vehículo.";
     }
 
-
     if (repartidor && vehiculo) {
       if (this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) {
         return "Este día está disponible para el repartidor y el vehículo.";
@@ -783,10 +804,11 @@ export class RutaFormComponent implements OnInit {
 
     return "";
   }
-    isDiaNoDisponible(dia: string): boolean {
-    return (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) ||
-           (!this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) ||
-           (this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]);
+  isDiaNoDisponible(dia: string): boolean {
+    return (
+      (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) ||
+      (!this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) ||
+      (this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia])
+    );
   }
-
 }

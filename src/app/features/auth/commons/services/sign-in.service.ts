@@ -4,7 +4,8 @@
   import { ISingInRequest } from '../../interfaces/sign-in-request.interface';
   import { Observable } from 'rxjs';
   // import { IToken } from 'src/app/shared/interfaces/token.interface';
-import { environment } from '../../../../../environments/environment.prod';
+import { environment } from '../../../../../environments/environment';
+
 import { IToken } from '../../../../shared/interfaces/token.interface';
 // import { IToken } from '../../../../shared/interfaces/token.interface';
 

@@ -21,12 +21,18 @@
                 <label for="nombre">Nombre Completo:</label>
                 <input placeholder="Nombre-Apellido paterno-Apellido materno" type="text" id="nombre"
                     formControlName="nombre">
+                <b class="text-danger"
+                    *ngIf="registroForm.get('nombre')?.hasError('required') && registroForm.get('nombre')?.touched">
 
+                    Este campo es obligatorio</b>
                 <label for="email">Correo Electrónico:</label>
                 <input placeholder="correo@gmail.com" type="email" id="email" formControlName="email">
 
+
+
                 <label for="telefono">Número de Teléfono:</label>
                 <input placeholder="000000000000" type="tel" id="telefono" formControlName="telefono">
+
                 <label for="telefono">Número de casa:</label>
                 <input placeholder="000000000000" type="tel" id="telefono" formControlName="numCasa">
             </fieldset>
@@ -61,6 +67,12 @@
                 </section>
 
                 <div id="map"></div>
+                <!-- Elemento con la referencia #asGeocoder -->
+                <div class="wrapper">
+                    <div class="box-form">
+                        <div id="geocoder" #asGeocoder class="geocoder"></div>
+                    </div>
+                </div>
 
                 <input formControlName="longitud" type="hidden">
 

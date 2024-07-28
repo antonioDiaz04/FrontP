@@ -6,7 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 // import { Token } from '@angular/compiler';
 import { ItokenResponse } from '../interfaces/apikey.interface';
 import { Token } from '../models/token.model';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

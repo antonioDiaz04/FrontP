@@ -5,6 +5,7 @@
 
 <p-toast></p-toast>
 
+
 <p-dialog header="Información del Usuario" [modal]="true" [(visible)]="visible"
   [style]="{ width: '25rem', height: '30rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   <form [formGroup]="clienteFormAdd" (ngSubmit)="agregarClienteEnRuta()">
@@ -56,7 +57,8 @@
             <div class="content-data">
 
               <label for="repartidorId">{{ accion }} Repartidor:</label>
-              <div class="custom-dropdown" id="tooltip">
+              <div class="custom-dropdown">
+                <!-- <div class="custom-dropdown" id="tooltip"> -->
                 <select *ngIf="id == null" formControlName="selectedRepartidor"
                   (change)="onRepartidorSelectionChange()">
                   <option [value]="0">
@@ -71,10 +73,10 @@
                   </option>
                 </select>
 
-                <span *ngIf="!id" class="tooltiptext">se listarán unicamente los repartidores sin ruta
+                <!-- <span *ngIf="!id" class="tooltiptext">se listarán unicamente los repartidores sin ruta
                 </span>
                 <span *ngIf="id" class="tooltiptext">se listarán unicamente los repartidores sin ruta y el seleccionado
-                </span>
+                </span> -->
 
                 <select *ngIf="id != null" formControlName="selectedRepartidor" (click)="onRepartidorSelectionChange()">
                   <option *ngFor="let repartidor of allRepartidores" [ngValue]="repartidor"
@@ -110,10 +112,10 @@
                     {{ vehiculo.placas }}
                   </option>
                 </select>
-                <span *ngIf="!id" class="tooltiptext">se listarán unicamente los vehiculos sin ruta
+                <!-- <span *ngIf="!id" class="tooltiptext">se listarán unicamente los vehiculos sin ruta
                 </span>
                 <span *ngIf="id" class="tooltiptext">se listarán unicamente los vehiculos sin ruta y el seleccionado
-                </span>
+                </span> -->
                 <select *ngIf="id" formControlName="selectedVehiculo" (click)="onVehiculoSelectionChange()">
                   <option *ngFor="let vehiculo of allVehiculos" [ngValue]="vehiculo"
                     [selected]="vehiculo._id === selectedVehiculo?._id">
@@ -132,7 +134,8 @@
     <div class="form-column">
       <fieldset>
         <legend>Segunda sección - Asignación de días</legend>
-        <div *ngIf="id == null" class="checkbox-container">
+        <!-- ESTO SE ACTIVA EN CASO DE QUE ESTEMOS EN FORMA DE AGREGAR -->
+        <div *ngIf="!id" class="checkbox-container">
           <div class="checkbox-item" *ngFor="
               let dia of [
                 'lunes',
@@ -154,9 +157,9 @@
 
             <!-- solucionar esto digamos que si no se ha seleccionada nada que muestre seeleccione  -->
             <!-- mostrar el mensage de que si hay una seleccion  -->
-            <span class="tooltiptext-dia">{{
+            <!-- <span class="tooltiptext-dia">{{
               getAvailabilityMessage(dia)
-              }}</span>
+              }}</span> -->
 
             <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia] || false"
               [ngClass]="{noDisponible: isDiaNoDisponible(dia) ,disponible: diasDisponiblesR[dia] &&  diasDisponiblesV[dia],}"
@@ -164,8 +167,9 @@
               (change)="onDiaSeleccionado($event, dia)" />
           </div>
         </div>
-
-        <div *ngIf="id != null" class="checkbox-container">
+        <!-- ESTO SE ACTIVA EN CASO DE QUE ESTEMOS EN FORMA DE EDITAR-->
+         <!--  YA QUE id ES TRUE LO QUE SIGNIFICA QUE SI HAY UN VALOR A EDITAR -->
+        <div *ngIf="id" class="checkbox-container">
           <div class="checkbox-item" *ngFor="
               let dia of [
                 'lunes',
@@ -179,26 +183,23 @@
             " [ngClass]="{
               disponibleR: diasDisponiblesR[dia],
               disponibleV: diasDisponiblesV[dia],
-            noDisponible: !(diasDisponiblesR[dia] || diasDisponiblesV[dia] || diasAsignados[dia])
+              noDisponible: !diasDisponiblesR[dia] && !diasDisponiblesV[dia]
             }">
-            <span [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia] &&!diasAsignados[dia]">{{ dia |
-              titlecase }}</span>
-
-            <span class="tooltiptext-dia">{{
-              getAvailabilityMessage(dia)
-              }}</span>
+            <span [class.strike]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]">{{ dia | titlecase }}</span>
+            <!-- <span class="tooltiptext-dia">{{ getAvailabilityMessage(dia) }}</span> -->
             <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia] || false"
-              [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia] && !diasAsignados[dia]"
+              [disabled]="!diasDisponiblesR[dia] && !diasDisponiblesV[dia]"
               (change)="onDiaSeleccionadoupdate($event)" />
           </div>
         </div>
+
       </fieldset>
       <fieldset>
         <legend>Tercera Sección - Agrega Direcciones:</legend>
         <table>
           <thead>
             <tr>
-              <th>Municipio</th>
+              <!-- <th>Municipio</th> -->
               <th>Colonia</th>
               <th>Clientes</th>
               <th>Quitar</th>
@@ -207,7 +208,7 @@
 
           <tbody *ngIf="id == null" formArrayName="filas">
             <tr *ngFor="let fila of filas.controls; let i = index" [formGroupName]="i">
-              <td>
+              <!-- <td>
                 <div class="custom-dropdown">
                   <div class="card flex justify-content-center">
                     <p-dropdown [style]="{ width: '100%' }" formControlName="selectedMunicipio"
@@ -216,7 +217,7 @@
                     </p-dropdown>
                   </div>
                 </div>
-              </td>
+              </td> -->
               <td>
                 <div class="custom-dropdown">
                   <div class="card flex justify-content-center">
@@ -243,7 +244,6 @@
           </tbody>
           <tbody *ngIf="id != null">
             <tr *ngFor="let punto of detalleRuta?.puntosDeEntrega">
-              <td>{{ punto.clienteId?.municipio }}</td>
               <td>{{ punto.clienteId?.colonia }}</td>
               <td>{{ punto.clienteId?.nombre }}</td>
               <td>

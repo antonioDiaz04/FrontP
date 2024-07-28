@@ -122,6 +122,7 @@
         <th>Ruta</th>
         <th>Repartidor</th>
         <th>Vehiculo</th>
+        <th>Días de entrega</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -130,6 +131,13 @@
         <td>{{ ruta.nombreRuta }}</td>
         <td>{{ ruta.repartidorId?.nombre }}</td>
         <td>{{ ruta.vehiculoId?.placas }}</td>
+        <td>
+          {{
+          ruta.diasAsignados && ruta.diasAsignados.length > 0
+          ? ruta.diasAsignados.join(", ")
+          : "ninguno"
+          }}
+        </td>
         <td>
           <button class="custom-btn custom-btn-danger" (click)="eliminarRuta(ruta._id)">
             <i class="fas fa-trash-can"></i> Eliminar

@@ -68,6 +68,9 @@ import { MessageService } from 'primeng/api';
 import { Toast } from '../../shared/services/toast.service';
 import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
+import { Message } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
 ]
@@ -82,7 +85,7 @@ const PIPES=[FilterPipe]
     AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,
     MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
   ],
-  imports: [MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
+  imports: [MessagesModule,MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
     AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule,
   ],
