@@ -75,7 +75,6 @@ import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ClienteRutaComponent } from './commons/components/cliente-ruta/cliente-ruta.component';
 import { AsignarClientesRutaComponent } from './commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component';
-
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
 ]
