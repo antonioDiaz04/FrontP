@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { StorageService } from './storage.service';
-import { Iuser } from '../../../../shared/interfaces/user.interface';
+import { Injectable } from "@angular/core";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { StorageService } from "./storage.service";
+import { Iuser } from "../../../../shared/interfaces/user.interface";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SessionService {
   private helper = new JwtHelperService();
@@ -16,7 +16,7 @@ export class SessionService {
   constructor(private storageService: StorageService) {}
 
   getUserData(): Iuser | undefined {
-    const {token} = this;
+    const { token } = this;
     if (token) {
       const decodedData = this.helper.decodeToken(token);
       return decodedData;
@@ -26,7 +26,7 @@ export class SessionService {
 
   getRol(): string {
     const userData = this.getUserData();
-    return userData ? userData.rol : 'invitado';
+    return userData ? userData.rol : "invitado";
   }
 
   getId(): string | null {
@@ -44,8 +44,29 @@ export class SessionService {
   }
 
   removeToken(): void {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('token');
+    if (typeof localStorage !== "undefined") {
+      localStorage.removeItem("token");
     }
   }
+
+  // Guardar el ID de salida en sessionStorage
+
+
+  // Obtener el ID de salida desde storageService
+  getIdSalida(): string | null {
+    return this.storageService.getIdSalidaActual();
+  }
+  getCantidadSalida(): number | null {
+    return this.storageService.getCantidad();
+  }
+
+  // Eliminar el ID de salida de storageService
+  // removeIdSalida(): void {
+  //   this.storageService.removeItem(this.salidaKey);
+  // }
+
+  // // Limpiar toda la sesión si es necesario
+  // clearSession(): void {
+  //   this.storageService.clear();
+  // }
 }

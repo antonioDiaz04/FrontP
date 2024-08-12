@@ -153,10 +153,11 @@ export class RutaDetalleComponent implements OnInit {
   
 
   getColoniaPorMunicipio() {
-    this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
+    let municipio="Huejutla de Reyes"
+    this.consultasCOPOMEX.getColoniaXMunicipio(municipio).subscribe(
       data => {
         this.allColoniaXMuncipio = data.Colonias;
-        console.log("colonias=>", this.allColoniaXMuncipio)
+        // console.log("colonias=>", this.allColoniaXMuncipio)
         console.log("objeto=>", data)
       },
       error => {

@@ -2,7 +2,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-
+<p-toast></p-toast>
 <style>
   .container-info {
     display: flex;
@@ -85,71 +85,74 @@
     font-size: 24px;
     margin: 20px 0;
   }
-
-  .add-button {
-    background-color: #33d089;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .add-button:hover {
-    background-color: #00a24e;
-  }
 </style>
 
 <div *ngIf="allRutas?.length == 0" class="container-info">
   <div class="icon">
-    <!--  -->
     <img (click)="redirecTo('agregar-ruta')" style="height: 100px; width: 100px; border-radius: 50%;"
       src="https://static.vecteezy.com/system/resources/previews/016/744/609/large_2x/click-to-upload-add-file-button-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
       alt="" srcset="">
-
   </div>
   <div class="message">No hay ninguna ruta por el momento</div>
   <a (click)="redirecTo('agregar-ruta')" class="add-button">Agregar Ruta</a>
 </div>
+<section *ngIf="allRutas.length > 0">
+  <p-table #dt2 [value]="paginatedRutas"
+    [globalFilterFields]="['nombreRuta', 'repartidorId.nombre', 'vehiculoId.placas', 'puntosDeEntrega.length']"
+    selectionMode="single" [(selection)]="selectedRuta" dataKey="_id" [tableStyle]="{ 'min-width': '50rem' }"
+    [rows]="rows" [paginator]="true" [totalRecords]="totalRecords" [first]="first"
+    (onPageChange)="onPageChange($event)">
 
-<section *ngIf="allRutas && allRutas?.length > 0" id="lista">
-  <h1>Listado de rutas</h1>
-  <table>
-    <thead>
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: 150%; padding-left: 20%;" type="text" (input)="onGlobalFilter($event)"
+          placeholder="Global Search" />
+      </span>
+      <button (click)="redirecTo('agregar-ruta')" class="add-button"><i class="fa-solid fa-plus"></i> Nuevo</button>
+    </ng-template>
+
+    <ng-template pTemplate="header">
       <tr>
-        <th>Ruta</th>
-        <th>Repartidor</th>
-        <th>Vehiculo</th>
+        <th pSortableColumn="nombreRuta">Ruta<p-sortIcon field="nombreRuta"></p-sortIcon></th>
+        <th pSortableColumn="repartidorId.nombre">Repartidor<p-sortIcon field="repartidorId.nombre"></p-sortIcon></th>
+        <th pSortableColumn="vehiculoId.placas">Vehiculo<p-sortIcon field="vehiculoId.placas"></p-sortIcon></th>
+        <th pSortableColumn="puntosDeEntrega.length">Clientes<p-sortIcon field="puntosDeEntrega.length"></p-sortIcon>
+        </th>
         <th>Días de entrega</th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ruta of allRutas">
+    </ng-template>
+
+    <ng-template pTemplate="body" let-ruta>
+      <tr>
         <td>{{ ruta.nombreRuta }}</td>
         <td>{{ ruta.repartidorId?.nombre }}</td>
         <td>{{ ruta.vehiculoId?.placas }}</td>
+        <td>{{ ruta.puntosDeEntrega.length }}</td>
         <td>
-          {{
-          ruta.diasAsignados && ruta.diasAsignados.length > 0
-          ? ruta.diasAsignados.join(", ")
-          : "ninguno"
-          }}
+          {{ ruta.diasAsignados && ruta.diasAsignados.length > 0 ? ruta.diasAsignados.join(", ") : "ninguno" }}
         </td>
         <td>
-          <button class="custom-btn custom-btn-danger" (click)="eliminarRuta(ruta._id)">
+          <button class="custom-btn custom-btn-danger" (click)="eliminarRuta(ruta._id, ruta.nombreRuta)">
             <i class="fas fa-trash-can"></i> Eliminar
           </button>
           <button class="custom-btn custom-btn-detail" (click)="detalleById(ruta._id)">
-            <i class="fa-solid fa-pen-to-square"></i> Detalle
+            <i class="fa-solid fa-eye"></i> Detalle
           </button>
           <button class="custom-btn custom-btn-primary" (click)="editar(ruta._id)">
-            <i class="fa-solid fa-pen-to-square"></i> Editar
+            <i class="fa-solid fa-pen"></i> Editar
           </button>
         </td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">No se encuentra ninguna ruta.</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+  <p>Hay {{paginatedRutas ? paginatedRutas.length : 0 }} vehiculos.</p>
 </section>

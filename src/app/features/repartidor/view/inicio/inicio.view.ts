@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 export class InicioView implements OnInit {
   @Input() data!: Salida[] | any; // data es un array de Salida
   id!: string;
-  idSalida!: string;
+  idSalida!: any;
   botellasSobrantes: number = 10;
   editMode: boolean = false;
   buttonText: string = "Recibir";
@@ -36,6 +36,7 @@ export class InicioView implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    console.log(this.idSalida);
   }
 
   toggleEditMode(salidaId: string): void {
@@ -54,6 +55,10 @@ export class InicioView implements OnInit {
       );
     }
   }
+
+  //  setIdSalida(id: string): void {
+  //   this.storageService.setIdSalida(this.idSalida);
+  // }
 
   redirectToAdminPurificadora(route: string): void {
     console.log(route);
@@ -85,9 +90,11 @@ export class InicioView implements OnInit {
         this.repService.detalleUsuarioSalidaById(this.id).subscribe(
           (data) => {
             this.data = data;
-            this.idSalida = data._id;
-
-            console.log(data);
+            this.idSalida = data[0]._id;
+            // this.idSalida = data[0]._id;
+            console.log(this.idSalida);
+            this.storageService.setIdSalida(data[0]._id);
+            this.storageService.setCantidadSalida(data[0].cantidadBotellas);
 
             if (this.data == null) {
               this.tienesSalidaProgramada = false;

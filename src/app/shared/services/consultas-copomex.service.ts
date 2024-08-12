@@ -23,16 +23,30 @@ export class ConsultasCOPOMEXService {
     return of(data);
   }
   
-  getColoniaXMunicipio(): Observable<any> {
-    return of(data1);
-  }
+  // getColoniaXMunicipio(): Observable<any> {
+  //   return of(data1);
+  // }
+  // getColoniaXMunicipio(): Observable<any> {
+  //   return of(data1);
+  // }
 
   // getMunicipioXEstado(Estado: string): Observable<any> {
   //   return this.http.get(`${environment.apiCOPOMEX}get_municipio_por_estado/${Estado}?token=${environment.tokenCOPOMEX}`)
   // }
   
-  // getColoniaXMunicipio(municipio: string): Observable<any> {
-  //   return this.http.get(`${environment.apiCOPOMEX}get_colonia_por_municipio/${municipio}?token=${environment.tokenCOPOMEX}`)
+  getColoniaXMunicipio(municipio: string): Observable<any> {
+    // http://localhost:4000/direccion/coloniasByMunicipio/Huejutla de Reyes
+      const url = `${environment.api}/direccion/coloniasByMunicipio/`;
+    return this.http.post(url, {municipio});
+  }
+  getColoniaXMunicipioByClientes(municipio: string): Observable<any> {
+    // http://localhost:4000/direccion/coloniasByMunicipio/Huejutla de Reyes
+      const url = `${environment.api}/direccion/getColoniasByMunicipioByClientes/`;
+    return this.http.post(url, {municipio});
+  }
+  // updateRuta(id: string, cliente: any): Observable<any> {
+  //   const url = `${environment.api}/purificadoraAdmin/ruta/` + id;
+  //   return this.http.put(url, cliente);
   // }
 
 

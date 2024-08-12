@@ -74,15 +74,17 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  
+
 }
 
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--header-background);
+  background: #288ebe;
   padding: 10px 20px;
+  position: sticky;
+  top: 0;
   color: var(--white);
 }
 
@@ -111,6 +113,9 @@ header {
   cursor: pointer;
 }
 
+.contiene-all {
+  margin-top: 20%;
+}
 @media (max-width: 600px) {
   body {
     header {
@@ -125,8 +130,7 @@ header {
     }
 
     .contiene-all {
-      border: dashed chocolate;
-
+      margin-top: 10%;
       margin-bottom: 50px;
     }
   }

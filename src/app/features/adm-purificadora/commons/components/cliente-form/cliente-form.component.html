@@ -35,6 +35,32 @@
 
                 <label for="telefono">Número de casa:</label>
                 <input placeholder="000000000000" type="tel" id="telefono" formControlName="numCasa">
+            <label for="nombre">Seleccione el municipio:</label>
+            <div class="custom-dropdown">
+                <!-- lo que hacemos aqui,aqui tomará el valor para asarlo en la funcion onMunicipioSelectionChange($event)" -->
+                <select formControlName="selectedMunicipio" (change)="onMunicipioSelectionChange($event)">
+                    <option value="0" disabled selected>Seleccionar</option>
+                    <option *ngFor="let municipio of allMuncipioXEstado" [value]="municipio">{{ municipio }}
+                    </option>
+                </select>
+            
+            </div>
+            <b class="text-danger" *ngIf="registroForm.get('selectedMunicipio')?.value==0">
+                Este campo es obligatorio</b>
+           
+           
+                <label for="nombre">Seleccione la colonia:</label>
+                <div class="custom-dropdown">
+                    <select formControlName="selectedColonia" (change)="onColoniaSelectionChange($event)">
+                        <option value="0" disabled selected>Seleccionar</option>
+                        <option *ngFor="let colonia of allColoniaXMuncipio" [value]="colonia">{{ colonia }}
+                        </option>
+                    </select>
+            
+            
+                </div>
+                <b class="text-danger" *ngIf="registroForm.get('selectedColonia')?.value==0">
+                    Este campo es obligatorio</b>
             </fieldset>
         </div>
 
@@ -42,29 +68,7 @@
             <fieldset>
                 <legend>Información direccion</legend>
 
-                <section class="Primer-seccion">
-                    <div>
-                        <label for="nombre">Seleccione el municipio:</label>
-                        <div class="custom-dropdown">
-                            <!-- lo que hacemos aqui,aqui tomará el valor para asarlo en la funcion onMunicipioSelectionChange($event)" -->
-                            <select formControlName="selectedMunicipio" (change)="onMunicipioSelectionChange($event)">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option *ngFor="let municipio of allMuncipioXEstado" [value]="municipio">{{ municipio }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="nombre">Seleccione la colonia:</label>
-                        <div class="custom-dropdown">
-                            <select formControlName="selectedColonia" (change)="onColoniaSelectionChange($event)">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option *ngFor="let colonia of allColoniaXMuncipio" [value]="colonia">{{ colonia }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </section>
+                
 
                 <div id="map"></div>
                 <!-- Elemento con la referencia #asGeocoder -->
@@ -86,6 +90,7 @@
                     <h1>
                         Welcome to QR Code Generator in Angular 17 Applications!
                     </h1>
+                 
                     <qrcode [qrdata]="myAngularxQrCode"  [errorCorrectionLevel]="'M'"></qrcode>
                 </div> -->
 

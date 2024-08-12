@@ -1,29 +1,29 @@
 /* Estilos para la tabla */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 /* Estilos para las celdas de la tabla */
 th,
 td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 /* Estilos para el encabezado de la tabla */
 table thead th {
-    background-color: #343a40;
-    color: #ffffff;
+  background-color: #343a40;
+  color: #ffffff;
 }
 
 th,
 td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 
@@ -31,94 +31,146 @@ td {
 
 
 table tbody tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 // /* Estilos para las filas impares */
 tbody {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 
-    /* Estilos para el botón */
-    button {
-        margin: 0;
-    }
-
-
+  /* Estilos para el botón */
+  button {
+    margin: 0;
+  }
 
 
 
 
-    // button:hover,
-    .remove:hover {
-
-        color: rgb(192, 2, 2);
-        background-color: #ffffff;
-        border: 1px solid #d60000;
-
-        // .material-symbols-outlined {
-        //     color: rgb(255, 255, 255);
-
-        // }
-    }
-
-    .remove {
-
-        color: rgb(255, 255, 255);
-        background-color: #d60000;
-        border: 1px solid #ffffff;
-
-        // .material-symbols-outlined {
-        //     color: rgb(255, 255, 255);
-
-        // }
-    }
 
 
+  // button:hover,
+  .remove:hover {
 
-    // button:hover,
+    color: rgb(192, 2, 2);
+    background-color: #ffffff;
+    border: 1px solid #d60000;
 
+    // .material-symbols-outlined {
+    //     color: rgb(255, 255, 255);
 
+    // }
+  }
 
-}
-
-button[type="button"]:hover {
+  .remove {
 
     color: rgb(255, 255, 255);
-    background-color: #45a08f;
+    background-color: #d60000;
+    border: 1px solid #ffffff;
 
-    .material-symbols-outlined {
-        color: rgb(255, 255, 255);
-    }
+    // .material-symbols-outlined {
+    //     color: rgb(255, 255, 255);
+
+    // }
+  }
+
+
+
+  // button:hover,
+
+
+
 }
 
 
 /* Estilos para el botón */
-button,
+button[type="button"] {
+  margin: 0;
+  padding: 10px 10px;
+  background-color: #fff;
+  color: #63738a;
+  border: 1px solid #cacaca;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s, color 0.3s;
+
+  .fa-arrow-left-long {
+    transition: transform 0.3s;
+  }
+
+  .fa-rotate-left {
+    transition: transform 0.3s;
+  }
+
+  &:hover {
+    .fa-arrow-left-long {
+      animation: moveForward 1s infinite;
+    }
+
+    .fa-rotate-left {
+      animation: rotate 1s none;
+    }
+  }
+}
+
+// Animación para mover la flecha hacia adelante
+@keyframes moveForward {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-10px);
+    /* Ajusta el valor según necesites */
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+// Animación para rotar la flecha redondeada
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-180deg);
+    /* Ajusta el valor según necesites */
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 input[type="button"] {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    color: rgb(97, 97, 97);
-    border: 1px solid #45a08f;
-    border-radius: 4px;
-    cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #63738a;
+  border: 1px solid #45a08f;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 input[type="button"]:hover {
 
+  color: rgb(255, 255, 255);
+  background-color: #45a08f;
+
+  .material-symbols-outlined {
     color: rgb(255, 255, 255);
-    background-color: #45a08f;
 
-    .material-symbols-outlined {
-        color: rgb(255, 255, 255);
-
-    }
+  }
 }
 
 
 
 
 .material-symbols-outlined {
-    cursor: pointer;
-    font-size: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }

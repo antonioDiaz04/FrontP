@@ -12,12 +12,14 @@ form {
 }
 
 form fieldset label {
-    color: #7a7a7a;
+    color: #63738a;
 }
 
 .form-column {
-    width: calc(50% - 20px);
+    width: calc(60% - 20px);
     margin-right: 20px;
+    padding: 20px;
+background-color: #fff;
 }
 
 fieldset {
@@ -30,7 +32,7 @@ fieldset {
 
 legend {
     font-weight: bold;
-    color: #565756;
+    color: #334256;
 }
 
 label {
@@ -87,6 +89,12 @@ button[type="submit"]:hover {
 
 .checkbox-item {
     margin-bottom: 0.5rem;
+    >input[type="checkbox"] {
+            accent-color: #4cafa2;
+        &:checked+span {
+                    color: #4cafa2;
+                }
+            }
 }
 
 :host ::ng-deep .ui-dropdown-panel ul {

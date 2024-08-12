@@ -25,6 +25,7 @@ import { NotificacionesView } from "./view/notificaciones/notificaciones.view";
 import { ResultadoEntregaView } from "./view/resultado-entrega/resultado-entrega.view";
 import { ResultadosListadoComponent } from "./commons/components/resultados-listado/resultados-listado.component";
 import { MiPerfilView } from "./view/mi-perfil/mi-perfil.view";
+import { AsignarClientesRutaComponent } from "./commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component";
 
 const routes: Routes = [
   {
@@ -65,7 +66,7 @@ const routes: Routes = [
       },
       {
         path: "miPerfil",
-        component: MiPerfilView,
+        component: MiPerfilView, 
       },
       {
         path: "salida",
@@ -188,6 +189,10 @@ const routes: Routes = [
           {
             path: "lista-rutas",
             component: RutaListadoComponent,
+          },
+          {
+            path: "asignar-clientes-ruta",
+            component: AsignarClientesRutaComponent,
           },
           {
             path: "editarByIdRutaFrom/:id",

@@ -1,10 +1,11 @@
+
 <div class="wave-container"></div>
 
 
 <div class="overlay-container">
   <div class="content">
-    <h2 class="nombre">Nombre de la purificadora</h2>
-    <p>Eslogan de la purificadora</p>
+    <h2 class="nombre">Solutions Agua Pura</h2>
+    <p>Optimizando tu Negocio de Purificación</p>
   </div>
 </div>
 
@@ -17,7 +18,8 @@
     <div class="container">
       <div class="text-container">
         <p class="text-title">Purificadora</p>
-        <p class="text">Registro de tu purificadora. Haz click en el enlace para registrar tu purificadora.</p>
+        <p class="text-description">Registro de tu purificadora. Haz click en el enlace para registrar tu purificadora.
+        </p>
         <a (click)="redirectTo('Registrar-purificadora')" class="register-link">Emprende tu purificadora</a>
       </div>
       <div class="image-container">
@@ -28,28 +30,28 @@
 
     <div class="container">
       <div class="image-container">
-        <img style="width:55%; margin-left: 70px;"
+        <img style="width:46%; margin-left: 70px;"
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1715560105/images/rx67gnmvt5xd1i43vogd.jpg"
           alt="Imagen">
       </div>
       <div class="text-container">
-        <p class="text-title">Titulo</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus cum ipsa quod aut blanditiis tempora error
-          laboriosam atque reiciendis excepturi nemo minus, voluptates mollitia quisquam dolore soluta facere,
-          voluptatem
-          pariatur.</p>
+        <p class="text-title">Entrega a Domicilio</p>
+        <p class="text-description">Ofrecemos un servicio conveniente de entrega de agua purificada directamente a su
+          puerta, garantizando que siempre tenga
+          acceso a agua fresca y segura sin salir de su hogar o negocio.</p>
       </div>
     </div>
     <div class="container">
       <div class="text-container">
         <p class="text-title">Titulo</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus cum ipsa quod aut blanditiis tempora error
+        <p class="text-description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus cum ipsa quod aut
+          blanditiis tempora error
           laboriosam atque reiciendis excepturi nemo minus, voluptates mollitia quisquam dolore soluta facere,
           voluptatem
           pariatur.</p>
       </div>
       <div class="image-container">
-        <img style="width:55%;"
+        <img style="width:48%;"
           src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1715467313/images/yi9pnxoxs8vh1razck6s.jpg"
           alt="Imagen">
       </div>
@@ -57,21 +59,50 @@
   </section>
   <section class="clients-section">
     <div class="container-client">
-      <h2 class="section-title">Who's using Float UI?</h2>
+      <h2 class="section-title">¿Te interesa?</h2>
+      <h3>Contactanos para mas informacion</h3>
       <p class="section-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim nibh nisi, vel egestas magna rhoncus
-        at. Nunc elementum efficitur tortor in laoreet.
+        Completa el formulario en la sección de registro. Asegúrate de proporcionar
+        toda la información requerida,te contactaremos en seguida..
       </p>
-      <div class="clients-logos">
-        <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Dropbox" alt="Dropbox"></div>
+
+      <div class="form-container">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input  placeholder="nombre-apellidoPaterno-ApellidoMaterno" type="text" id="nombre" name="nombre">
+        </div>
+        <div class="form-group">
+          <label for="telefono">Numero Teléfono</label>
+          <input placeholder="000000000" type="text" id="telefono" name="telefono">
+        </div>
+        <div class="form-group">
+          <label for="correo">Correo electronico</label>
+          <input placeholder="correo@ejemplo.com" type="email" id="correo" name="correo">
+        </div>
+        <div class="form-group">
+          <label for="estado">Estado</label>
+          <input placeholder="México" type="text" id="estado" name="estado">
+        </div>
+        <div class="form-group">
+          <label for="mencion">Mención (opcional)</label>
+          <textarea id="mencion" name="mencion" rows="4"></textarea>
+          <small class="optional">Este campo es opcional</small>
+        </div>
+        <button type="submit"> Enviar</button>
+      </div>
+      <!-- <div class="clients-logos">
+
+
+        <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Notion" alt="Notion"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Notion" alt="Notion"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=GitHub" alt="GitHub"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Microsoft" alt="Microsoft"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Linear" alt="Linear"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Canva" alt="Canva"></div>
+        <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Dropbox" alt="Dropbox"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Zoom" alt="Zoom"></div>
         <div class="client-logo"><img src="https://via.placeholder.com/80x80?text=Slack" alt="Slack"></div>
-      </div>
+      </div> -->
     </div>
   </section>
 

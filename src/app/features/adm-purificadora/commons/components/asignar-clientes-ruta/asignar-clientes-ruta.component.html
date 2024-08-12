@@ -1,0 +1,63 @@
+<div class="card">
+  <!-- Select Dropdown for Routes -->
+  <div style="margin-bottom: 1rem;">
+    <p-dropdown [options]="rutas" [formControl]="rutaControl" optionLabel="nombreRuta"
+      placeholder="Seleccione una ruta"></p-dropdown>
+  </div>
+  <!-- Display Selected Route Details -->
+  <div *ngIf="rutaControl.value">
+    <p>Ruta Seleccionada: {{ rutaControl.value.nombreRuta }}</p>
+  </div>
+  <!-- MultiSelect for Colonias -->
+  <div style="margin-bottom: 1rem;">
+    <p-multiSelect [options]="coloniasOptions" [(ngModel)]="selectedColonias" optionLabel="label" display="chip"
+      placeholder="Seleccione colonias" (onChange)="filterClients()"></p-multiSelect>
+  </div>
+  <!-- PrimeNG TabView -->
+<div style="width: 100%; overflow: hidden;">
+  <p-tabView [(activeIndex)]="activeIndex" [scrollable]="true">
+    <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
+      <p>{{ tab.content }}</p>
+      <div class="card">
+        <p-table [value]="allClients" [(selection)]="selectedCliente" dataKey="code" [tableStyle]="{'min-width': '50rem'}">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+              <th>Nombre</th>
+              <th>Colonia</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-cliente>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="cliente" />
+              </td>
+              <td>{{cliente.nombre}}</td>
+              <td>{{cliente.colonia}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+
+
+  <!-- PrimeNG Table -->
+  <p-table [value]="filteredClients" dataKey="nombre" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Municipio</th>
+        <th>Colonia</th>
+        <th>Cliente</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-client>
+      <tr>
+        <td>{{ client.municipio }}</td>
+        <td>{{ client.colonia }}</td>
+        <td>{{ client.nombre }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

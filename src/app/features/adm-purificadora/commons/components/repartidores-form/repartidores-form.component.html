@@ -16,49 +16,45 @@
                 <input placeholder="0000000000" type="tel" id="telefono" formControlName="telefono">
                 <label for="telefono">Número de casa:</label>
                 <input placeholder="0000000000 " type="tel" id="telefono" formControlName="numCasa">
-            </fieldset>
-        </div>
-
-        <div class="form-column">
-            <fieldset>
+           
                 <label for="horario">passwor de Trabajo:</label>
                 <input placeholder="ingrese el password" type="text" id="horario" formControlName="password1">
                 <label>Asignación de días </label>
                 <div class="checkbox-container">
                     <div class="checkbox-item">
-                        <span for="lunes">Lunes</span>
                         <input type="checkbox" id="lunes" formcontr="Lunes" value="lunes"
                             (change)="onDiaSeleccionado($event)">
+                        <span for="lunes">Lunes</span>
                     </div>
                     <div class="checkbox-item">
-                        <span for="martes">Martes</span>
                         <input type="checkbox" id="martes" name="Martes" value="martes"
                             (change)="onDiaSeleccionado($event)">
+                        <span for="martes">Martes</span>
                     </div>
                     <div class="checkbox-item">
-                        <span for="miercoles">Miércoles</span>
                         <input type="checkbox" id="miercoles" name="Miércoles" value="miercoles"
-                            (change)="onDiaSeleccionado($event)">
+                        (change)="onDiaSeleccionado($event)">
+                        <span for="miercoles">Miércoles</span>
                     </div>
                     <div class="checkbox-item">
-                        <span for="jueves">Jueves</span>
                         <input type="checkbox" id="jueves" name="Jueves" value="jueves"
-                            (change)="onDiaSeleccionado($event)">
+                        (change)="onDiaSeleccionado($event)">
+                        <span for="jueves">Jueves</span>
                     </div>
                     <div class="checkbox-item">
-                        <span for="viernes">Viernes</span>
                         <input type="checkbox" id="viernes" name="Viernes" value="viernes"
-                            (change)="onDiaSeleccionado($event)">
+                        (change)="onDiaSeleccionado($event)">
+                        <span for="viernes">Viernes</span>
                     </div>
                     <div class="checkbox-item">
-                        <span for="sabado">Sábado</span>
                         <input type="checkbox" id="sabado" name="Sábado" value="sabado"
-                            (change)="onDiaSeleccionado($event)">
+                        (change)="onDiaSeleccionado($event)">
+                        <span for="sabado">Sábado</span>
                     </div>
                     <div class="checkbox-item">
-                        <span for="domingo">Domingo</span>
                         <input type="checkbox" id="domingo" name="Domingo" value="domingo"
-                            (change)="onDiaSeleccionado($event)">
+                        (change)="onDiaSeleccionado($event)">
+                        <span for="domingo">Domingo</span>
                     </div>
                 </div>
                 <button type="submit">Registrar Empleado</button>

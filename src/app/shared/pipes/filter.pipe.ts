@@ -29,6 +29,7 @@ export class FilterPipe implements PipeTransform {
       );
     }
 
+    
     return values.filter((item: Cliente) =>
       properties 
         .flat()

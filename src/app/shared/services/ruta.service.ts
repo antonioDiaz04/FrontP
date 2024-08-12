@@ -19,6 +19,7 @@ export class RutaService {
   }
   updateRepartidora(id: string, cliente: any): Observable<any> {
     const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id;
+
     return this.http.put(url, cliente);
   }
   // updateRutaEntregaDetalle(id: string, cliente: any): Observable<any> {
@@ -40,6 +41,13 @@ export class RutaService {
       `${environment.api}/purificadoraAdmin/byRepartidor/${repartidorId}`
     );
   }
+  diasDisponiblesByRuta(repartidorId: string): Observable<any[]> {
+    return this.http.get<any[]>(
+      // http://localhost:4000/purificadoraAdmin/diasDisponiblesByRuta/66a27fe1d112e8038fbc0c2d
+      `${environment.api}/purificadoraAdmin/diasDisponiblesByRuta/${repartidorId}`
+    );
+  }
+
   getRutasByVehiculo(vehculoId: string): Observable<any[]> {
     return this.http.get<any[]>(
       `${environment.api}/purificadoraAdmin/byVehiculo/${vehculoId}`
@@ -71,6 +79,11 @@ export class RutaService {
       { estado }
     );
   }
+  // const url = `${environment.api}/purificadoraAdmin/salidacantidad/${idSalida}/${clienteId}`;
+  enviarCantidad(body:any): Observable<any> {
+  return this.http.put<any>(`${environment.api}/purificadoraAdmin/salidacantidad/`, body);
+}
+
   addPuntoEntregaRutaById(id: string, data: any): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/cliente/` + id;
     return this.http.post(url, data);

@@ -54,46 +54,50 @@
 
 <section id="lista">
   <h2>Lista de vehiculos</h2>
-  <table>
-    <thead>
+  <button (click)="redirecTo('agregar-vehiculo')" class="custom-btn add-button"><i class="fa-solid fa-plus"></i>
+    Nuevo</button>
+
+  <p-table [value]="paginatedVehiculo">
+    <ng-template pTemplate="header">
       <tr>
-        <th>marca</th>
-        <th>modelo</th>
+        <th pSortableColumn="marca">marca<p-sortIcon field="marca"></p-sortIcon></th>
+        <th pSortableColumn="modelo">modelo<p-sortIcon field="modelo"></p-sortIcon></th>
+        <th pSortableColumn="placas">placa<p-sortIcon field="placas"></p-sortIcon></th>
         <th>Dia disponibilidad</th>
-        <th>placa</th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of paginatedVehiculo">
-        <td>{{ data.marca }}</td>
-        <td>{{ data.modelo }}</td>
+    </ng-template>
+    <ng-template pTemplate="body" let-vehiculo>
+      <tr>
+        <td>{{ vehiculo.marca }}</td>
+        <td>{{ vehiculo.modelo }}</td>
+        <td>{{ vehiculo.placas }}</td>
         <td>
           {{
-            data.diasAsignados && data.diasAsignados.length > 0
-              ? data.diasAsignados.join(", ")
+            vehiculo.diasAsignados && vehiculo.diasAsignados.length > 0
+              ? vehiculo.diasAsignados.join(", ")
               : "ninguno"
           }}
         </td>
-        <td>{{ data.placas }}</td>
         <td>
           <button
             class="custom-btn custom-btn-danger"
-            (click)="eliminar(data._id)"
+            (click)="eliminar(vehiculo._id)"
           >
             <i class="fas fa-trash-can"></i> Eliminar
           </button>
 
           <button
             class="custom-btn custom-btn-primary"
-            (click)="editar(data._id)"
+            (click)="editar(vehiculo._id)"
           >
             <i class="fa-solid fa-pen-to-square"></i> Editar
           </button>
         </td>
       </tr>
-    </tbody>
-  </table>
+  </ng-template>
+  </p-table>
+Hay {{paginatedVehiculo ? paginatedVehiculo.length : 0 }} vehiculos.
   <p-paginator
     [totalRecords]="totalRecords"
     [rows]="rows"

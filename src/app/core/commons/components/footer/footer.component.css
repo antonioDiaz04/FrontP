@@ -3,9 +3,9 @@ footer.pie {
     position: relative;
     bottom: 0;
     left: 0;
-    top: 40px;
+    /* top: 40px; */
     width: 100%;
-    background-color: #2073b2;
+    background-color: #1d1f25;
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -43,6 +43,16 @@ footer.pie {
     color: #007bff;
 }
 
+.informacion-contacto p {
+    margin: 5px 0;
+    display: flex;
+        justify-content: flex-start;
+        >i{
+            margin-right: 10px;
+            /* font-size: 1.5em; */
+        }
+}
+
 .redes-sociales {
     display: inline-block;
 }
@@ -54,15 +64,15 @@ footer.pie {
 }
 
 /* Personaliza los íconos de redes sociales */
-.fab fa-facebook {
+.fab.fa-facebook {
     color: #3b5998;
 }
 
-.fab fa-twitter {
+.fab.fa-twitter {
     color: #1da1f2;
 }
 
-.fab fa-instagram {
+.fab.fa-instagram {
     color: #e1306c;
 }
 

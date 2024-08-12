@@ -128,7 +128,7 @@
                         <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar vehiculo</span>
                     </button>
 
-                    <button *ngIf="ruta.estado !== 'cancelado' && ruta.esSalida" type="input"
+                    <button *ngIf="ruta.estado !== 'cancelado'  && ruta.esSalida &&  ruta.estado !== 'recibido'" type="input"
                         class="remove enable-button" (click)="cancelarSalida(ruta._id)">
                         <i class="fa-regular fa-calendar-xmark"></i><span>Cancelar</span>
                     </button>

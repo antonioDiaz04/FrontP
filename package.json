@@ -52,6 +52,9 @@
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.6.13",
     "tslib": "^1.14.1",
+     "@zxing/browser": "^0.1.1",
+    "@zxing/library": "^0.19.1",
+    "@zxing/ngx-scanner": "^3.5.0",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

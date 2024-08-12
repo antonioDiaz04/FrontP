@@ -20,7 +20,7 @@
 }
 
 .form-login h2 {
-  color: rgb(27, 209, 255);
+  color: rgb(67, 154, 179);
   margin-bottom: 10px;
 }
 
@@ -32,10 +32,11 @@
 .form-login label {
   display: block;
   font-weight: bold;
-  color: rgb(93, 98, 104);
+  color: #414e62;
   margin-bottom: 10px;
 }
- label::before{
+
+label::before {
   content: '*';
   color: red;
 }

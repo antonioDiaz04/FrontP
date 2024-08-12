@@ -14,6 +14,11 @@ export class RepartidoresService {
       `${environment.api}/purificadoraRepartidores/repartidores`
     );
   }
+  getRepartidoresVehiculosDisponibles(): Observable<any> {
+    return this.http.get(
+      `${environment.api}/purificadoraAdmin/repartidoresYvehiculosDisponibles`
+    );
+  }
   obtenerRepartidoresSinRutas(): Observable<any> {
     const url = `${environment.api}/purificadoraRepartidores/repartidoresExRutas/`;
     return this.http.get(url);

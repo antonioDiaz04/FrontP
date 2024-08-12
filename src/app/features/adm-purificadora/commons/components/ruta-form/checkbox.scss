@@ -74,7 +74,8 @@
 
 span {
   font-size: 15px;
-  color: #51a47b;
+  color: #63738a;
+  // color: #51a47b;
 }
 
 span.strike-through {
@@ -86,13 +87,18 @@ span.strike-through {
 
 
 .checkbox-item {
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
+
+
+
+
   padding: 5px;
   border-radius: 10px;
   margin-bottom: 5px;
 
   .disponible {
+   background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+
     /* Color de fondo para los días disponibles */
     /* Bordes para distinguir */
     cursor: pointer;
@@ -104,6 +110,8 @@ span.strike-through {
   content: '✘';
   color: red;
   cursor: not-allowed;
+    background-color: #d0d3d1;
+      border: 1px solid #d0d3d1;
   /* Ajusta el tamaño según sea necesario */
 }
 
@@ -130,6 +138,24 @@ span.strike-through {
 
 
 }
+.checkbox-item.seleccionado,.checkbox-item.disponible {
+  background-color: #d6ffc2;
+    border: 1px solid #4cafa2;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+
+
+      /* Color de fondo para los días disponibles */
+      /* Bordes para distinguir */
+      cursor: pointer;
+&::before {
+    // position: relative;
+    content: '✔️';
+    color:#4cafa2;
+}
+
+}
 
 .strike {
   text-decoration: line-through;
@@ -137,4 +163,13 @@ span.strike-through {
 
 .checkbox-item {
   margin-bottom: 5px;
+  margin-bottom: 0.5rem;
+
+    >input[type="checkbox"] {
+      accent-color: #4cafa2;
+
+      &:checked+span {
+        color: #4cafa2;
+      }
+    }
 }

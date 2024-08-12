@@ -1,28 +1,46 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { RutaService } from "../../../../../shared/services/ruta.service";
-import { Repartidor } from "../../../../../shared/models/repartidor.model";
 import { Ruta } from "../../../../../shared/interfaces/ruta.interface";
+import { Toast } from "../../../../../shared/services/toast.service";
+import { Table } from "primeng/table";
 
 @Component({
   selector: "app-ruta-listado",
   templateUrl: "./ruta-listado.component.html",
-  styleUrls: ["../../../adm-purificadora.component.scss", "../../../form.scss"],
+  styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
 })
 export class RutaListadoComponent implements OnInit {
-  // getRutas
+  @ViewChild("dt2") dt2!: Table;
+  allRutas: Ruta[] = [];
+  paginatedRutas: Ruta[] = [];
+  selectedRuta: Ruta | null = null;
+  totalRecords: number = 0;
+  rows: number = 5;
+  first: number = 0;
 
-  allRutas?: Ruta[] | any = [];
-  constructor(private rutaS: RutaService, private router: Router) {}
+  constructor(
+    private rutaS: RutaService,
+    private toast: Toast,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
     this.obtenerRutas();
+    this.updatePaginatedRutas();
+  }
+
+  onGlobalFilter(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.dt2.filterGlobal(input.value, "contains");
   }
 
   obtenerRutas() {
     this.rutaS.getRutas().subscribe(
       (data) => {
         this.allRutas = data;
-        console.log(this.allRutas);
+        this.totalRecords = this.allRutas.length;
+        this.updatePaginatedRutas();
       },
       (error) => {
         console.log("ocurrió un error al obtener la información", error);
@@ -30,9 +48,12 @@ export class RutaListadoComponent implements OnInit {
     );
   }
 
-  eliminarRuta(id: any) {
+  eliminarRuta(id: any, nombre: any) {
     this.rutaS.eliminarRuta(id).subscribe(
       (data) => {
+        this.toast.showToastPmNgSecondary(
+          `Se eliminó correctamente la ruta ${nombre} del sistema.`
+        );
         this.obtenerRutas();
       },
       (error) => {
@@ -42,17 +63,19 @@ export class RutaListadoComponent implements OnInit {
   }
 
   detalleById(id: any) {
-    this.rutaS.detalleRutaById(id).subscribe(
-      (data) => {
-        console.log("detallado...");
-        this.router.navigate([
-          "/purificadoraAdm/ruta/detalleByIdRutaFrom/",
-          id,
-        ]);
-      },
-      (error) => {
-        console.log("ocurrio un error", error);
-      }
+    this.router.navigate([`/purificadoraAdm/ruta/detalleByIdRutaFrom/${id}`]);
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.updatePaginatedRutas();
+  }
+
+  updatePaginatedRutas() {
+    this.paginatedRutas = this.allRutas.slice(
+      this.first,
+      this.first + this.rows
     );
   }
 
@@ -61,6 +84,6 @@ export class RutaListadoComponent implements OnInit {
   }
 
   editar(_id: any) {
-    this.router.navigate(["/purificadoraAdm/ruta/editarByIdRutaFrom/", _id]);
+    this.router.navigate([`/purificadoraAdm/ruta/editarByIdRutaFrom/${_id}`]);
   }
 }

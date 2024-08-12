@@ -56,8 +56,8 @@ export class ClienteFormComponent implements OnInit {
       latitud: ["", Validators.required],
       telefono: ["", Validators.required],
       numCasa: ["", Validators.required],
-      selectedColonia: ["", Validators.required],
-      selectedMunicipio: ["", Validators.required],
+      selectedColonia: [0],
+      selectedMunicipio: [0],
     });
     this.myAngularxQrCode = "Nico Antonio";
   }
@@ -124,11 +124,11 @@ export class ClienteFormComponent implements OnInit {
       this.toast.showToastPmNgWarn("Por favor ingresa tu telefono");
       return;
     }
-    if (!municipio) {
+    if (municipio==0) {
       this.toast.showToastPmNgWarn("Por favor ingresa tu municipio");
       return;
     }
-    if (!colonia) {
+    if (colonia==0) {
       this.toast.showToastPmNgWarn("Por favor ingresa tu colonia");
       return;
     }
@@ -185,9 +185,11 @@ export class ClienteFormComponent implements OnInit {
   }
 
   getColoniaPorMunicipio() {
-    this.consultasCOPOMEX.getColoniaXMunicipio().subscribe(
+   let municipio="Huejutla de Reyes"
+    this.consultasCOPOMEX.getColoniaXMunicipio(municipio).subscribe(
       (data1) => {
-        this.allColoniaXMuncipio = data1.Colonias;
+        this.allColoniaXMuncipio = data1[0].colonias;
+        console.log()
       },
       (error) => {
         console.log("Ocurrió un error al obtener la información", error);

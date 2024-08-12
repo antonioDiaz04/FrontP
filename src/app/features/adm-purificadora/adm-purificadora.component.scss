@@ -7,7 +7,7 @@ body {
 h1 {
   text-align: start;
   margin-bottom: 20px;
-  color: #5a5a5a;
+  color: #334256 !important;
 }
 
 .top-bar {
@@ -47,6 +47,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+
 .filter-group {
   flex: 1 1 200px;
   display: flex;
@@ -55,7 +56,7 @@ h1 {
 
 label {
   margin-bottom: 5px;
-  color: #454545;
+  color: #63738a;
 }
 
 select {
@@ -128,7 +129,7 @@ section#lista {
           border-bottom: 1px solid #ddd;
           background-color: #ffffff;
           // color: #383838;
-          color: rgb(0, 0, 0);
+          color: #334256;
         }
       }
     }
@@ -137,7 +138,10 @@ section#lista {
       border-radius: 10px 10px;
 
       >tr {
-        >.custom-btn {
+
+        td{
+
+          .custom-btn {
           display: inline-flex;
           justify-content: space-between;
           align-items: center;
@@ -153,6 +157,7 @@ section#lista {
           /* Espacio entre los elementos hijos */
         }
 
+      }
         .custom-btn i {
           margin-right: 0.5rem;
         }
@@ -174,31 +179,45 @@ section#lista {
           color: #fa5566;
 
           box-shadow: 0 0 5px #ffaab2;
+
+          &:hover {
+            background-color: #ff4154;
+
+            color: #fff;
+          }
         }
 
-        .custom-btn-danger:hover {
-          background-color: #ff4154;
 
-          color: #fff;
-        }
+
 
         .custom-btn-primary {
           color: #4aa2ff;
           box-shadow: 0 0 5px #aad3ff;
-
           background-color: #fff;
+
+          &:hover {
+            background-color: #258eff;
+            color: #fff;
+          }
         }
 
-        .custom-btn-primary:hover {
-          background-color: #258eff;
-          color: #fff;
+        .custom-btn-secundary {
+          color: #6cb590;
+          box-shadow: 0 0 5px #6cb590;
+          background-color: #fff;
+
+          &:hover{
+            background:#6cb590;
+            color: #fff;
+          }
         }
+
 
         >td {
           padding: 12px 15px;
           text-align: left;
           border-bottom: 1px solid #ddd;
-          color: rgb(100, 100, 100);
+          color: #63738a;
 
           >p {
             text-align: center;
@@ -388,7 +407,7 @@ table {
   }
 }
 
-/* 
+/*
 .p-paginator {
     background: none;
     border: solid #f3f4f6;

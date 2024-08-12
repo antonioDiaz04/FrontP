@@ -8,7 +8,7 @@ import { Toast } from "../../../../../shared/services/toast.service";
 @Component({
   selector: "app-repartidores-listado",
   templateUrl: "./repartidores-listado.component.html",
-  styleUrls: ["../../../adm-purificadora.component.scss", "../../../form.scss"],
+  styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
 })
 export class RepartidoresListadoComponent implements OnInit {
   visible: boolean = false;
@@ -55,9 +55,12 @@ export class RepartidoresListadoComponent implements OnInit {
     this.id = this.router.snapshot.paramMap.get("id");
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getRepartidores();
     this.updatePaginatedRepartidores();
+  }
+  redirecTo(route: string): void {
+    this.rou.navigate(["/purificadoraAdm/repartidor/", route]);
   }
 
   editar(id: any) {
@@ -66,8 +69,6 @@ export class RepartidoresListadoComponent implements OnInit {
     this.idRepartidor = this.router.snapshot.params["id"];
 
     if (id !== null) {
-      console.log("actualizar....");
-
       this.repService.detalleUsuarioById(id).subscribe((data) => {
         this.listRepartidor = data;
 
@@ -98,7 +99,7 @@ export class RepartidoresListadoComponent implements OnInit {
   }
   // }
 
-  actualizarCliente(id: any) {
+  actualizarRepartidor(id: any) {
     const diasAsignados = this.diasSeleccionados;
 
     const REPARTIDOR: Repartidor = {
@@ -111,10 +112,11 @@ export class RepartidoresListadoComponent implements OnInit {
 
     this.repService.updateRepartidora(id, REPARTIDOR).subscribe(
       (response) => {
-        this.visible = false;
+        console.log(response)
         this.getRepartidores();
+        this.visible = false;
 
-        this.toast.showToastPmNgSuccess("Se guardaron los cambios con exito");
+        this.toast.showToastSwalSuccess("Se ha actualizado correctamente.");
         // console.log('Usuario actualizado:', response);
       },
       (error) => {
@@ -136,8 +138,9 @@ export class RepartidoresListadoComponent implements OnInit {
   }
 
   getRepartidores() {
+    console.log("Llamando a getRepartidores");
     this.repService.getRepartidores().subscribe(
-      (data) => {
+      (data: Repartidor[]) => {
         this.allRepartidores = data;
         this.totalRecords = this.allRepartidores.length;
         this.updatePaginatedRepartidores();

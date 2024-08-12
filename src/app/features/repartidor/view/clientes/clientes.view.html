@@ -1,33 +1,84 @@
-<section id="lista">
-    <h2>Listado de Clientes</h2>
+<p-toast/>
 
-    <div class="card-data-container">
-        <div class="card-data" *ngFor="let cliente of listClientes">
-            <p><a (click)="redireccionar()">{{ cliente.nombre }}</a></p>
-            <p>Teléfono: {{ cliente.telefono }}</p>
-            <p>Municipio: {{ cliente.municipio }}</p>
-            <p>Colonia: {{ cliente.colonia }}</p>
-            <p>numero de casa: {{ cliente.numCasa }}</p>
-            <button (click)="escanearQR('qr')">
-                <i class="fas fa-qrcode"></i> Escanear QR
-            </button>
-            <button (click)="verRuta(cliente)">
-                <i class="fas fa-route"></i> Ver Ruta
-            </button>
-            <!-- <button (click)="entregar(cliente)">
-                <i class="fas fa-solid fa-receipt"></i> Entregar
-            </button> -->
+<div class="card flex justify-content-center">
+  <p-dialog header="Ingresar cantidad" [(visible)]="isModal" [modal]="true"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+  
+    <form [formGroup]="cantidadForm" (ngSubmit)="enviarEntrada()">
+  
+      <!-- Mostrar la cantidad asignada con una descripción -->
+      <p>Cantidad asignada para entregar: {{ cantidadAsignada }} unidades.</p>
+  
+      <!-- Input para ingresar la cantidad -->
+      <p-inputNumber mode="decimal" formControlName="cantidadIngresada" [showButtons]="true" inputId="minmax-buttons"
+        [min]="0" [max]="cantidadAsignada" [style]="{ width: '100%' }" />
+  
+      <!-- Mostrar la cantidad restante después de la entrada -->
+      <p>Cantidad restante después de la entrada: {{ cantidadAsignada - cantidadForm.get('cantidadIngresada')?.value }}
+        unidades.</p>
+  
+      <div class="contiene-botones">
+        <!-- Botón para enviar la entrada -->
+        <button type="submit" [style]="{ width: '100%', margin: '20px auto', display: 'block' }">Enviar</button>
+        <!-- Botón para cerrar el diálogo -->
+        <button type="button" (click)="closeScanner()">Cancelar</button>
+      </div>
+  
+    </form>
+  
+  </p-dialog>
+
+</div>
+
+<!-- Loader para cuando no se encuentran cámaras -->
+<div *ngIf="showLoader" class="loader-container">
+  <div class="ripple">
+  </div>
+</div>
+
+<div *ngIf="showLoaderCamera" class="loader-container">
+  <div class="gear">
+    <img src="https://assets.codepen.io/6093409/gear.svg.png" alt="an illustration of a gear" />
+  </div>
+</div>
+<!-- Modal para escanear QR -->
+<p-dialog *ngIf="!showLoaderCamera && showScanner" header="Escanear QR" [(visible)]="showScanner" [modal]="true"
+  [closable]="false" [style]="{ width: '400px' }">
+  <select #selectList (change)="selectCamera(selectList.value)">
+    <option *ngFor="let camera of cameras" value={{camera.label}}>
+      {{ camera.label }}
+    </option>
+  </select>
+
+  <!-- para escaner de QR -->
+  <zxing-scanner *ngIf="showScanner" style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+    (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
+
+  <p-footer>
+    <p-button label="Cerrar" icon="pi pi-times" (click)="closeScanner()" styleClass="p-button-text"></p-button>
+  </p-footer>
+</p-dialog>
+<section *ngIf="!showLoader" id="lista">
+  <h2>Listado de Clientes</h2>
+  <div class="card-data-container">
+    <p-card [style]="{ 'margin-top':'20px' }" *ngFor="let cliente of listClientes" header="{{ cliente.nombre }}">
+      <ng-template pTemplate="content">
+        <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+        <p><strong>Municipio:</strong> {{ cliente.municipio }}</p>
+        <p><strong>Colonia:</strong> {{ cliente.colonia }}</p>
+        <p><strong>Número de casa:</strong> {{ cliente.numCasa }}</p>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="ui-g">
+          <p-button label="Escanear QR" icon="pi pi-qrcode" (click)="escanearQR( cliente._id)"
+            styleClass="p-button-sm mr-2"></p-button>
+          <p-button label="Ver Ruta" icon="pi pi-map-marker" (click)="verRuta(cliente)"
+            styleClass="p-button-sm"></p-button>
         </div>
-    </div>
+      </ng-template>
+    </p-card>
+  </div>
 
-    <div *ngIf="showScanner" class="modal">
-        <div class="modal-content">
-            <span class="close" (click)="closeScanner()">&times;</span>
-        </div>
-    </div>
 
-    <div *ngIf="scannedData">
-        <h2>Scanned Data:</h2>
-        <p>{{ scannedData }}</p>
-    </div>
 </section>

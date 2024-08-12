@@ -1,7 +1,10 @@
 import { PaginatorModule } from 'primeng/paginator';
 import { ToastModule } from 'primeng/toast';
-
+import { IconFieldModule } from 'primeng/iconfield';
+import { TableModule } from 'primeng/table';
 import { NgModule } from '@angular/core';
+import { TabViewModule } from 'primeng/tabview';
+import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
 import { AdmPurificadoraRoutingModule } from './adm-purificadora-routing.module';
 import { MapaView } from './view/mapa/mapa.view';
@@ -70,9 +73,11 @@ import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
+import { ClienteRutaComponent } from './commons/components/cliente-ruta/cliente-ruta.component';
+import { AsignarClientesRutaComponent } from './commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component';
 
-const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,
-  AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule
+const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,
+  AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
 ]
 
 
@@ -83,7 +88,7 @@ const PIPES=[FilterPipe]
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
     AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView,
+    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView, ClienteRutaComponent, AsignarClientesRutaComponent,
   ],
   imports: [MessagesModule,MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,

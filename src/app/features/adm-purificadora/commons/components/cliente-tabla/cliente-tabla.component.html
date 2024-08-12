@@ -1,9 +1,4 @@
-<head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  />
-</head>
+
 
 <p-dialog
   *ngIf="listUsuario"
@@ -49,22 +44,21 @@
   </form>
 </p-dialog>
 
-<section id="lista">
-  <h2>Listado de Clientes</h2>
-  <table>
-    <thead>
+
+<section>
+  <p-table [value]="paginatedUser">
+    <ng-template pTemplate="header">
       <tr>
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th>Telefono</th>
-        <th>Municipio</th>
-        <th>Colonia</th>
+        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+        <th pSortableColumn="email">Correo <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="telefono">Telefono <p-sortIcon field="telefono"></p-sortIcon></th>
+        <th pSortableColumn="municipio">Municipio <p-sortIcon field="municipio"></p-sortIcon></th>
+        <th pSortableColumn="colonia">Colonia <p-sortIcon field="colonia"></p-sortIcon></th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cliente of paginatedUser">
-        <!-- <tr *ngFor="let cliente of allClients | filter:filterProperty:properties"> -->
+    </ng-template>
+    <ng-template pTemplate="body" let-cliente>
+      <tr>
         <td>{{ cliente.nombre }}</td>
         <td>{{ cliente.email }}</td>
         <td>{{ cliente.telefono }}</td>
@@ -72,27 +66,18 @@
         <td>{{ cliente.colonia }}</td>
         <td>
           <!-- Botones de acciones -->
-          <button
-            class="custom-btn custom-btn-danger"
-            (click)="eliminarUsuario(cliente._id)"
-          >
+          <button class="custom-btn custom-btn-danger" (click)="eliminarUsuario(cliente._id)">
             <i class="fas fa-trash-can"></i> Eliminar
           </button>
-          <button
-            class="custom-btn custom-btn-primary"
-            (click)="editar(cliente._id)"
-          >
+          <button class="custom-btn custom-btn-primary" (click)="editar(cliente._id)">
             <i class="fa-solid fa-pen-to-square"></i> Editar
           </button>
         </td>
       </tr>
-    </tbody>
-  </table>
-  <p-paginator
-    [totalRecords]="totalRecords"
-    [rows]="rows"
-    [first]="first"
-    (onPageChange)="onPageChange($event)"
-  >
+    </ng-template>
+  </p-table>
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
   </p-paginator>
+  Hay {{paginatedUser ? paginatedUser.length : 0 }} clientes.
+
 </section>

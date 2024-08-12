@@ -1,176 +1,14 @@
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* .container {
-            padding: 20px;
-        } */
 
-
-        .row-bienvenida {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            padding: 20px;
-            box-shadow: 0 0 6px 1px #f7f7f7;
-            border-radius: 10px;
-            background-color: #c9f0e8;
-            position: sticky;
-            justify-content: space-between;
-
-
-            .text {
-                display: flex;
-                flex-direction: column;
-
-                .text-bienvenida {
-                    color: #3c5256;
-                    font-size: 30px;
-                    font-weight: bold;
-                    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                }
-            }
-        }
-
-        .row {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            padding: 20px;
-            /* box-shadow: 0 0 6px 1px #f7f7f7; */
-            border-radius: 10px;
-            /* background-color: #c9f0e8; */
-
-
-        }
-
-        .target {
-            align-items: center;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-        }
-
-        .target:hover {
-            transform: scale(1.05);
-            box-shadow: 1px 11px 30px 9px rgba(141, 141, 141, 0.4);
-            /* Escalar el elemento en un 5% */
-            /* Sombra más pronunciada */
-            transition: transform 0.3s, box-shadow 0.3s;
-            /* Transiciones suaves */
-        }
-
-
-        .target-header {
-            display: flex;
-            align-items: center;
-        }
-
-        .target-header i {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-
-        .target-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #565862;
-        }
-
-        .target-content {
-            color: #808080;
-            font-size: 14px;
-        }
-
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .target-green {
-            background-color: #ffffff;
-            border-left: 1px solid#3df3b3;
-
-
-            i {
-                color: #3df3b3;
-            }
-        }
-
-        .btn-green {
-            background-color: #3df3b3;
-        }
-
-
-        .target-blue {
-            border-left: 1px solid#6ab2ff;
-            background-color: #ffffff;
-
-            div {
-
-                i {
-                    color: #6ab2ff;
-                }
-            }
-
-            .btn-blue {
-                background-color: #6ab2ff;
-            }
-
-        }
-
-        .target-orange {
-            border-left: 1px solid#ffc155;
-
-            background-color: #ffffff;
-
-
-            div {
-
-
-                i {
-                    color: #ffc155;
-                    ;
-                }
-            }
-
-            .btn-orange {
-                background-color: #ffc155;
-                ;
-            }
-        }
-
-        .target-morado {
-            border-left: 1px solid#ac5aff;
-
-            background-color: #ffffff;
-
-            div {
-
-
-                i {
-                    color: #ac5aff;
-                }
-            }
-
-            .btn-morado {
-                background-color: #ac5aff;
-            }
-        }
-    </style>
-</head>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <h1>Dashboard</h1>
+
     <div class="row-bienvenida">
         <div class="text">
             <p class="text-bienvenida">
 
                 Hola Admin, {{nombre}}
             </p>
-            <b>Listo para comenzar el día con algunas presentaciones?</b>
+
+            <b style="color: #63738a !important;">Listo para comenzar el día con algunas presentaciones?</b>
         </div>
 
         <img style="
@@ -178,8 +16,8 @@
 justify-content: right;
   margin-top: -90px;
   margin-right: 100px;
-  margin-bottom: -55px ;z-index: 999;
-position: relative;width: 30%;height: 30%;"
+  margin-bottom: -55px ;
+width: 30%;height: 30%;position:static;"
             src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1721586139/images/undraw_at_the_park_2e47-removebg-preview_kekvlp.png"
             alt="" srcset="">
     </div>
@@ -188,7 +26,7 @@ position: relative;width: 30%;height: 30%;"
         <div class="target target-green">
             <div class="target-header">
                 <i class="fas fa-users"></i>
-                <span class="target-title">Cantidad de Clientes</span>
+                <span class="target-title">Sección de Clientes</span>
             </div>
             <div class="target-content">
                 <p> Sólo tiene <strong>{{allClients.length}}</strong> clientes registrados</p>
@@ -199,7 +37,7 @@ position: relative;width: 30%;height: 30%;"
         <div class="target target-blue">
             <div class="target-header">
                 <i class="fas fa-truck"></i>
-                <span class="target-title">Cantidad de Repartidores</span>
+                <span class="target-title">Sección de Repartidores</span>
             </div>
             <div class="target-content">
                 <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> repartidores registrados</p>
@@ -210,7 +48,7 @@ position: relative;width: 30%;height: 30%;"
         <div class="target target-orange">
             <div class="target-header">
                 <i class="fas fa-truck-ramp-box"></i>
-                <span class="target-title">Cantidad de vehiculos</span>
+                <span class="target-title">Sección de vehiculos</span>
             </div>
             <div class="target-content">
                 <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> vehiculos registrados</p>
@@ -223,10 +61,10 @@ position: relative;width: 30%;height: 30%;"
         <div class="target target-morado">
             <div class="target-header">
                 <i class="fas fa-route"></i>
-                <span class="target-title">Rutas</span>
+                <span class="target-title">Sección de rutas</span>
             </div>
             <div class="target-content">
-                <p>cantidad de ruta <strong>{{allRutas.length}}</strong> </p>
+                <p>Sólo tiene <strong>{{allRutas.length}}</strong> rutas registrados</p>
             </div>
             <button (click)="redirecto('ruta')" class="btn btn-morado">Ver detalles</button>
         </div>

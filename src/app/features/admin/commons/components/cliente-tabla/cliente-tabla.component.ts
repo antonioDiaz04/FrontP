@@ -56,7 +56,6 @@ export class ClienteTablaComponent implements OnInit {
 
       console.log(data)
 
-
       this.allPurificadoras = data;
       console.log("nombre", data.purificadoraNombre)
     }, error => {

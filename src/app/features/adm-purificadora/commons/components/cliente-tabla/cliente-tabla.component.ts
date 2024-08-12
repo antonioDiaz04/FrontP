@@ -26,7 +26,7 @@ import { MapaClientDetailUbacionService } from '../../services/mapaClientDetalle
 @Component({
   selector: 'app-cliente-tabla',
   templateUrl: './cliente-tabla.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
+  styleUrls: [  '../../../form.scss','../../../tablePrime.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class ClienteTablaComponent implements OnInit {
@@ -35,6 +35,7 @@ export class ClienteTablaComponent implements OnInit {
   id!: string | null;
   clienteForm!: FormGroup;
   allClients: Cliente[] = [];
+  selectedClient!: Cliente;
   paginatedUser: Cliente[] = [];
 
   totalRecords: number = 0;
@@ -77,6 +78,9 @@ export class ClienteTablaComponent implements OnInit {
     } else {
       this.rou.navigate(['/purificadoraAdm', route]); // Navegación hacia otras páginas públicas
     }
+  }
+   redirecTo(route: string): void {
+    this.rou.navigate(["/purificadoraAdm/cliente/", route]);
   }
 
   editar(id: any) {

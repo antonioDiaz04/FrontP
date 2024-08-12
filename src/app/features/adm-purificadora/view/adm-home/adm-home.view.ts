@@ -13,6 +13,17 @@ import { Router } from "@angular/router";
 })
 export class AdmHomeView implements OnInit {
   openSubmenu: string | null = null;
+  activeLink: HTMLElement | null = null;
+  setActiveLink(event: Event): void {
+    const target = event.currentTarget as HTMLElement;
+
+    if (this.activeLink) {
+      this.activeLink.classList.remove("m-tree__itemContent__selected");
+    }
+
+    target.classList.add("m-tree__itemContent__selected");
+    this.activeLink = target;
+  }
 
   toggleSubmenu(submenuId: string) {
     this.openSubmenu = this.openSubmenu === submenuId ? null : submenuId;
@@ -34,7 +45,7 @@ export class AdmHomeView implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.obtenerFechaYYYYMMDD()); // Output: "Viernes / Junio / 2024" (para la fecha actual)
+    // console.log(this.obtenerFechaYYYYMMDD()); // Output: "Viernes / Junio / 2024" (para la fecha actual)
   }
 
   redirectToAdminPurificadora(route: string): void {
@@ -64,6 +75,16 @@ export class AdmHomeView implements OnInit {
       this.router.navigate(["/purificadoraAdm/cliente", route]); // Navegación hacia otras páginas públicas
     }
   }
+  redirectToRolEmpleado(route: string): void {
+    console.log(route);
+    if (route === "login") {
+      this.router.navigate(["/auth/login"]); // Navegación hacia la página de inicio de sesión
+    } else {
+      console.log("llegaste a purificadoraAdm");
+      this.router.navigate(["/purificadoraAdm/cliente", route]); // Navegación hacia otras páginas públicas
+    }
+  }
+
   redirectToCotrolRepartidores(route: string): void {
     console.log(route);
     if (route === "login") {

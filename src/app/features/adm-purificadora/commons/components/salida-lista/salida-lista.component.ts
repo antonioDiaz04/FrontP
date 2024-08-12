@@ -56,10 +56,11 @@ export class SalidaListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerRutas();
-    this.getRepartidores();
-    // this.getAllNombresRutas();
-    this.getVehiculos();
+    this.getRepartidoreVehiculosDisponibles();
     this.updatePaginatedRutasDetalles();
+    // this.getRepartidores();
+    // this.getAllNombresRutas();
+    // this.getVehiculos();
   }
 
   constructor(
@@ -105,10 +106,10 @@ export class SalidaListaComponent implements OnInit {
       "domingo",
       "lunes",
       "martes",
-      "miércoles",
+      "miercoles",
       "jueves",
       "viernes",
-      "sábado",
+      "sabado",
     ];
     let fecha = new Date();
     return diasSemana[fecha.getDay()];
@@ -127,17 +128,29 @@ export class SalidaListaComponent implements OnInit {
       }
     );
   }
-
-  getRepartidores() {
-    this.repService.getRepartidores().subscribe(
-      (data: Repartidor[]) => {
-        this.allRepartidores = data;
+  getRepartidoreVehiculosDisponibles() {
+    this.repService.getRepartidoresVehiculosDisponibles().subscribe(
+      (data) => {
+        this.allRepartidores = data.repartidores;
+        this.allVehiculos = data.vehiculos;
+        console.log(data)
       },
       (error) => {
         console.log("Ocurrió un error al obtener la información", error);
       }
     );
   }
+
+  // getRepartidores() {
+  //   this.repService.getRepartidores().subscribe(
+  //     (data: Repartidor[]) => {
+  //       this.allRepartidores = data;
+  //     },
+  //     (error) => {
+  //       console.log("Ocurrió un error al obtener la información", error);
+  //     }
+  //   );
+  // }
 
   updatePaginatedRutasDetalles() {
     this.paginatedRutasDetalles = this.allRutas.slice(
@@ -414,16 +427,16 @@ export class SalidaListaComponent implements OnInit {
     // }
   }
 
-  getVehiculos() {
-    this.vehiculoService.getVehiculos().subscribe(
-      (data: Vehiculo[]) => {
-        this.allVehiculos = data;
-      },
-      (error) => {
-        console.log("ocurrió un error al obtener la información", error);
-      }
-    );
-  }
+  // getVehiculos() {
+  //   this.vehiculoService.getVehiculos().subscribe(
+  //     (data: Vehiculo[]) => {
+  //       this.allVehiculos = data;
+  //     },
+  //     (error) => {
+  //       console.log("ocurrió un error al obtener la información", error);
+  //     }
+  //   );
+  // }
 
   onPageChange(event: any) {
     this.first = event.first;

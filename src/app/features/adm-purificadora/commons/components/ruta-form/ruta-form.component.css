@@ -6,9 +6,6 @@
   grid-row-gap: 10px;
   /* Espacio entre filas */
 
-  /*  */
-
-
 
   .content-text-input {
     display: grid;
@@ -18,18 +15,25 @@
       flex-direction: row;
 
       label {
-        margin-top: auto;
+        /* margin-top: auto;
         margin-bottom: auto;
-        grid-column: 1;
-        margin: 10px;
+        grid-column: 1; */
+          margin-block: auto;
+
       }
 
       input[type="text"] {
         width: 50%;
+        height: 40px;
         grid-column: 2;
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #fff;
+        padding-left: 5%;
+
+        &:focus{
+        border: 1px solid #ccc;
+        }
       }
 
       .custom-dropdown {
@@ -40,7 +44,7 @@
           border: 1px solid #ccc;
           border-radius: 5px;
           background-color: #fff;
-          color: #686767;
+          color: #63738a;
           font-size: 16px;
           outline: none;
         }
@@ -123,7 +127,7 @@
   padding: 20px;
   /* border-radius: 2px; */
   box-shadow: 0 0 15px #cecece8d;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #cacaca;
   width: 100%;
   /* Ajusta el ancho del .form-registroulario según tus necesidades */
   /* margin: 20px auto;.] */
@@ -134,7 +138,7 @@
 }
 
 .form-registro fieldset label {
-  color: #595959;
+  color: #63738a;
 }
 
 .form-column {
@@ -145,14 +149,15 @@
 }
 
 fieldset {
+  border: #becbd0 1px solid;
   margin-bottom: 20px;
-  padding: 10px;
   border-radius: 5px;
+      padding: 10px 10px 10px 10px;
 }
 
 legend {
   font-weight: bold;
-  color: #565756;
+  color: #334256;
 }
 
 label {
@@ -168,6 +173,17 @@ label::before {
 
 
 .form-registro button[type="submit"] {
+  width: 50%;
+}
+
+
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  top: auto;
+  bottom: auto;
   width: 100%;
 }
 
@@ -180,9 +196,38 @@ button[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 10px;
+
+  &:hover {
+    .fa-check {
+    animation: vibrate 0.2s infinite;
+  }
+    background-color: #44b07a;
+  }
 }
 
-button[type="submit"]:hover {
-  background-color: #44b07a;
+
+
+
+
+
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-1px);
+  }
+
+  50% {
+    transform: translateX(1px);
+  }
+
+  75% {
+    transform: translateX(-1px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }

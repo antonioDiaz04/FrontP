@@ -8,7 +8,7 @@ import { Toast } from '../../../../../shared/services/toast.service';
 @Component({
   selector: 'app-vehiculo-listado',
   templateUrl: './vehiculo-listado.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
+  styleUrls: ['../../../tablePrime.scss', '../../../form.scss'],
 })
 export class VehiculoListadoComponent {
   visible: boolean = false;
@@ -57,6 +57,10 @@ export class VehiculoListadoComponent {
   ngOnInit(): void {
     this.getVehiculos();
     this.updatePaginatedVehiculo();
+  }
+
+   redirecTo(route: string): void {
+    this.rou.navigate(["/purificadoraAdm/vehiculo/", route]);
   }
 
   editar(id: any) {

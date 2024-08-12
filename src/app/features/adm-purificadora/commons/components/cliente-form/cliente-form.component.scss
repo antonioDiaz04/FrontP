@@ -1,32 +1,3 @@
-.Primer-seccion {
-  display: block ruby;
-  grid-template-columns: max-content 1fr;
-  grid-row-gap: 10px;
-
-
-  label {
-    grid-column: 1;
-    margin: 10px;
-  }
-
-  input[type="text"] {
-    width: 20%;
-    grid-column: 2;
-  }
-
-  .custom-dropdown select {
-    grid-column: 2;
-    width: 80%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #686767;
-    font-size: 16px;
-    outline: none;
-    margin-bottom: 10px;
-  }
-}
 
 input {
   grid-column: 2;
@@ -42,18 +13,16 @@ input {
 }
 
 form {
-  // background: #fff5ec;
   padding: 20px;
   border-radius: 5px;
-  // box-shadow: 0 0 10px rgba(110, 110, 110, 0.386);
-  // border: 1px solid #e8e7e7;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  background: ghostwhite;
 }
 
 form fieldset label {
-  color: #595959;
+  color: #63738a;
 }
 
 .form-column {
@@ -70,7 +39,7 @@ fieldset {
 
 legend {
   font-weight: bold;
-
+  color: #334256;
 }
 
 label {
@@ -122,11 +91,12 @@ input[type="button"] {
   margin-top: 10px;
 }
 .text-danger{
-  color: brown;
+  color: red;
   font-weight: bold;
 }
 
 input[type="text"],
+select,
 input[type="date"],
 input[type="tel"],
 input[type="email"],
@@ -138,6 +108,7 @@ input[type="password"] {
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(227, 227, 227, 0.656);
   margin-bottom: 10px;
+    background-color: #fff;
 }
 
 button[type="submit"] {
@@ -173,7 +144,7 @@ button[type="submit"]:hover {
 
 #map {
   width: 450px;
-  height: 250px;
+  height: 450px;
   margin-left: 20px;
   border-radius: 5px;
   border: 5px solid #ffffff;
@@ -181,7 +152,7 @@ button[type="submit"]:hover {
 }
 
 .wrapper {
-  padding: 2rem;
+  // padding: 2rem;
   display: flex;
   justify-content: center;
 }

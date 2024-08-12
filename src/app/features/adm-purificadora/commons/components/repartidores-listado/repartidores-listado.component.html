@@ -1,69 +1,29 @@
-<head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  />
-</head>
 <p-toast></p-toast>
 
-<p-dialog
-  *ngIf="listRepartidor"
-  header="Información del Usuario"
-  [modal]="true"
-  [(visible)]="visible"
-  [style]="{ width: '29rem' }"
-  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
->
-  <form
-    [formGroup]="usuarioForm"
-    (ngSubmit)="actualizarCliente(listRepartidor._id)"
-  >
+<p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible"
+  [style]="{ width: '29rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <form [formGroup]="usuarioForm" (ngSubmit)="actualizarRepartidor(listRepartidor._id)">
     <div class="form-group">
       <label for="nombre" class="form-label">Nombre:</label>
-      <input
-        type="text"
-        id="nombre"
-        formControlName="nombre"
-        class="form-control"
-      />
+      <input type="text" id="nombre" formControlName="nombre" class="form-control" />
     </div>
     <div class="form-group">
       <label for="email" class="form-label">Email:</label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        class="form-control"
-      />
+      <input type="email" id="email" formControlName="email" class="form-control" />
     </div>
     <div class="form-group">
       <label for="numCasa" class="form-label">Número de casa:</label>
-      <input
-        type="text"
-        id="numCasa"
-        formControlName="numCasa"
-        class="form-control"
-      />
+      <input type="text" id="numCasa" formControlName="numCasa" class="form-control" />
     </div>
     <div class="form-group">
       <label for="telefono" class="form-label">Teléfono:</label>
-      <input
-        type="text"
-        id="telefono"
-        formControlName="telefono"
-        class="form-control"
-      />
+      <input type="text" id="telefono" formControlName="telefono" class="form-control" />
     </div>
 
     <div class="checkbox-item" *ngFor="let dia of dias">
       <span>{{ dia | titlecase }}</span>
-      <input
-        type="checkbox"
-        [id]="dia"
-        [value]="dia"
-        [checked]="diasAsignados[dia]"
-        (change)="onDiaSeleccionado($event)"
-      />
+      <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]"
+        (change)="onDiaSeleccionado($event)" />
     </div>
 
     <div class="btn-group" role="group">
@@ -72,54 +32,47 @@
   </form>
 </p-dialog>
 
-<section id="lista">
+<section>
   <h2>Lista de repartidores</h2>
-  <table>
-    <thead>
+  <button (click)="redirecTo('agregar-repartidor')" class="custom-btn add-button"><i class="fa-solid fa-plus"></i>
+    Nuevo</button>
+
+  <p-table [value]="paginatedRepartidores">
+    <ng-template pTemplate="header">
       <tr>
-        <th>Nombre completo</th>
-        <th>Teléfono</th>
-        <th>Email</th>
+        <th pSortableColumn="nombre">Nombre completo <p-sortIcon field="nombre"></p-sortIcon></th>
+        <th pSortableColumn="telefono">Teléfono<p-sortIcon field="telefono"></p-sortIcon></th>
+        <th pSortableColumn="email">Email<p-sortIcon field="email"></p-sortIcon></th>
+        <th>Registro</th>
         <th>Días disponibles</th>
-        <th>Fecha de Contratación</th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let repartidor of paginatedRepartidores">
+    </ng-template>
+    <ng-template pTemplate="body" let-repartidor>
+      <tr>
         <td>{{ repartidor.nombre }}</td>
         <td>{{ repartidor.telefono }}</td>
         <td>{{ repartidor.email }}</td>
-        <td>
-          {{
-            repartidor.diasAsignados && repartidor.diasAsignados.length > 0
-              ? repartidor.diasAsignados.join(", ")
-              : "ninguno" 
-          }}
-        </td>
         <td>{{ repartidor.fechaDeAgregacion }}</td>
         <td>
-          <button
-            class="custom-btn custom-btn-danger"
-            (click)="eliminarUsuario(repartidor._id)"
-          >
+          {{
+          repartidor.diasAsignados && repartidor.diasAsignados.length > 0
+          ? repartidor.diasAsignados.join(", ")
+          : "ninguno"
+          }}
+        </td>
+        <td>
+          <button class="custom-btn custom-btn-danger" (click)="eliminarUsuario(repartidor._id)">
             <i class="fas fa-trash-can"></i> Eliminar
           </button>
-          <button
-            class="custom-btn custom-btn-primary"
-            (click)="editar(repartidor._id)"
-          >
+          <button class="custom-btn custom-btn-primary" (click)="editar(repartidor._id)">
             <i class="fa-solid fa-pen-to-square"></i> Editar
           </button>
         </td>
       </tr>
-    </tbody>
-  </table>
-  <p-paginator
-    [totalRecords]="totalRecords"
-    [rows]="rows"
-    [first]="first"
-    (onPageChange)="onPageChange($event)"
-  >
+    </ng-template>
+  </p-table>
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
   </p-paginator>
+  Hay {{paginatedRepartidores ? paginatedRepartidores.length : 0 }} Repartidores.
 </section>
