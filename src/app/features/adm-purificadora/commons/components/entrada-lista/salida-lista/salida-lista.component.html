@@ -1,0 +1,170 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .quantity {
+            width: 80%;
+        }
+
+        .edit-icon {
+            cursor: pointer;
+            color: #4CAF50;
+            font-size: 18px;
+            right: 10px;
+            top: 50%;
+        }
+    </style>
+</head>
+<p-toast />
+
+<section id="lista">
+
+    <h1>Salidas</h1>
+    <!-- <div class="top-bar">
+        <input type="text" id="searchBar" placeholder="Buscar...">
+    </div>
+    <div class="filter-container">
+        <div class="filter-group">
+            <label for="date">Días Programada la Salida:</label>
+            <select id="date" name="date">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="repartidor">Repartidor:</label>
+            <select id="repartidor" name="repartidor">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="route">Ruta:</label>
+            <select id="route" name="route">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="municipality">Estado:</label>
+            <select id="municipality" name="municipality">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="colony">Catidad:</label>
+            <select id="colony" name="colony">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+    </div> -->
+    <table class="entry-table">
+        <thead>
+            <tr>
+                <th>Ruta</th>
+                <th>Repartidor</th>
+                <th>Vehiculo</th>
+                <th>Dia programado</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ruta of paginatedRutasDetalles">
+                <td>{{ ruta?.nombreRuta }}</td>
+                <td>{{ ruta.repartidorId?.nombre }}</td>
+                <td>{{ ruta.vehiculoId?.placas }}</td>
+                <td>
+                    {{ ruta.diasAsignados?.includes(diaTexto) ? diaTexto : '' }}
+                </td>
+
+                <td>
+                    <span style="text-align:center;margin-right: 15px;" class="quantity">{{ ruta.cantidadBotellas !==
+                        undefined &&
+                        ruta.cantidadBotellas !== null ?
+                        ruta.cantidadBotellas
+                        : 0 }}
+
+
+                    </span>
+                    <i *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" id="tooltip"
+                        class="fa-regular fa-pen-to-square" (click)="editar(ruta)">
+
+                        <span class="tooltiptext">
+                            Asigna o modifica la cantidad dando click aqui.
+                        </span>
+                    </i>
+                </td>
+                <td>
+                    <p style="font-weight: bold;" [ngClass]="{
+                    'enviado': ruta.estado === 'enviado',
+                    'pendiente': !ruta.estado || ruta.estado === 'pendiente',
+                    'en_curso': ruta.estado === 'recibido',
+                    'finalizada': ruta.estado === 'finalizada',
+                    'cancelado': ruta.estado === 'cancelado'
+                }">
+                        {{ ruta.estado ? ruta.estado : 'pendiente' }}
+                    </p>
+
+                </td>
+                <td>
+                    <button *ngIf="!ruta?.esSalida" type="input" class="read enable-button"
+                        (click)="enviar(ruta,ruta.esSalida)">
+                        <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
+                    </button>
+
+                    <button *ngIf="ruta.esSalida && ruta.estado === 'cancelado'" type="input" class="read enable-button"
+                        (click)="enviar(ruta,ruta.esSalida)">
+                        <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
+                    </button>
+
+
+                    <button *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" type="input"
+                        class="read enable-button" (click)="selectToastSwal(ruta)">
+                        <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar repartidor</span>
+                    </button>
+                    <button *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" type="input"
+                        class="read enable-button" (click)="selectToastCambiarVehiculoSwal(ruta)">
+                        <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar vehiculo</span>
+                    </button>
+
+                    <button *ngIf="ruta.estado !== 'cancelado'  && ruta.esSalida &&  ruta.estado !== 'recibido'" type="input"
+                        class="remove enable-button" (click)="cancelarSalida(ruta._id)">
+                        <i class="fa-regular fa-calendar-xmark"></i><span>Cancelar</span>
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
+</section>
+
+<div class="card flex justify-content-center">
+    <p-dialog [modal]="true" [(visible)]="visible" [style]="{width: '28rem',height:'18rem' }">
+        <form [formGroup]="cantidadForm" class="modal-content" (ngSubmit)="guardarCambios()">
+            <div class="inputs-container">
+                <h2>Asignar cantidad</h2>
+                <p-inputNumber [style]="{ width: '25rem' }" class="inptNumber"
+                    [(ngModel)]="cantidadForm.controls['cantidadBotellas'].value" formControlName="cantidadBotellas"
+                    [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"
+                    [step]="1" [min]="0" decrementButtonClass="decrement-button p-button"
+                    incrementButtonClass="increment-button p-button" incrementButtonIcon="fas fa-plus"
+                    decrementButtonIcon="fas fa-minus">
+                </p-inputNumber>
+            </div>
+
+            <div class="text-danger"
+                *ngIf="cantidadForm.get('cantidadBotellas')?.hasError('required') && cantidadForm.get('cantidadBotellas')?.touched">
+                <span>La cantidad no es <strong>valida</strong></span>
+            </div>
+
+            <div class="contiene-botones">
+
+                <button type="submit">Guardar</button>
+                <button type="button" (click)="close()">Cancelar</button>
+            </div>
+        </form>
+    </p-dialog>
+</div>

@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { RutaService } from '../../../../../shared/services/ruta.service';
 import { Subscription, interval } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EntregaService } from '../../services/entrega.service';
 
 export interface ClienteInterface {
   _id: string;
@@ -68,8 +70,11 @@ export interface DetalleEntregaInterface {
 @Component({
   selector: 'app-entrada-lista',
   templateUrl: './entrada-lista.component.html',
-  styleUrls: ['../../../adm-purificadora.component.scss', '../../../form.scss'],
-})
+  styleUrls: [
+    "../../../adm-purificadora.component.scss",
+    "./modal.scss",
+    "../../../form.scss",
+  ],})
 export class EntradaListaComponent implements OnInit, OnDestroy {
   allRutas: DetalleEntregaInterface[] = [];
   paginatedRutasDetalles: DetalleEntregaInterface[] = [];
@@ -80,14 +85,20 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
   ruta!: DetalleEntregaInterface[];
   inputNumberValue: number | null = null; // Valor del campo de entrada
   mostrarBotonGuardar: boolean = false; // Controla la visibilidad del botón
+  visible: boolean = false;
+  rutaSeleccionada!: DetalleEntregaInterface;
+  cantidadInvalida: boolean = false;
 
   private pollingSubscription: Subscription | undefined;
 
-  constructor(private rutaS: RutaService, private router: Router) {}
+  constructor(private rutaS: RutaService, private router: Router,    private fb: FormBuilder,    private entregaS: EntregaService, // Inyecta el servicio EntregaService
+
+  ) {}
 
   ngOnInit(): void {
     this.obtenerRutas();
     // this.startPolling();
+
   }
 
   ngOnDestroy(): void {
@@ -182,20 +193,81 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
       this.pollingSubscription.unsubscribe();
     }
   }
+  guardarEntrega() {
+    // Verificar si la cantidad es válida
+    if (this.inputNumberValue && this.inputNumberValue > this.rutaSeleccionada.cantidadBotellas) {
+      this.cantidadInvalida = true;
+      console.log('La cantidad ingresada supera la cantidad de botellas asignadas.');
+    } else {
+      this.cantidadInvalida = false;
+  
+      const cantidadBotellasSobrantes = this.rutaSeleccionada?.cantidadBotellas - this.calcularCantidadTotalEntregada(this.rutaSeleccionada);
+  
+      // Preparar los puntos de entrega
+      const puntosDeEntrega = this.rutaSeleccionada.puntosDeEntrega.map((punto: any) => ({
+        clienteId: punto.clienteId._id
+      }));
+  
+      // Convertir la fecha de entrada al formato DD-MM-YYYY
+      const fechaEntrada = new Date().toISOString().split('T')[0];  // YYYY-MM-DD
+      const [year, month, day] = fechaEntrada.split('-');
+      const fechaEntradaFormatted = `${day}-${month}-${year}`;  // DD-MM-YYYY
+  
+      // Crear el objeto de entrega
+      const entrega = {
+        nombreRuta: this.rutaSeleccionada.nombreRuta,
+        repartidorId: this.rutaSeleccionada.repartidorId._id,
+        vehiculoId: this.rutaSeleccionada.vehiculoId._id,
+        estado: this.rutaSeleccionada.estado,
+        cantidadBotellas: this.rutaSeleccionada.cantidadBotellas,
+        cantidadBotellasSobrantes: cantidadBotellasSobrantes,
+        contados: this.inputNumberValue,
+        puntosDeEntrega: puntosDeEntrega,
+        diasEntrada: this.rutaSeleccionada.diasSalida,
+        fechaEntrada: fechaEntradaFormatted  // Fecha en formato DD-MM-YYYY
+      };
+  
+      console.log('Datos de la entrega:', entrega);
+  
+      // Llamar al servicio para crear la entrega
+      this.entregaS.crearEntrega(entrega).subscribe(
+        response => {
+          console.log('Entrega creada exitosamente', response);
+          console.log('confirm', this.rutaSeleccionada.nombreRuta, entrega.fechaEntrada);
+  
+          // Llamar al servicio para confirmar la salida
+          this.entregaS.confirmarSalida(this.rutaSeleccionada.nombreRuta, entrega.fechaEntrada).subscribe(
+            confirmResponse => {
+              console.log('Salida confirmada exitosamente', confirmResponse);
+              this.obtenerRutas(); // Refresca las rutas
+              this.visible = false; // Cerrar el modal
+            },
+            error => {
+              console.error('Error al confirmar la salida', error);
+            }
+          );
+        },
+        error => {
+          console.error('Error al crear la entrega', error);
+        }
+      );
+    }
+  }
+  
 
-  onInputNumberChange(event: any) {
-    const value = event.value;
-    this.inputNumberValue = value;
-    this.mostrarBotonGuardar = value !== null && value !== 0;
-    console.log('Valor cambiado:', this.inputNumberValue);
+
+cancelarRecibo() {
+  this.estadoinput = true;
+  this.inputNumberValue = null; // Resetea el valor del input
+  this.cantidadInvalida = false; // Oculta el mensaje de error
+  this.mostrarBotonGuardar = false; // Oculta los botones de guardar y cancelar
+}
+
+   // Método para mostrar el modal
+   mostrarModal(ruta: DetalleEntregaInterface) {
+    this.rutaSeleccionada = ruta;
+    this.visible = true;
   }
 
-  guardarCambios(nombreRuta: string, repartidorId: RepartidorInterface, vehiculoId: VehiculoInterface, estado: string, cantidadBotellas: number) {
-    console.log('Nombre Ruta:', nombreRuta);
-    console.log('Repartidor ID:', repartidorId);
-    console.log('Vehículo ID:', vehiculoId);
-    console.log('Estado:', estado);
-    console.log('Cantidad Botellas:', cantidadBotellas);
-  }
 
 }

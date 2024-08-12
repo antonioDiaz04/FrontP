@@ -22,7 +22,7 @@
 
 // export interface PuntoDeEntregaInterface {
 //   _id: string;
-//   cantidadEntregada: number;
+//   cantidadEntregada?: number; // Hacerlo opcional
 //   clienteId: ClienteInterface;
 // }
 
@@ -56,7 +56,7 @@
 //   vehiculoId: VehiculoInterface;
 //   estado: string;
 //   cantidadBotellas: number;
-//   cantidadContada?: number; // Agrega esta propiedad si es necesaria
+//   cantidadContada?: number; // Hacerlo opcional
 //   puntosDeEntrega: PuntoDeEntregaInterface[];
 //   diasSalida: string;
 //   fechaSalida: string;
@@ -81,7 +81,6 @@
 //   inputNumberValue: number | null = null; // Valor del campo de entrada
 //   mostrarBotonGuardar: boolean = false; // Controla la visibilidad del botón
 
-
 //   private pollingSubscription: Subscription | undefined;
 
 //   constructor(private rutaS: RutaService, private router: Router) {}
@@ -100,12 +99,12 @@
 //       (data: DetalleEntregaInterface[]) => {
 //         console.log(data);
 //         this.ruta = data;
-//         // Filtrar los datos para solo incluir los que tienen fechaProgramada
-//         const rutasConFechaProgramada = data.filter(
+//         // Filtrar los datos para solo incluir los que tienen fechaSalida
+//         const rutasConFechaSalida = data.filter(
 //           (ruta: DetalleEntregaInterface) => ruta.fechaSalida
 //         );
-//         console.log(rutasConFechaProgramada);
-//         this.allRutas = rutasConFechaProgramada;
+//         console.log(rutasConFechaSalida);
+//         this.allRutas = rutasConFechaSalida;
 //         this.totalRecords = this.allRutas.length;
 //         this.updatePaginatedRutasDetalles();
 //       },
@@ -124,7 +123,7 @@
 
 //   calcularSobrantes(ruta: DetalleEntregaInterface): number {
 //     let totalEntregado = 0;
-//     ruta.puntosDeEntrega.forEach((punto: { cantidadEntregada: number }) => {
+//     ruta.puntosDeEntrega.forEach((punto: PuntoDeEntregaInterface) => {
 //       totalEntregado += punto.cantidadEntregada || 0;
 //     });
 //     const cantidadBotellas = ruta.cantidadBotellas || 0;
@@ -147,33 +146,29 @@
 //   }
 
 //   disablein(estado: string): boolean {
-//     return estado == 'terminado' ? false : true;
+//     return estado === 'terminado' ? false : true;
 //   }
 
-//   getEstado(ruta: any): string {
+//   getEstado(ruta: DetalleEntregaInterface): string {
 //     return ruta.estado === 'recibido' ? 'en proceso' : ruta.estado;
 //   }
 
 //   onPageChange(event: any) {
-//     // Método para manejar el cambio de página
 //     this.first = event.first;
 //     this.rows = event.rows;
-//     // Realiza la carga de datos según la nueva página
-//     // this.loadData();
+//     this.updatePaginatedRutasDetalles();
 //   }
 
-//   // Método para calcular la cantidad total entregada
-//   calcularCantidadTotalEntregada(ruta: any): number {
+//   calcularCantidadTotalEntregada(ruta: DetalleEntregaInterface): number {
 //     if (!ruta.puntosDeEntrega) return 0;
-//     return ruta.puntosDeEntrega.reduce((total: number, punto: any) => {
+//     return ruta.puntosDeEntrega.reduce((total: number, punto: PuntoDeEntregaInterface) => {
 //       return total + (punto.cantidadEntregada || 0);
 //     }, 0);
 //   }
 
 //   recibirRuta(id: string) {
-//     this.estadoinput=false
-//     this.mostrarBotonGuardar=true
-
+//     this.estadoinput = false;
+//     this.mostrarBotonGuardar = true;
 //   }
 
 //   startPolling() {
@@ -189,16 +184,18 @@
 //   }
 
 //   onInputNumberChange(event: any) {
-//     const value = event.value;  // Valor del campo de entrada
+//     const value = event.value;
 //     this.inputNumberValue = value;
-//     this.mostrarBotonGuardar = value !== null && value !== 0; // Muestra el botón si el valor no es null y no es cero
+//     this.mostrarBotonGuardar = value !== null && value !== 0;
 //     console.log('Valor cambiado:', this.inputNumberValue);
 //   }
 
-//   // Método para guardar los cambios
-//   guardarCambios() {
-//     console.log('Guardando cambios:', this.inputNumberValue);
-//     // Implementa la lógica para guardar los cambios
+//   guardarCambios(nombreRuta: string, repartidorId: RepartidorInterface, vehiculoId: VehiculoInterface, estado: string, cantidadBotellas: number) {
+//     console.log('Nombre Ruta:', nombreRuta);
+//     console.log('Repartidor ID:', repartidorId);
+//     console.log('Vehículo ID:', vehiculoId);
+//     console.log('Estado:', estado);
+//     console.log('Cantidad Botellas:', cantidadBotellas);
 //   }
 
 // }

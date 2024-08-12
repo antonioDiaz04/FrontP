@@ -16,31 +16,6 @@
       top: 50%;
     }
 
-    .entry-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .entry-table th,
-    .entry-table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    .entry-table th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-
-    .entry-table tbody tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    .entry-table tbody tr:hover {
-      background-color: #ddd;
-    }
-
     .tooltiptext {
       visibility: hidden;
       width: 120px;
@@ -85,7 +60,9 @@
     }
   </style>
 </head>
-
+<div>
+  <h1>Gestión de Entrada</h1>
+</div>
 <p-toast />
 <section id="lista">
   <h1>Salidas</h1>
@@ -114,15 +91,7 @@
         >
           Sobrantes
         </th>
-        <th
-          *ngIf="
-            (paginatedRutasDetalles.length > 0 &&
-              paginatedRutasDetalles[0].estado === 'recibido') ||
-            paginatedRutasDetalles[0].estado === 'finalizada'
-          "
-        >
-          Contado
-        </th>
+
         <th>Estado</th>
         <th
           *ngIf="
@@ -147,21 +116,13 @@
 
         <!-- Mostrar columnas adicionales solo si el estado es "recibido" -->
         <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
-          {{ ruta.cantidadBotellas }}
+          <span style="text-align: center; margin-right: 15px" class="quantity">
+            {{ ruta.cantidadBotellas }}
+          </span>
         </td>
         <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
           {{ calcularSobrantes(ruta) }}
         </td>
-        <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
-          <p-inputNumber
-            inputId="integeronly"
-            [(ngModel)]="inputNumberValue"
-            (onValueChange)="onInputNumberChange($event)"
-            [disabled]="estadoinput"
-          ></p-inputNumber>
-        </td>
-
-
 
         <td>
           <span
@@ -173,15 +134,10 @@
           >
             {{ getEstado(ruta) }}
             <button
-              *ngIf="ruta.estado === 'finalizada' && !mostrarBotonGuardar"
-              (click)="recibirRuta(ruta._id)"
+              *ngIf="ruta.estado === 'finalizada' && !visible"
+              (click)="mostrarModal(ruta)"
             >
               Recibir
-            </button>
-
-            <!-- Botón de guardar -->
-            <button *ngIf="mostrarBotonGuardar" (click)="guardarCambios()">
-              Guardar
             </button>
           </span>
         </td>
@@ -202,3 +158,55 @@
   >
   </p-paginator>
 </section>
+
+<!-- Modal para recibir la ruta -->
+<div class="card flex justify-content-center">
+  <p-dialog
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '28rem', height: '20rem' }"
+  >
+    <div class="modal-content" >
+      <div class="inputs-container">
+
+        <h2>Guardar Entrada para la Ruta {{ rutaSeleccionada?.nombreRuta }}</h2>
+
+        <p-inputNumber
+          [style]="{ width: '25rem' }"
+          class="inptNumber"
+          [(ngModel)]="inputNumberValue"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          inputId="horizontal"
+          spinnerMode="horizontal"
+          [step]="1"
+          [min]="0"
+          decrementButtonClass="decrement-button p-button"
+          incrementButtonClass="increment-button p-button"
+          incrementButtonIcon="fas fa-plus"
+          decrementButtonIcon="fas fa-minus"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="text-danger" *ngIf="cantidadInvalida">
+        <span>
+            La cantidad no es <strong>válida</strong>. Supera la cantidad de botellas asignadas
+            para la ruta <strong>{{ rutaSeleccionada?.nombreRuta }}</strong>.
+        </span>
+              </div>
+        <div class="contiene-botones">
+          <button  type="submit" (click)="guardarEntrega()" >
+            Guardar
+          </button>
+          <button
+          type="button"
+          (click)="cancelarRecibo()"
+          >
+          Cancelar
+        </button>
+
+    </div>
+    </div>
+
+  </p-dialog>
+</div>
