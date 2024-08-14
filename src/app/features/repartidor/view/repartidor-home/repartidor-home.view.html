@@ -14,7 +14,7 @@
               <i class="fa fa-truck"></i> Mis Entregas
             </a>
           </li>
-          <li>
+          <li *ngIf="estado=='recibido'">
             <a (click)="redirectToAdminPurificadora('clientes')">
               <i class="fa fa-users"></i> Clientes
             </a>
@@ -43,33 +43,33 @@
     </main>
 
     <footer>
+      <!-- Información de la purificadora -->
+      <!-- <div class="footer-info">
+        <span>Purificadora Agua Pura</span>
+        <span>Ubicación: Calle Falsa 123, Ciudad, País</span>
+        <span>Tel: (123) 456-7890</span>
+      </div> -->
       <div class="footer-item" (click)="redirectToAdminPurificadora('Home')">
         <i class="fa-solid fa-home"></i>
         <span>Inicio</span>
       </div>
-      <div
-        class="footer-item"
-        (click)="redirectToAdminPurificadora('ruta-entrega')"
-      >
+      <div class="footer-item" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('ruta-entrega')">
         <i class="fa-solid fa-route"></i>
         <span>Ruta</span>
       </div>
-      <div
-        class="footer-item"
-        (click)="redirectToAdminPurificadora('clientes')"
-      >
+      <div class="footer-item" *ngIf="estado!='finalizada'" (click)="redirectToAdminPurificadora('clientes')">
         <i class="fa-solid fa-users"></i>
         <span>Clientes</span>
       </div>
-      <div class="footer-item notificacion"
-      (click)="redirectToAdminPurificadora('notificaciones')"
-      >
+      <div class="footer-item notificacion" (click)="redirectToAdminPurificadora('notificaciones')">
         <i class="fa-solid fa-bell">
           <div class="notification-indicator"></div>
         </i>
         <span>Notificaciones</span>
       </div>
+
     </footer>
+
     <style>
       footer {
         position: fixed;
@@ -83,14 +83,19 @@
         box-shadow: 0 2px 4px rgb(45, 45, 45);
         border: #666666;
         padding: 10px 0;
+        flex-wrap: wrap;
+        /* Permite que el contenido se ajuste en varias líneas si es necesario */
       }
 
       .footer-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-
         cursor: pointer;
+        flex: 1;
+        /* Permite que cada elemento ocupe el mismo espacio horizontal */
+        text-align: center;
+        /* Asegura que el texto esté centrado */
       }
 
       .footer-item i {
@@ -101,6 +106,7 @@
         margin-top: 5px;
         font-size: 12px;
       }
+
       .notificacion {
         border: none;
         position: relative;
@@ -120,5 +126,20 @@
       .footer-item.notificacion .notification-indicator {
         display: block;
       }
+
+      .footer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+        /* Color del texto */
+        margin-top: 10px;
+        font-size: 10px;
+        /* Tamaño de la fuente para información adicional */
+      }
+
+      .footer-info span {
+        margin: 2px 0;
+        /* Espaciado entre las líneas de información */
+      }
     </style>
-  </body>

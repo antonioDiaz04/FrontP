@@ -1,33 +1,51 @@
-import { Component, OnInit } from "@angular/core";
-import { DetalleEntregaInterface } from "../../../../../shared/interfaces/detalle-entrega-schema.interface";
-import { Repartidor } from "../../../../../shared/interfaces/repartidor.interface";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
-import { RepartidoresService } from "../../../../../shared/services/rapartidores.service";
-import { RutaService } from "../../../../../shared/services/ruta.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Ruta } from "../../../../../shared/interfaces/ruta.interface";
-import { Vehiculo } from "../../../../../shared/interfaces/vehiculo.interface";
-import { VehiculoService } from "../../../../../shared/services/vehiculo.service";
-import Swal from "sweetalert2";
-import { Toast } from "../../../../../shared/services/toast.service";
-import { Salida } from "../../../../../shared/models/salida.model";
-import { Cliente } from "../../../../../shared/interfaces/client.interface";
+import { Component, Input } from '@angular/core';
+import { Message } from 'primeng/api';
+import { Cliente } from '../../../../../shared/interfaces/client.interface';
+import { Ruta } from '../../../../../shared/models/ruta.model';
+import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Repartidor } from '../../../../../shared/models/repartidor.model';
+// import { DetalleEntregaInterface } from '../entrada-lista/entrada-lista.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
+import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
+import { RutaService } from '../../../../../shared/services/ruta.service';
+import { Toast } from '../../../../../shared/services/toast.service';
+import Swal from 'sweetalert2';
+import { Salida } from '../../../../../shared/models/salida.model';
+import { PuntoDeEntregaInterface, RepartidorInterface, VehiculoInterface } from '../entrada-lista/entrada-lista.component';
+
+
+export interface DetalleEntregaInterface {
+  _id: string;
+  nombreRuta: any;
+  repartidorId: RepartidorInterface;
+  vehiculoId: VehiculoInterface;
+  estado: string;
+  cantidadBotellas: number ;
+  cantidadContada?: number; // Hacerlo opcional
+  puntosDeEntrega: PuntoDeEntregaInterface[];
+  diasEntrada: string;
+  fechaEntrada: string;
+  __v: number;
+}
+
+export interface PuntoDeEntrega {
+  clienteId?: Cliente;
+  clientePresente?:boolean;
+  cantidadEntregada?: number;
+  _id: string;
+}
 @Component({
-  selector: "app-salida-lista",
-  templateUrl: "./salida-lista.component.html",
-  styleUrls: [
-    "../../../adm-purificadora.component.scss",
-    "./modal.scss",
-    "../../../form.scss",
-  ],
+  selector: 'app-historial-entrega',
+  templateUrl: './historial-entrega.component.html',
+  styleUrl:     "../../../adm-purificadora.component.scss",
 })
-export class SalidaListaComponent implements OnInit {
-  visible: boolean = false;
+export class HistorialEntregaComponent {
+messages!: Message[];
+  @Input() data!:  any; // data es un array de Salida
+
+visible: boolean = false;
   id!: string;
   cantidadForm!: FormGroup;
   allClients: Cliente[] = [];
@@ -39,9 +57,9 @@ export class SalidaListaComponent implements OnInit {
   allNombreRuta: Ruta[] = [];
   allVehiculos: Vehiculo[] = [];
 
-  allRutas: DetalleEntregaInterface[] = [];
+  allEntregas: DetalleEntregaInterface[] = [];
   date2: Date | undefined;
-  paginatedRutasDetalles: DetalleEntregaInterface[] = [];
+  paginatedEntregas: DetalleEntregaInterface[] = [];
   clientAll!: DetalleEntregaInterface;
   totalRecords: number = 0;
   rows: number = 5; // Número de registros por página
@@ -51,12 +69,15 @@ export class SalidaListaComponent implements OnInit {
   diaTexto: string;
 
   fecha: string;
-
+ totalAsignado: number = 0;
+  totalEntregado: number = 0;
+  totalSobrado: number = 0;
   rutaActual: any;
+  listClientes: Cliente[] | any;
 
   ngOnInit(): void {
-    this.obtenerRutas();
-    this.updatePaginatedRutasDetalles();
+    this.obtenerEntregas();
+    this.updatePaginatedEntregas();
     // this.getRepartidores();
     // this.getAllNombresRutas();
     // this.getVehiculos();
@@ -114,13 +135,13 @@ export class SalidaListaComponent implements OnInit {
     return diasSemana[fecha.getDay()];
   }
 
-  obtenerRutas() {
-    this.rutaS.getRutasSalidas().subscribe(
+  obtenerEntregas() {
+    this.rutaS.getEntregas().subscribe(
       (data) => {
-        this.allRutas = data;
+        this.allEntregas = data;
         this.clientAll = data;
-        this.totalRecords = this.allRutas.length;
-        this.updatePaginatedRutasDetalles();
+        this.totalRecords = this.allEntregas.length;
+        this.updatePaginatedEntregas();
       },
       (error) => {
         console.log("ocurrió un error al obtener la información", error);
@@ -129,19 +150,73 @@ export class SalidaListaComponent implements OnInit {
   }
 
 
-  // getRepartidores() {
-  //   this.repService.getRepartidores().subscribe(
-  //     (data: Repartidor[]) => {
-  //       this.allRepartidores = data;
-  //     },
-  //     (error) => {
-  //       console.log("Ocurrió un error al obtener la información", error);
-  //     }
-  //   );
-  // }
+  calculateTotals() {
+    this.totalAsignado = this.data.reduce((sum:any, item:any) => sum + item.cantidadBotellas, 0);
+    this.totalEntregado = this.data.reduce((sum:any, item:any) => sum + (item.cantidadBotellas - item.cantidadBotellasSobrantes), 0);
+    this.totalSobrado = this.data.reduce((sum:any, item:any) => sum + item.cantidadBotellasSobrantes, 0);
+  }
+  //!aqui 
+  getData(id:string): void {
+console.log("aquI")
+      if (id) {
+        this.rutaS.detalleEntregaById(id).subscribe(
+          (data) => {
+            this.data = data;
+            // this.showLoader = false;
+            // console.log("Data received:", this.data); // Check what `data` contains
 
-  updatePaginatedRutasDetalles() {
-    this.paginatedRutasDetalles = this.allRutas.slice(
+    this.calculateTotals();
+
+            if (Array.isArray(data)) {
+              data.forEach((item: Salida) => {
+                if (
+                  item.puntosDeEntrega &&
+                  Array.isArray(item.puntosDeEntrega)
+                ) {
+                  const clientes = item.puntosDeEntrega.map(
+                    (entrega: PuntoDeEntrega) => entrega
+                  );
+
+
+
+// / Suponiendo que item.puntosDeEntrega es un array de objetos
+                  // this.cantidadEntregadaTotal = item.puntosDeEntrega.reduce(
+                  //   (total, dt: any) => {
+                  //     return total + dt.cantidadEntregada;
+                  //   },
+                  //   0
+                  // );
+                  // console.log(this.cantidadEntregadaTotal);
+                  // const diferencia =
+                  //   data[0].cantidadBotellas - this.cantidadEntregadaTotal;
+                  // this.botellasSobrantes = diferencia;
+
+
+
+                  this.listClientes = clientes;
+                  // Suponiendo que item.puntosDeEntrega es un array de objetos
+                       // Show the modal after data is loaded
+              this.visible = true;
+                  // console.log(cantidadEntregadaTotal);
+                } else {
+                  console.log(
+                    "No hay puntos de entrega disponibles para este item."
+                  );
+                }
+              });
+            } else {
+              console.log("La respuesta no es un array.");
+            }
+          },
+          (error) => {
+            console.error("Error al actualizar el usuario:", error);
+          }
+        );
+    }
+  }
+
+  updatePaginatedEntregas() {
+    this.paginatedEntregas = this.allEntregas.slice(
       this.first,
       this.first + this.rows
     );
@@ -150,7 +225,7 @@ export class SalidaListaComponent implements OnInit {
   eliminarRuta(id: any) {
     this.rutaS.eliminarRuta(id).subscribe(
       (data) => {
-        this.obtenerRutas();
+        this.obtenerEntregas();
       },
       (error) => {
         console.log("ocurrio un error", error);
@@ -163,7 +238,7 @@ export class SalidaListaComponent implements OnInit {
     this.rutaS.updateEstadoSalida(id, estado).subscribe(
       (response) => {
         console.log("Status updated:", response);
-        this.obtenerRutas();
+        this.obtenerEntregas();
       },
       (error) => {
         console.error("Error updating status:", error);
@@ -351,7 +426,7 @@ export class SalidaListaComponent implements OnInit {
             this.rutaS.addSalida(SALIDA).subscribe(
               (response) => {
                 this.visible = false;
-                this.obtenerRutas();
+                this.obtenerEntregas();
                 this.toast.showToastSwalSuccess(
                   "Se ha agregado correctamente."
                 );
@@ -383,7 +458,7 @@ export class SalidaListaComponent implements OnInit {
             this.rutaS.updateSalida(data._id, SALIDAUPDATE).subscribe(
               (response) => {
                 this.visible = false;
-                this.obtenerRutas();
+                this.obtenerEntregas();
                 this.toast.showToastSwalSuccess(
                   "Se ha actualizado correctamente."
                 );
@@ -433,7 +508,7 @@ export class SalidaListaComponent implements OnInit {
   }
 
   updatePaginatedClients() {
-    this.paginatedRutasDetalles = this.allRutas.slice(
+    this.paginatedEntregas = this.allEntregas.slice(
       this.first,
       this.first + this.rows
     );

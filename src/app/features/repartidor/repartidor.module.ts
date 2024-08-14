@@ -33,11 +33,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { Toast } from '../../shared/services/toast.service';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
+import { MapaComponent } from './view/mapa/mapa.component';
 
 const primeNg = [ReactiveFormsModule,MessagesModule,ToastModule,FormsModule,SidebarModule,DialogModule,DropdownModule,CardModule,InputNumberModule,ButtonModule,ZXingScannerModule]
 const ngxScanner = [NgQrScannerModule]
 @NgModule({
-  declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView, NotificacionesView],
+  declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView, NotificacionesView, MapaComponent],
   imports: [primeNg,
     CommonModule, QRCodeModule,
     RepartidorRoutingModule,

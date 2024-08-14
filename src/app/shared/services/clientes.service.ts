@@ -38,6 +38,10 @@ export class ClientesService {
     const url = `${environment.api}/usuarios/` + id;
     return this.http.get(url);
   }
+  purificadora(id: string): Observable<any> {
+    const url = `${environment.api}/purificadoraAdmin/purificadora/` + id;
+    return this.http.get(url);
+  }
 
   updateUsuario(id: string, cliente: any): Observable<any> {
     const url = `${environment.api}/usuarios/actualiza/` + id;

@@ -1,0 +1,164 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .quantity {
+      width: 80%;
+    }
+
+    .edit-icon {
+      cursor: pointer;
+      color: #4CAF50;
+      font-size: 18px;
+      right: 10px;
+      top: 50%;
+    }
+  </style>
+</head>
+<p-toast />
+
+<section id="lista">
+
+  <h1>Hisotrial de entregas</h1>
+  <!-- <div class="top-bar">
+        <input type="text" id="searchBar" placeholder="Buscar...">
+    </div>
+    <div class="filter-container">
+        <div class="filter-group">
+            <label for="date">Días Programada la Salida:</label>
+            <select id="date" name="date">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="repartidor">Repartidor:</label>
+            <select id="repartidor" name="repartidor">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="route">Ruta:</label>
+            <select id="route" name="route">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="municipality">Estado:</label>
+            <select id="municipality" name="municipality">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="colony">Catidad:</label>
+            <select id="colony" name="colony">
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+    </div> -->
+  <table class="entry-table">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Repartidor</th>
+        <th>Vehiculo</th>
+        <th>dia de la entrega</th>
+        <th>Fecha de la entrega</th>
+        <th>Cantidad</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ruta of paginatedEntregas">
+        <td>{{ ruta?.nombreRuta }}</td>
+        <td>{{ ruta.repartidorId.nombre }}</td>
+        <td>{{ ruta.vehiculoId.placas }}</td>
+        <td>
+          {{ ruta.diasEntrada }}
+        </td>
+        <td>
+          {{ ruta.fechaEntrada }}
+        </td>
+        <td>
+          <span style="text-align:center;margin-right: 15px;" class="quantity">{{ ruta.cantidadBotellas !==
+            undefined &&
+            ruta.cantidadBotellas !== null ?
+            ruta.cantidadBotellas
+            : 0 }}
+          </span>
+        </td>
+        <td>
+          <p style="font-weight: bold;" [ngClass]="{
+                    'enviado': ruta.estado === 'enviado',
+                    'pendiente': !ruta.estado || ruta.estado === 'pendiente',
+                    'en_curso': ruta.estado === 'recibido',
+                    'finalizada': ruta.estado === 'finalizada',
+                    'cancelado': ruta.estado === 'cancelado'
+                }">
+            {{ ruta.estado ? ruta.estado : 'pendiente' }}
+          </p>
+
+        </td>
+        <td>
+          <!-- <button type="input" class="read enable-button"> -->
+          <button type="button" class="read enable-button" (click)="getData(ruta._id)">
+            <i class="fa-solid fa-people-carry-box"></i><span>ver detalle</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+  </p-paginator>
+</section>
+
+<p-dialog [modal]="true" header="Información de clientes" [(visible)]="visible" [style]="{width: '50rem', height: '40rem'}">
+  <div class="modal-content">
+    <div class="inputs-container">
+
+      <p-table [value]="listClientes" class="p-datatable-gridlines">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nombre</th>
+            <th>Cantidad de Botellas</th>
+            <th>Presente</th>
+            <th>Compro</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cliente>
+          <tr>
+            <td>{{ cliente.clienteId.nombre }}</td>
+            <td [ngStyle]="{'background-color': cliente.cantidadEntregada > 0 ? 'lightgreen' : 'lightyellow'}">
+              {{ cliente.cantidadEntregada }}
+            </td>
+            <td>{{ cliente.clientePresente ? 'Sí' : 'No' }}</td>
+            <td>{{ cliente.cantidadEntregada > 0 ? 'Sí pidió' : 'No pidió' }}</td>
+          </tr>
+        </ng-template>
+          <!-- <tr>
+            <th><strong>Totales</strong></th>
+          </tr> -->
+        <ng-template pTemplate="footer">
+         
+          <tr>
+            <!-- <td><strong>Totales</strong></td> -->
+            <td>Cantidad asignado:<strong>{{ totalAsignado }}</strong></td>
+            <td>Cantidad entregado:<strong>{{ totalEntregado }}</strong></td>
+            <td>Cantidad sobrado:<strong>{{ totalSobrado }}</strong></td>
+          </tr>
+        </ng-template>
+      </p-table>
+      
+      </div>
+
+    <!-- <div class="contiene-botones">
+      <button type="button" (click)="guardarCambios()">Guardar</button>
+      <button type="button" (click)="close()">Cancelar</button>
+    </div> -->
+  </div>
+</p-dialog>
+
+
+<!-- </div> -->

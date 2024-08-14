@@ -10,11 +10,19 @@ export class RutaService {
   constructor(private http: HttpClient) {}
 
   getRutasSalidas(): Observable<any> {
-    return this.http.get(`${environment.api}/purificadoraAdmin/salidaActual`);
+    return this.http.get(`${environment.api}/salida/salidaActual`);
   }
+  getEntregas(): Observable<any> {
+    return this.http.get(`${environment.api}/entrega/entregas`);
+  }
+  
 
   detalleRutaById(id: string): Observable<any> {
     const url = `${environment.api}/purificadoraAdmin/ruta/` + id;
+    return this.http.get(url);
+  }
+  detalleEntregaById(id: string): Observable<any> {
+    const url = `${environment.api}/entrega/` + id;
     return this.http.get(url);
   }
   updateRepartidora(id: string, cliente: any): Observable<any> {
@@ -64,24 +72,24 @@ export class RutaService {
     return this.http.post(url, data);
   }
   addSalida(data: any): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/salida/`;
+    const url = `${environment.api}/salida/salida/`;
     return this.http.post(url, data);
   }
   updateSalida(id: string, data: any): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/salida/${id}`;
+    const url = `${environment.api}/salida/salida/${id}`;
     return this.http.put(url, data);
   }
-  updateEstadoSalida(id: string, estado: any): Observable<any> {
+  updateEstadoSalida(id: any, estado: any): Observable<any> {
     // `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
     // const url = `${environment.api}/purificadoraAdmin/salidaActual/{id}, ${ estado }`
     return this.http.put(
-      `${environment.api}/purificadoraAdmin/salidaEstado/${id}`,
+      `${environment.api}/salida/salidaEstado/${id}`,
       { estado }
     );
   }
   // const url = `${environment.api}/purificadoraAdmin/salidacantidad/${idSalida}/${clienteId}`;
   enviarCantidad(body:any): Observable<any> {
-  return this.http.put<any>(`${environment.api}/purificadoraAdmin/salidacantidad/`, body);
+  return this.http.put<any>(`${environment.api}/salida/salidacantidad/`, body);
 }
 
   addPuntoEntregaRutaById(id: string, data: any): Observable<any> {

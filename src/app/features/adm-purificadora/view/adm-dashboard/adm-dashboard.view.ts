@@ -6,6 +6,9 @@ import { Repartidor } from "../../../../shared/interfaces/repartidor.interface";
 import { Router } from "@angular/router";
 import { Ruta } from "../../../../shared/interfaces/ruta.interface";
 import { RutaService } from "../../../../shared/services/ruta.service";
+// import { SessionService
+  import { NgxUiLoaderService } from "ngx-ui-loader";
+import { SessionService } from '../../../../core/commons/components/service/session.service';
 @Component({
   selector: "app-adm-dashboard",
   templateUrl: "./adm-dashboard.view.html",
@@ -17,13 +20,17 @@ export class AdmDashboardView {
   basicData: any;
 
   basicOptions: any;
-  nombre: string = "Andrea";
+  // nombre: string = "Andrea";
+  id!: string;
+  data: any = {};
+
 
   // constructor(cpriv){}
 
   ngOnInit() {
     this.getUsers();
     this.getRepartidores();
+    this.getData()
 
     this.obtenerRutas();
 
@@ -127,8 +134,25 @@ export class AdmDashboardView {
     private rutaS: RutaService,
     private router: Router,
     private UserS: ClientesService,
-    private repService: RepartidoresService
+    private repService: RepartidoresService,private sessionService: SessionService,
+    private ngxService: NgxUiLoaderService
   ) {}
+
+  getData(): void {
+    this.ngxService.start();
+    const userData = this.sessionService.getId();
+    console.log("userData=>", userData)
+    if (userData) {
+      this.id = userData;
+      console.log("id=>", this.id)
+      if (this.id) {
+        this.UserS.purificadora(this.id).subscribe((data) => {
+          this.data = data;
+          console.log(data)
+        })
+      }
+    }
+  }
   obtenerRutas() {
     this.rutaS.getRutas().subscribe(
       (data) => {

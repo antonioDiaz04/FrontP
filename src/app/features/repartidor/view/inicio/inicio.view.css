@@ -101,8 +101,9 @@
   padding: 20px;
   margin-top: 0;
   background-color: #fff;
-  border: 1px solid #c2d8ebdc;
-  box-shadow: 0 0 4px rgba(188, 203, 209, 0.786);
+  border-radius: 8px;
+    border: 1px solid rgb(210, 215, 217);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   animation: fadeIn 1s ease-in-out;
 }
@@ -140,9 +141,10 @@
 
 .description-salida {
   padding: 20px;
-  background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 4px rgba(188, 203, 209, 0.786);
+
+    border: 1px solid rgb(210, 215, 217);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .description-salida h2 {
@@ -162,9 +164,9 @@
   margin: 10px;
   padding: 20px;
   background-color: #fff;
-  border: 1px solid #c2d8ebdc;
-  border-radius: 8px;
-  box-shadow: 0 0 4px rgba(188, 203, 209, 0.786);
+  /* border: 1px solid #c2d8ebdc; */
+  border-radius: 8px;border: 1px solid rgb(210, 215, 217);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }

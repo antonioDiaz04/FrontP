@@ -75,6 +75,8 @@ import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ClienteRutaComponent } from './commons/components/cliente-ruta/cliente-ruta.component';
 import { AsignarClientesRutaComponent } from './commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component';
+import { HistorialEntregaComponent } from './commons/components/historial-entrega/historial-entrega.component';
+
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
 ]
@@ -83,11 +85,10 @@ const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,
 
 const PIPES=[FilterPipe]
 @NgModule({
-  declarations: [PIPES,
-    AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,
-    AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,
-    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,
-    MapaView, MapaClientUbicacionView,ClienteTablaComponent,ClienteFormComponent, Grafica1Component, RepartidoresFormComponent, RepartidoresView, RutaFormComponent, RutaListadoComponent, RutaView, VehiculosView, VehiculoFormComponent, VehiculoListadoComponent,   SalidaView, EntradaView, SalidaListaComponent, EntradaListaComponent, EntradaEditComponent, ResultadosListadoComponent, ResultadoEntregaView, MiPerfilView, ClienteRutaComponent, AsignarClientesRutaComponent,
+  declarations: [PIPES,HistorialEntregaComponent,SalidaListaComponent,EntradaListaComponent,ClienteFormComponent,RepartidoresView,RutaFormComponent,VehiculosView,VehiculoFormComponent,
+    AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,ClienteTablaComponent,MapaView,AsignarClientesRutaComponent,RutaListadoComponent,RutaView,EntradaView,
+    AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,SalidaView,ResultadosListadoComponent,EntradaEditComponent,ResultadoEntregaView,
+    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,VehiculoListadoComponent,ClienteRutaComponent,MiPerfilView,MapaClientUbicacionView,
   ],
   imports: [MessagesModule,MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,

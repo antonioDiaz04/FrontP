@@ -51,6 +51,7 @@ export class RepartidoresListadoComponent implements OnInit {
       email: ["", Validators.required],
       numCasa: ["", Validators.required],
       telefono: ["", Validators.required],
+      password1: ["", Validators.required],
     });
     this.id = this.router.snapshot.paramMap.get("id");
   }
@@ -77,6 +78,7 @@ export class RepartidoresListadoComponent implements OnInit {
           email: data.email,
           numCasa: data.numCasa,
           telefono: data.telefono,
+          password1:data.password1
         });
 
         // Inicializar los checkboxes según los días asignados

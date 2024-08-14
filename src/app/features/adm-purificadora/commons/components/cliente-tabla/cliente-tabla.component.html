@@ -1,17 +1,6 @@
-
-
-<p-dialog
-  *ngIf="listUsuario"
-  header="Información del Usuario"
-  [modal]="true"
-  [(visible)]="visible"
-  [style]="{ width: '35rem' }"
-  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
->
-  <form
-    [formGroup]="clienteForm"
-    (ngSubmit)="actualizarCliente(listUsuario._id)"
-  >
+<p-dialog *ngIf="listUsuario" header="Información del Usuario" [modal]="true" [(visible)]="visible"
+  [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <form [formGroup]="clienteForm" (ngSubmit)="actualizarCliente(listUsuario._id)">
     <h3>Detalles Personales</h3>
     <div>
       <label for="nombre">Nombre:</label>
@@ -36,8 +25,19 @@
       <label for="telefono">Teléfono:</label>
       <input type="text" id="telefono" formControlName="telefono" />
     </div>
+
+    <div>
+      <label for="longitud">longitud:</label>
+      <input formControlName="longitud">
+    </div>
+
+    <div>
+      <label for="latitud">latitud:</label>
+      <input formControlName="latitud" >
+    </div>
     <!-- <app-mapa-client-ubicacion></app-mapa-client-ubicacion> -->
 
+    <label for="telefono">Teléfono:</label>
     <div class="btn-group" role="group">
       <button type="submit" class="btn btn-primary">Actualizar</button>
     </div>

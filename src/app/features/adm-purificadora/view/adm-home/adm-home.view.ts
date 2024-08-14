@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { SessionService } from '../../../../core/commons/components/service/session.service';
+import { ClientesService } from "../../../../shared/services/clientes.service";
 
 @Component({
   selector: "app-adm-home",
@@ -33,8 +36,14 @@ export class AdmHomeView implements OnInit {
   fechaTexto: string;
   fechaSeleccionada: Date;
   mostrarCalendario: boolean = false;
+  id!: string;
+  data: any = {};
 
-  constructor(private router: Router) {
+
+  constructor(
+    private clientesService: ClientesService
+    ,private router: Router,private sessionService: SessionService,
+    private ngxService: NgxUiLoaderService,) {
     this.fechaSeleccionada = new Date(); // Puedes inicializar con la fecha actual o la que necesites
     this.fecha = this.obtenerFechaYYYYMMDD();
     this.fechaTexto = this.obtenerFechaTexto();
@@ -45,8 +54,26 @@ export class AdmHomeView implements OnInit {
   }
 
   ngOnInit() {
+    this.getData()
     // console.log(this.obtenerFechaYYYYMMDD()); // Output: "Viernes / Junio / 2024" (para la fecha actual)
   }
+
+  getData(): void {
+    this.ngxService.start();
+    const userData = this.sessionService.getId();
+    console.log("userData=>", userData)
+    if (userData) {
+      this.id = userData;
+      console.log("id=>", this.id)
+      if (this.id) {
+        this.clientesService.purificadora(this.id).subscribe((data) => {
+          this.data = data;
+          console.log(data)
+        })
+      }
+    }
+  }
+
 
   redirectToAdminPurificadora(route: string): void {
     // this.sidebarVisible2 = !this.sidebarVisible2

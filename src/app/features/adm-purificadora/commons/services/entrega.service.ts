@@ -9,7 +9,7 @@ import { environment } from '../../../../../environments/environment';
 export class EntregaService {
 
   private apiUrl = `${environment.api}/entrega`;
-  private confirmacionUrl =`${environment.api}/salidas`;
+  private confirmacionUrl =`${environment.api}/salida`;
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +23,6 @@ export class EntregaService {
     const url = `${this.confirmacionUrl}/confirmar`; // Ensure this URL is correct
     return this.http.put<any>(url, { nombreRuta, fechaEntrada });
   }
-  
+
 
 }

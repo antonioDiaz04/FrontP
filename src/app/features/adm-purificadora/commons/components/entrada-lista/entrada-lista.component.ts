@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { RutaService } from '../../../../../shared/services/ruta.service';
-import { Subscription, interval } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EntregaService } from '../../services/entrega.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
+import { RutaService } from "../../../../../shared/services/ruta.service";
+import { Subscription, interval } from "rxjs";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { EntregaService } from "../../services/entrega.service";
 
 export interface ClienteInterface {
   _id: string;
@@ -24,6 +24,7 @@ export interface ClienteInterface {
 
 export interface PuntoDeEntregaInterface {
   _id: string;
+  clientePresente: boolean;
   cantidadEntregada?: number; // Hacerlo opcional
   clienteId: ClienteInterface;
 }
@@ -53,7 +54,7 @@ export interface VehiculoInterface {
 
 export interface DetalleEntregaInterface {
   _id: string;
-  nombreRuta: string;
+  nombreRuta: any;
   repartidorId: RepartidorInterface;
   vehiculoId: VehiculoInterface;
   estado: string;
@@ -68,37 +69,42 @@ export interface DetalleEntregaInterface {
 }
 
 @Component({
-  selector: 'app-entrada-lista',
-  templateUrl: './entrada-lista.component.html',
+  selector: "app-entrada-lista",
+  templateUrl: "./entrada-lista.component.html",
   styleUrls: [
     "../../../adm-purificadora.component.scss",
     "./modal.scss",
     "../../../form.scss",
-  ],})
+  ],
+})
 export class EntradaListaComponent implements OnInit, OnDestroy {
   allRutas: DetalleEntregaInterface[] = [];
   paginatedRutasDetalles: DetalleEntregaInterface[] = [];
   totalRecords: number = 0;
   rows: number = 5;
   first: number = 0;
+ 
   estadoinput: boolean = true;
   ruta!: DetalleEntregaInterface[];
   inputNumberValue: number | null = null; // Valor del campo de entrada
   mostrarBotonGuardar: boolean = false; // Controla la visibilidad del botón
   visible: boolean = false;
-  rutaSeleccionada!: DetalleEntregaInterface;
+  // rutaSeleccionada!: DetalleEntregaInterface;
   cantidadInvalida: boolean = false;
+  rutaSeleccionada: DetalleEntregaInterface | null = null; // Asegúrate de que sea null al iniciar
 
   private pollingSubscription: Subscription | undefined;
 
-  constructor(private rutaS: RutaService, private router: Router,    private fb: FormBuilder,    private entregaS: EntregaService, // Inyecta el servicio EntregaService
-
+  constructor(
+    private rutaS: RutaService,
+    private router: Router,
+    private fb: FormBuilder,
+    private entregaS: EntregaService // Inyecta el servicio EntregaService
   ) {}
 
   ngOnInit(): void {
     this.obtenerRutas();
     // this.startPolling();
-
   }
 
   ngOnDestroy(): void {
@@ -108,19 +114,30 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
   obtenerRutas() {
     this.rutaS.getRutasSalidas().subscribe(
       (data: DetalleEntregaInterface[]) => {
-        console.log(data);
         this.ruta = data;
         // Filtrar los datos para solo incluir los que tienen fechaSalida
         const rutasConFechaSalida = data.filter(
           (ruta: DetalleEntregaInterface) => ruta.fechaSalida
         );
-        console.log(rutasConFechaSalida);
         this.allRutas = rutasConFechaSalida;
+
+  // this.totalEntregado = item.puntosDeEntrega.reduce(
+  //                   (total, dt: any) => {
+  //                     return total + dt.cantidadEntregada;
+  //                   },
+  //                   0
+  //                 );
+  // cantidadBotellas: number;
+  // cantidadContada?: number; // Hacerlo opcional
+
+//  cantidadBotellas: number;
+  // cantidadContada?: number;
+      
         this.totalRecords = this.allRutas.length;
         this.updatePaginatedRutasDetalles();
       },
       (error) => {
-        console.log('Ocurrió un error al obtener la información', error);
+        console.log("Ocurrió un error al obtener la información", error);
       }
     );
   }
@@ -147,21 +164,21 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
         this.obtenerRutas();
       },
       (error) => {
-        console.log('Ocurrió un error', error);
+        console.log("Ocurrió un error", error);
       }
     );
   }
 
   editar(id: string) {
-    this.router.navigate(['/purificadoraAdm/salida/edit-salida/', id]);
+    this.router.navigate(["/purificadoraAdm/salida/edit-salida/", id]);
   }
 
   disablein(estado: string): boolean {
-    return estado === 'terminado' ? false : true;
+    return estado === "terminado" ? false : true;
   }
 
   getEstado(ruta: DetalleEntregaInterface): string {
-    return ruta.estado === 'recibido' ? 'en proceso' : ruta.estado;
+    return ruta.estado === "recibido" ? "en proceso" : ruta.estado;
   }
 
   onPageChange(event: any) {
@@ -172,9 +189,12 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
 
   calcularCantidadTotalEntregada(ruta: DetalleEntregaInterface): number {
     if (!ruta.puntosDeEntrega) return 0;
-    return ruta.puntosDeEntrega.reduce((total: number, punto: PuntoDeEntregaInterface) => {
-      return total + (punto.cantidadEntregada || 0);
-    }, 0);
+    return ruta.puntosDeEntrega.reduce(
+      (total: number, punto: PuntoDeEntregaInterface) => {
+        return total + (punto.cantidadEntregada || 0);
+      },
+      0
+    );
   }
 
   recibirRuta(id: string) {
@@ -194,80 +214,85 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     }
   }
   guardarEntrega() {
-    // Verificar si la cantidad es válida
-    if (this.inputNumberValue && this.inputNumberValue > this.rutaSeleccionada.cantidadBotellas) {
-      this.cantidadInvalida = true;
-      console.log('La cantidad ingresada supera la cantidad de botellas asignadas.');
-    } else {
-      this.cantidadInvalida = false;
-  
-      const cantidadBotellasSobrantes = this.rutaSeleccionada?.cantidadBotellas - this.calcularCantidadTotalEntregada(this.rutaSeleccionada);
-  
-      // Preparar los puntos de entrega
-      const puntosDeEntrega = this.rutaSeleccionada.puntosDeEntrega.map((punto: any) => ({
-        clienteId: punto.clienteId._id
-      }));
-  
-      // Convertir la fecha de entrada al formato DD-MM-YYYY
-      const fechaEntrada = new Date().toISOString().split('T')[0];  // YYYY-MM-DD
-      const [year, month, day] = fechaEntrada.split('-');
-      const fechaEntradaFormatted = `${day}-${month}-${year}`;  // DD-MM-YYYY
-  
-      // Crear el objeto de entrega
-      const entrega = {
-        nombreRuta: this.rutaSeleccionada.nombreRuta,
-        repartidorId: this.rutaSeleccionada.repartidorId._id,
-        vehiculoId: this.rutaSeleccionada.vehiculoId._id,
-        estado: this.rutaSeleccionada.estado,
-        cantidadBotellas: this.rutaSeleccionada.cantidadBotellas,
-        cantidadBotellasSobrantes: cantidadBotellasSobrantes,
-        contados: this.inputNumberValue,
-        puntosDeEntrega: puntosDeEntrega,
-        diasEntrada: this.rutaSeleccionada.diasSalida,
-        fechaEntrada: fechaEntradaFormatted  // Fecha en formato DD-MM-YYYY
-      };
-  
-      console.log('Datos de la entrega:', entrega);
-  
-      // Llamar al servicio para crear la entrega
-      this.entregaS.crearEntrega(entrega).subscribe(
-        response => {
-          console.log('Entrega creada exitosamente', response);
-          console.log('confirm', this.rutaSeleccionada.nombreRuta, entrega.fechaEntrada);
-  
-          // Llamar al servicio para confirmar la salida
-          this.entregaS.confirmarSalida(this.rutaSeleccionada.nombreRuta, entrega.fechaEntrada).subscribe(
-            confirmResponse => {
-              console.log('Salida confirmada exitosamente', confirmResponse);
-              this.obtenerRutas(); // Refresca las rutas
-              this.visible = false; // Cerrar el modal
+    if (this.rutaSeleccionada === null) {
+      console.error("No se ha seleccionado ninguna ruta.");
+      return;
+    }
+
+    console.log(this.rutaSeleccionada);
+
+    const cantidadBotellasSobrantes =
+      this.rutaSeleccionada.cantidadBotellas -
+      this.calcularCantidadTotalEntregada(this.rutaSeleccionada);
+
+    const puntosDeEntrega = this.rutaSeleccionada.puntosDeEntrega.map(
+      (punto: any) => ({
+        clientePresente: punto.clientePresente,
+        cantidadEntregada: punto.cantidadEntregada,
+        clienteId: punto.clienteId._id,
+      })
+    );
+
+    const fechaEntrada = new Date().toISOString().split("T")[0];
+    const [year, month, day] = fechaEntrada.split("-");
+    const fechaEntradaFormatted = `${day}-${month}-${year}`;
+    // !aqui corregir
+    const entrega = {
+      nombreRuta: this.rutaSeleccionada.nombreRuta,
+      repartidorId: this.rutaSeleccionada.repartidorId._id,
+      vehiculoId: this.rutaSeleccionada.vehiculoId._id,
+      estado: this.rutaSeleccionada.estado,
+      cantidadBotellas: this.rutaSeleccionada.cantidadBotellas,
+      cantidadBotellasSobrantes: cantidadBotellasSobrantes,
+      contados: this.inputNumberValue,
+      puntosDeEntrega: puntosDeEntrega,
+      diasEntrada: this.rutaSeleccionada.diasSalida,
+      fechaEntrada: fechaEntradaFormatted,
+    };
+
+    console.log("Datos de la entrega:", entrega);
+
+    this.entregaS.crearEntrega(entrega).subscribe(
+      (response) => {
+        console.log("Entrega creada exitosamente", response);
+        console.log(
+          "confirm",
+          this.rutaSeleccionada?.nombreRuta,
+          entrega.fechaEntrada
+        );
+
+        this.entregaS
+          .confirmarSalida(
+            this.rutaSeleccionada?.nombreRuta,
+            entrega.fechaEntrada
+          )
+          .subscribe(
+            (confirmResponse) => {
+              console.log("Salida confirmada exitosamente", confirmResponse);
+              this.obtenerRutas();
+              this.visible = false;
             },
-            error => {
-              console.error('Error al confirmar la salida', error);
+            (error) => {
+              console.error("Error al confirmar la salida", error);
             }
           );
-        },
-        error => {
-          console.error('Error al crear la entrega', error);
-        }
-      );
-    }
+      },
+      (error) => {
+        console.error("Error al crear la entrega", error);
+      }
+    );
   }
-  
 
+  cancelarRecibo() {
+    this.estadoinput = true;
+    this.inputNumberValue = null; // Resetea el valor del input
+    this.cantidadInvalida = false; // Oculta el mensaje de error
+    this.mostrarBotonGuardar = false; // Oculta los botones de guardar y cancelar
+  }
 
-cancelarRecibo() {
-  this.estadoinput = true;
-  this.inputNumberValue = null; // Resetea el valor del input
-  this.cantidadInvalida = false; // Oculta el mensaje de error
-  this.mostrarBotonGuardar = false; // Oculta los botones de guardar y cancelar
-}
-
-   // Método para mostrar el modal
-   mostrarModal(ruta: DetalleEntregaInterface) {
+  // Método para mostrar el modal
+  mostrarModal(ruta: DetalleEntregaInterface) {
     this.rutaSeleccionada = ruta;
     this.visible = true;
   }
-
-
 }

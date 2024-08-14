@@ -8,6 +8,11 @@ import { RepartidoresService } from "../../../../shared/services/rapartidores.se
 import { RutaService } from "../../../../shared/services/ruta.service";
 import Swal from "sweetalert2";
 
+export interface PuntoDeEntrega {
+  cantidadEntregada?: number;
+  _id: string;
+}
+
 @Component({
   selector: "app-inicio",
   templateUrl: "./inicio.view.html",
@@ -22,8 +27,10 @@ export class InicioView implements OnInit {
   buttonText: string = "Recibir";
   enviado!: any;
   buttonColor: string = "#379b91";
-  tienesSalidaProgramada!: boolean;
+  cantidadEntregadaTotal!: number;
   sidebarVisible: boolean = false;
+  tienesSalidaProgramada!: boolean;
+  estado!: string;
 
   constructor(
     private router: Router,
@@ -34,9 +41,8 @@ export class InicioView implements OnInit {
     private sessionService: SessionService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getData();
-    console.log(this.idSalida);
   }
 
   toggleEditMode(salidaId: string): void {
@@ -92,14 +98,47 @@ export class InicioView implements OnInit {
             this.data = data;
             this.idSalida = data[0]._id;
             // this.idSalida = data[0]._id;
-            console.log(this.idSalida);
+            this.estado=data[0].estado
             this.storageService.setIdSalida(data[0]._id);
             this.storageService.setCantidadSalida(data[0].cantidadBotellas);
 
-            if (this.data == null) {
+            if (this.data == null || data[0].estado=='finalizada') {
               this.tienesSalidaProgramada = false;
             } else {
               this.tienesSalidaProgramada = true;
+            }
+
+            if (Array.isArray(data)) {
+              data.forEach((item: Salida) => {
+                if (
+                  item.puntosDeEntrega &&
+                  Array.isArray(item.puntosDeEntrega)
+                ) {
+                  const clientes = item.puntosDeEntrega.map(
+                    (entrega: PuntoDeEntrega) => entrega
+                  );
+
+                  // Suponiendo que item.puntosDeEntrega es un array de objetos
+                  this.cantidadEntregadaTotal = item.puntosDeEntrega.reduce(
+                    (total, dt: any) => {
+                      return total + dt.cantidadEntregada;
+                    },
+                    0
+                  );
+                  console.log(this.cantidadEntregadaTotal);
+                  const diferencia =
+                    data[0].cantidadBotellas - this.cantidadEntregadaTotal;
+                  this.botellasSobrantes = diferencia;
+
+                  // console.log(cantidadEntregadaTotal);
+                } else {
+                  console.log(
+                    "No hay puntos de entrega disponibles para este item."
+                  );
+                }
+              });
+            } else {
+              console.log("La respuesta no es un array.");
             }
           },
           (error) => {
@@ -118,7 +157,16 @@ export class InicioView implements OnInit {
   }
 
   terminarEntrega(salidaId: string) {
-    console.log(`Entrega ${salidaId} terminada`);
+     const estado = "finalizada";
+      this.salidaService.updateEstadoSalida(this.idSalida, estado).subscribe(
+        (response) => {
+          console.log("Status updated:", response);
+          this.getData();
+        },
+        (error) => {
+          console.error("Error updating status:", error);
+        }
+      );
   }
 
   enviarEntreada() {

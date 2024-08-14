@@ -106,8 +106,9 @@ section#lista {
   padding: 15px;
   // border-radius: 10px 10px;
   background-color: white;
-  box-shadow: 0 0 5px 7px rgba(218, 218, 218, 0.251);
-
+  // box-shadow: 0 0 5px 7px rgba(218, 218, 218, 0.251);
+box-shadow: 0 0 3px #0000001a;
+  border-right: solid 1.5px #d2d7d9;
   >h2 {
     color: rgb(158, 158, 158);
   }
@@ -421,32 +422,35 @@ table {
     color: #182433;
 } */
 
-/* styles.css */
-.swal2-actions {
-  gap: 10px;
+
+
+.confirmed {
+  background-color: #d4edda;
+  /* Un tono verde claro */
+  color: #155724;
+  /* Color del texto en verde oscuro */
 }
 
-.swal2-confirm.btn-success {
-  background-color: #28a745;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-}
+ >table {
+   width: 100%;
+   border-collapse: collapse;
+   margin: 20px 0;
+   background-color: white;
+   // border-radius: 10px 10px;
 
-.swal2-cancel.btn-danger {
-  background-color: #dc3545;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-}
+   >thead {
+     border-radius: 10px 10px;
 
-.swal2-confirm.btn-success:hover,
-.swal2-cancel.btn-danger:hover {
-  opacity: 0.8;
-}
+     >tr {
+       >th {
+         padding: 12px 15px;
+         text-align: left;
+         border-bottom: 1px solid #ddd;
+         background-color: #ffffff;
+         // color: #383838;
+         color: #334256;
+       }
+     }
+   }
+
+  }

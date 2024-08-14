@@ -26,6 +26,7 @@ import { ResultadoEntregaView } from "./view/resultado-entrega/resultado-entrega
 import { ResultadosListadoComponent } from "./commons/components/resultados-listado/resultados-listado.component";
 import { MiPerfilView } from "./view/mi-perfil/mi-perfil.view";
 import { AsignarClientesRutaComponent } from "./commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component";
+import { HistorialEntregaComponent } from "./commons/components/historial-entrega/historial-entrega.component";
 
 const routes: Routes = [
   {
@@ -66,7 +67,7 @@ const routes: Routes = [
       },
       {
         path: "miPerfil",
-        component: MiPerfilView, 
+        component: MiPerfilView,
       },
       {
         path: "salida",
@@ -116,6 +117,10 @@ const routes: Routes = [
             pathMatch: "full",
           },
         ],
+      },
+      {
+        path: "historial-entrega",
+        component: HistorialEntregaComponent,
       },
       {
         path: "notificaciones",

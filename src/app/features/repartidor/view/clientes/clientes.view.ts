@@ -10,14 +10,34 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ClientesService } from "../../../../shared/services/clientes.service";
-import { Cliente } from "../../../../shared/interfaces/client.interface";
+// import { Cliente } from "../../../../shared/interfaces/client.interface";
 import { NgxUiLoaderService } from "ngx-ui-loader";
 import { SessionService } from "../../../../core/commons/components/service/session.service";
 import { RepartidoresService } from "../../../../shared/services/rapartidores.service";
-import { Salida, PuntoDeEntrega } from "../../../../shared/models/salida.model";
+import { Salida } from "../../../../shared/models/salida.model";
 import Swal from "sweetalert2";
 import { RutaService } from "../../../../shared/services/ruta.service";
 import { Toast } from "../../../../shared/services/toast.service";
+
+export interface PuntoDeEntrega {
+  clienteId?: Cliente;
+  cantidadEntregada?: number;
+  _id: string;
+}
+export interface Cliente {
+  _id?: string;
+  nombre: string;
+  email: string;
+  longitud?: string;
+  latitud?: string;
+  telefono?: string;
+  numCasa?: string;
+  municipio?: string;
+  colonia: string;
+  rol?: string;
+  estatus?: string;
+  [key: string]: any;
+}
 @Component({
   selector: "app-cliente-tabla",
   templateUrl: "./clientes.view.html",
@@ -31,7 +51,7 @@ export class ClientesView implements OnInit {
   idCliente!: string;
   id!: string | null;
   showLoader: boolean = true; // Propiedad para controlar la visibilidad del loader
-
+  cantidadEntregadaTotal!: number | null;
   clienteForm!: FormGroup;
 
   showLoaderCamera: boolean = false;
@@ -44,13 +64,13 @@ export class ClientesView implements OnInit {
 
   visible: boolean = false;
   isVisible = false;
-
+  errorMessage!: string;
   value2: number = 10.5;
 
   idSalida!: string | null;
   tienesSalidaProgramada!: boolean;
   clienteId!: string;
-  cantidadAsignada: any; // Valor inicial asignado
+  cantidadAsignada: number | null; // Valor inicial asignado
   cantidadIngresada: number = 0; // Cantidad que se va ingresando
   cantidadActual!: number;
   title = "qr-reader";
@@ -71,7 +91,8 @@ export class ClientesView implements OnInit {
     private ngxService: NgxUiLoaderService,
     private salidaService: RutaService,
     private toast: Toast,
-    private sessionService: SessionService
+    // private router: Router,
+    private sessionService: SessionService,
   ) {
     this.clienteForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -80,8 +101,9 @@ export class ClientesView implements OnInit {
       numCasa: ["", Validators.required],
       telefono: ["", Validators.required],
     });
+    this.cantidadAsignada = 0;
     this.cantidadForm = this.fb.group({
-      cantidadIngresada: [0, [Validators.required, Validators.min(0)]]
+      cantidadIngresada: [0, [Validators.required, Validators.min(0)]],
     });
     this.id = this.router.snapshot.paramMap.get("id");
   }
@@ -94,8 +116,8 @@ export class ClientesView implements OnInit {
     this.cantidadAsignada = this.sessionService.getCantidadSalida();
     console.log(this.cantidadAsignada);
     // this.updatePaginatedClients();
-      this.idSalida = this.sessionService.getIdSalida();
-      console.log(this.idSalida)
+    this.idSalida = this.sessionService.getIdSalida();
+    console.log(this.idSalida);
     this.getData();
   }
 
@@ -111,42 +133,84 @@ export class ClientesView implements OnInit {
   onCantidadChange(event: any) {
     const nuevaCantidad = event.value;
     this.cantidadActual = nuevaCantidad;
+    const cantidadIngresada = this.cantidadForm.get("cantidadIngresada")?.value;
 
-    // Validar que la cantidad ingresada sea válida
-    if (nuevaCantidad <= this.cantidadAsignada && nuevaCantidad >= 0) {
-      this.cantidadAsignada -= nuevaCantidad;
-      this.cantidadIngresada = 0; // Resetea el valor del input
-    } else {
-      // Mostrar un error o notificación si la cantidad es inválida
-      console.error("Cantidad inválida.");
-    }
+    // // Validar que la cantidad ingresada sea válida
+    // if (nuevaCantidad <= this.cantidadAsignada && nuevaCantidad >= 0) {
+    //   this.cantidadAsignada -= nuevaCantidad;
+    //   this.cantidadIngresada = 0; // Resetea el valor del input
+    // } else {
+    //   // Mostrar un error o notificación si la cantidad es inválida
+    //   console.error("Cantidad inválida.");
+    // }
   }
 
   enviarEntrada(): void {
     // Obtén el idSalida desde la sesión
-    const idSalida =this.idSalida;
+    const idSalida = this.idSalida;
     // Validar que idSalida no sea null
     if (!idSalida) {
       this.toast.showToastPmNgError(
         "No se pudo obtener idSalida. Inténtalo de nuevo."
       );
       return;
-    } 
-    const cantidadIngresada = this.cantidadForm.get('cantidadIngresada')?.value;
+    }
+    const cantidadIngresada = this.cantidadForm.get("cantidadIngresada")?.value;
 
-    const cantidadActual=this.cantidadAsignada-cantidadIngresada;
+    // const cantidadActual=this.cantidadAsignada-cantidadIngresada;
     // Mostrar en la consola los valores antes de enviar
     console.log("idSalida:", idSalida);
     console.log("clienteId:", this.clienteId);
+
+
+
+    const cantidadSobrante = (this.cantidadAsignada || 0) - (this.cantidadEntregadaTotal || 0);
+
+
+    if (cantidadIngresada >= cantidadSobrante) {
+        // Mostrar SweetAlert
+        Swal.fire({
+            title: '¿Deseas terminar la salida?',
+            text: "La cantidad ingresada es mayor o igual a la cantidad sobrante.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, terminar',
+            cancelButtonText: 'No, cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Llamar al servicio para terminar la salida
+                this.terminarSalida();
+                this.toast.showToastPmNgSuccess("se ha finalizado la salida.")
+
+            } else {
+                // Acción de cancelación
+                this.toast.showToastPmNgInfo("Operación cancelada por el usuario.");
+            }
+        });
+    } else {
+        console.log("La cantidad ingresada no es mayor o igual a la cantidad sobrante.");
+    }
+
+
+
+
     console.log("cantidadIngresada:", cantidadIngresada);
+
+
+
+
+
+
+
     // Crear el objeto con los datos a enviar
     const body = {
       idSalida: idSalida,
       clienteId: this.clienteId,
       cantidad: cantidadIngresada,
-      
     };
-    console.log(body)
+    console.log(body);
     this.salidaService.enviarCantidad(body).subscribe(
       (response) => {
         // Manejar la respuesta si es necesario
@@ -155,6 +219,7 @@ export class ClientesView implements OnInit {
         this.toast.showToastPmNgSuccess("Se envio la cantidad");
         // Desactivar el escáner
         this.scannerEnabled = false;
+        this.getData();
       },
       (error) => {
         // Manejar el error si es necesario
@@ -166,31 +231,18 @@ export class ClientesView implements OnInit {
       }
     );
   }
-
-  // enviarEntreada() {
-  //   const selectHTML = `
-  //   <input id="swal-input1" class="swal2-input">
-  //   <input id="swal-input2" class="swal2-input">`;
-  //   Swal.fire({
-  //     title: "Multiple inputs",
-  //     html: selectHTML,
-  //     focusConfirm: false,
-  //     showCancelButton: true,
-  //     preConfirm: () => {
-  //       const selectedValue = (
-  //         Swal.getPopup()?.querySelector("#swal-select") as HTMLSelectElement
-  //       ).value;
-  //       if (!selectedValue) {
-  //         Swal.showValidationMessage("Por favor selecciona un vehículo");
-  //       }
-  //       return selectedValue;
-  //     },
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       const selectedVehiculoId = result.value;
-  //     }
-  //   });
-  // }
+  terminarSalida(): void {
+      const estado = "finalizada";
+      this.salidaService.updateEstadoSalida(this.idSalida, estado).subscribe(
+        (response) => {
+          console.log("Status updated:", response);
+          this.getData();
+        },
+        (error) => {
+          console.error("Error updating status:", error);
+        }
+      );
+  }
 
   editar(id: any) {
     this.visible = true;
@@ -245,11 +297,19 @@ export class ClientesView implements OnInit {
                   Array.isArray(item.puntosDeEntrega)
                 ) {
                   const clientes = item.puntosDeEntrega.map(
-                    (entrega: PuntoDeEntrega) => entrega.clienteId
+                    (entrega: PuntoDeEntrega) => entrega
                   );
+
                   this.listClientes = clientes;
-                  // console.log("Clientes:", this.listClientes);
-                  // console.log("Clientes:", clientes);
+                  // Suponiendo que item.puntosDeEntrega es un array de objetos
+                  this.cantidadEntregadaTotal = item.puntosDeEntrega.reduce(
+                    (total, dt: any) => {
+                      return total + dt.cantidadEntregada;
+                    },
+                    0
+                  );
+
+                  // console.log(cantidadEntregadaTotal);
                 } else {
                   console.log(
                     "No hay puntos de entrega disponibles para este item."
@@ -277,11 +337,6 @@ export class ClientesView implements OnInit {
       this.showLoaderCamera = true; // muestra el loader encuentran cámaras
     }
   }
-
-  // scanSuccessHandler(event: string) {
-  //   console.log(event);
-  //   this.results.unshift(event);
-  // }
 
   scanSuccessHandler(event: string) {
     // console.log(event);
@@ -370,7 +425,6 @@ export class ClientesView implements OnInit {
 
   closeScanner() {
     this.isModal = false;
-
     this.showScanner = false; // Oculta el modal
     // Opcionalmente, desactiva el escáner
     this.scannerEnabled = false;
@@ -378,24 +432,6 @@ export class ClientesView implements OnInit {
 
   entregar(id: any) {
     this.isModal = true;
-
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     Swal.fire({
-    //       title: "Deleted!",
-    //       text: "Your file has been deleted.",
-    //       icon: "success",
-    //     });
-    //   }
-    // });
   }
 
   handleQrCodeResult(result: string): void {
@@ -404,8 +440,19 @@ export class ClientesView implements OnInit {
     this.closeScanner();
   }
 
-  verRuta(cliente: any) {
+
+
+  verRuta(latitud: any,longitud:any) {
     // Lógica para ver ruta
-    console.log("Ver ruta de", cliente.nombre);
+    // console.log("Ver ruta de", .nombre);
+this.rou.navigate([`repartidor/mapa/${latitud}/${longitud}`])
+
   }
+
+
+
+
+
+
+
 }

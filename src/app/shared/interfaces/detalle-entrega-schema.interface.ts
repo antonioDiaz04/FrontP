@@ -17,7 +17,7 @@ export interface DetalleEntregaInterface {
   vehiculoId?: Vehiculo;
   fechaInicio?: Date;
   fechaFin?: Date;
-  estado: "enviado" | "recibido" | "pendiente" | "en_curso" | "finalizada" | "cancelado";
+  estado: "enviado" | "recibido" | "pendiente" | "en_curso" | "finalizada" | "cancelado" | "confirmado";
   puntosDeEntrega: PuntoDeEntrega | any;
   cantidadBotellasEntregadas?: Number;
   diasAsignados?: string[];

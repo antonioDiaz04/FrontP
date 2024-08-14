@@ -10,6 +10,7 @@ import { EntregasView } from './view/entregas/entregas.view';
 import { OpcionesView } from './view/opciones/opciones.view';
 import { CodigoqrView } from './view/codigoqr/codigoqr.view';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
+import { MapaComponent } from './view/mapa/mapa.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'Home',
         component: InicioView,
+      },
+      {
+        path: 'mapa/:latitud/:longitud',
+        component: MapaComponent,
       },
       {
         path: 'notificaciones',

@@ -2,8 +2,14 @@
     <div class="welcome-card" *ngIf="!tienesSalidaProgramada">
         <p class="animated-text">No tienes salidas programadas para hoy</p>
     </div>
-    <div class="welcome-card" *ngFor="let salida of data">
-        <p *ngIf="salida.estado === 'enviado' &&  salida.estado !== 'cancelado'" class="animated-text">Tienes programada
+    <div class="welcome-card" *ngIf="estado == 'finalizada'">
+        <p class="animated-text">Haz finalizado la salida programadas de hoy</p>
+    </div>
+
+    <div *ngIf="estado !== 'finalizada'">
+
+      <div class="welcome-card" *ngFor="let salida of data">
+        <p *ngIf="salida.estado == 'enviado'  && salida.estado !== 'cancelado'" class="animated-text">Tienes programada
             una salida hoy</p>
         <h2>Descripción de la Entrega</h2>
         <div class="info">
@@ -33,15 +39,12 @@
                     Cantidad de Botellas: {{salida.cantidadBotellas}}
                 </p>
                 <!-- Mostrar cantidad de entregas solo cuando el estado es 'recibido' -->
-                <p *ngIf="salida.estado === 'recibido'">
+                <p *ngIf="salida.estado == 'recibido'">
                     <i style="color: rgb(255, 99, 71)" class="fa-solid fa-box"></i>
 
-                    <ng-container *ngIf="!salida.cantidadBotellasEntregadas; else elseTemplate">
-                        Cantidad Entregada: ninguna
+                    <ng-container>
+                        Cantidad Entregada: {{cantidadEntregadaTotal}}
                     </ng-container>
-                    <ng-template #elseTemplate>
-                        Cantidad Entregada: {{salida.cantidadBotellasEntregadas}}
-                    </ng-template>
                 </p>
             </div>
         </div>
@@ -49,9 +52,9 @@
 
 
         <!-- Mostrar el botón solo cuando la cantidad entregada es mayor a 0 -->
-        <button *ngIf="salida.cantidadBotellasEntregadas > 0" type="submit" class="floating-button"
+        <button *ngIf="cantidadEntregadaTotal > 0 && estado != 'finalizada'" type="submit" class="floating-button"
             (click)="terminarEntrega(salida._id)">
-            Terminar Entrega
+          ¿Desea finalizar la entrega?
         </button>
 
         <!-- Mostrar la cantidad de botellas sobrantes -->
@@ -61,12 +64,12 @@
         </p>
 
         <!-- Mostrar otro contenido cuando el estado es 'recibido' -->
-        <div *ngIf="salida.estado === 'recibido' && salida.cantidadBotellasEntregadas">
+        <div *ngIf="estado == 'recibido' && salida.cantidadBotellasEntregadas">
             <p style="color: rgb(255, 218, 71); text-align: center">
                 Entrega recibida
             </p>
             <button type="submit" class="floating-button" (click)="enviarEntreada()"
-                [style.background-color]="buttonColor">Desea terminar la entrega?
+                [style.background-color]="buttonColor">¿Desea terminar la entrega?
                 <!-- <i class="fas" [ngClass]="editMode ?  'fa-circle-check': 'fa-check'"></i>
                 {{ buttonText }} -->
             </button>
@@ -79,6 +82,7 @@
                 {{ buttonText }}
             </button>
         </div>
+    </div>
     </div>
 
     <h2 style="text-align: center">Ver más</h2>
@@ -103,7 +107,7 @@
             <p>Revisa tus entregas programadas.</p>
         </div>
 
-        <div class="action-card" *ngIf="tienesSalidaProgramada" (click)="redirectToAdminPurificadora('clientes')">
+        <div class="action-card" *ngIf="estado=='recibido'" (click)="redirectToAdminPurificadora('clientes')">
             <h3><i class="fa fa-users"></i> Clientes</h3>
             <p>Accede a la lista de clientes y sus detalles.</p>
         </div>

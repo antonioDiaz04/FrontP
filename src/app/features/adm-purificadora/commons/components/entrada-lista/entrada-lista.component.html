@@ -1,8 +1,5 @@
 <head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
     .quantity {
       width: 80%;
@@ -60,12 +57,13 @@
     }
   </style>
 </head>
+
 <div>
   <h1>Gestión de Entrada</h1>
 </div>
-<p-toast />
+<p-toast></p-toast>
 <section id="lista">
-  <h1>Salidas</h1>
+  <h1>Entradas</h1>
 
   <table class="entry-table">
     <thead>
@@ -73,187 +71,92 @@
         <th>Ruta</th>
         <th>Repartidor</th>
         <th>Vehículo</th>
-        <th
-          *ngIf="
-            (paginatedRutasDetalles.length > 0 &&
-              paginatedRutasDetalles[0].estado === 'recibido') ||
-            paginatedRutasDetalles[0].estado === 'finalizada'
-          "
-        >
+        <th>
+        <!-- <th 
+        *ngIf="
+            paginatedRutasDetalles.length > 0 &&
+            (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')
+          "> -->
           Cantidad Asignadas
         </th>
-        <th
-          *ngIf="
-            (paginatedRutasDetalles.length > 0 &&
-              paginatedRutasDetalles[0].estado === 'recibido') ||
-            paginatedRutasDetalles[0].estado === 'finalizada'
-          "
-        >
+        <th>
+<!--  *ngIf="
+            paginatedRutasDetalles.length > 0 &&
+            (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')
+          " -->
           Sobrantes
         </th>
 
         <th>Estado</th>
-        <th
-          *ngIf="
-            (paginatedRutasDetalles.length > 0 &&
-              paginatedRutasDetalles[0].estado === 'recibido') ||
-            paginatedRutasDetalles[0].estado === 'finalizada'
-          "
-        >
+        <th>
+          <!-- *ngIf="
+          paginatedRutasDetalles.length > 0 &&
+          (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')
+          " -->
           Cantidad Entregada
         </th>
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let ruta of paginatedRutasDetalles"> -->
-       <!-- <tr *ngFor="let ruta of paginatedRutasDetalles" >
-
-
-        <td>{{ ruta.nombreRuta }}</td>
-        <td>{{ ruta.repartidorId.nombre }}</td>
-        <td>
-          {{ ruta.vehiculoId.marca }} {{ ruta.vehiculoId.modelo }} ({{
-            ruta.vehiculoId.anio
-          }})
-        </td>
-
-
-        <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
-          <span style="text-align: center; margin-right: 15px" class="quantity">
-            {{ ruta.cantidadBotellas }}
-          </span>
-        </td>
-        <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
-          {{ calcularSobrantes(ruta) }}
-        </td>
-
-        <td>
-          <span
-            [ngClass]="{
-              'text-success':
-                ruta.estado === 'recibido' || ruta.estado === 'finalizada',
-              'text-danger': ruta.estado === 'pendiente'
-            }"
-          >
-            {{ getEstado(ruta) }}
-            <button
-              *ngIf="ruta.estado === 'finalizada' && !visible"
-              (click)="mostrarModal(ruta)"
-            >
-              Recibir
-            </button>
-          </span>
-        </td>
-
-
-        <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
-          {{ calcularCantidadTotalEntregada(ruta) }}
-        </td>
-      </tr> -->
       <ng-container *ngFor="let ruta of paginatedRutasDetalles">
         <tr *ngIf="ruta.estado !== 'confirmado'">
           <td>{{ ruta.nombreRuta }}</td>
           <td>{{ ruta.repartidorId.nombre }}</td>
           <td>
-            {{ ruta.vehiculoId.marca }} {{ ruta.vehiculoId.modelo }} ({{
-              ruta.vehiculoId.anio
-            }})
+            {{ ruta.vehiculoId.marca }} {{ ruta.vehiculoId.modelo }} ({{ ruta.vehiculoId.anio }})
           </td>
-          <!-- Mostrar columnas adicionales solo si el estado es "recibido" -->
-          <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
+          <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
             <span style="text-align: center; margin-right: 15px" class="quantity">
               {{ ruta.cantidadBotellas }}
             </span>
           </td>
-          <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
+          <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
             {{ calcularSobrantes(ruta) }}
           </td>
-
           <td>
-            <span
-              [ngClass]="{
-                'text-success':
-                  ruta.estado === 'recibido' || ruta.estado === 'finalizada',
-                'text-danger': ruta.estado === 'pendiente'
-              }"
-            >
+            <span [ngClass]="{
+                'text-success': ruta.estado == 'recibido' || ruta.estado == 'finalizada',
+                'text-danger': ruta.estado =='pendiente'
+              }">
               {{ getEstado(ruta) }}
-              <button
-                *ngIf="ruta.estado === 'finalizada' && !visible"
-                (click)="mostrarModal(ruta)"
-              >
+              <button *ngIf="ruta.estado == 'finalizada' && !visible" (click)="mostrarModal(ruta)">
                 Recibir
               </button>
             </span>
           </td>
-
-          <!-- Nueva columna para mostrar la cantidad total entregada -->
-          <td *ngIf="ruta.estado === 'recibido' || ruta.estado === 'finalizada'">
+          <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
             {{ calcularCantidadTotalEntregada(ruta) }}
           </td>
         </tr>
       </ng-container>
-
     </tbody>
   </table>
 
-  <p-paginator
-    [totalRecords]="totalRecords"
-    [rows]="rows"
-    [first]="first"
-    (onPageChange)="onPageChange($event)"
-  >
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
   </p-paginator>
 </section>
 
 <!-- Modal para recibir la ruta -->
 <div class="card flex justify-content-center">
-  <p-dialog
-    [modal]="true"
-    [(visible)]="visible"
-    [style]="{ width: '28rem', height: '20rem' }"
-  >
-    <div class="modal-content" >
+  <p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '28rem', height: '20rem' }">
+    <div class="modal-content">
       <div class="inputs-container">
-
         <h2>Guardar Entrada para la Ruta {{ rutaSeleccionada?.nombreRuta }}</h2>
-
-        <p-inputNumber
-          [style]="{ width: '25rem' }"
-          class="inptNumber"
-          [(ngModel)]="inputNumberValue"
-          [showButtons]="true"
-          buttonLayout="horizontal"
-          inputId="horizontal"
-          spinnerMode="horizontal"
-          [step]="1"
-          [min]="0"
-          decrementButtonClass="decrement-button p-button"
-          incrementButtonClass="increment-button p-button"
-          incrementButtonIcon="fas fa-plus"
-          decrementButtonIcon="fas fa-minus"
-        >
-        </p-inputNumber>
+        <p-inputNumber [style]="{ width: '25rem' }" class="inptNumber" [(ngModel)]="inputNumberValue"
+          [showButtons]="true" buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1"
+          [min]="0" decrementButtonClass="decrement-button p-button" incrementButtonClass="increment-button p-button"
+          incrementButtonIcon="fas fa-plus" decrementButtonIcon="fas fa-minus"></p-inputNumber>
       </div>
       <div class="text-danger" *ngIf="cantidadInvalida">
         <span>
-            La cantidad no es <strong>válida</strong>. Supera la cantidad de botellas asignadas
-            para la ruta <strong>{{ rutaSeleccionada?.nombreRuta }}</strong>.
+          La cantidad no es <strong>válida</strong>. Supera la cantidad de botellas asignadas para la ruta <strong>{{
+            rutaSeleccionada?.nombreRuta }}</strong>.
         </span>
-              </div>
-        <div class="contiene-botones">
-          <button  type="submit" (click)="guardarEntrega()" >
-            Guardar
-          </button>
-          <button
-          type="button"
-          (click)="cancelarRecibo()"
-          >
-          Cancelar
-        </button>
-
+      </div>
+      <div class="contiene-botones">
+        <button type="submit" (click)="guardarEntrega()">Guardar</button>
+        <button type="button" (click)="cancelarRecibo()">Cancelar</button>
+      </div>
     </div>
-    </div>
-
   </p-dialog>
 </div>
