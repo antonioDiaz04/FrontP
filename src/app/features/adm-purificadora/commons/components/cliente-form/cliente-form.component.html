@@ -18,6 +18,14 @@
         <div class="form-column">
             <fieldset>
                 <legend>Información Básica</legend>
+                <!-- abis -->
+                <!-- <div style="text-align:center">
+                  <h1>
+                    Welcome to QR Code Generator in Angular 17 Applications!
+                    <qrcode [qrdata]="myAngularxQrCode" [errorCorrectionLevel]="'M'"></qrcode>
+                  </h1>
+                </div> -->
+                <!-- abis -->
                 <label for="nombre">Nombre Completo:</label>
                 <input placeholder="Nombre-Apellido paterno-Apellido materno" type="text" id="nombre"
                     formControlName="nombre">
@@ -43,12 +51,12 @@
                     <option *ngFor="let municipio of allMuncipioXEstado" [value]="municipio">{{ municipio }}
                     </option>
                 </select>
-            
+
             </div>
             <b class="text-danger" *ngIf="registroForm.get('selectedMunicipio')?.value==0">
                 Este campo es obligatorio</b>
-           
-           
+
+
                 <label for="nombre">Seleccione la colonia:</label>
                 <div class="custom-dropdown">
                     <select formControlName="selectedColonia" (change)="onColoniaSelectionChange($event)">
@@ -56,8 +64,8 @@
                         <option *ngFor="let colonia of allColoniaXMuncipio" [value]="colonia">{{ colonia }}
                         </option>
                     </select>
-            
-            
+
+
                 </div>
                 <b class="text-danger" *ngIf="registroForm.get('selectedColonia')?.value==0">
                     Este campo es obligatorio</b>
@@ -68,7 +76,7 @@
             <fieldset>
                 <legend>Información direccion</legend>
 
-                
+
 
                 <div id="map"></div>
                 <!-- Elemento con la referencia #asGeocoder -->
@@ -86,13 +94,7 @@
                 <!-- codigo qr -->
                 <!--este qr se lo daremos al cliente codigo qr -->
 
-                <!-- <div style="text-align:center">
-                    <h1>
-                        Welcome to QR Code Generator in Angular 17 Applications!
-                    </h1>
-                 
-                    <qrcode [qrdata]="myAngularxQrCode"  [errorCorrectionLevel]="'M'"></qrcode>
-                </div> -->
+
 
                 <input type="button" (click)="volverAtras()" value="Atras" class="button">
             </fieldset>

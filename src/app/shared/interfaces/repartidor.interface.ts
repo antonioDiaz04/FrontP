@@ -6,7 +6,7 @@ export interface Repartidor {
     // longitud: string;
     // latitud: string;
     telefono: string;
-    // numCasa: string;
+    numCasa: string;
     diasAsignados?: string[];
     password1: string;
 

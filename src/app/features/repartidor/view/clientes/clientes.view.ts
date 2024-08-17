@@ -22,6 +22,8 @@ import { Toast } from "../../../../shared/services/toast.service";
 export interface PuntoDeEntrega {
   clienteId?: Cliente;
   cantidadEntregada?: number;
+
+  clientePresente?: string;
   _id: string;
 }
 export interface Cliente {
@@ -53,7 +55,7 @@ export class ClientesView implements OnInit {
   showLoader: boolean = true; // Propiedad para controlar la visibilidad del loader
   cantidadEntregadaTotal!: number | null;
   clienteForm!: FormGroup;
-
+  hasDevices = false;
   showLoaderCamera: boolean = false;
   listClientes: Cliente[] | any;
   allClients: Cliente[] | any;
@@ -68,6 +70,7 @@ export class ClientesView implements OnInit {
   value2: number = 10.5;
 
   idSalida!: string | null;
+  clientePresente!: string | null;
   tienesSalidaProgramada!: boolean;
   clienteId!: string;
   cantidadAsignada: number | null; // Valor inicial asignado
@@ -92,7 +95,7 @@ export class ClientesView implements OnInit {
     private salidaService: RutaService,
     private toast: Toast,
     // private router: Router,
-    private sessionService: SessionService,
+    private sessionService: SessionService
   ) {
     this.clienteForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -162,50 +165,41 @@ export class ClientesView implements OnInit {
     console.log("idSalida:", idSalida);
     console.log("clienteId:", this.clienteId);
 
-
-
-    const cantidadSobrante = (this.cantidadAsignada || 0) - (this.cantidadEntregadaTotal || 0);
-
+    const cantidadSobrante =
+      (this.cantidadAsignada || 0) - (this.cantidadEntregadaTotal || 0);
 
     if (cantidadIngresada >= cantidadSobrante) {
-        // Mostrar SweetAlert
-        Swal.fire({
-            title: '¿Deseas terminar la salida?',
-            text: "La cantidad ingresada es mayor o igual a la cantidad sobrante.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, terminar',
-            cancelButtonText: 'No, cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Llamar al servicio para terminar la salida
-                this.terminarSalida();
-                this.toast.showToastPmNgSuccess("se ha finalizado la salida.")
-
-            } else {
-                // Acción de cancelación
-                this.toast.showToastPmNgInfo("Operación cancelada por el usuario.");
-            }
-        });
+      // Mostrar SweetAlert
+      Swal.fire({
+        title: "¿Deseas terminar la salida?",
+        text: "La cantidad ingresada es mayor o igual a la cantidad sobrante.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, terminar",
+        cancelButtonText: "No, cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Llamar al servicio para terminar la salida
+          this.terminarSalida();
+          this.toast.showToastPmNgSuccess("se ha finalizado la salida.");
+        } else {
+          // Acción de cancelación
+          this.toast.showToastPmNgInfo("Operación cancelada por el usuario.");
+        }
+      });
     } else {
-        console.log("La cantidad ingresada no es mayor o igual a la cantidad sobrante.");
+      console.log(
+        "La cantidad ingresada no es mayor o igual a la cantidad sobrante."
+      );
     }
-
-
-
 
     console.log("cantidadIngresada:", cantidadIngresada);
 
-
-
-
-
-
-
     // Crear el objeto con los datos a enviar
     const body = {
+      clientePresente: this.clientePresente,
       idSalida: idSalida,
       clienteId: this.clienteId,
       cantidad: cantidadIngresada,
@@ -232,16 +226,16 @@ export class ClientesView implements OnInit {
     );
   }
   terminarSalida(): void {
-      const estado = "finalizada";
-      this.salidaService.updateEstadoSalida(this.idSalida, estado).subscribe(
-        (response) => {
-          console.log("Status updated:", response);
-          this.getData();
-        },
-        (error) => {
-          console.error("Error updating status:", error);
-        }
-      );
+    const estado = "finalizada";
+    this.salidaService.updateEstadoSalida(this.idSalida, estado).subscribe(
+      (response) => {
+        console.log("Status updated:", response);
+        this.getData();
+      },
+      (error) => {
+        console.error("Error updating status:", error);
+      }
+    );
   }
 
   editar(id: any) {
@@ -331,6 +325,8 @@ export class ClientesView implements OnInit {
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
     this.cameras = cameras;
     if (cameras.length > 0) {
+   this.hasDevices = true;
+     this.scannerEnabled = true; // Activa el escáner
       this.selectCamera(this.cameras[0].deviceId);
       this.showLoaderCamera = false; // Ocultar el loader si se encuentran cámaras
     } else {
@@ -339,26 +335,136 @@ export class ClientesView implements OnInit {
   }
 
   scanSuccessHandler(event: string) {
-    // console.log(event);
     this.results.unshift(event);
     this.showScanner = false; // Ocultar el scanner/modal
     this.scannerEnabled = false; // Desactiva el escáner
+    console.log(event);
+    console.log(this.clienteId);
 
-    // Mostrar SweetAlert para confirmar la acción
-    Swal.fire({
-      title: "QR detectado",
-      text: `¿Deseas continuar con la entrega al usuario ${event}?`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Sí, continuar",
-      cancelButtonText: "No, cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.entregar(event); // Llamar a la función de entrega si se confirma
-      } else {
-        this.showScanner = false; // Volver a mostrar el scanner si se cancela
-      }
-    });
+    // Verificar si el ID escaneado coincide con el clienteId esperado
+    if (event === this.clienteId) {
+      // Mostrar SweetAlert para confirmar la acción
+      Swal.fire({
+        title: "QR detectado",
+        text: `¿Deseas continuar con la entrega al usuario con ID ${event}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Mostrar SweetAlert para opciones adicionales
+          Swal.fire({
+            title: "Confirmación de entrega",
+            html: `
+            <label for="presente">¿El usuario estuvo presente?</label>
+            <select id="presente" class="swal2-input">
+              <option value="si">Sí estuvo presente</option>
+              <option value="no">No estuvo presente</option>
+            </select>
+            <label for="cantidad">¿El usuario aceptó una cantidad específica?</label>
+            <select id="cantidad" class="swal2-input">
+              <option value="si">Sí aceptó</option>
+              <option value="no">No aceptó</option>
+            </select>
+          `,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar",
+            preConfirm: () => {
+              const presente = (
+                document.getElementById("presente") as HTMLSelectElement
+              ).value;
+              const cantidad = (
+                document.getElementById("cantidad") as HTMLSelectElement
+              ).value;
+              return { presente, cantidad };
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const value = result.value as
+                | { presente: string; cantidad: string }
+                | undefined;
+
+              if (value) {
+                const { presente, cantidad } = value;
+
+                this.clientePresente = presente;
+                // Guardar o manejar las respuestas seleccionadas
+                console.log(
+                  `Usuario presente: ${presente}, Aceptó cantidad: ${cantidad}`
+                );
+
+                if (cantidad == "si") {
+                  // Si aceptó cantidad, realiza la entrega
+                  this.entregar(event);
+                } else {
+                  // Si no aceptó cantidad, solo muestra un mensaje o realiza otras acciones necesarias
+                  Swal.fire({
+                    title: "Confirmación",
+                    text: `El usuario no aceptó una cantidad específica.`,
+                    icon: "info",
+                    confirmButtonText: "Aceptar",
+                  });
+
+                  //! aqui realizar el envio de dagtos
+                  const idSalida = this.idSalida;
+                  const body = {
+                    clientePresente: this.clientePresente,
+                    idSalida: idSalida,
+                    clienteId: this.clienteId,
+                    cantidad: 0,
+                  };
+                  console.log(body);
+                  this.salidaService.enviarCantidad(body).subscribe(
+                    (response) => {
+                      // Manejar la respuesta si es necesario
+
+                      this.isModal = false;
+                      this.toast.showToastPmNgSuccess("Se envio la cantidad");
+                      // Desactivar el escáner
+                      this.scannerEnabled = false;
+                      this.getData();
+                    },
+                    (error) => {
+                      // Manejar el error si es necesario
+                      this.toast.showToastPmNgSuccess(
+                        `Error al enviar la cantidad:${error}`
+                      );
+
+                      console.error("Error al enviar la cantidad:", error);
+                    }
+                  );
+                }
+              } else {
+                console.error("No se recibieron valores válidos.");
+              }
+            }
+          });
+        } else {
+          // Si no se confirma la entrega, simplemente muestra un mensaje y maneja la acción cancelada
+          Swal.fire({
+            title: "Operación cancelada",
+            text: "No se ha realizado la entrega.",
+            icon: "info",
+            confirmButtonText: "Aceptar",
+          }).then(() => {
+            this.showScanner = true; // Volver a mostrar el scanner si se cancela
+          });
+        }
+      });
+    } else {
+      // Mostrar alerta de error si no coincide
+      Swal.fire({
+        title: "Error",
+        text: "Los datos no fueron encontrados. El QR escaneado no coincide con el cliente esperado.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      }).then(() => {
+        this.showScanner = true; // Volver a mostrar el scanner si no se encuentra coincidencia
+      });
+    }
   }
 
   selectCamera(deviceId: string) {
@@ -440,19 +546,9 @@ export class ClientesView implements OnInit {
     this.closeScanner();
   }
 
-
-
-  verRuta(latitud: any,longitud:any) {
+  verRuta(latitud: any, longitud: any) {
     // Lógica para ver ruta
     // console.log("Ver ruta de", .nombre);
-this.rou.navigate([`repartidor/mapa/${latitud}/${longitud}`])
-
+    this.rou.navigate([`repartidor/mapa/${latitud}/${longitud}`]);
   }
-
-
-
-
-
-
-
 }

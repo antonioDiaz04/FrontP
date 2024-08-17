@@ -101,10 +101,6 @@ export class RutaService {
     return this.http.get(`${environment.api}/purificadoraAdmin/rutas`);
   }
 
-  // detalleRutaById(id: string): Observable<any> {
-  //   const url = `${environment.api}/purificadoraAdmin/getDetallesRutaById/` + id
-  //   return this.http.get(url)
-  // }
 
   // updateRepartidora(id: string, cliente: any): Observable<any> {
   //   const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id

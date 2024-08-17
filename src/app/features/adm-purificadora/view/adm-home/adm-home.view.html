@@ -6,6 +6,14 @@
     <li><a tabindex="0" (click)="redirectToAdminPurificadora('Home');setActiveLink($event)" class="nav-link"><i
           class="fas fa-home"></i>
         <span class="link-text">Inicio</span></a></li>
+
+<!-- 
+
+    <li><a tabindex="0" (click)="redirectToAdminPurificadora('QrClients');setActiveLink($event)" class="nav-link"><i
+          class="fas fa-home"></i>
+        <span class="link-text">QrClients</span></a></li>
+  -->
+
     <li class="nav-item">
       <a tabindex="0" class="nav-link" [class.open]="openSubmenu === 'clientes-submenu'"
         (click)="toggleSubmenu('clientes-submenu');setActiveLink($event)">
@@ -24,7 +32,7 @@
     </li>
     <!--  -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a tabindex="0" class="nav-link" [class.open]="openSubmenu === 'roles-empleado-submenu'"
         (click)="toggleSubmenu('roles-empleado-submenu');setActiveLink($event)">
         <i class="fa-solid fa-users-gear"></i>
@@ -46,7 +54,7 @@
         </li>
       </ul>
     </li>
-
+ -->
 
     <!--  -->
     <li class="nav-item">
@@ -67,6 +75,18 @@
         </li>
       </ul>
     </li>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <li class="nav-item">
       <a tabindex="0" class="nav-link" [class.open]="openSubmenu === 'vehiculo-submenu'"
@@ -100,9 +120,9 @@
         <li><a tabindex="0" (click)="redirectToCotrolRutas('agregar-ruta');setActiveLink($event)"
             class="nav-link">Agregar ruta</a>
         </li>
-        <li><a tabindex="0" (click)="redirectToCotrolRutas('asignar-clientes-ruta');setActiveLink($event)"
+        <!-- <li><a tabindex="0" (click)="redirectToCotrolRutas('asignar-clientes-ruta');setActiveLink($event)"
             class="nav-link">Asiganar clientes a ruta</a>
-        </li>
+        </li> -->
       </ul>
     </li>
 

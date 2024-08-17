@@ -114,7 +114,8 @@
   </p-paginator>
 </section>
 
-<p-dialog [modal]="true" header="Información de clientes" [(visible)]="visible" [style]="{width: '50rem', height: '40rem'}">
+<p-dialog [modal]="true" header="Información de clientes" [(visible)]="visible"
+  [style]="{width: '50rem', height: '40rem'}">
   <div class="modal-content">
     <div class="inputs-container">
 
@@ -133,15 +134,20 @@
             <td [ngStyle]="{'background-color': cliente.cantidadEntregada > 0 ? 'lightgreen' : 'lightyellow'}">
               {{ cliente.cantidadEntregada }}
             </td>
-            <td>{{ cliente.clientePresente ? 'Sí' : 'No' }}</td>
-            <td>{{ cliente.cantidadEntregada > 0 ? 'Sí pidió' : 'No pidió' }}</td>
+            <td>{{ cliente.clientePresente }}</td>
+            <td>
+              <!-- Mostrar 'No visitado' si el clientePresente es 'no visitado', de lo contrario, mostrar 'Sí pidió' o 'No pidió' -->
+              {{ cliente.clientePresente === 'no visitado' ? 'No visitado' : (cliente.cantidadEntregada > 0 ? 'Sí pidió'
+              : 'No
+              pidió') }}
+            </td>
           </tr>
         </ng-template>
-          <!-- <tr>
+        <!-- <tr>
             <th><strong>Totales</strong></th>
           </tr> -->
         <ng-template pTemplate="footer">
-         
+
           <tr>
             <!-- <td><strong>Totales</strong></td> -->
             <td>Cantidad asignado:<strong>{{ totalAsignado }}</strong></td>
@@ -150,8 +156,8 @@
           </tr>
         </ng-template>
       </p-table>
-      
-      </div>
+
+    </div>
 
     <!-- <div class="contiene-botones">
       <button type="button" (click)="guardarCambios()">Guardar</button>

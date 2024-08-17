@@ -23,13 +23,17 @@ import { Cliente } from "../../../../../shared/interfaces/client.interface";
 import { MapaService } from "../../services/mapa.service";
 import { Usuario } from "../../../../../shared/models/usuario.model";
 import { MapaClientDetailUbacionService } from "../../services/mapaClientDetalle.service";
+import { Table } from "primeng/table";
+import { Toast } from "../../../../../shared/services/toast.service";
 @Component({
   selector: "app-cliente-tabla",
   templateUrl: "./cliente-tabla.component.html",
-  styleUrls: ["../../../form.scss", "../../../tablePrime.scss"],
+  styleUrls: [ "../../../tablePrime.scss","../../../form.scss"],
   encapsulation: ViewEncapsulation.None,
 })
 export class ClienteTablaComponent implements OnInit {
+  @ViewChild("dt2") dt2!: Table;
+
   listUsuario?: Cliente;
   idCliente!: string;
   id!: string | null;
@@ -59,7 +63,8 @@ export class ClienteTablaComponent implements OnInit {
     private mapaService: MapaService,
     private UserS: ClientesService,
     private router: ActivatedRoute,
-    private rou: Router
+    private rou: Router,
+    private toast: Toast
   ) {
     this.clienteForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -71,6 +76,36 @@ export class ClienteTablaComponent implements OnInit {
       latitud: ["", Validators.required],
     });
     this.id = this.router.snapshot.paramMap.get("id");
+  }
+
+  onGlobalFilter(event: Event) {
+    // const value = event.target as HTMLInputElement;
+    const value = (event.target as HTMLInputElement).value.toLowerCase();
+
+    if (value) {
+      const filteredData = this.allClients.filter(
+        (c) =>
+          c.nombre.toLowerCase().includes(value) ||
+          c.email.toLowerCase().includes(value) ||
+          c.telefono.toLowerCase().includes(value) ||
+          c.municipio.toLowerCase().includes(value) ||
+          c.colonia.toLowerCase().includes(value)
+      );
+
+      this.totalRecords = filteredData.length;
+      this.paginatedUser = filteredData.slice(
+        this.first,
+        this.first + this.rows
+      );
+    } else {
+      this.totalRecords = this.allClients.length;
+      this.paginatedUser = this.allClients.slice(
+        this.first,
+        this.first + this.rows
+      );
+
+      // this.dt2.filterGlobal(input.value, "contains");
+    }
   }
 
   redirectToAdmin(route: string): void {
@@ -104,6 +139,17 @@ export class ClienteTablaComponent implements OnInit {
       });
     }
   }
+  filterText: string = '';
+// resaltado de texto letra o palabra entonctrada
+highlightText(text: string): string {
+  if (!this.filterText) {
+    return text; // Si no hay texto a filtrar, regresa el texto original.
+  }
+
+  const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
+  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto en negritas.
+}
+
 
   actualizarCliente(id: any) {
     if (this.clienteForm.valid) {
@@ -121,6 +167,7 @@ export class ClienteTablaComponent implements OnInit {
   }
 
   getUsers() {
+    console.log("aqui");
     this.UserS.obtenerCLientes().subscribe(
       (data: Cliente[]) => {
         this.allClients = data;
@@ -138,6 +185,8 @@ export class ClienteTablaComponent implements OnInit {
       (data) => {
         console.log("eliminado");
         this.getUsers();
+
+        this.toast.showToastPmNgInfo("Cliente eliminado correctamente");
         // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
       },
       (error) => {

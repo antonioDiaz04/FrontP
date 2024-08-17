@@ -51,58 +51,59 @@
     </div>
   </form>
 </p-dialog>
-
 <section id="lista">
-  <h2>Lista de vehiculos</h2>
+  <h2>Lista de vehículos</h2>
+  <span class="p-input-icon-left">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input pInputText style="width: 150%; padding-left: 20%;" type="text"
+    (input)="onGlobalFilter($event)" placeholder="Buscar vehículo..." />
+  </span>
   <button (click)="redirecTo('agregar-vehiculo')" class="custom-btn add-button"><i class="fa-solid fa-plus"></i>
     Nuevo</button>
 
-  <p-table [value]="paginatedVehiculo">
+  <p-table #dt2 [value]="paginatedVehiculo"
+    [rows]="rows" [totalRecords]="totalRecords" selectionMode="single" dataKey="_id"  [first]="first"
+    (onPageChange)="onPageChange($event)">
+
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="marca">marca<p-sortIcon field="marca"></p-sortIcon></th>
-        <th pSortableColumn="modelo">modelo<p-sortIcon field="modelo"></p-sortIcon></th>
-        <th pSortableColumn="placas">placa<p-sortIcon field="placas"></p-sortIcon></th>
-        <th>Dia disponibilidad</th>
+        <th pSortableColumn="marca">Marca<p-sortIcon field="marca"></p-sortIcon></th>
+        <th pSortableColumn="modelo">Modelo<p-sortIcon field="modelo"></p-sortIcon></th>
+        <th pSortableColumn="placas">Placa<p-sortIcon field="placas"></p-sortIcon></th>
+        <th>Día disponibilidad</th>
         <th>Acciones</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-vehiculo>
       <tr>
-        <td>{{ vehiculo.marca }}</td>
-        <td>{{ vehiculo.modelo }}</td>
-        <td>{{ vehiculo.placas }}</td>
+        <td [innerHTML]="highlightText(vehiculo.marca)"></td>
+        <td [innerHTML]="highlightText(vehiculo.modelo)"></td>
+        <td [innerHTML]="highlightText(vehiculo.placas)"></td>
         <td>
-          {{
-            vehiculo.diasAsignados && vehiculo.diasAsignados.length > 0
-              ? vehiculo.diasAsignados.join(", ")
-              : "ninguno"
+          {{ vehiculo.diasAsignados && vehiculo.diasAsignados.length > 0 ? vehiculo.diasAsignados.join(", ") : "ninguno"
           }}
         </td>
         <td>
-          <button
-            class="custom-btn custom-btn-danger"
-            (click)="eliminar(vehiculo._id)"
-          >
+          <button class="custom-btn custom-btn-danger" (click)="eliminar(vehiculo._id)">
             <i class="fas fa-trash-can"></i> Eliminar
           </button>
-
-          <button
-            class="custom-btn custom-btn-primary"
-            (click)="editar(vehiculo._id)"
-          >
+          <button class="custom-btn custom-btn-primary" (click)="editar(vehiculo._id)">
             <i class="fa-solid fa-pen-to-square"></i> Editar
           </button>
         </td>
       </tr>
-  </ng-template>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No se encuentra ningún vehículo.</td>
+      </tr>
+    </ng-template>
   </p-table>
-Hay {{paginatedVehiculo ? paginatedVehiculo.length : 0 }} vehiculos.
-  <p-paginator
-    [totalRecords]="totalRecords"
-    [rows]="rows"
-    [first]="first"
-    (onPageChange)="onPageChange($event)"
-  >
+
+  Hay {{paginatedVehiculo ? paginatedVehiculo.length : 0 }} vehículos.
+
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
   </p-paginator>
 </section>

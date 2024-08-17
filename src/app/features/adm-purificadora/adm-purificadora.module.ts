@@ -76,6 +76,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ClienteRutaComponent } from './commons/components/cliente-ruta/cliente-ruta.component';
 import { AsignarClientesRutaComponent } from './commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component';
 import { HistorialEntregaComponent } from './commons/components/historial-entrega/historial-entrega.component';
+import { QrGnerarPdfComponent } from './commons/components/qr-gnerar-pdf/qr-gnerar-pdf.component';
 
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
@@ -88,7 +89,7 @@ const PIPES=[FilterPipe]
   declarations: [PIPES,HistorialEntregaComponent,SalidaListaComponent,EntradaListaComponent,ClienteFormComponent,RepartidoresView,RutaFormComponent,VehiculosView,VehiculoFormComponent,
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,ClienteTablaComponent,MapaView,AsignarClientesRutaComponent,RutaListadoComponent,RutaView,EntradaView,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,SalidaView,ResultadosListadoComponent,EntradaEditComponent,ResultadoEntregaView,
-    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,VehiculoListadoComponent,ClienteRutaComponent,MiPerfilView,MapaClientUbicacionView,
+    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,VehiculoListadoComponent,ClienteRutaComponent,MiPerfilView,MapaClientUbicacionView, QrGnerarPdfComponent,
   ],
   imports: [MessagesModule,MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,

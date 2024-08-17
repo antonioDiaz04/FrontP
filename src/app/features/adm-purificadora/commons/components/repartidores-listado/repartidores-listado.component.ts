@@ -1,9 +1,10 @@
-import { Component, OnInit, Renderer2 } from "@angular/core";
+import { Component, OnInit, Renderer2, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RepartidoresService } from "../../../../../shared/services/rapartidores.service";
 import { Repartidor } from "../../../../../shared/interfaces/repartidor.interface";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Toast } from "../../../../../shared/services/toast.service";
+import { Table } from "primeng/table";
 
 @Component({
   selector: "app-repartidores-listado",
@@ -18,6 +19,7 @@ export class RepartidoresListadoComponent implements OnInit {
   listRepartidor?: Repartidor;
   idRepartidor!: string;
   diasSeleccionados: string[] = [];
+  @ViewChild("dt2") dt2!: Table;
 
   diasAsignados: { [key: string]: boolean } = {};
 
@@ -35,7 +37,7 @@ export class RepartidoresListadoComponent implements OnInit {
     "domingo",
   ];
   // diasAsignados: { [key: string]: boolean } = {};
-
+  filterText: string = '';
   usuarioForm!: FormGroup;
   reparitorForm!: FormGroup;
   constructor(
@@ -64,6 +66,44 @@ export class RepartidoresListadoComponent implements OnInit {
     this.rou.navigate(["/purificadoraAdm/repartidor/", route]);
   }
 
+  onGlobalFilter(event: Event) {
+    // const value = event.target as HTMLInputElement;
+    const value = (event.target as HTMLInputElement).value.toLowerCase();
+
+     if (value) {
+      const filteredData = this.allRepartidores.filter(
+        (v) =>
+          v.nombre.toLowerCase().includes(value) ||
+        v.telefono.toLowerCase().includes(value)||
+        v.email.toLowerCase().includes(value)
+      );
+
+      this.totalRecords = filteredData.length;
+      this.paginatedRepartidores = filteredData.slice(
+        this.first,
+        this.first + this.rows
+      );
+    } else {
+      this.totalRecords = this.allRepartidores.length;
+      this.paginatedRepartidores = this.allRepartidores.slice(
+        this.first,
+        this.first + this.rows
+      );
+    }
+  }
+   highlightText(text: string): string {
+     console.log(`El tipo de dato de 'text' es: ${typeof text}`); // Esto mostrará el tipo de dato de 'text' en la consola.
+  if (!this.filterText) {
+
+    // console.log("aqui pasa")
+    return text; // Si no hay texto a filtrar, regresa el texto original.
+  }
+
+  const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
+  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto en negritas.
+}
+
+
   editar(id: any) {
     let selectedRepartidor;
     this.visible = true;
@@ -78,7 +118,7 @@ export class RepartidoresListadoComponent implements OnInit {
           email: data.email,
           numCasa: data.numCasa,
           telefono: data.telefono,
-          password1:data.password1
+          password1: data.password1,
         });
 
         // Inicializar los checkboxes según los días asignados
@@ -109,12 +149,13 @@ export class RepartidoresListadoComponent implements OnInit {
       email: this.usuarioForm.get("email")?.value,
       telefono: this.usuarioForm.get("telefono")?.value,
       password1: this.usuarioForm.get("password1")?.value,
+      numCasa:this.usuarioForm.get("numCasa")?.value,
       diasAsignados: diasAsignados,
     };
 
     this.repService.updateRepartidora(id, REPARTIDOR).subscribe(
       (response) => {
-        console.log(response)
+        console.log(response);
         this.getRepartidores();
         this.visible = false;
 

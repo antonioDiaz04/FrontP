@@ -36,34 +36,46 @@
   </form>
 </p-dialog>
 
-<section>
-  <h2>Lista de repartidores</h2>
-  <button (click)="redirecTo('agregar-repartidor')" class="custom-btn add-button"><i class="fa-solid fa-plus"></i>
-    Nuevo</button>
 
-  <p-table [value]="paginatedRepartidores">
+
+
+
+<section>
+  <h1>Listar Repartidores</h1>
+  <p-table #dt2 [value]="paginatedRepartidores" selectionMode="single" dataKey="_id" [rows]="rows"
+    [totalRecords]="totalRecords" [first]="first" (onPageChange)="onPageChange($event)">
+
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: 150%; padding-left: 20%;" type="text" (input)="onGlobalFilter($event)"
+          placeholder="Buscar repartidor..." [(ngModel)]="filterText" />
+      </span>
+      <button (click)="redirecTo('agregar-repartidor')" class="add-button">
+        <i class="fa-solid fa-plus"></i> Nuevo
+      </button>
+    </ng-template>
+
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="nombre">Nombre completo <p-sortIcon field="nombre"></p-sortIcon></th>
-        <th pSortableColumn="telefono">Teléfono<p-sortIcon field="telefono"></p-sortIcon></th>
-        <th pSortableColumn="email">Email<p-sortIcon field="email"></p-sortIcon></th>
-        <th>Registro</th>
+        <th pSortableColumn="telefono">Teléfono <p-sortIcon field="telefono"></p-sortIcon></th>
+        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="fechaDeAgregacion">Registro <p-sortIcon field="fechaDeAgregacion"></p-sortIcon></th>
         <th>Días disponibles</th>
         <th>Acciones</th>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-repartidor>
       <tr>
-        <td>{{ repartidor.nombre }}</td>
-        <td>{{ repartidor.telefono }}</td>
-        <td>{{ repartidor.email }}</td>
-        <td>{{ repartidor.fechaDeAgregacion }}</td>
+        <td [innerHTML]="highlightText(repartidor.nombre)"></td>
+        <td [innerHTML]="highlightText(repartidor.telefono)"></td>
+        <td [innerHTML]="highlightText(repartidor.email)"></td>
+        <td>{{repartidor.fechaDeAgregacion}}</td>
         <td>
-          {{
-          repartidor.diasAsignados && repartidor.diasAsignados.length > 0
-          ? repartidor.diasAsignados.join(", ")
-          : "ninguno"
-          }}
+          {{ repartidor.diasAsignados && repartidor.diasAsignados.length > 0 ? repartidor.diasAsignados.join(", ") :
+          "ninguno" }}
         </td>
         <td>
           <button class="custom-btn custom-btn-danger" (click)="eliminarUsuario(repartidor._id)">
@@ -75,8 +87,16 @@
         </td>
       </tr>
     </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">No se encuentra ningún repartidor.</td>
+      </tr>
+    </ng-template>
   </p-table>
+
   <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
   </p-paginator>
-  Hay {{paginatedRepartidores ? paginatedRepartidores.length : 0 }} Repartidores.
+
+  <p>Hay {{paginatedRepartidores ? paginatedRepartidores.length : 0 }} repartidores.</p>
 </section>

@@ -7,9 +7,9 @@ export interface Cliente {
     email: string;
     longitud?: string;
     latitud?: string;
-    telefono?: string;
-    numCasa?: string;
-    municipio?:string;
+    telefono: string;
+    numCasa: string;
+    municipio:string;
     colonia: string;
     rol?: string;
     estatus?: string;

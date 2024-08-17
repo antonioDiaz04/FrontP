@@ -96,11 +96,18 @@
   <div class="message">No hay ninguna ruta por el momento</div>
   <a (click)="redirecTo('agregar-ruta')" class="add-button">Agregar Ruta</a>
 </div>
+
+
+
+
+
+
 <section *ngIf="allRutas.length > 0">
+  <h1>Listar rutas</h1>
   <p-table #dt2 [value]="paginatedRutas"
     [globalFilterFields]="['nombreRuta', 'repartidorId.nombre', 'vehiculoId.placas', 'puntosDeEntrega.length']"
     selectionMode="single" [(selection)]="selectedRuta" dataKey="_id" [tableStyle]="{ 'min-width': '50rem' }"
-    [rows]="rows" [paginator]="true" [totalRecords]="totalRecords" [first]="first"
+    [rows]="rows"  [totalRecords]="totalRecords" [first]="first"
     (onPageChange)="onPageChange($event)">
 
     <ng-template pTemplate="caption">
@@ -126,9 +133,9 @@
 
     <ng-template pTemplate="body" let-ruta>
       <tr>
-        <td>{{ ruta.nombreRuta }}</td>
-        <td>{{ ruta.repartidorId?.nombre }}</td>
-        <td>{{ ruta.vehiculoId?.placas }}</td>
+        <td [innerHTML]="highlightText(ruta.nombreRuta)"></td>
+        <td [innerHTML]="highlightText(ruta.repartidorId?.nombre)"></td>
+        <td [innerHTML]="highlightText(ruta.vehiculoId?.placas)"></td>
         <td>{{ ruta.puntosDeEntrega.length }}</td>
         <td>
           {{ ruta.diasAsignados && ruta.diasAsignados.length > 0 ? ruta.diasAsignados.join(", ") : "ninguno" }}
@@ -143,6 +150,9 @@
           <button class="custom-btn custom-btn-primary" (click)="editar(ruta._id)">
             <i class="fa-solid fa-pen"></i> Editar
           </button>
+          <button class="custom-btn custom-btn-secundary" (click)="getData(ruta._id)">
+            <i class="fa-solid fa-file-arrow-down"></i> Descargar Qrs
+          </button>
         </td>
       </tr>
     </ng-template>
@@ -152,7 +162,70 @@
         <td colspan="6">No se encuentra ninguna ruta.</td>
       </tr>
     </ng-template>
+    <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
+    </p-paginator>
 
   </p-table>
   <p>Hay {{paginatedRutas ? paginatedRutas.length : 0 }} vehiculos.</p>
 </section>
+
+<!--  -->
+<p-dialog header="Generar QR" [(visible)]="visible" [modal]="true" [closable]="true" [style]="{width: '800px'}">
+  <div id="qr-container">
+    <div class="header">
+      <h2>Ruta:{{ name }}</h2>
+    </div>
+    <div class="qr-grid">
+      <div class="qr-item" *ngFor="let cliente of listClientes">
+        <h4>{{ cliente.clienteId.nombre }}</h4>
+        <qrcode [qrdata]="cliente.clienteId._id" [width]="80" [style]=""></qrcode>
+      </div>
+    </div>
+  </div>
+  <button class="custom-btn custom-btn-secundary" (click)="generarPDF()">
+    <i class="fa-solid fa-file-arrow-down"></i> Descargar QRs
+  </button>
+</p-dialog>
+
+<!--  -->
+
+
+<style>
+  #qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .header h2 {
+    margin: 0;
+  }
+
+  .btn-example {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+
+
+  .qr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+  }
+
+  .qr-item {
+    text-align: center;
+  }
+</style>
+
+<!-- <button type="button" pButton label="Mostrar QRs" icon="pi pi-qrcode" (click)="visible = true"></button> -->

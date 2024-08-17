@@ -1,83 +1,83 @@
-
 <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-    <div class="row-bienvenida">
-        <div class="text">
-            <p class="text-bienvenida">
+  <div class="row-bienvenida">
+    <div class="text">
+      <p class="text-bienvenida">
 
-                Hola Admin, {{data.nombre}}
-            </p>
+        Hola Admin, {{data.nombre}}
+      </p>
 
-            <b style="color: #63738a !important;">Listo para comenzar el día con algunas presentaciones?</b>
-        </div>
+      <b style="color: #63738a !important;">Listo para comenzar el día con algunas presentaciones?</b>
+    </div>
 
-        <img style="
+    <img style="
         display: flex;
 justify-content: right;
   margin-top: -90px;
   margin-right: 100px;
   margin-bottom: -55px ;
 width: 30%;height: 30%;position:static;"
-            src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1721586139/images/undraw_at_the_park_2e47-removebg-preview_kekvlp.png"
-            alt="" srcset="">
+      src="https://res.cloudinary.com/dvvhnrvav/image/upload/v1721586139/images/undraw_at_the_park_2e47-removebg-preview_kekvlp.png"
+      alt="" srcset="">
+  </div>
+  <div class="row">
+
+    <div class="target target-green">
+      <div class="target-header">
+        <i class="fas fa-users"></i>
+        <span class="target-title">Sección de Clientes</span>
+      </div>
+      <div class="target-content">
+        <p> Sólo tiene <strong>{{allClients.length}}</strong> clientes registrados</p>
+      </div>
+      <button (click)="redirecto('cliente')" class="btn btn-green">Ver detalles</button>
     </div>
-    <div class="row">
 
-        <div class="target target-green">
-            <div class="target-header">
-                <i class="fas fa-users"></i>
-                <span class="target-title">Sección de Clientes</span>
-            </div>
-            <div class="target-content">
-                <p> Sólo tiene <strong>{{allClients.length}}</strong> clientes registrados</p>
-            </div>
-            <button (click)="redirecto('cliente')" class="btn btn-green">Ver detalles</button>
-        </div>
-
-        <div class="target target-blue">
-            <div class="target-header">
-                <i class="fas fa-truck"></i>
-                <span class="target-title">Sección de Repartidores</span>
-            </div>
-            <div class="target-content">
-                <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> repartidores registrados</p>
-            </div>
-            <button (click)="redirecto('repartidor')" class="btn btn-blue">Ver detalles</button>
-        </div>
-
-        <div class="target target-orange">
-            <div class="target-header">
-                <i class="fas fa-truck-ramp-box"></i>
-                <span class="target-title">Sección de vehiculos</span>
-            </div>
-            <div class="target-content">
-                <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> vehiculos registrados</p>
-            </div>
-            <button (click)="redirecto('vehiculo')" class="btn btn-orange">Ver detalles</button>
-        </div>
-
-
-
-        <div class="target target-morado">
-            <div class="target-header">
-                <i class="fas fa-route"></i>
-                <span class="target-title">Sección de rutas</span>
-            </div>
-            <div class="target-content">
-                <p>Sólo tiene <strong>{{allRutas.length}}</strong> rutas registrados</p>
-            </div>
-            <button (click)="redirecto('ruta')" class="btn btn-morado">Ver detalles</button>
-        </div>
+    <div class="target target-blue">
+      <div class="target-header">
+        <i class="fas fa-truck"></i>
+        <span class="target-title">Sección de Repartidores</span>
+      </div>
+      <div class="target-content">
+        <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> repartidores registrados</p>
+      </div>
+      <button (click)="redirecto('repartidor')" class="btn btn-blue">Ver detalles</button>
     </div>
-    <h1>Gráfico de ventas</h1>
 
-    <div class="card flex-container">
-        <div class="chart-container">
-            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
-        </div>
-        <div class="calendar-container">
-            <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>
-        </div>
+
+    <div class="target target-orange">
+      <div class="target-header">
+        <i class="fas fa-truck-ramp-box"></i>
+        <span class="target-title">Sección de vehiculos</span>
+      </div>
+      <div class="target-content">
+        <p> Sólo tiene <strong>{{allRepartidores.length}}</strong> vehiculos registrados</p>
+      </div>
+      <button (click)="redirecto('vehiculo')" class="btn btn-orange">Ver detalles</button>
     </div>
+
+
+
+    <div class="target target-morado">
+      <div class="target-header">
+        <i class="fas fa-route"></i>
+        <span class="target-title">Sección de rutas</span>
+      </div>
+      <div class="target-content">
+        <p>Sólo tiene <strong>{{allRutas.length}}</strong> rutas registrados</p>
+      </div>
+      <button (click)="redirecto('ruta')" class="btn btn-morado">Ver detalles</button>
+    </div>
+  </div>
+  <h1>Gráfico de ventas</h1>
+
+  <div class="card flex-container">
+    <div class="chart-container">
+      <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+    </div>
+    <div class="calendar-container">
+      <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>
+    </div>
+  </div>
 
 </main>

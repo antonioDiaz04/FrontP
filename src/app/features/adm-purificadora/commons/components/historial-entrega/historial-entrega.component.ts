@@ -1,20 +1,23 @@
-import { Component, Input } from '@angular/core';
-import { Message } from 'primeng/api';
-import { Cliente } from '../../../../../shared/interfaces/client.interface';
-import { Ruta } from '../../../../../shared/models/ruta.model';
-import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Repartidor } from '../../../../../shared/models/repartidor.model';
+import { Component, Input } from "@angular/core";
+import { Message } from "primeng/api";
+import { Cliente } from "../../../../../shared/interfaces/client.interface";
+import { Ruta } from "../../../../../shared/models/ruta.model";
+import { Vehiculo } from "../../../../../shared/models/vehiculo.model";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Repartidor } from "../../../../../shared/models/repartidor.model";
 // import { DetalleEntregaInterface } from '../entrada-lista/entrada-lista.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
-import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
-import { RutaService } from '../../../../../shared/services/ruta.service';
-import { Toast } from '../../../../../shared/services/toast.service';
-import Swal from 'sweetalert2';
-import { Salida } from '../../../../../shared/models/salida.model';
-import { PuntoDeEntregaInterface, RepartidorInterface, VehiculoInterface } from '../entrada-lista/entrada-lista.component';
-
+import { ActivatedRoute, Router } from "@angular/router";
+import { RepartidoresService } from "../../../../../shared/services/rapartidores.service";
+import { VehiculoService } from "../../../../../shared/services/vehiculo.service";
+import { RutaService } from "../../../../../shared/services/ruta.service";
+import { Toast } from "../../../../../shared/services/toast.service";
+import Swal from "sweetalert2";
+import { Salida } from "../../../../../shared/models/salida.model";
+import {
+  PuntoDeEntregaInterface,
+  RepartidorInterface,
+  VehiculoInterface,
+} from "../entrada-lista/entrada-lista.component";
 
 export interface DetalleEntregaInterface {
   _id: string;
@@ -22,7 +25,7 @@ export interface DetalleEntregaInterface {
   repartidorId: RepartidorInterface;
   vehiculoId: VehiculoInterface;
   estado: string;
-  cantidadBotellas: number ;
+  cantidadBotellas: number;
   cantidadContada?: number; // Hacerlo opcional
   puntosDeEntrega: PuntoDeEntregaInterface[];
   diasEntrada: string;
@@ -32,20 +35,20 @@ export interface DetalleEntregaInterface {
 
 export interface PuntoDeEntrega {
   clienteId?: Cliente;
-  clientePresente?:boolean;
+  clientePresente?: boolean;
   cantidadEntregada?: number;
   _id: string;
 }
 @Component({
-  selector: 'app-historial-entrega',
-  templateUrl: './historial-entrega.component.html',
-  styleUrl:     "../../../adm-purificadora.component.scss",
+  selector: "app-historial-entrega",
+  templateUrl: "./historial-entrega.component.html",
+  styleUrl: "../../../adm-purificadora.component.scss",
 })
 export class HistorialEntregaComponent {
-messages!: Message[];
-  @Input() data!:  any; // data es un array de Salida
+  messages!: Message[];
+  @Input() data!: any; // data es un array de Salida
 
-visible: boolean = false;
+  visible: boolean = false;
   id!: string;
   cantidadForm!: FormGroup;
   allClients: Cliente[] = [];
@@ -69,7 +72,7 @@ visible: boolean = false;
   diaTexto: string;
 
   fecha: string;
- totalAsignado: number = 0;
+  totalAsignado: number = 0;
   totalEntregado: number = 0;
   totalSobrado: number = 0;
   rutaActual: any;
@@ -149,69 +152,71 @@ visible: boolean = false;
     );
   }
 
-
   calculateTotals() {
-    this.totalAsignado = this.data.reduce((sum:any, item:any) => sum + item.cantidadBotellas, 0);
-    this.totalEntregado = this.data.reduce((sum:any, item:any) => sum + (item.cantidadBotellas - item.cantidadBotellasSobrantes), 0);
-    this.totalSobrado = this.data.reduce((sum:any, item:any) => sum + item.cantidadBotellasSobrantes, 0);
+    this.totalAsignado = this.data.reduce(
+      (sum: any, item: any) => sum + item.cantidadBotellas,
+      0
+    );
+    this.totalEntregado = this.data.reduce(
+      (sum: any, item: any) =>
+        sum + (item.cantidadBotellas - item.cantidadBotellasSobrantes),
+      0
+    );
+    this.totalSobrado = this.data.reduce(
+      (sum: any, item: any) => sum + item.cantidadBotellasSobrantes,
+      0
+    );
   }
-  //!aqui 
-  getData(id:string): void {
-console.log("aquI")
-      if (id) {
-        this.rutaS.detalleEntregaById(id).subscribe(
-          (data) => {
-            this.data = data;
-            // this.showLoader = false;
-            // console.log("Data received:", this.data); // Check what `data` contains
+  //!aqui
+  getData(id: string): void {
+    console.log("aquI");
+    if (id) {
+      this.rutaS.detalleEntregaById(id).subscribe(
+        (data) => {
+          this.data = data;
+          // this.showLoader = false;
+          // console.log("Data received:", this.data); // Check what `data` contains
 
-    this.calculateTotals();
+          this.calculateTotals();
 
-            if (Array.isArray(data)) {
-              data.forEach((item: Salida) => {
-                if (
-                  item.puntosDeEntrega &&
-                  Array.isArray(item.puntosDeEntrega)
-                ) {
-                  const clientes = item.puntosDeEntrega.map(
-                    (entrega: PuntoDeEntrega) => entrega
-                  );
+          if (Array.isArray(data)) {
+            data.forEach((item: Salida) => {
+              if (item.puntosDeEntrega && Array.isArray(item.puntosDeEntrega)) {
+                const clientes = item.puntosDeEntrega.map(
+                  (entrega: PuntoDeEntrega) => entrega
+                );
 
+                // / Suponiendo que item.puntosDeEntrega es un array de objetos
+                // this.cantidadEntregadaTotal = item.puntosDeEntrega.reduce(
+                //   (total, dt: any) => {
+                //     return total + dt.cantidadEntregada;
+                //   },
+                //   0
+                // );
+                // console.log(this.cantidadEntregadaTotal);
+                // const diferencia =
+                //   data[0].cantidadBotellas - this.cantidadEntregadaTotal;
+                // this.botellasSobrantes = diferencia;
 
-
-// / Suponiendo que item.puntosDeEntrega es un array de objetos
-                  // this.cantidadEntregadaTotal = item.puntosDeEntrega.reduce(
-                  //   (total, dt: any) => {
-                  //     return total + dt.cantidadEntregada;
-                  //   },
-                  //   0
-                  // );
-                  // console.log(this.cantidadEntregadaTotal);
-                  // const diferencia =
-                  //   data[0].cantidadBotellas - this.cantidadEntregadaTotal;
-                  // this.botellasSobrantes = diferencia;
-
-
-
-                  this.listClientes = clientes;
-                  // Suponiendo que item.puntosDeEntrega es un array de objetos
-                       // Show the modal after data is loaded
-              this.visible = true;
-                  // console.log(cantidadEntregadaTotal);
-                } else {
-                  console.log(
-                    "No hay puntos de entrega disponibles para este item."
-                  );
-                }
-              });
-            } else {
-              console.log("La respuesta no es un array.");
-            }
-          },
-          (error) => {
-            console.error("Error al actualizar el usuario:", error);
+                this.listClientes = clientes;
+                // Suponiendo que item.puntosDeEntrega es un array de objetos
+                // Show the modal after data is loaded
+                this.visible = true;
+                // console.log(cantidadEntregadaTotal);
+              } else {
+                console.log(
+                  "No hay puntos de entrega disponibles para este item."
+                );
+              }
+            });
+          } else {
+            console.log("La respuesta no es un array.");
           }
-        );
+        },
+        (error) => {
+          console.error("Error al actualizar el usuario:", error);
+        }
+      );
     }
   }
 

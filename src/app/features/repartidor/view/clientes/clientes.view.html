@@ -54,10 +54,111 @@
       {{ camera.label }}
     </option>
   </select>
+<!-- <div class="scanner-container" *ngIf="showScanner">
+  <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+    (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)">
+  </zxing-scanner>
+  <div class="scanner-overlay" *ngIf="scannerEnabled">
+    <p>Escaneando...</p>
+    <div class="loading-spinner"></div>
+    <div class="focus-guide"></div> Guía visual para el enfoque
+  </div>
+</div> -->
 
-  <!-- para escaner de QR -->
-  <zxing-scanner *ngIf="showScanner" style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+<style>
+  
+  .scanner-container {
+  position: relative;
+  display: inline-block;
+}
+
+.scanner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Para que no interfiera con el escáner */
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+}
+
+.text-loading, .text-escaning {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.loading-spinner {
+  border: 16px solid #f3f3f3; /* Fondo de la rueda */
+  border-top: 16px solid #3498db; /* Color de la rueda */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.focus-guide {
+  position: absolute;
+  border: 2px solid #00ff00; /* Color de la guía de enfoque */
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  box-sizing: border-box;
+  pointer-events: none;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.1); /* Fondo semitransparente dentro de la guía */
+  animation: focusPulse 1.5s infinite;
+}
+
+@keyframes focusPulse {
+  0% { border-color: #00ff00; }
+  50% { border-color: #00cc00; }
+  100% { border-color: #00ff00; }
+}
+
+
+</style>
+
+  <!-- <div class="scanner-container" *ngIf="showScanner">
+    <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+      (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)">
+    </zxing-scanner>
+    <div class="scanner-overlay" *ngIf="scannerEnabled">
+      <p>Escaneando...</p>
+      <div class="loading-spinner"></div>
+    </div>
+  </div> -->
+
+<!-- 
+  para escaner de QR -->
+  <!-- <zxing-scanner *ngIf="showScanner" style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+    (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner> -->
+
+
+<div class="scanner-container" *ngIf="showScanner">
+  <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
     (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
+  <div class="scanner-overlay" *ngIf="!hasDevices">
+    <p class="text-loading">Cargando cámara...</p>
+    <!-- <div class="loading-spinner"></div> -->
+  </div>
+  <div class="scanner-overlay" *ngIf="scannerEnabled && hasDevices">
+    <p class="text-escaning">Escaneando...</p>
+    <!-- <div *ngIf="scannerEnabled" class="loading-spinner"></div> -->
+    <div class="focus-guide"></div> <!-- Guía visual para el enfoque -->
+  </div>
+</div>
+
 
   <p-footer>
     <p-button label="Cerrar" icon="pi pi-times" (click)="closeScanner()" styleClass="p-button-text"></p-button>
@@ -70,16 +171,18 @@
     <p-card [style]="{ 'margin-top':'20px' }" *ngFor="let cliente of listClientes"
       header="{{ cliente.clienteId.nombre }}">
       <ng-template pTemplate="content">
+        <p><strong>id:</strong> {{ cliente.clienteId._id }}</p>
         <p><strong>Teléfono:</strong> {{ cliente.clienteId.telefono }}</p>
         <p><strong>Municipio:</strong> {{ cliente.clienteId.municipio }}</p>
         <p><strong>Colonia:</strong> {{ cliente.clienteId.colonia }}</p>
         <p><strong>Número de casa:</strong> {{ cliente.clienteId.numCasa }}</p>
+        <p><strong>presente:</strong> {{ cliente.clientePresente}}</p>
         <p><strong>cantidad entregada:</strong> {{ cliente.cantidadEntregada}}</p>
       </ng-template>
       <ng-template pTemplate="footer">
         <div class="ui-g">
           <p-button *ngIf="cliente.cantidadEntregada==0" label="Escanear QR" icon="pi pi-qrcode"
-            (click)="escanearQR(cliente._id)" styleClass="p-button-sm mr-2"></p-button>
+            (click)="escanearQR(cliente.clienteId._id)" styleClass="p-button-sm mr-2"></p-button>
           <p-button label="Ver Ruta" icon="pi pi-map-marker" (click)="verRuta(cliente.clienteId.latitud, cliente.clienteId.longitud)"
             styleClass="p-button-sm"></p-button>
         </div>

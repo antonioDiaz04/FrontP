@@ -1,16 +1,19 @@
-import { Component, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
-import { Toast } from '../../../../../shared/services/toast.service';
+import { Component, Renderer2, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { VehiculoService } from "../../../../../shared/services/vehiculo.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Vehiculo } from "../../../../../shared/models/vehiculo.model";
+import { Toast } from "../../../../../shared/services/toast.service";
+import { Table } from "primeng/table";
 
 @Component({
-  selector: 'app-vehiculo-listado',
-  templateUrl: './vehiculo-listado.component.html',
-  styleUrls: ['../../../tablePrime.scss', '../../../form.scss'],
+  selector: "app-vehiculo-listado",
+  templateUrl: "./vehiculo-listado.component.html",
+  styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
 })
 export class VehiculoListadoComponent {
+  @ViewChild("dt2") dt2!: Table;
+
   visible: boolean = false;
   isVisible = false;
   id!: string | null;
@@ -20,13 +23,13 @@ export class VehiculoListadoComponent {
   vehiculoForm!: FormGroup;
   // reparitorForm!: FormGroup;
   dias: string[] = [
-    'lunes',
-    'martes',
-    'miercoles',
-    'jueves',
-    'viernes',
-    'sabado',
-    'domingo',
+    "lunes",
+    "martes",
+    "miercoles",
+    "jueves",
+    "viernes",
+    "sabado",
+    "domingo",
   ];
 
   diasSeleccionados: string[] = [];
@@ -38,6 +41,8 @@ export class VehiculoListadoComponent {
   rows: number = 5; // Número de registros por página
   first: number = 0; // Índice del primer registro de la página actual
 
+  filterText: string = '';
+
   constructor(
     private fb: FormBuilder,
     private toast: Toast,
@@ -47,11 +52,11 @@ export class VehiculoListadoComponent {
     private rou: Router
   ) {
     this.vehiculoForm = this.fb.group({
-      marca: ['', Validators.required],
-      modelo: ['', Validators.required],
-      placas: ['', Validators.required],
+      marca: ["", Validators.required],
+      modelo: ["", Validators.required],
+      placas: ["", Validators.required],
     });
-    this.id = this.router.snapshot.paramMap.get('id');
+    this.id = this.router.snapshot.paramMap.get("id");
   }
 
   ngOnInit(): void {
@@ -59,15 +64,50 @@ export class VehiculoListadoComponent {
     this.updatePaginatedVehiculo();
   }
 
-   redirecTo(route: string): void {
+  highlightText(text: string): string {
+  if (!this.filterText) {
+    return text; // Si no hay texto a filtrar, regresa el texto original.
+  }
+
+  const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
+  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto en negritas.
+}
+
+
+  redirecTo(route: string): void {
     this.rou.navigate(["/purificadoraAdm/vehiculo/", route]);
+  }
+
+  onGlobalFilter(event: Event) {
+    const value = (event.target as HTMLInputElement).value.toLowerCase();
+
+    if (value) {
+      const filteredData = this.allVehiculos.filter(
+        (v) =>
+          v.marca.toLowerCase().includes(value) ||
+          v.modelo.toLowerCase().includes(value) ||
+          v.placas.toLowerCase().includes(value)
+      );
+
+      this.totalRecords = filteredData.length;
+      this.paginatedVehiculo = filteredData.slice(
+        this.first,
+        this.first + this.rows
+      );
+    } else {
+      this.totalRecords = this.allVehiculos.length;
+      this.paginatedVehiculo = this.allVehiculos.slice(
+        this.first,
+        this.first + this.rows
+      );
+    }
   }
 
   editar(id: any) {
     this.visible = true;
-    this.idRepartidor = this.router.snapshot.params['id'];
+    this.idRepartidor = this.router.snapshot.params["id"];
     if (id !== null) {
-      console.log('actualizar....');
+      console.log("actualizar....");
       this.repService.detalleVehiculoById(id).subscribe((data) => {
         this.dataVehiculo = data;
         this.vehiculoForm.setValue({
@@ -92,17 +132,17 @@ export class VehiculoListadoComponent {
   }
   actualizarVehiculo(id: any) {
     if (this.vehiculoForm.valid) {
-      const marca = this.vehiculoForm.get('marca')?.value;
-      const modelo = this.vehiculoForm.get('modelo')?.value;
+      const marca = this.vehiculoForm.get("marca")?.value;
+      const modelo = this.vehiculoForm.get("modelo")?.value;
       // const anio = this.vehiculoForm.get('anio')?.value;
-      const placas = this.vehiculoForm.get('placas')?.value;
+      const placas = this.vehiculoForm.get("placas")?.value;
       const diasAsignados = this.diasSeleccionados;
       // Aquí puedes realizar las operaciones necesarias con el valor de 'marca'
 
       const VEHICULO: Vehiculo = {
-        marca: this.vehiculoForm.get('marca')?.value,
-        modelo: this.vehiculoForm.get('modelo')?.value,
-        placas: this.vehiculoForm.get('placas')?.value,
+        marca: this.vehiculoForm.get("marca")?.value,
+        modelo: this.vehiculoForm.get("modelo")?.value,
+        placas: this.vehiculoForm.get("placas")?.value,
         diasAsignados: diasAsignados,
       };
 
@@ -111,10 +151,10 @@ export class VehiculoListadoComponent {
           this.getVehiculos();
           this.visible = false;
 
-          this.toast.showToastPmNgSuccess('Se guardaron los cambios con exito');
+          this.toast.showToastPmNgSuccess("Se guardaron los cambios con exito");
         },
         (error) => {
-          console.error('Error al actualizar el usuario:', error);
+          console.error("Error al actualizar el usuario:", error);
         }
       );
     }
@@ -123,11 +163,11 @@ export class VehiculoListadoComponent {
   eliminar(id: any) {
     this.repService.eliminarVehiculo(id).subscribe(
       (data) => {
-        console.log('eliminado');
+        console.log("eliminado");
         this.getVehiculos();
       },
       (error) => {
-        console.log('ocurrio un error', error);
+        console.log("ocurrio un error", error);
       }
     );
   }
@@ -153,7 +193,7 @@ export class VehiculoListadoComponent {
         this.updatePaginatedVehiculo();
       },
       (error) => {
-        console.log('ocurrió un error al obtener la información', error);
+        console.log("ocurrió un error al obtener la información", error);
       }
     );
   }
@@ -171,7 +211,7 @@ export class VehiculoListadoComponent {
         this.diasSeleccionados.splice(index, 1);
       }
     }
-    console.log('dias en as', this.diasAsignados[dia]);
-    console.log('dias en seleccion', this.diasSeleccionados);
+    console.log("dias en as", this.diasAsignados[dia]);
+    console.log("dias en seleccion", this.diasSeleccionados);
   }
 }

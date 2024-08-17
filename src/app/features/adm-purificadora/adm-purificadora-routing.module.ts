@@ -27,6 +27,7 @@ import { ResultadosListadoComponent } from "./commons/components/resultados-list
 import { MiPerfilView } from "./view/mi-perfil/mi-perfil.view";
 import { AsignarClientesRutaComponent } from "./commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component";
 import { HistorialEntregaComponent } from "./commons/components/historial-entrega/historial-entrega.component";
+import { QrGnerarPdfComponent } from "./commons/components/qr-gnerar-pdf/qr-gnerar-pdf.component";
 
 const routes: Routes = [
   {
@@ -64,6 +65,10 @@ const routes: Routes = [
             pathMatch: "full",
           },
         ],
+      },
+      {
+        path: "QrClients",
+        component: QrGnerarPdfComponent,
       },
       {
         path: "miPerfil",
