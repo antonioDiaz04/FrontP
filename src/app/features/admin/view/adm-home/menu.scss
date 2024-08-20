@@ -4,7 +4,7 @@
             color: #fff;
             padding: 10px 0;
             text-align: center;
-            font-weight:999;
+            font-weight: 999;
 
           }
 
@@ -14,21 +14,22 @@
             position: sticky;
             border-bottom: 1px solid #33425638;
             top: 0;
-              /* Asegúrate de que top esté definido */
+
+            /* Asegúrate de que top esté definido */
             nav.menu {
               display: flex;
               justify-content: center;
-              
+
               ul {
-               
+
                 list-style-type: none;
                 padding: 0;
                 margin: 0;
                 display: flex;
 
                 li {
-                    /* Asegúrate de que top esté definido */
-                z-index: 1;
+                  /* Asegúrate de que top esté definido */
+                  z-index: 1;
                   position: relative;
 
                   a {
@@ -38,27 +39,36 @@
                     display: block;
 
                     &:hover {
-                        color: #334256;
+                      color: #334256;
                     }
                   }
+
+
 
                   ul {
                     display: none;
                     position: absolute;
-                    top: 50px;
+                    top: 30px;
                     left: 0;
-                    background-color: transparent;
-                    box-shadow: -1px 15px 16px 6px #33425687;
-                    padding: 0;
+                    background-color: white;
+                    // box-shadow: -1px 15px 16px 6px #33425687;
+                    padding: 5%;
                     min-width: 150px;
                     z-index: 1000;
+                    border: 1px solid #33425638;
+                    border-radius: 4px;
+
+                    
 
                     li {
-                    
                       a {
                         color: #63738a;
                         padding: 10px;
+                    border-radius: 4px;
                       }
+                      &:hover {
+                      background: #eceff1e2;
+                    }
                     }
                   }
 

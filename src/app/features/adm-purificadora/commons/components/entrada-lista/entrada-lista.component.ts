@@ -72,7 +72,7 @@ export interface DetalleEntregaInterface {
   selector: "app-entrada-lista",
   templateUrl: "./entrada-lista.component.html",
   styleUrls: [
-    "../../../adm-purificadora.component.scss",
+    "../../../tablePrime.scss",
     "./modal.scss",
     "../../../form.scss",
   ],
@@ -83,7 +83,8 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
   totalRecords: number = 0;
   rows: number = 5;
   first: number = 0;
- 
+
+  filterText:string=''
   estadoinput: boolean = true;
   ruta!: DetalleEntregaInterface[];
   inputNumberValue: number | null = null; // Valor del campo de entrada
@@ -111,6 +112,35 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     this.stopPolling();
   }
 
+   onGlobalFilter(event: Event) {
+    // // const value = event.target as HTMLInputElement;
+    // const value = (event.target as HTMLInputElement).value.toLowerCase();
+
+    // if (value) {
+    //   const filteredData = this.allClients.filter(
+    //     (c) =>
+    //       c.nombre.toLowerCase().includes(value) ||
+    //       c.email.toLowerCase().includes(value) ||
+    //       c.telefono.toLowerCase().includes(value) ||
+    //       c.municipio.toLowerCase().includes(value) ||
+    //       c.colonia.toLowerCase().includes(value)
+    //   );
+
+    //   this.totalRecords = filteredData.length;
+    //   this.paginatedUser = filteredData.slice(
+    //     this.first,
+    //     this.first + this.rows
+    //   );
+    // } else {
+    //   this.totalRecords = this.allClients.length;
+    //   this.paginatedUser = this.allClients.slice(
+    //     this.first,
+    //     this.first + this.rows
+    //   );
+
+    //   // this.dt2.filterGlobal(input.value, "contains");
+    // }
+  }
   obtenerRutas() {
     this.rutaS.getRutasSalidas().subscribe(
       (data: DetalleEntregaInterface[]) => {
@@ -132,7 +162,7 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
 
 //  cantidadBotellas: number;
   // cantidadContada?: number;
-      
+
         this.totalRecords = this.allRutas.length;
         this.updatePaginatedRutasDetalles();
       },

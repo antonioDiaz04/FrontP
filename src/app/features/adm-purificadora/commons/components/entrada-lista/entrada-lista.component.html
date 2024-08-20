@@ -61,79 +61,86 @@
 <div>
   <h1>Gestión de Entrada</h1>
 </div>
-<p-toast></p-toast>
-<section id="lista">
-  <h1>Entradas</h1>
+<p-toast/>
+<section>
+  <h2>Entradas</h2>
 
-  <table class="entry-table">
-    <thead>
+  <p-table #dt [value]="paginatedRutasDetalles" selectionMode="single" dataKey="_id" [rows]="rows"
+    [totalRecords]="totalRecords" [first]="first" (onPageChange)="onPageChange($event)">
+
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: 150%; padding-left: 20%;" type="text" (input)="onGlobalFilter($event)"
+          placeholder="Buscar entrada..." [(ngModel)]="filterText" />
+      </span>
+      <!-- Puedes agregar un botón aquí si es necesario -->
+    </ng-template>
+
+    <ng-template pTemplate="header">
       <tr>
-        <th>Ruta</th>
-        <th>Repartidor</th>
-        <th>Vehículo</th>
-        <th>
-        <!-- <th 
-        *ngIf="
-            paginatedRutasDetalles.length > 0 &&
-            (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')
-          "> -->
+        <th pSortableColumn="nombreRuta">Ruta <p-sortIcon field="nombreRuta"></p-sortIcon></th>
+        <th pSortableColumn="repartidorId.nombre">Repartidor <p-sortIcon field="repartidorId.nombre"></p-sortIcon></th>
+        <th pSortableColumn="vehiculoId.marca">Vehículo <p-sortIcon field="vehiculoId.marca"></p-sortIcon></th>
+        <th
+          *ngIf="paginatedRutasDetalles.length > 0 && (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')">
           Cantidad Asignadas
         </th>
-        <th>
-<!--  *ngIf="
-            paginatedRutasDetalles.length > 0 &&
-            (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')
-          " -->
+        <th
+          *ngIf="paginatedRutasDetalles.length > 0 && (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')">
           Sobrantes
         </th>
-
         <th>Estado</th>
-        <th>
-          <!-- *ngIf="
-          paginatedRutasDetalles.length > 0 &&
-          (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')
-          " -->
+        <th
+          *ngIf="paginatedRutasDetalles.length > 0 && (paginatedRutasDetalles[0].estado == 'recibido' || paginatedRutasDetalles[0].estado == 'finalizada')">
           Cantidad Entregada
         </th>
       </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let ruta of paginatedRutasDetalles">
-        <tr *ngIf="ruta.estado !== 'confirmado'">
-          <td>{{ ruta.nombreRuta }}</td>
-          <td>{{ ruta.repartidorId.nombre }}</td>
-          <td>
-            {{ ruta.vehiculoId.marca }} {{ ruta.vehiculoId.modelo }} ({{ ruta.vehiculoId.anio }})
-          </td>
-          <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
-            <span style="text-align: center; margin-right: 15px" class="quantity">
-              {{ ruta.cantidadBotellas }}
-            </span>
-          </td>
-          <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
-            {{ calcularSobrantes(ruta) }}
-          </td>
-          <td>
-            <span [ngClass]="{
-                'text-success': ruta.estado == 'recibido' || ruta.estado == 'finalizada',
-                'text-danger': ruta.estado =='pendiente'
-              }">
-              {{ getEstado(ruta) }}
-              <button *ngIf="ruta.estado == 'finalizada' && !visible" (click)="mostrarModal(ruta)">
-                Recibir
-              </button>
-            </span>
-          </td>
-          <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
-            {{ calcularCantidadTotalEntregada(ruta) }}
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+    </ng-template>
 
-  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
-  </p-paginator>
+    <ng-template pTemplate="body" let-ruta>
+      <tr *ngIf="ruta.estado !== 'confirmado'">
+        <td>{{ ruta.nombreRuta }}</td>
+        <td>{{ ruta.repartidorId.nombre }}</td>
+        <td>
+          {{ ruta.vehiculoId.marca }} {{ ruta.vehiculoId.modelo }} ({{ ruta.vehiculoId.anio }})
+        </td>
+        <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
+          <span style="text-align: center; margin-right: 15px" class="quantity">
+            {{ ruta.cantidadBotellas }}
+          </span>
+        </td>
+        <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
+          {{ calcularSobrantes(ruta) }}
+        </td>
+        <td>
+          <span [ngClass]="{
+              'text-success': ruta.estado == 'recibido' || ruta.estado == 'finalizada',
+              'text-danger': ruta.estado =='pendiente'
+            }">
+            {{ getEstado(ruta) }}
+            <button *ngIf="ruta.estado == 'finalizada' && !visible" (click)="mostrarModal(ruta)">
+              Recibir
+            </button>
+          </span>
+        </td>
+        <td *ngIf="ruta.estado == 'recibido' || ruta.estado == 'finalizada'">
+          {{ calcularCantidadTotalEntregada(ruta) }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No se encuentran entradas.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first"
+    (onPageChange)="onPageChange($event)"></p-paginator>
+
+  <!-- <p>Hay {{paginatedRutasDetalles ? paginatedRutasDetalles.length : 0 }} entradas.</p> -->
 </section>
 
 <!-- Modal para recibir la ruta -->

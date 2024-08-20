@@ -1,0 +1,142 @@
+//? styles btns
+.custom-btn-secundary {
+  color: #6cb590;
+  box-shadow: 0 0 5px #6cb590;
+  background-color: #fff;
+
+  &:hover {
+    background: #6cb590;
+    color: #fff;
+  }
+}
+
+.custom-btn i {
+  margin-right: 0.5rem;
+}
+
+
+
+.custom-btn-detail {
+  color: #c035dc;
+  background-color: #fff;
+  box-shadow: 0 0 5px #ddaaff;
+
+  &:hover {
+    background-color: #8a66ff;
+    color: #fff;
+  }
+
+}
+
+.custom-btn-danger {
+  background-color: #fff;
+  color: #fa5566;
+
+  box-shadow: 0 0 5px #ffaab2;
+
+  &:hover {
+    background-color: #ff4154;
+
+    color: #fff;
+  }
+}
+
+.custom-btn-primary {
+  color: #4aa2ff;
+  box-shadow: 0 0 5px #aad3ff;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #258eff;
+    color: #fff;
+  }
+}
+
+
+//! styles status
+.enviado {
+  color: #ff9900;
+  background: #fffc9f;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+.ninguno {
+  color: #7e7e7e;
+  background: #e5e5e5;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+.finalizada {
+  color: #4ca87a;
+  background: #bdffde;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+.en_curso {
+  color: #0045f3;
+  background: #70c1fa;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+.parcialmente-entregado {
+  color: #ff9d00;
+  background: #fff6da;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+.pendiente {
+  color: #ffbd5b;
+  background: #ffefe0;
+  border-radius: 5px;
+  padding: 5px 5px;
+}
+
+.cancelado {
+  color: #cd6262;
+  background: #fbcccc;
+  border-radius: 5px;
+  padding: 5px 5px;
+}
+
+.remove {
+  color: rgb(192, 2, 2);
+  background-color: #ffffff;
+  border: 1px solid #d60000;
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: #d60000;
+    border: 1px solid #ffffff;
+  }
+}
+
+
+.read {
+  color: #02a4c0;
+  background-color: #ffffff;
+  border: 1px solid #02a4c0;
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: #02a4c0;
+    border: 1px solid #ffffff;
+  }
+}
+
+
+.edit {
+  color: #0bc002;
+  background-color: #ffffff;
+  border: 1px solid #35c002;
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: #0bc002;
+    border: 1px solid #ffffff;
+  }
+}

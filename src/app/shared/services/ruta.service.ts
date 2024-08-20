@@ -18,7 +18,7 @@ export class RutaService {
   
 
   detalleRutaById(id: string): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/ruta/` + id;
+    const url = `${environment.api}/ruta/` + id;
     return this.http.get(url);
   }
   detalleEntregaById(id: string): Observable<any> {
@@ -35,18 +35,18 @@ export class RutaService {
   //   return this.http.put(url, cliente)
   // }
   updateRuta(id: string, cliente: any): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/ruta/` + id;
+    const url = `${environment.api}/ruta/` + id;
     return this.http.put(url, cliente);
   }
 
   eliminarRuta(id: string): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/ruta/` + id;
+    const url = `${environment.api}/ruta/` + id;
     return this.http.delete(url);
   }
 
   getRutasByRepartidor(repartidorId: string): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.api}/purificadoraAdmin/byRepartidor/${repartidorId}`
+      `${environment.api}/ruta/byRepartidor/${repartidorId}`
     );
   }
   diasDisponiblesByRuta(repartidorId: string): Observable<any[]> {
@@ -58,7 +58,7 @@ export class RutaService {
 
   getRutasByVehiculo(vehculoId: string): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.api}/purificadoraAdmin/byVehiculo/${vehculoId}`
+      `${environment.api}/ruta/byVehiculo/${vehculoId}`
     );
   }
 
@@ -68,7 +68,7 @@ export class RutaService {
   }
 
   addRuta(data: any): Observable<any> {
-    const url = `${environment.api}/purificadoraAdmin/ruta/`;
+    const url = `${environment.api}/ruta/`;
     return this.http.post(url, data);
   }
   addSalida(data: any): Observable<any> {
@@ -98,7 +98,7 @@ export class RutaService {
   }
 
   getRutas(): Observable<any> {
-    return this.http.get(`${environment.api}/purificadoraAdmin/rutas`);
+    return this.http.get(`${environment.api}/ruta/`);
   }
 
 

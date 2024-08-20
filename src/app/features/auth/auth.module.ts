@@ -7,6 +7,7 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SignInService } from './commons/services/sign-in.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './commons/components/sign-up/sign-up.component';
+import { NgxLoadingModule } from "ngx-loading";
 @NgModule({
   providers: [
     SignInService
@@ -20,7 +21,7 @@ import { SignUpComponent } from './commons/components/sign-up/sign-up.component'
     HttpClientModule,
     ReactiveFormsModule,FormsModule,
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,NgxLoadingModule.forRoot({}),
   ]
 })
 export class AuthModule { }

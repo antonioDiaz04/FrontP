@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Vehiculo } from "../../../../../shared/models/vehiculo.model";
 import { Toast } from "../../../../../shared/services/toast.service";
 import { Table } from "primeng/table";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: "app-vehiculo-listado",
@@ -40,8 +42,9 @@ export class VehiculoListadoComponent {
   totalRecords: number = 0;
   rows: number = 5; // Número de registros por página
   first: number = 0; // Índice del primer registro de la página actual
+  idPurificadora!: string;
 
-  filterText: string = '';
+  filterText: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +52,9 @@ export class VehiculoListadoComponent {
     private repService: VehiculoService,
     private render2: Renderer2,
     private router: ActivatedRoute,
-    private rou: Router
+    private rou: Router,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService
   ) {
     this.vehiculoForm = this.fb.group({
       marca: ["", Validators.required],
@@ -62,17 +67,21 @@ export class VehiculoListadoComponent {
   ngOnInit(): void {
     this.getVehiculos();
     this.updatePaginatedVehiculo();
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+    }
   }
 
   highlightText(text: string): string {
-  if (!this.filterText) {
-    return text; // Si no hay texto a filtrar, regresa el texto original.
+    if (!this.filterText) {
+      return text; // Si no hay texto a filtrar, regresa el texto original.
+    }
+
+    const regex = new RegExp(`(${this.filterText})`, "gi"); // Crea una expresión regular para encontrar el texto de búsqueda.
+    return text.replace(regex, "<strong>$1</strong>"); // Reemplaza las coincidencias con el texto en negritas.
   }
-
-  const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
-  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto en negritas.
-}
-
 
   redirecTo(route: string): void {
     this.rou.navigate(["/purificadoraAdm/vehiculo/", route]);
@@ -140,6 +149,8 @@ export class VehiculoListadoComponent {
       // Aquí puedes realizar las operaciones necesarias con el valor de 'marca'
 
       const VEHICULO: Vehiculo = {
+      idPurificadora: this.idPurificadora,
+
         marca: this.vehiculoForm.get("marca")?.value,
         modelo: this.vehiculoForm.get("modelo")?.value,
         placas: this.vehiculoForm.get("placas")?.value,
@@ -154,7 +165,7 @@ export class VehiculoListadoComponent {
           this.toast.showToastPmNgSuccess("Se guardaron los cambios con exito");
         },
         (error) => {
-          console.error("Error al actualizar el usuario:", error);
+          console.error("Error al actualizar el vehiculo:", error);
         }
       );
     }
@@ -163,7 +174,7 @@ export class VehiculoListadoComponent {
   eliminar(id: any) {
     this.repService.eliminarVehiculo(id).subscribe(
       (data) => {
-        console.log("eliminado");
+        this.toast.showToastPmNgInfo("Eliminado con exito");
         this.getVehiculos();
       },
       (error) => {
@@ -186,16 +197,21 @@ export class VehiculoListadoComponent {
   }
 
   getVehiculos() {
-    this.repService.getVehiculos().subscribe(
-      (data) => {
-        this.allVehiculos = data;
-        this.totalRecords = this.allVehiculos.length;
-        this.updatePaginatedVehiculo();
-      },
-      (error) => {
-        console.log("ocurrió un error al obtener la información", error);
-      }
-    );
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      const idPurificadora = userData;
+      this.repService.getVehiculosByIdPurificadora(idPurificadora).subscribe(
+        (data) => {
+          this.allVehiculos = data;
+          this.totalRecords = this.allVehiculos.length;
+          this.updatePaginatedVehiculo();
+        },
+        (error) => {
+          console.log("ocurrió un error al obtener la información", error);
+        }
+      );
+    }
   }
 
   onDiaSeleccionado(event: Event): void {

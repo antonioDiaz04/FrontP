@@ -42,7 +42,7 @@ export interface PuntoDeEntrega {
 @Component({
   selector: "app-historial-entrega",
   templateUrl: "./historial-entrega.component.html",
-  styleUrl: "../../../adm-purificadora.component.scss",
+  styleUrls:[ "../../../tablePrime.scss", "../../../form.scss"]
 })
 export class HistorialEntregaComponent {
   messages!: Message[];
@@ -77,7 +77,7 @@ export class HistorialEntregaComponent {
   totalSobrado: number = 0;
   rutaActual: any;
   listClientes: Cliente[] | any;
-
+  filterText: string = "";
   ngOnInit(): void {
     this.obtenerEntregas();
     this.updatePaginatedEntregas();
@@ -105,6 +105,32 @@ export class HistorialEntregaComponent {
     this.fecha = this.obtenerFechaYYYYMMDD();
     this.diaTexto = this.obtenerDiaTexto();
     // this.id = this.aRouter.snapshot.paramMap.get('id');
+  }
+  onGlobalFilter(event: Event) {
+    // // const value = event.target as HTMLInputElement;
+    // const value = (event.target as HTMLInputElement).value.toLowerCase();
+    // if (value) {
+    //   const filteredData = this.allClients.filter(
+    //     (c) =>
+    //       c.nombre.toLowerCase().includes(value) ||
+    //       c.email.toLowerCase().includes(value) ||
+    //       c.telefono.toLowerCase().includes(value) ||
+    //       c.municipio.toLowerCase().includes(value) ||
+    //       c.colonia.toLowerCase().includes(value)
+    //   );
+    //   this.totalRecords = filteredData.length;
+    //   this.paginatedUser = filteredData.slice(
+    //     this.first,
+    //     this.first + this.rows
+    //   );
+    // } else {
+    //   this.totalRecords = this.allClients.length;
+    //   this.paginatedUser = this.allClients.slice(
+    //     this.first,
+    //     this.first + this.rows
+    //   );
+    //   // this.dt2.filterGlobal(input.value, "contains");
+    // }
   }
 
   obtenerFechaYYYYMMDD() {

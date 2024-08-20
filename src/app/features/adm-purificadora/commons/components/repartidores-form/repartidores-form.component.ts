@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { RepartidoresService } from '../../../../../shared/services/rapartidores.service';
@@ -6,35 +6,52 @@ import { Location } from '@angular/common';
 import { Repartidor } from '../../../../../shared/models/repartidor.model';
 import { Toast } from '../../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { SessionService } from '../../../../../core/commons/components/service/session.service';
 @Component({
   selector: 'app-repartidores-form',
   templateUrl: './repartidores-form.component.html',
   styleUrls:  ['./repartidores-form.component.scss']
 })
-export class RepartidoresFormComponent {
+export class RepartidoresFormComponent implements OnInit {
 
 
   diasSeleccionados: string[] = [];
   registroRepartidores!: FormGroup;
-  constructor(private router:Router,private toast: Toast,private repService: RepartidoresService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder) {
+  idPurificadora!: string;
+  constructor(private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService,private router:Router,private toast: Toast,private repService: RepartidoresService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder) {
     this.registroRepartidores = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
       telefono: ['', Validators.required],
-      numCasa: ['', Validators.required], 
-      password1: ['', Validators.required], 
+      numCasa: ['', Validators.required],
+      password1: ['', Validators.required],
       diasAsignados: this.formBuilder.array([]),
     });
   }
+
+
+ngOnInit(): void {
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+    }
+}
+
+
+
 
 
   registroRepartidor() {
     const nombre = this.registroRepartidores.get('nombre')?.value;
     const email = this.registroRepartidores.get('email')?.value;
     const telefono = this.registroRepartidores.get('telefono')?.value;
-    const numCasa = this.registroRepartidores.get('numCasa')?.value; 
+    const numCasa = this.registroRepartidores.get('numCasa')?.value;
     const password1 = this.registroRepartidores.get('password1')?.value;
     const diasAsignados = this.diasSeleccionados;
+
     if (!nombre) {
      this.toast.showToastPmNgWarn( 'Por favor ingresa tu nombre');
       return;
@@ -65,6 +82,7 @@ export class RepartidoresFormComponent {
 
 
     const REPARTIDOR: Repartidor = {
+      idPurificadora: this.idPurificadora,
       nombre: this.registroRepartidores.get('nombre')?.value,
       email: this.registroRepartidores.get('email')?.value,
       telefono: this.registroRepartidores.get('telefono')?.value,
@@ -72,11 +90,9 @@ export class RepartidoresFormComponent {
       password1: this.registroRepartidores.get('password1')?.value,
       diasAsignados: diasAsignados
     }
-    
     this.repService.signUp(REPARTIDOR).subscribe(response => {
-
       this.toast.showToastSwalSuccess( "El resgitro fue exito")
-      this.router.navigate(['/purificadoraAdm/repartidores/lista-repartidores']) // Navegación hacia otras páginas públicas
+      this.router.navigate(['/purificadoraAdm/repartidore/lista-repartidores']) // Navegación hacia otras páginas públicas
     }, (error) => {
       console.error(error);
       let errorMessage = "Error desconocido";
@@ -84,11 +100,7 @@ export class RepartidoresFormComponent {
         errorMessage = error.error.message;
       }
       this.toast.showToastSwalError(errorMessage);
-
     })
-
-
-
   }
 
   volverAtras() {
@@ -96,11 +108,10 @@ export class RepartidoresFormComponent {
   }
 
 
- 
+
   onDiaSeleccionado(event: any) {
     const isChecked = event.target.checked;
     const dia = event.target.value;
-
     if (isChecked) {
       this.diasSeleccionados.push(dia);
     } else {

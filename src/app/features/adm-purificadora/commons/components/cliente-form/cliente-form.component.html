@@ -1,105 +1,109 @@
 <head>
 
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
-    <script
-        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-    <link rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
-        type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 </head>
 <p-toast />
 <section id="registro">
-    <form [formGroup]="registroForm" (ngSubmit)="registroCliente()" method="post">
-        <div class="form-column">
-            <fieldset>
-                <legend>Información Básica</legend>
-                <!-- abis -->
-                <!-- <div style="text-align:center">
+  <form [formGroup]="registroForm" (ngSubmit)="registroCliente()" method="post">
+    <div class="form-column">
+      <fieldset>
+        <legend>Información Básica</legend>
+        <!-- abis -->
+        <!-- <div style="text-align:center">
                   <h1>
                     Welcome to QR Code Generator in Angular 17 Applications!
                     <qrcode [qrdata]="myAngularxQrCode" [errorCorrectionLevel]="'M'"></qrcode>
                   </h1>
                 </div> -->
-                <!-- abis -->
-                <label for="nombre">Nombre Completo:</label>
-                <input placeholder="Nombre-Apellido paterno-Apellido materno" type="text" id="nombre"
-                    formControlName="nombre">
-                <b class="text-danger"
-                    *ngIf="registroForm.get('nombre')?.hasError('required') && registroForm.get('nombre')?.touched">
+        <!-- abis -->
+        <label for="nombre">Nombre Completo:</label>
+        <input placeholder="Nombre-Apellido paterno-Apellido materno" type="text" id="nombre" formControlName="nombre">
+        <b class="text-danger"
+          *ngIf="registroForm.get('nombre')?.hasError('required') && registroForm.get('nombre')?.touched">
 
-                    Este campo es obligatorio</b>
-                <label for="email">Correo Electrónico:</label>
-                <input placeholder="correo@gmail.com" type="email" id="email" formControlName="email">
-
+          Este campo es obligatorio</b>
+        <label for="email">Correo Electrónico:</label>
+        <input placeholder="correo@gmail.com" type="email" id="email" formControlName="email">
 
 
-                <label for="telefono">Número de Teléfono:</label>
-                <input placeholder="000000000000" type="tel" id="telefono" formControlName="telefono">
 
-                <label for="telefono">Número de casa:</label>
-                <input placeholder="000000000000" type="tel" id="telefono" formControlName="numCasa">
-            <label for="nombre">Seleccione el municipio:</label>
+        <label for="telefono">Número de Teléfono:</label>
+        <input placeholder="000000000000" type="tel" id="telefono" formControlName="telefono">
+
+        <label for="telefono">Número de casa:</label>
+        <input placeholder="000000000000" type="tel" id="telefono" formControlName="numCasa">
+        <label for="nombre">Seleccione el municipio:</label>
+        <div class="custom-dropdown">
+          <!-- Aquí mostramos el municipio seleccionado en un input de solo lectura -->
+          <input type="text" [value]="selectedMunicipio" readonly />
+        </div>
+
+        <!-- <label for="nombre">Seleccione el municipio:</label>
             <div class="custom-dropdown">
-                <!-- lo que hacemos aqui,aqui tomará el valor para asarlo en la funcion onMunicipioSelectionChange($event)" -->
+                 lo que hacemos aqui,aqui tomará el valor para asarlo en la funcion onMunicipioSelectionChange($event)"
                 <select formControlName="selectedMunicipio" (change)="onMunicipioSelectionChange($event)">
                     <option value="0" disabled selected>Seleccionar</option>
                     <option *ngFor="let municipio of allMuncipioXEstado" [value]="municipio">{{ municipio }}
                     </option>
                 </select>
 
-            </div>
-            <b class="text-danger" *ngIf="registroForm.get('selectedMunicipio')?.value==0">
-                Este campo es obligatorio</b>
+            </div> -->
+        <b class="text-danger" *ngIf="selectedMunicipio==0">
+          Este campo es obligatorio</b>
 
 
-                <label for="nombre">Seleccione la colonia:</label>
-                <div class="custom-dropdown">
-                    <select formControlName="selectedColonia" (change)="onColoniaSelectionChange($event)">
-                        <option value="0" disabled selected>Seleccionar</option>
-                        <option *ngFor="let colonia of allColoniaXMuncipio" [value]="colonia">{{ colonia }}
-                        </option>
-                    </select>
+        <label for="nombre">Seleccione la colonia:</label>
+        <div class="custom-dropdown">
+          <select formControlName="selectedColonia" (change)="onColoniaSelectionChange($event)">
+            <option value="0" disabled selected>Seleccionar</option>
+            <option *ngFor="let colonia of allColoniaXMuncipio" [value]="colonia">{{ colonia }}
+            </option>
+          </select>
 
 
-                </div>
-                <b class="text-danger" *ngIf="registroForm.get('selectedColonia')?.value==0">
-                    Este campo es obligatorio</b>
-            </fieldset>
+        </div>
+        <b class="text-danger" *ngIf="registroForm.get('selectedColonia')?.value==0">
+          Este campo es obligatorio</b>
+      </fieldset>
+    </div>
+
+    <div class="form-column">
+      <fieldset>
+        <legend>Información direccion</legend>
+
+
+
+        <div id="map"></div>
+        <!-- Elemento con la referencia #asGeocoder -->
+        <div class="wrapper">
+          <div class="box-form">
+            <div id="geocoder" #asGeocoder class="geocoder"></div>
+          </div>
         </div>
 
-        <div class="form-column">
-            <fieldset>
-                <legend>Información direccion</legend>
+        <input formControlName="longitud" type="hidden">
+
+        <input formControlName="latitud" type="hidden">
+
+
+        <!-- codigo qr -->
+        <!--este qr se lo daremos al cliente codigo qr -->
 
 
 
-                <div id="map"></div>
-                <!-- Elemento con la referencia #asGeocoder -->
-                <div class="wrapper">
-                    <div class="box-form">
-                        <div id="geocoder" #asGeocoder class="geocoder"></div>
-                    </div>
-                </div>
+        <input type="button" (click)="volverAtras()" value="Atras" class="button">
+      </fieldset>
+    </div>
 
-                <input formControlName="longitud" type="hidden">
-
-                <input formControlName="latitud" type="hidden">
-
-
-                <!-- codigo qr -->
-                <!--este qr se lo daremos al cliente codigo qr -->
-
-
-
-                <input type="button" (click)="volverAtras()" value="Atras" class="button">
-            </fieldset>
-        </div>
-
-        <button type="submit">Registrar Cliente</button>
-    </form>
+    <button type="submit">Registrar Cliente</button>
+  </form>
 </section>

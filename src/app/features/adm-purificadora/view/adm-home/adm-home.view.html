@@ -7,7 +7,7 @@
           class="fas fa-home"></i>
         <span class="link-text">Inicio</span></a></li>
 
-<!-- 
+    <!-- 
 
     <li><a tabindex="0" (click)="redirectToAdminPurificadora('QrClients');setActiveLink($event)" class="nav-link"><i
           class="fas fa-home"></i>
@@ -155,25 +155,27 @@
     sesión</button>
 </div>
 
+
+
+
 <div class="floating-header">
+  <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
 
   <div class="admin-info">
-    <div class="footer-info">
-      <span>{{data.purificadoraNombre}},Ubicación: Calle:{{data.calle}}, Ciudad:{{data.estado}},</span>
-      <span>Tel:(52){{ data.telefono}}</span>
-    </div>
     <span class="date">{{fechaTexto}}</span>
-    <div class="calendar-container">
-      <button type="date" class="round-button">
-        <i class="fa-regular fa-calendar-days"></i>
-      </button>
-    </div>
   </div>
-  <button class="notification-button">
+
+  <!-- <button class="notification-button">
     <i class="fas fa-bell"></i>
-  </button>
+  </button> -->
 </div>
 
 <div class="content">
+
+  <!-- migas de pan -->
+  <!-- <div class="card flex justify-content-center"> -->
+  <!-- </div> -->
+
+
   <router-outlet></router-outlet>
 </div>

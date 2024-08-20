@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SessionService } from '../../../../core/commons/components/service/session.service';
 import { ClientesService } from "../../../../shared/services/clientes.service";
+import { MenuItem } from "primeng/api";
 
 @Component({
   selector: "app-adm-home",
@@ -39,6 +40,12 @@ export class AdmHomeView implements OnInit {
   id!: string;
   data: any = {};
 
+   items: MenuItem[] | undefined;
+
+    home: MenuItem | undefined;
+
+    
+
 
   constructor(
     private clientesService: ClientesService
@@ -55,6 +62,15 @@ export class AdmHomeView implements OnInit {
 
   ngOnInit() {
     this.getData()
+    this.items = [
+            { label: 'Electronics' }, 
+            { label: 'Computer' }, 
+            { label: 'Accessories' }, 
+            { label: 'Keyboard' }, 
+            { label: 'Wireless' }
+        ];
+
+        this.home = { icon: 'pi pi-home', routerLink: '/' };
     // console.log(this.obtenerFechaYYYYMMDD()); // Output: "Viernes / Junio / 2024" (para la fecha actual)
   }
 
@@ -73,7 +89,7 @@ export class AdmHomeView implements OnInit {
       }
     }
   }
-
+  
 
   redirectToAdminPurificadora(route: string): void {
     // this.sidebarVisible2 = !this.sidebarVisible2

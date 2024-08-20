@@ -21,6 +21,9 @@ import {
   Colonia,
   Municipio,
 } from "../../../../../shared/models/DireccionSchema.model";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
+import { ClientesService } from "../../../../../shared/services/clientes.service";
 
 @Component({
   selector: "app-cliente-form",
@@ -33,12 +36,13 @@ export class ClienteFormComponent implements OnInit {
   registroForm: FormGroup;
   allMuncipioXEstado: any;
   allColoniaXMuncipio: any;
-
+  idPurificadora!: string;
   municipio!: Municipio[];
   colonias!: Colonia[];
-
+  data!: string;
   selectedMunicipio: any;
   selectedColonia: any;
+  municipioId!: string;
   constructor(
     private toast: Toast,
     private router: Router,
@@ -47,7 +51,10 @@ export class ClienteFormComponent implements OnInit {
     private mapService: MapaClientService,
     private location: Location,
     private formBuilder: FormBuilder,
-    private clienteS: SignupService
+    private clienteS: SignupService,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService,
+    private clientesService: ClientesService
   ) {
     this.registroForm = this.formBuilder.group({
       nombre: ["", Validators.required],
@@ -76,9 +83,45 @@ export class ClienteFormComponent implements OnInit {
     console.log("Colonia seleccionado:", this.selectedColonia);
   }
 
+  getData(): void {
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+
+      if (this.idPurificadora) {
+        this.clientesService
+          .purificadora(this.idPurificadora)
+          .subscribe((data) => {
+            this.data = data;
+            this.municipioId = data.municipioId._id;
+            this.selectedMunicipio = data.municipioId.municipio;
+            console.log(data.municipioId._id);
+            console.log(this.municipioId);
+
+            if (this.municipioId) {
+              this.consultasCOPOMEX
+                .getColoniaXMunicipio(this.municipioId)
+                .subscribe(
+                  (data1) => {
+                    this.allColoniaXMuncipio = data1[0].colonias;
+                  },
+                  (error) => {
+                    console.log(
+                      "Ocurrió un error al obtener la información",
+                      error
+                    );
+                  }
+                );
+            }
+          });
+      }
+    }
+  }
+
   ngOnInit() {
+    this.getData();
     this.getMunicipioPorExtado();
-    this.getColoniaPorMunicipio();
     this.mapService.latitudLongitudCambiadas.subscribe(
       ({ latitud, longitud }) => {
         this.registroForm.get("latitud")?.setValue(latitud);
@@ -102,6 +145,23 @@ export class ClienteFormComponent implements OnInit {
       console.log("*** getPoint", getPoint);
     });
   }
+
+  // getData(): void {
+  //   this.ngxService.start();
+  //   const userData = this.sessionService.getId();
+  //   console.log("userData=>", userData)
+  //   if (userData) {
+  //     this.id = userData;
+  //     console.log("id=>", this.id)
+  //     if (this.id) {
+  //       this.clientesService.purificadora(this.id).subscribe((data) => {
+  //         this.data = data;
+  //         console.log(data)
+  //       })
+  //     }
+  //   }
+  // }
+
   registroCliente() {
     const nombre = this.registroForm.get("nombre")?.value;
     const email = this.registroForm.get("email")?.value;
@@ -110,7 +170,7 @@ export class ClienteFormComponent implements OnInit {
     const telefono = this.registroForm.get("telefono")?.value;
     const numCasa = this.registroForm.get("numCasa")?.value;
     const colonia = this.registroForm.get("selectedColonia")?.value;
-    const municipio = this.registroForm.get("selectedMunicipio")?.value;
+    const municipio = this.municipioId;
     if (!nombre) {
       this.toast.showToastPmNgWarn("Por favor ingresa tu nombre");
       return;
@@ -124,11 +184,8 @@ export class ClienteFormComponent implements OnInit {
       this.toast.showToastPmNgWarn("Por favor ingresa tu telefono");
       return;
     }
-    if (municipio==0) {
-      this.toast.showToastPmNgWarn("Por favor ingresa tu municipio");
-      return;
-    }
-    if (colonia==0) {
+   
+    if (colonia == 0) {
       this.toast.showToastPmNgWarn("Por favor ingresa tu colonia");
       return;
     }
@@ -143,18 +200,19 @@ export class ClienteFormComponent implements OnInit {
     }
 
     const USUARIO: Usuario = {
+      idPurificadora: this.idPurificadora,
       nombre: this.registroForm.get("nombre")?.value,
       email: this.registroForm.get("email")?.value,
       longitud: this.registroForm.get("longitud")?.value,
       latitud: this.registroForm.get("latitud")?.value,
       telefono: this.registroForm.get("telefono")?.value,
       numCasa: this.registroForm.get("numCasa")?.value,
-      municipio: this.selectedMunicipio,
+      municipioId: this.municipioId,
       colonia: this.selectedColonia,
     };
     this.clienteS.signUp(USUARIO).subscribe(
       (response) => {
-        this.toast.showToastSwalSuccess("El resgitro fue exitos");
+        this.toast.showToastSwalSuccess("El resgitro fue exitoso");
         this.router.navigate(["/purificadoraAdm/cliente/lista-clientes"]);
       },
       (error) => {
@@ -184,16 +242,17 @@ export class ClienteFormComponent implements OnInit {
     );
   }
 
-  getColoniaPorMunicipio() {
-   let municipio="Huejutla de Reyes"
-    this.consultasCOPOMEX.getColoniaXMunicipio(municipio).subscribe(
-      (data1) => {
-        this.allColoniaXMuncipio = data1[0].colonias;
-        console.log()
-      },
-      (error) => {
-        console.log("Ocurrió un error al obtener la información", error);
-      }
-    );
-  }
+  // getColoniaPorMunicipio() {
+  //   // let municipio = "Huejutla de Reyes";
+  //   console.log(this.municipioId)
+
+  //   this.consultasCOPOMEX.getColoniaXMunicipio(this.municipioId).subscribe(
+  //     (data1) => {
+  //       this.allColoniaXMuncipio = data1[0].colonias;
+  //     },
+  //     (error) => {
+  //       console.log("Ocurrió un error al obtener la información", error);
+  //     }
+  //   );
+  // }
 }

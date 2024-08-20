@@ -15,6 +15,14 @@ section {
       border-bottom: 1px solid #ddd;
     }
 
+    tr {
+      td {
+        .resaltado {
+            color: red;
+          }
+      }
+    }
+
     th {
       background-color: #f0f4f5;
       color: #334256;
@@ -110,3 +118,11 @@ section {
 .add-button:hover {
   background-color: #168470;
 }
+
+// strong {
+//   color: red;
+// }
+
+// .resaltado {
+//   color: red;
+// }

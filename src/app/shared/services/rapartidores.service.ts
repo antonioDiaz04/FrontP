@@ -14,6 +14,11 @@ export class RepartidoresService {
       `${environment.api}/purificadoraRepartidores/repartidores`
     );
   }
+  getRepartidoresByIdPurificadora(idPurificadora: string): Observable<any> {
+ const url =
+      `${environment.api}/purificadoraRepartidores/obtenerRepartidoresByIdPurificadora/` + idPurificadora;
+   return this.http.get(url);
+  }
   getRepartidoresVehiculosDisponibles(): Observable<any> {
     return this.http.get(
       `${environment.api}/purificadoraAdmin/repartidoresYvehiculosDisponibles`
@@ -39,11 +44,17 @@ export class RepartidoresService {
     const url = `${environment.api}/purificadoraRepartidores/actualiza/` + id;
     return this.http.put(url, cliente);
   }
+
+  
+
   eliminarRepartidores(id: string): Observable<any> {
     const url =
       `${environment.api}/purificadoraRepartidores/deleteRepartidor/` + id;
     return this.http.delete(url);
   }
+
+
+
   signUp(data: any): Observable<any> {
     const url = `${environment.api}/purificadoraRepartidores/repartidor/`;
     return this.http.post(url, data);

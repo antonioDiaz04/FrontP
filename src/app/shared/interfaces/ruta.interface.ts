@@ -14,12 +14,12 @@ export interface PuntoDeEntrega {
 
 export interface Ruta {
   _id?: string;
-  nombreRuta?: string;
-  repartidorId?: Repartidor;
-  vehiculoId?: Vehiculo;
+  nombreRuta: string;
+  repartidorId: Repartidor;
+  vehiculoId: Vehiculo;
   fechaInicio?: Date;
   fechaFin?: Date;
   estado?: 'pendiente' | 'en_curso' | 'finalizada';
-  puntosDeEntrega: PuntoDeEntrega;
+  puntosDeEntrega: PuntoDeEntrega[];
   diasAsignados?: string[];
 }

@@ -27,13 +27,12 @@ import { Table } from "primeng/table";
 import { Toast } from "../../../../../shared/services/toast.service";
 import { finalize, tap } from "rxjs";
 @Component({
-  selector: "app-cliente-tabla",
-  templateUrl: "./cliente-tabla.component.html",
-  styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-cliente-listado',
+  templateUrl: './cliente-listado.component.html',
+    styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
+
 })
-export class ClienteTablaComponent implements OnInit {
-  @ViewChild("dt2") dt2!: Table;
+export class ClienteListadoComponent {
 
   listUsuario?: Cliente;
   idCliente!: string;
@@ -216,4 +215,5 @@ export class ClienteTablaComponent implements OnInit {
       this.first + this.rows
     );
   }
+
 }

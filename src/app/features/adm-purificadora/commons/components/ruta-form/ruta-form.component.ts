@@ -25,6 +25,8 @@ import { DetalleEntregaInterface } from "../../../../../shared/interfaces/detall
 import { Toast } from "../../../../../shared/services/toast.service";
 import { Message, MessageService } from "primeng/api";
 import { Municipio } from "../../../../../shared/models/DireccionSchema.model";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
 interface PuntoDeEntrega {
   clienteId: {
     _id: string;
@@ -114,6 +116,7 @@ export class RutaFormComponent implements OnInit {
     "background-color": "#fff",
     color: "#333",
   };
+  idPurificadora!: string;
 
   selectedRepartidorId!: any;
   selectedVehiculoId!: any;
@@ -133,7 +136,9 @@ export class RutaFormComponent implements OnInit {
     private rutaService: RutaService,
     private render2: Renderer2,
     private location: Location,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService
   ) {
     this.esEdit = false;
     this.registroRuta = this.formBuilder.group({
@@ -177,9 +182,12 @@ export class RutaFormComponent implements OnInit {
     this.getVehiculos();
     this.getMunicipioPorExtado();
     this.getColoniaPorMunicipio();
-    // this.filtrarColoniasDisponibles()
-    // this.initializeAllDiasDisponibles()
 
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+    }
     this.messages = [
       // { severity: "success", summary: "Success", detail: "Message Content" },
       { severity: "info", summary: "Info", detail: "Message Content" },
@@ -522,7 +530,7 @@ export class RutaFormComponent implements OnInit {
       return;
     }
     // Actualiza el array de colonias seleccionadas
-    
+
   // Actualiza el array de colonias seleccionadas
   this.selectedColonias[index] = selectedColoniaValue || null;
 
@@ -715,6 +723,8 @@ export class RutaFormComponent implements OnInit {
     }
 
     const RUTA: Ruta = {
+      idPurificadora: this.idPurificadora,
+
       nombreRuta: nombreRuta,
       repartidorId: selectedRepartidor,
       vehiculoId: selectedVehiculo,
@@ -1208,7 +1218,7 @@ export class RutaFormComponent implements OnInit {
     if (
       (!this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia]) ||
       (!this.diasDisponiblesR[dia] && this.diasDisponiblesV[dia]) ||
-      (this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia])  
+      (this.diasDisponiblesR[dia] && !this.diasDisponiblesV[dia])
     ) {
       return true; // Día no disponible según las nuevas condiciones
     }

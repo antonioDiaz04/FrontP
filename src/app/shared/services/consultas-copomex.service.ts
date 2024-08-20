@@ -34,10 +34,10 @@ export class ConsultasCOPOMEXService {
   //   return this.http.get(`${environment.apiCOPOMEX}get_municipio_por_estado/${Estado}?token=${environment.tokenCOPOMEX}`)
   // }
   
-  getColoniaXMunicipio(municipio: string): Observable<any> {
+  getColoniaXMunicipio(municipioId: string): Observable<any> {
     // http://localhost:4000/direccion/coloniasByMunicipio/Huejutla de Reyes
-      const url = `${environment.api}/direccion/coloniasByMunicipio/`;
-    return this.http.post(url, {municipio});
+      const url = `${environment.api}/direccion/coloniasByMunicipio/`+municipioId;
+    return this.http.get(url);
   }
   getColoniaXMunicipioByClientes(municipio: string): Observable<any> {
     // http://localhost:4000/direccion/coloniasByMunicipio/Huejutla de Reyes

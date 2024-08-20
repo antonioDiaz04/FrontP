@@ -14,105 +14,116 @@
     }
   </style>
 </head>
-<p-toast />
-
-<section id="lista">
-
-  <h1>Hisotrial de entregas</h1>
   <!-- <div class="top-bar">
-        <input type="text" id="searchBar" placeholder="Buscar...">
-    </div>
-    <div class="filter-container">
-        <div class="filter-group">
-            <label for="date">Días Programada la Salida:</label>
-            <select id="date" name="date">
-                <option value="">Seleccione...</option>
-            </select>
-        </div>
+          <input type="text" id="searchBar" placeholder="Buscar...">
+      </div>
+      <div class="filter-container">
+          <div class="filter-group">
+              <label for="date">Días Programada la Salida:</label>
+              <select id="date" name="date">
+                  <option value="">Seleccione...</option>
+              </select>
+          </div>
 
-        <div class="filter-group">
-            <label for="repartidor">Repartidor:</label>
-            <select id="repartidor" name="repartidor">
-                <option value="">Seleccione...</option>
-            </select>
-        </div>
+          <div class="filter-group">
+              <label for="repartidor">Repartidor:</label>
+              <select id="repartidor" name="repartidor">
+                  <option value="">Seleccione...</option>
+              </select>
+          </div>
 
-        <div class="filter-group">
-            <label for="route">Ruta:</label>
-            <select id="route" name="route">
-                <option value="">Seleccione...</option>
-            </select>
-        </div>
+          <div class="filter-group">
+              <label for="route">Ruta:</label>
+              <select id="route" name="route">
+                  <option value="">Seleccione...</option>
+              </select>
+          </div>
 
-        <div class="filter-group">
-            <label for="municipality">Estado:</label>
-            <select id="municipality" name="municipality">
-                <option value="">Seleccione...</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="colony">Catidad:</label>
-            <select id="colony" name="colony">
-                <option value="">Seleccione...</option>
-            </select>
-        </div>
-    </div> -->
-  <table class="entry-table">
-    <thead>
+          <div class="filter-group">
+              <label for="municipality">Estado:</label>
+              <select id="municipality" name="municipality">
+                  <option value="">Seleccione...</option>
+              </select>
+          </div>
+          <div class="filter-group">
+              <label for="colony">Catidad:</label>
+              <select id="colony" name="colony">
+                  <option value="">Seleccione...</option>
+              </select>
+          </div>
+      </div> -->
+<p-toast/>
+<section>
+  <h2>Historial de Entregas</h2>
+
+  <p-table #dt [value]="paginatedEntregas" selectionMode="single" dataKey="_id" [rows]="rows"
+    [totalRecords]="totalRecords" [first]="first" (onPageChange)="onPageChange($event)">
+
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: 150%; padding-left: 20%;" type="text" (input)="onGlobalFilter($event)"
+          placeholder="Buscar entrega..." [(ngModel)]="filterText" />
+      </span>
+    </ng-template>
+
+    <ng-template pTemplate="header">
       <tr>
-        <th>Ruta</th>
-        <th>Repartidor</th>
-        <th>Vehiculo</th>
-        <th>dia de la entrega</th>
-        <th>Fecha de la entrega</th>
-        <th>Cantidad</th>
-        <th>Estado</th>
+        <th pSortableColumn="nombreRuta">Ruta <p-sortIcon field="nombreRuta"></p-sortIcon></th>
+        <th pSortableColumn="repartidorId.nombre">Repartidor <p-sortIcon field="repartidorId.nombre"></p-sortIcon></th>
+        <th pSortableColumn="vehiculoId.placas">Vehículo <p-sortIcon field="vehiculoId.placas"></p-sortIcon></th>
+        <th pSortableColumn="diasEntrada">Día de la Entrega <p-sortIcon field="diasEntrada"></p-sortIcon></th>
+        <th pSortableColumn="fechaEntrada">Fecha de la Entrega <p-sortIcon field="fechaEntrada"></p-sortIcon></th>
+        <th pSortableColumn="cantidadBotellas">Cantidad <p-sortIcon field="cantidadBotellas"></p-sortIcon></th>
+        <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ruta of paginatedEntregas">
+    </ng-template>
+
+    <ng-template pTemplate="body" let-ruta>
+      <tr>
         <td>{{ ruta?.nombreRuta }}</td>
         <td>{{ ruta.repartidorId.nombre }}</td>
         <td>{{ ruta.vehiculoId.placas }}</td>
+        <td>{{ ruta.diasEntrada }}</td>
+        <td>{{ ruta.fechaEntrada }}</td>
         <td>
-          {{ ruta.diasEntrada }}
-        </td>
-        <td>
-          {{ ruta.fechaEntrada }}
-        </td>
-        <td>
-          <span style="text-align:center;margin-right: 15px;" class="quantity">{{ ruta.cantidadBotellas !==
-            undefined &&
-            ruta.cantidadBotellas !== null ?
-            ruta.cantidadBotellas
-            : 0 }}
+          <span style="text-align:center;margin-right: 15px;" class="quantity">
+            {{ ruta.cantidadBotellas !== undefined && ruta.cantidadBotellas !== null ? ruta.cantidadBotellas : 0 }}
           </span>
         </td>
         <td>
           <p style="font-weight: bold;" [ngClass]="{
-                    'enviado': ruta.estado === 'enviado',
-                    'pendiente': !ruta.estado || ruta.estado === 'pendiente',
-                    'en_curso': ruta.estado === 'recibido',
-                    'finalizada': ruta.estado === 'finalizada',
-                    'cancelado': ruta.estado === 'cancelado'
-                }">
+                'enviado': ruta.estado === 'enviado',
+                'pendiente': !ruta.estado || ruta.estado === 'pendiente',
+                'en_curso': ruta.estado === 'recibido',
+                'finalizada': ruta.estado === 'finalizada',
+                'cancelado': ruta.estado === 'cancelado'
+              }">
             {{ ruta.estado ? ruta.estado : 'pendiente' }}
           </p>
-
         </td>
         <td>
-          <!-- <button type="input" class="read enable-button"> -->
           <button type="button" class="read enable-button" (click)="getData(ruta._id)">
-            <i class="fa-solid fa-people-carry-box"></i><span>ver detalle</span>
+            <i class="fa-solid fa-people-carry-box"></i><span>Ver Detalle</span>
           </button>
         </td>
       </tr>
-    </tbody>
-  </table>
-  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
-  </p-paginator>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No se encuentran entregas.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first"
+    (onPageChange)="onPageChange($event)"></p-paginator>
+
+  <p>Hay {{ paginatedEntregas ? paginatedEntregas.length : 0 }} entregas.</p>
 </section>
+
 
 <p-dialog [modal]="true" header="Información de clientes" [(visible)]="visible"
   [style]="{width: '50rem', height: '40rem'}">

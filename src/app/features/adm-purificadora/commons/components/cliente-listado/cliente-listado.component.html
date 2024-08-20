@@ -1,4 +1,4 @@
- <p-toast/>
+<p-toast />
 <p-dialog *ngIf="listUsuario" header="Información del Usuario" [modal]="true" [(visible)]="visible"
   [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   <form [formGroup]="clienteForm" (ngSubmit)="actualizarCliente(listUsuario._id)">
@@ -34,7 +34,7 @@
 
     <div>
       <label for="latitud">latitud:</label>
-      <input formControlName="latitud" >
+      <input formControlName="latitud">
     </div>
     <!-- <app-mapa-client-ubicacion></app-mapa-client-ubicacion> -->
 

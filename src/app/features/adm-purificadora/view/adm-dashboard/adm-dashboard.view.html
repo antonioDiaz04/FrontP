@@ -4,10 +4,17 @@
     <div class="text">
       <p class="text-bienvenida">
 
-        Hola Admin, {{data.nombre}}
+       Te damos la bienvenida, {{data.nombre}}
       </p>
 
       <b style="color: #63738a !important;">Listo para comenzar el día con algunas presentaciones?</b>
+      <div class="admin-info">
+        <div class="footer-info">
+          <span>{{data.purificadoraNombre}},Ubicación: Calle:{{data.calle}}, Ciudad:{{data.estado}},</span>
+          <span>Tel:(52){{ data.telefono}}</span>
+        </div>
+        <span class="date">{{fechaTexto}}</span>
+      </div>
     </div>
 
     <img style="

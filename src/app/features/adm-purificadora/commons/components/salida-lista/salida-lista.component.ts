@@ -21,7 +21,7 @@ import { Cliente } from "../../../../../shared/interfaces/client.interface";
   selector: "app-salida-lista",
   templateUrl: "./salida-lista.component.html",
   styleUrls: [
-    "../../../adm-purificadora.component.scss",
+   "../../../colorsClass.scss", "../../../tablePrime.scss","../../../tooltip.scss",
     "./modal.scss",
     "../../../form.scss",
   ],

@@ -28,11 +28,12 @@ import { MiPerfilView } from "./view/mi-perfil/mi-perfil.view";
 import { AsignarClientesRutaComponent } from "./commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component";
 import { HistorialEntregaComponent } from "./commons/components/historial-entrega/historial-entrega.component";
 import { QrGnerarPdfComponent } from "./commons/components/qr-gnerar-pdf/qr-gnerar-pdf.component";
+import { ClienteListadoComponent } from "./commons/components/cliente-listado/cliente-listado.component";
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "Home",
+    redirectTo: "purificadoraAdm/Home",
     pathMatch: "full",
   },
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
         children: [
           {
             path: "lista-clientes",
-            component: ClienteTablaComponent,
+            component: ClienteListadoComponent,
           },
           {
             path: "agregar-cliente",

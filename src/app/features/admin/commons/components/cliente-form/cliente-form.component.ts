@@ -1,11 +1,23 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { Usuario } from '../../../../../shared/models/usuario.model';
+// import { Usuario } from '../../../../../shared/models/usuario.model';
 import { SignupService } from '../../../../../shared/services/signup.service';
 import { response } from 'express';
 import { error } from 'console';
 import { Location } from '@angular/common';
+interface Usuario {
+  _id?: number; // ID opcional, típicamente usado para identificar al usuario
+  nombre: string; // Nombre del usuario
+  email: string; // Correo electrónico del usuario
+  longitud: string; // Longitud de la ubicación
+  latitud: string; // Latitud de la ubicación
+  telefono: string; // Número de teléfono del usuario
+  numCasa: string; // Número de casa (agregado el tipo 'string')
+  municipio: string; // Municipio del usuario
+  colonia: string; // Colonia del usuario
+}
+
 
 @Component({
   selector: 'app-cliente-form',

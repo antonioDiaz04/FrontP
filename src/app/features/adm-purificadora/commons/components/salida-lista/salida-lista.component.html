@@ -13,13 +13,12 @@
     }
   </style>
 </head>
-<p-toast />
-
+<p-toast/>
 <section id="lista">
-
   <h1>Salidas</h1>
-  <table class="entry-table">
-    <thead>
+  <p-table [value]="paginatedRutasDetalles" [rows]="rows" [totalRecords]="totalRecords"
+    [first]="first" (onPageChange)="onPageChange($event)">
+    <ng-template pTemplate="header">
       <tr>
         <th>Ruta</th>
         <th>Repartidor</th>
@@ -29,56 +28,42 @@
         <th>Estado</th>
         <th>Acciones</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ruta of paginatedRutasDetalles" [ngClass]="{'confirmed': ruta.estado === 'confirmado'}">
+    </ng-template>
+    <ng-template pTemplate="body" let-ruta>
+      <tr [ngClass]="{'confirmed': ruta.estado === 'confirmado'}">
         <td>{{ ruta?.nombreRuta }}</td>
         <td>{{ ruta.repartidorId?.nombre }}</td>
         <td>{{ ruta.vehiculoId?.placas }}</td>
         <td>
           {{ ruta.diasAsignados?.includes(diaTexto) ? diaTexto : '' }}
         </td>
-
         <td>
-          <span style="text-align:center;margin-right: 15px;" class="quantity">{{ ruta.cantidadBotellas !==
-            undefined &&
-            ruta.cantidadBotellas !== null ?
-            ruta.cantidadBotellas
-            : 0 }}
-
-
-          </span>
+          <span class="quantity">{{ ruta.cantidadBotellas !== undefined && ruta.cantidadBotellas !== null ?
+            ruta.cantidadBotellas : 0 }}</span>
           <i *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" id="tooltip" class="fa-regular fa-pen-to-square"
             (click)="editar(ruta)">
-
-            <span class="tooltiptext">
-              Asigna o modifica la cantidad dando click aqui.
-            </span>
+            <span class="tooltiptext">Asigna o modifica la cantidad dando click aqui.</span>
           </i>
         </td>
         <td>
-          <p style="font-weight: bold;" [ngClass]="{
-                    'enviado': ruta.estado === 'enviado',
-                    'pendiente': !ruta.estado || ruta.estado === 'pendiente',
-                    'en_curso': ruta.estado === 'recibido',
-                    'finalizada': ruta.estado === 'finalizada',
-                    'cancelado': ruta.estado === 'cancelado'
-                }">
+          <p [ngClass]="{
+            'enviado': ruta.estado === 'enviado',
+            'pendiente': !ruta.estado || ruta.estado === 'pendiente',
+            'en_curso': ruta.estado === 'recibido',
+            'finalizada': ruta.estado === 'finalizada',
+            'cancelado': ruta.estado === 'cancelado'
+          }">
             {{ ruta.estado ? ruta.estado : 'pendiente' }}
           </p>
-
         </td>
         <td>
-          <button *ngIf="!ruta?.esSalida" type="input" class="read enable-button" (click)="enviar(ruta,ruta.esSalida)">
+          <button *ngIf="!ruta?.esSalida" type="input" class="read enable-button" (click)="enviar(ruta, ruta.esSalida)">
             <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
           </button>
-
           <button *ngIf="ruta.esSalida && ruta.estado === 'cancelado'" type="input" class="read enable-button"
-            (click)="enviar(ruta,ruta.esSalida)">
+            (click)="enviar(ruta, ruta.esSalida)">
             <i class="fa-regular fa-paper-plane"></i><span>Enviar</span>
           </button>
-
-
           <button *ngIf="!ruta.esSalida || ruta.estado === 'cancelado'" type="input" class="read enable-button"
             (click)="selectToastSwal(ruta)">
             <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar repartidor</span>
@@ -87,20 +72,17 @@
             (click)="selectToastCambiarVehiculoSwal(ruta)">
             <i class="fa-solid fa-arrows-rotate"></i><span>Cambiar vehiculo</span>
           </button>
-
           <button
-            *ngIf="ruta.estado !== 'cancelado' && ruta.esSalida &&  ruta.estado !== 'recibido' && ruta.estado!='confirmado'  && ruta.estado != 'finalizada' "
+            *ngIf="ruta.estado !== 'cancelado' && ruta.esSalida && ruta.estado !== 'recibido' && ruta.estado !== 'confirmado' && ruta.estado !== 'finalizada'"
             type="input" class="remove enable-button" (click)="cancelarSalida(ruta._id)">
             <i class="fa-regular fa-calendar-xmark"></i><span>Cancelar</span>
           </button>
         </td>
-
       </tr>
-    </tbody>
-  </table>
-  <p-paginator [totalRecords]="totalRecords" [rows]="rows" [first]="first" (onPageChange)="onPageChange($event)">
-  </p-paginator>
+    </ng-template>
+  </p-table>
 </section>
+
 
 <!-- <div class=" flex justify-content-center"> -->
   <p-dialog [modal]="true" [(visible)]="visible" [style]="{width: '28rem',height:'18rem' }">

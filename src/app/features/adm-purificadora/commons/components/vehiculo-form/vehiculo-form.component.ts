@@ -1,23 +1,27 @@
 import { Location } from '@angular/common';
-import { Component, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehiculoService } from '../../../../../shared/services/vehiculo.service';
 import Swal from 'sweetalert2';
 import { Vehiculo } from '../../../../../shared/models/vehiculo.model';
 import { Toast } from '../../../../../shared/services/toast.service';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { SessionService } from '../../../../../core/commons/components/service/session.service';
 
 @Component({
   selector: 'app-vehiculo-form',
   templateUrl: './vehiculo-form.component.html',
   styleUrls:[ './vehiculo-form.component.scss']
 })
-export class VehiculoFormComponent {
+export class VehiculoFormComponent implements OnInit {
   diasSeleccionados: string[] = [];
 
   vehiculoForm!:FormGroup
+  idPurificadora!: string;
 
-  constructor(private router:Router,private toast:Toast,private vService: VehiculoService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder) {
+  constructor(private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService,private router:Router,private toast:Toast,private vService: VehiculoService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder) {
     this.vehiculoForm = this.formBuilder.group({
       marca: ['', Validators.required],
       modelo: ['', Validators.required],
@@ -27,6 +31,13 @@ export class VehiculoFormComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+    }
+  }
 
   onDiaSeleccionado(event: any) {
     const isChecked = event.target.checked;
@@ -64,15 +75,17 @@ export class VehiculoFormComponent {
       this.toast.showToastPmNgWarn('No tiene ningun dia seleccionado')
       return;
     }
-  
+
     if (!placas) {
       Swal.fire('Error', 'Por favor ingresa tu placas', 'error');
       return;
     }
-    
+
 
 
     const VEHICULO: Vehiculo = {
+      idPurificadora: this.idPurificadora,
+
       marca: this.vehiculoForm.get('marca')?.value,
       modelo: this.vehiculoForm.get('modelo')?.value,
       placas: this.vehiculoForm.get('placas')?.value,

@@ -1,25 +1,14 @@
 <head>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-  />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
-<p-toast></p-toast>
+<p-toast/>
 
-<p-dialog
-  *ngIf="dataVehiculo"
-  [(visible)]="visible"
-  header="Información del vehiculo"
-  [modal]="true"
-  [style]="{ width: '35rem' }"
-  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
->
+<p-dialog *ngIf="dataVehiculo" [(visible)]="visible" header="Información del vehiculo" [modal]="true"
+  [style]="{ width: '35rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   <!-- <p-dialog *ngIf="listRepartidor" header="Información del Usuario" [modal]="true" [(visible)]="visible" -->
-  <form
-    [formGroup]="vehiculoForm"
-    (ngSubmit)="actualizarVehiculo(dataVehiculo._id)"
-  >
+  <form [formGroup]="vehiculoForm" (ngSubmit)="actualizarVehiculo(dataVehiculo._id)">
     <h3>Detalles del vehiculo</h3>
     <div>
       <label for="nombre">Marca:</label>
@@ -37,13 +26,8 @@
 
     <div class="checkbox-item" *ngFor="let dia of dias">
       <span>{{ dia | titlecase }}</span>
-      <input
-        type="checkbox"
-        [id]="dia"
-        [value]="dia"
-        [checked]="diasAsignados[dia]"
-        (change)="onDiaSeleccionado($event)"
-      />
+      <input type="checkbox" [id]="dia" [value]="dia" [checked]="diasAsignados[dia]"
+        (change)="onDiaSeleccionado($event)" />
     </div>
 
     <div class="btn-group" role="group">
@@ -53,17 +37,21 @@
 </p-dialog>
 <section id="lista">
   <h2>Lista de vehículos</h2>
-  <span class="p-input-icon-left">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input pInputText style="width: 150%; padding-left: 20%;" type="text"
-    (input)="onGlobalFilter($event)" placeholder="Buscar vehículo..." />
-  </span>
-  <button (click)="redirecTo('agregar-vehiculo')" class="custom-btn add-button"><i class="fa-solid fa-plus"></i>
-    Nuevo</button>
 
-  <p-table #dt2 [value]="paginatedVehiculo"
-    [rows]="rows" [totalRecords]="totalRecords" selectionMode="single" dataKey="_id"  [first]="first"
-    (onPageChange)="onPageChange($event)">
+  <p-table #dt2 [value]="paginatedVehiculo" [rows]="rows" [totalRecords]="totalRecords" selectionMode="single"
+    dataKey="_id" [first]="first" (onPageChange)="onPageChange($event)">
+
+    <ng-template pTemplate="caption">
+
+      <span class="p-input-icon-left">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input pInputText style="width: 150%; padding-left: 20%;" type="text" (input)="onGlobalFilter($event)"
+          [(ngModel)]="filterText" placeholder="Buscar vehículo..." />
+      </span>
+      <button (click)="redirecTo('agregar-vehiculo')" class="custom-btn add-button"><i class="fa-solid fa-plus"></i>
+        Nuevo</button>
+    </ng-template>
+
 
     <ng-template pTemplate="header">
       <tr>

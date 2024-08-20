@@ -102,20 +102,54 @@ export class RutaListadoComponent implements OnInit {
     }
   }
 
-  onGlobalFilter(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.dt2.filterGlobal(input.value, "contains");
+  // onGlobalFilter(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   this.dt2.filterGlobal(input.value, "contains");
+  // }
+onGlobalFilter(event: Event) {
+  const value = (event.target as HTMLInputElement).value.toLowerCase();
+
+  if (value) {
+    // Filtrar las rutas basadas en el valor de búsqueda
+    const filteredData = this.allRutas.filter(
+      (r) =>
+        r.nombreRuta.toLowerCase().includes(value) ||
+        r.repartidorId.nombre.toLowerCase().includes(value) ||
+        r.vehiculoId.placas.toLowerCase().includes(value) ||
+        r.puntosDeEntrega.length.toString().includes(value)
+    );
+
+    // Actualizar el número total de registros y la paginación
+    this.totalRecords = filteredData.length;
+    this.paginatedRutas = filteredData;
+  } else {
+    // Restablecer la lista cuando no hay filtro
+    this.totalRecords = this.allRutas.length;
+    this.paginatedRutas = this.allRutas;
   }
+
+  // Reiniciar la paginación después de filtrar
+  this.first = 0;
+  this.paginatedRutas = this.paginatedRutas.slice(
+    this.first,
+    this.first + this.rows
+  );
+}
+
+isTextHighlighted(text: string): boolean {
+  if (!this.filterText) return false;
+  return text?.toLowerCase().includes(this.filterText.toLowerCase());
+}
+
   filterText:string=''
 highlightText(text: string): string {
-  console.log(`El tipo de dato de 'text' es: ${typeof text}`); // Esto mostrará el tipo de dato de 'text' en la consola.
 
   if (!this.filterText) {
     return text; // Si no hay texto a filtrar, regresa el texto original.
   }
 
   const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
-  return text.replace(regex, '<mark>$1</mark>'); // Reemplaza las coincidencias con el texto envuelto en <mark>.
+  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto envuelto en <mark>.
 }
 
   obtenerRutas() {

@@ -250,57 +250,70 @@ body {
   left: 0;
   z-index: 1;
 }
-
 .floating-header {
   position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0;
-  background-color: rgba(255, 255, 255, 0.489);
-  backdrop-filter: blur(1px);
-  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-  z-index: 0;
-  gap: 5px;
-}
+    top: 0;
+    width: 85%;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    z-index: 999;
+    gap: 36px;
+    // border: dashed;
+    margin-left: 16%;
+  .p-breadcrumb {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+        font-size: 14px;
+    padding: 1rem;
+    position: unset;
+  }
 
-.floating-header .notification-button,
-.round-button {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-}
+  .admin-info {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #3e3e3e;
 
-.floating-header .notification-button:hover,
-.round-button:hover {
-  border: 1px #007bff solid;
-  background-color: #ffffff;
-  color: #007bff;
-}
+    .date {
+      margin-right: 50px;
+      /* Separar la fecha del botón de calendario */
+    }
 
-.floating-header .notification-button i {
-  font-size: 18px;
-}
+    .calendar-container {
+      display: flex;
+      align-items: center;
+    }
+  }
 
-.floating-header .admin-info {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #3e3e3e;
-}
+  .notification-button {
+    display: flex;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    margin-left: 20px;
+    /* Espacio entre el botón de notificaciones y otros elementos */
+  }
 
-.floating-header .admin-info .date {
-  margin: 10px;
+  .notification-button:hover {
+    border: 1px #007bff solid;
+    background-color: #ffffff;
+    color: #007bff;
+  }
+
+  .notification-button i {
+    font-size: 18px;
+  }
 }

@@ -23,9 +23,9 @@ export class AdmDashboardView {
   // nombre: string = "Andrea";
   id!: string;
   data: any = {};
+fechaTexto!:string;
 
 
-  // constructor(cpriv){}
 
   ngOnInit() {
     this.getUsers();
@@ -136,7 +136,41 @@ export class AdmDashboardView {
     private UserS: ClientesService,
     private repService: RepartidoresService,private sessionService: SessionService,
     private ngxService: NgxUiLoaderService
-  ) {}
+  ) {
+      this.fechaTexto = this.obtenerFechaTexto();
+  }
+
+
+   obtenerFechaTexto() {
+    let diasSemana = [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ];
+    let meses = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ];
+    let fecha = new Date();
+    let diaSemana = diasSemana[fecha.getDay()];
+    let mes = meses[fecha.getMonth()];
+    let año = fecha.getFullYear();
+    return `${diaSemana} / ${mes} / ${año}`;
+  }
 
   getData(): void {
     this.ngxService.start();

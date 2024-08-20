@@ -5,6 +5,8 @@ import { Repartidor } from "../../../../../shared/interfaces/repartidor.interfac
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Toast } from "../../../../../shared/services/toast.service";
 import { Table } from "primeng/table";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
 
 @Component({
   selector: "app-repartidores-listado",
@@ -37,7 +39,7 @@ export class RepartidoresListadoComponent implements OnInit {
     "domingo",
   ];
   // diasAsignados: { [key: string]: boolean } = {};
-  filterText: string = '';
+  filterText: string = "";
   usuarioForm!: FormGroup;
   reparitorForm!: FormGroup;
   constructor(
@@ -46,7 +48,9 @@ export class RepartidoresListadoComponent implements OnInit {
     private repService: RepartidoresService,
     private render2: Renderer2,
     private router: ActivatedRoute,
-    private rou: Router
+    private rou: Router,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService
   ) {
     this.usuarioForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -70,12 +74,12 @@ export class RepartidoresListadoComponent implements OnInit {
     // const value = event.target as HTMLInputElement;
     const value = (event.target as HTMLInputElement).value.toLowerCase();
 
-     if (value) {
+    if (value) {
       const filteredData = this.allRepartidores.filter(
         (v) =>
           v.nombre.toLowerCase().includes(value) ||
-        v.telefono.toLowerCase().includes(value)||
-        v.email.toLowerCase().includes(value)
+          v.telefono.toLowerCase().includes(value) ||
+          v.email.toLowerCase().includes(value)
       );
 
       this.totalRecords = filteredData.length;
@@ -91,18 +95,16 @@ export class RepartidoresListadoComponent implements OnInit {
       );
     }
   }
-   highlightText(text: string): string {
-     console.log(`El tipo de dato de 'text' es: ${typeof text}`); // Esto mostrará el tipo de dato de 'text' en la consola.
-  if (!this.filterText) {
+  highlightText(text: string): string {
+    //  console.log(`El tipo de dato de 'text' es: ${typeof text}`); // Esto mostrará el tipo de dato de 'text' en la consola.
+    if (!this.filterText) {
+      // console.log("aqui pasa")
+      return text; // Si no hay texto a filtrar, regresa el texto original.
+    }
 
-    // console.log("aqui pasa")
-    return text; // Si no hay texto a filtrar, regresa el texto original.
+    const regex = new RegExp(`(${this.filterText})`, "gi"); // Crea una expresión regular para encontrar el texto de búsqueda.
+    return text.replace(regex, '<strong class="resaltado">$1</strong>'); // Reemplaza las coincidencias con el texto en negritas.
   }
-
-  const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
-  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto en negritas.
-}
-
 
   editar(id: any) {
     let selectedRepartidor;
@@ -141,6 +143,42 @@ export class RepartidoresListadoComponent implements OnInit {
   }
   // }
 
+  // getData(): void {
+  //   this.ngxUiLoaderService.start();
+  //   const userData = this.sessionService.getId();
+  //   if (userData) {
+  //     this.idPurificadora = userData;
+
+  //     if (this.idPurificadora) {
+  //       this.clientesService
+  //         .purificadora(this.idPurificadora)
+  //         .subscribe((data) => {
+  //           this.data = data;
+  //           this.municipioId = data.municipioId._id;
+  //           this.selectedMunicipio = data.municipioId.municipio;
+  //           console.log(data.municipioId._id);
+  //           console.log(this.municipioId);
+
+  //           if (this.municipioId) {
+  //             this.consultasCOPOMEX
+  //               .getColoniaXMunicipio(this.municipioId)
+  //               .subscribe(
+  //                 (data1) => {
+  //                   this.allColoniaXMuncipio = data1[0].colonias;
+  //                 },
+  //                 (error) => {
+  //                   console.log(
+  //                     "Ocurrió un error al obtener la información",
+  //                     error
+  //                   );
+  //                 }
+  //               );
+  //           }
+  //         });
+  //     }
+  //   }
+  // }
+
   actualizarRepartidor(id: any) {
     const diasAsignados = this.diasSeleccionados;
 
@@ -149,7 +187,7 @@ export class RepartidoresListadoComponent implements OnInit {
       email: this.usuarioForm.get("email")?.value,
       telefono: this.usuarioForm.get("telefono")?.value,
       password1: this.usuarioForm.get("password1")?.value,
-      numCasa:this.usuarioForm.get("numCasa")?.value,
+      numCasa: this.usuarioForm.get("numCasa")?.value,
       diasAsignados: diasAsignados,
     };
 
@@ -159,7 +197,7 @@ export class RepartidoresListadoComponent implements OnInit {
         this.getRepartidores();
         this.visible = false;
 
-        this.toast.showToastSwalSuccess("Se ha actualizado correctamente.");
+        this.toast.showToastPmNgInfo("Se ha actualizado correctamente.");
         // console.log('Usuario actualizado:', response);
       },
       (error) => {
@@ -172,7 +210,13 @@ export class RepartidoresListadoComponent implements OnInit {
   eliminarUsuario(id: any) {
     this.repService.eliminarRepartidores(id).subscribe(
       (data) => {
+        this.toast.showToastPmNgError("Eliminado del registro.");
+
+
+
         this.getRepartidores();
+
+
       },
       (error) => {
         console.log("ocurrio un error", error);
@@ -180,18 +224,25 @@ export class RepartidoresListadoComponent implements OnInit {
     );
   }
 
+  
+
   getRepartidores() {
     console.log("Llamando a getRepartidores");
-    this.repService.getRepartidores().subscribe(
-      (data: Repartidor[]) => {
-        this.allRepartidores = data;
-        this.totalRecords = this.allRepartidores.length;
-        this.updatePaginatedRepartidores();
-      },
-      (error) => {
-        console.log("ocurrió un error al obtener la información", error);
-      }
-    );
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      const idPurificadora = userData;
+      this.repService.getRepartidoresByIdPurificadora(idPurificadora).subscribe(
+        (data: Repartidor[]) => {
+          this.allRepartidores = data;
+          this.totalRecords = this.allRepartidores.length;
+          this.updatePaginatedRepartidores();
+        },
+        (error) => {
+          console.log("ocurrió un error al obtener la información", error);
+        }
+      );
+    }
   }
 
   onPageChange(event: any) {

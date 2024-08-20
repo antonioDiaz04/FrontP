@@ -24,7 +24,9 @@ import { MapaView } from './view/mapa/mapa.view';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupService } from '../../shared/services/signup.service';
-const MATERIALS = [
+import { TableModule } from 'primeng/table';
+
+const MATERIALS = [TableModule,
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
 ]
 @NgModule({
