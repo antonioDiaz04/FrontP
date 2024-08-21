@@ -23,7 +23,7 @@ import { ToastModule } from 'primeng/toast';
 
 // import { ZXingScannerModule, ZXingScannerComponent } from '@zxing/ngx-scanner';
 // import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanLOAD_WASMner-qrcode';
-import { QRCodeModule } from 'angularx-qrcode';
+// import  } from 'angularx-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 import { ButtonModule } from 'primeng/button';
@@ -40,7 +40,7 @@ const ngxScanner = [NgQrScannerModule]
 @NgModule({
   declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView, NotificacionesView, MapaComponent],
   imports: [primeNg,
-    CommonModule, QRCodeModule,
+    CommonModule,
     RepartidorRoutingModule,
   ], providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService]
