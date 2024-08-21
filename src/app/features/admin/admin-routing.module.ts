@@ -43,7 +43,7 @@ const routes: Routes = [
         path: 'comentarios',
         component: ComentariosView,
       },
-     
+
       {
         // path: 'detail/:id',
         path: 'mapa-entregas',
