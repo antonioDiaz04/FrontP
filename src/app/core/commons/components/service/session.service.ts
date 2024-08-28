@@ -44,9 +44,7 @@ export class SessionService {
   }
 
   removeToken(): void {
-    if (typeof localStorage !== "undefined") {
-      localStorage.removeItem("token");
-    }
+    this.storageService.removeItem('token');
   }
 
   // Guardar el ID de salida en sessionStorage

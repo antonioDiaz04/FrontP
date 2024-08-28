@@ -66,7 +66,11 @@ export class StorageService {
       return 0;
     }
   }
-
+  removeItem(key: string): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(key);
+    }
+  }
   getIdSalidaActual(): string | null {
     if (this.isLocalStorageAvailable()) {
       const idSalida = localStorage.getItem(this.keyIdSalida);

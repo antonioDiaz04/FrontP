@@ -4,6 +4,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SessionService } from '../../../../core/commons/components/service/session.service';
 import { ClientesService } from "../../../../shared/services/clientes.service";
 import { MenuItem } from "primeng/api";
+import { StorageService } from "../../../../core/commons/components/service/storage.service";
 
 @Component({
   selector: "app-adm-home",
@@ -40,16 +41,17 @@ export class AdmHomeView implements OnInit {
   id!: string;
   data: any = {};
 
-   items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    home: MenuItem | undefined;
+  home: MenuItem | undefined;
 
-    
+
 
 
   constructor(
+    private storageService: StorageService,
     private clientesService: ClientesService
-    ,private router: Router,private sessionService: SessionService,
+    , private router: Router, private sessionService: SessionService,
     private ngxService: NgxUiLoaderService,) {
     this.fechaSeleccionada = new Date(); // Puedes inicializar con la fecha actual o la que necesites
     this.fecha = this.obtenerFechaYYYYMMDD();
@@ -63,14 +65,14 @@ export class AdmHomeView implements OnInit {
   ngOnInit() {
     this.getData()
     this.items = [
-            { label: 'Electronics' }, 
-            { label: 'Computer' }, 
-            { label: 'Accessories' }, 
-            { label: 'Keyboard' }, 
-            { label: 'Wireless' }
-        ];
+      { label: 'Electronics' },
+      { label: 'Computer' },
+      { label: 'Accessories' },
+      { label: 'Keyboard' },
+      { label: 'Wireless' }
+    ];
 
-        this.home = { icon: 'pi pi-home', routerLink: '/' };
+    this.home = { icon: 'pi pi-home', routerLink: '/' };
     // console.log(this.obtenerFechaYYYYMMDD()); // Output: "Viernes / Junio / 2024" (para la fecha actual)
   }
 
@@ -89,7 +91,7 @@ export class AdmHomeView implements OnInit {
       }
     }
   }
-  
+
 
   redirectToAdminPurificadora(route: string): void {
     // this.sidebarVisible2 = !this.sidebarVisible2
@@ -103,8 +105,7 @@ export class AdmHomeView implements OnInit {
   }
 
   logout() {
-    // Eliminar el token del almacenamiento
-    localStorage.removeItem("token"); // o sessionStorage.removeItem('token');
+    this.storageService.removeItem('token');
     // Opcional: hacer una solicitud al backend para manejar cualquier estado del lado del servidor
     this.router.navigate(["/auth/login"]); // Redirigir a la página de inicio de sesión
   }
