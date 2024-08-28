@@ -16,7 +16,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { DialogModule } from 'primeng/dialog';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { MaterialModule } from '../admin/commons/material/material.module';
@@ -70,7 +70,7 @@ import { MiPerfilView } from './view/mi-perfil/mi-perfil.view';
 import { MessageService } from 'primeng/api';
 import { Toast } from '../../shared/services/toast.service';
 import { FilterPipe } from '../../shared/pipes/filter.pipe';
-
+import { QRCodeModule } from 'angularx-qrcode';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ClienteRutaComponent } from './commons/components/cliente-ruta/cliente-ruta.component';
@@ -83,23 +83,18 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,BreadcrumbModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
 ]
-import { QRCodeModule } from 'angularx-qrcode';
+// import { QRCodeModule } from 'angularx-qrcode';
 // NgxScannerQrcodeModule
 // QRCodeModule 
 
 const PIPES=[FilterPipe]
-@NgModule({
-  declarations: [PIPES,HistorialEntregaComponent,SalidaListaComponent,EntradaListaComponent,ClienteFormComponent,RepartidoresView,RutaFormComponent,VehiculosView,VehiculoFormComponent,
-    AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,ClienteTablaComponent,MapaView,AsignarClientesRutaComponent,RutaListadoComponent,RutaView,EntradaView,
-    AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,SalidaView,ResultadosListadoComponent,EntradaEditComponent,ResultadoEntregaView,
-    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,VehiculoListadoComponent,ClienteRutaComponent,MiPerfilView,MapaClientUbicacionView, ClienteListadoComponent,
-  ],
-  imports: [QRCodeModule,MessagesModule,MATERIALS,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
-    CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
-    AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule,
-  ],
-  providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
-    SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService]
-})
+@NgModule({ declarations: [PIPES, HistorialEntregaComponent, SalidaListaComponent, EntradaListaComponent, ClienteFormComponent, RepartidoresView, RutaFormComponent, VehiculosView, VehiculoFormComponent,
+        AdmPurificadoraComponent, RepartidoresFormComponent, RepartidoresListadoComponent, ClienteTablaComponent, MapaView, AsignarClientesRutaComponent, RutaListadoComponent, RutaView, EntradaView,
+        AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView, SalidaView, ResultadosListadoComponent, EntradaEditComponent, ResultadoEntregaView,
+        AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent, VehiculoListadoComponent, ClienteRutaComponent, MiPerfilView, MapaClientUbicacionView, ClienteListadoComponent,
+    ], imports: [QRCodeModule, MessagesModule, MATERIALS, CheckboxModule, TriStateCheckboxModule, StepperModule,
+        CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
+        AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule], providers: [Toast, MessageService, provideClientHydration(), [provideHttpClient(withFetch())],
+        SignupService, ClientesService, RepartidoresService, ConsultasCOPOMEXService, provideHttpClient(withInterceptorsFromDi())] })
 export class AdmPurificadoraModule {
 }

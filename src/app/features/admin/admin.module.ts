@@ -22,36 +22,33 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { DialogModule } from 'primeng/dialog';
 import { MapaView } from './view/mapa/mapa.view';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SignupService } from '../../shared/services/signup.service';
 import { TableModule } from 'primeng/table';
 
 const MATERIALS = [TableModule,
   AvatarModule, AvatarGroupModule, DialogModule, ModalModule
 ]
-@NgModule({
-  declarations: [
-    AdmDashboardView,
-    AdmHomeView,
-    NotificacionesView,
-    ProductFormComponent,
-    VentasComponent,
-    PedidosComponent,
-    AdminComponent,
-    InicioView,
-    TablaUsuarioComponent,
-    UsuarioView,
-    ControlEntregasView,
-    MapaClientsView,
-    ClienteFormComponent,
-    ClienteTablaComponent,
-    MapaView,
-  ],
-  imports: [MATERIALS, HttpClientModule,
-    CommonModule, FormsModule,
-    AdminRoutingModule, MaterialModule, ReactiveFormsModule
-  ],
-  providers: [
-    SignupService]
-})
+@NgModule({ declarations: [
+        AdmDashboardView,
+        AdmHomeView,
+        NotificacionesView,
+        ProductFormComponent,
+        VentasComponent,
+        PedidosComponent,
+        AdminComponent,
+        InicioView,
+        TablaUsuarioComponent,
+        UsuarioView,
+        ControlEntregasView,
+        MapaClientsView,
+        ClienteFormComponent,
+        ClienteTablaComponent,
+        MapaView,
+    ], imports: [MATERIALS,
+        CommonModule, FormsModule,
+        AdminRoutingModule, MaterialModule, ReactiveFormsModule], providers: [
+        SignupService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AdminModule { }
