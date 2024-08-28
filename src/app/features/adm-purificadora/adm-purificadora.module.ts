@@ -15,7 +15,6 @@ import { InicioView } from './view/inicio/inicio.view';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { DialogModule } from 'primeng/dialog';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
@@ -81,7 +80,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ClienteListadoComponent } from './commons/components/cliente-listado/cliente-listado.component';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,BreadcrumbModule,
-  AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
+  AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule,TableModule,IconFieldModule,InputIconModule
 ]
 // import { QRCodeModule } from 'angularx-qrcode';
 // NgxScannerQrcodeModule

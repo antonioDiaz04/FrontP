@@ -18,7 +18,6 @@ import { ControlEntregasView } from './view/control-entregas/control-entregas.vi
 import { MapaClientsView } from './view/mapa-clients/mapa-clients.view';
 import { ClienteFormComponent } from './commons/components/cliente-form/cliente-form.component';
 import { ClienteTablaComponent } from './commons/components/cliente-tabla/cliente-tabla.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 import { DialogModule } from 'primeng/dialog';
 import { MapaView } from './view/mapa/mapa.view';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,28 +26,30 @@ import { SignupService } from '../../shared/services/signup.service';
 import { TableModule } from 'primeng/table';
 
 const MATERIALS = [TableModule,
-  AvatarModule, AvatarGroupModule, DialogModule, ModalModule
+  AvatarModule, AvatarGroupModule, DialogModule
 ]
-@NgModule({ declarations: [
-        AdmDashboardView,
-        AdmHomeView,
-        NotificacionesView,
-        ProductFormComponent,
-        VentasComponent,
-        PedidosComponent,
-        AdminComponent,
-        InicioView,
-        TablaUsuarioComponent,
-        UsuarioView,
-        ControlEntregasView,
-        MapaClientsView,
-        ClienteFormComponent,
-        ClienteTablaComponent,
-        MapaView,
-    ], imports: [MATERIALS,
-        CommonModule, FormsModule,
-        AdminRoutingModule, MaterialModule, ReactiveFormsModule], providers: [
-        SignupService,
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
+@NgModule({
+  declarations: [
+    AdmDashboardView,
+    AdmHomeView,
+    NotificacionesView,
+    ProductFormComponent,
+    VentasComponent,
+    PedidosComponent,
+    AdminComponent,
+    InicioView,
+    TablaUsuarioComponent,
+    UsuarioView,
+    ControlEntregasView,
+    MapaClientsView,
+    ClienteFormComponent,
+    ClienteTablaComponent,
+    MapaView,
+  ], imports: [MATERIALS,
+    CommonModule, FormsModule,
+    AdminRoutingModule, MaterialModule, ReactiveFormsModule], providers: [
+      SignupService,
+      provideHttpClient(withInterceptorsFromDi())
+    ]
+})
 export class AdminModule { }

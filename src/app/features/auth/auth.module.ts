@@ -7,14 +7,14 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SignInService } from './commons/services/sign-in.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SignUpComponent } from './commons/components/sign-up/sign-up.component';
-import { NgxLoadingModule } from "ngx-loading";
+// import { NgxLoadingModule } from "ngx-loading";
 @NgModule({ declarations: [
         AuthComponent,
         IniciarSesionView,
         SignUpComponent
     ], imports: [ReactiveFormsModule, FormsModule,
         CommonModule,
-        AuthRoutingModule, NgxLoadingModule.forRoot({})], providers: [
+        AuthRoutingModule], providers: [
         SignInService,
         provideHttpClient(withInterceptorsFromDi())
     ] })
