@@ -1,3 +1,4 @@
+import { StorageService } from './../../../../core/commons/components/service/storage.service';
 import { Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignupService } from '../../../../shared/services/signup.service';
@@ -32,7 +33,8 @@ export class RegitroPurificadoraView implements OnInit {
   }
 
 
-  constructor(private clipboardService: ClipboardService, private mapService: MapaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private purificadoraServicio: SignupService) {
+  constructor(private storageService:StorageService,
+    private clipboardService: ClipboardService, private mapService: MapaService, private render2: Renderer2, private location: Location, private formBuilder: FormBuilder, private purificadoraServicio: SignupService) {
     this.registroForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       email: ['', Validators.required],
@@ -148,7 +150,7 @@ export class RegitroPurificadoraView implements OnInit {
       this.registroForm.get('longitud')?.setValue(longitud);
     });
 
-    this.setEstado("registrando");
+    // this.setEstado("registrando");
     this.mapService.buildMap()
       .then(({ geocoder, map }) => {
         this.render2.appendChild(this.asGeocoder.nativeElement, geocoder.onAdd(map));
@@ -164,9 +166,10 @@ export class RegitroPurificadoraView implements OnInit {
   }
 
 
-  setEstado(estado: string) {
-    localStorage.setItem('estado', estado);
-  }
+  // setEstado(estado: string) {
+  //   this.storageService.setItem()
+  //   // localStorage.setItem('estado', estado);
+  // }
 
 
 
