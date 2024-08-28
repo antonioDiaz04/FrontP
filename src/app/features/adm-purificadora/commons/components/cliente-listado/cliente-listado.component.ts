@@ -26,6 +26,8 @@ import { MapaClientDetailUbacionService } from "../../services/mapaClientDetalle
 import { Table } from "primeng/table";
 import { Toast } from "../../../../../shared/services/toast.service";
 import { finalize, tap } from "rxjs";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 @Component({
   selector: 'app-cliente-listado',
   templateUrl: './cliente-listado.component.html',
@@ -50,8 +52,6 @@ export class ClienteListadoComponent {
   ngOnInit() {
     this.getUsers();
     this.updatePaginatedUser();
-
-    // this.mapaService.setUbicaciones(this.puntosClientesUbicaciones)
   }
   visible: boolean = false;
   isVisible = false;
@@ -64,7 +64,9 @@ export class ClienteListadoComponent {
     private UserS: ClientesService,
     private router: ActivatedRoute,
     private rou: Router,
-    private toast: Toast
+    private toast: Toast,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService
   ) {
     this.clienteForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -168,9 +170,11 @@ export class ClienteListadoComponent {
     }
   }
 
-  getUsers() {
-    console.log("aqui");
-    this.UserS.obtenerCLientes().subscribe(
+  getUsers() { this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+      const idPurificadora = userData;
+    
+    this.UserS.obtenerCLientesByIdPurificadora(idPurificadora).subscribe(
       (data: Cliente[]) => {
         this.allClients = data;
         this.totalRecords = this.allClients.length;

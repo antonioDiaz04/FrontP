@@ -298,69 +298,6 @@ export class RutaFormComponent implements OnInit {
     }
   }
 
-  // ?esto es funcional
-  // onRepartidorSelectionChange() {
-  //   let selectedId = this.registroRuta.get("selectedRepartidor")?.value;
-  //     this.selectedRepartidorId=selectedId
-
-  //   if (selectedId && typeof selectedId === "object") {
-  //     selectedId = selectedId._id;
-  //   } else if (this.selectedRepartidor) {
-  //     selectedId = this.selectedRepartidor?._id;
-  //   }
-
-  //   const selectedRepartidor = this.allRepartidores.find(
-  //     (repartidor) => repartidor._id === selectedId
-  //   );
-
-  //   if (selectedRepartidor) {
-  //     // if (!this.id) {
-  //       this.rutaService.getRutasByRepartidor(selectedId).subscribe(
-  //         (diasOcupados: string[]) => {
-  //           const diasOcupadosSet = new Set(diasOcupados);
-
-  //           this.diasDisponiblesR = selectedRepartidor.diasAsignados.reduce(
-  //             (acc, dia) => {
-  //               acc[dia] = !diasOcupadosSet.has(dia);
-  //               return acc;
-  //             },
-  //             {} as { [key: string]: boolean }
-  //           );
-
-  //           this.diasSeleccionados = [];
-  //           for (let dia of this.diasSemana) {
-  //             if (this.diasAsignados[dia] && this.diasDisponiblesR[dia]) {
-  //               this.diasSeleccionados.push(dia);
-  //             } else {
-  //               this.diasAsignados[dia] = false;
-  //             }
-  //           }
-  //         },
-  //         (error) => {
-  //           console.error(
-  //             "Error al obtener los días ocupados del repartidor:",
-  //             error
-  //           );
-  //         }
-  //       );
-  //     // }
-  //     //  else {
-  //     //   console.log("aqui pasa")
-  //     //   this.diasDisponiblesR = {};
-  //     //   selectedRepartidor.diasAsignados.forEach((dia) => {
-  //     //     this.diasDisponiblesR[dia] = true;
-  //     //   });
-  //     //   console.log("aqui pasa")
-
-  //     //   this.diasSeleccionados = [];
-  //     //   for (let dia of this.diasSemana) {
-  //     //     if (this.diasAsignados[dia]) {
-  //     //       this.diasSeleccionados.push(dia);
-  //     //     }
-  //     //   }
-  //     // }
-  //   }
-  // }
   onVehiculoSelectionChange() {
     let selectedId = this.registroRuta.get("selectedVehiculo")?.value;
     this.selectedVehiculoId = selectedId;
@@ -517,7 +454,7 @@ export class RutaFormComponent implements OnInit {
 
     const filaFormGroup = this.filas.at(index) as FormGroup;
     const selectedColoniaValue = filaFormGroup.get(coloniaControlName)?.value;
-
+4
     console.log(`Selected colonia value: ${selectedColoniaValue}`);
     if (selectedColoniaValue === null || selectedColoniaValue === undefined) {
       console.log(
@@ -531,18 +468,18 @@ export class RutaFormComponent implements OnInit {
     }
     // Actualiza el array de colonias seleccionadas
 
-  // Actualiza el array de colonias seleccionadas
-  this.selectedColonias[index] = selectedColoniaValue || null;
+    // Actualiza el array de colonias seleccionadas
+    this.selectedColonias[index] = selectedColoniaValue || null;
 
-  // Filtra las colonias disponibles después de la selección
-  this.updateFilteredColonias(index);
-  // // / Filtra las colonias disponibles para la fila actual
-  // this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter((colonia: any) =>
-  //   // Incluye la colonia si es la seleccionada en la fila actual o no está seleccionada en otras filas
-  //   this.selectedColonias[index] === colonia || !this.selectedColonias.some(
-  //     (selectedColonia, i) => selectedColonia === colonia && i !== index
-  //   )
-  // );
+    // Filtra las colonias disponibles después de la selección
+    this.updateFilteredColonias(index);
+    // // / Filtra las colonias disponibles para la fila actual
+    // this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter((colonia: any) =>
+    //   // Incluye la colonia si es la seleccionada en la fila actual o no está seleccionada en otras filas
+    //   this.selectedColonias[index] === colonia || !this.selectedColonias.some(
+    //     (selectedColonia, i) => selectedColonia === colonia && i !== index
+    //   )
+    // );
     // // Filtra las colonias disponibles después de la selección
     // this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter(
     //   (colonia: any) =>
@@ -551,7 +488,7 @@ export class RutaFormComponent implements OnInit {
     //     ) // Excluye las colonias seleccionadas en otras filas
     // );
 
-    console.log('Filtered Colonias:', this.filteredColoniasXMuncipio);
+    console.log("Filtered Colonias:", this.filteredColoniasXMuncipio);
 
     this.UserS.obtenerCLientesDisponiblesByColonia(
       selectedColoniaValue
@@ -575,21 +512,25 @@ export class RutaFormComponent implements OnInit {
         console.log("Ocurrió un error al obtener la información", error);
       }
     );
-     // Actualiza el índice de la fila actual
+    // Actualiza el índice de la fila actual
     // this.currentIndex = index;
     // this.updateFilteredColonias();
   }
 
-   // Método para actualizar las colonias filtradas
-   // Método para actualizar las colonias filtradas
+  // Método para actualizar las colonias filtradas
+  // Método para actualizar las colonias filtradas
   updateFilteredColonias(currentIndex: number) {
-  this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter((colonia: any) =>
-    // Mantiene la colonia si es la seleccionada en la fila actual
-    this.selectedColonias[currentIndex] === colonia ||
-    // Excluye colonias seleccionadas en otras filas
-    !this.selectedColonias.some((selectedColonia, index) => selectedColonia === colonia && index !== currentIndex)
-  );
-}
+    this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter(
+      (colonia: any) =>
+        // Mantiene la colonia si es la seleccionada en la fila actual
+        this.selectedColonias[currentIndex] === colonia ||
+        // Excluye colonias seleccionadas en otras filas
+        !this.selectedColonias.some(
+          (selectedColonia, index) =>
+            selectedColonia === colonia && index !== currentIndex
+        )
+    );
+  }
 
   onMunicipioSelectionChange(event: any, index: number) {
     const filaFormGroup = this.filas.at(index) as FormGroup;
@@ -638,7 +579,8 @@ export class RutaFormComponent implements OnInit {
         // console.log(data); // Asegúrate de que la estructura es correcta
         if (data) {
           this.allColoniaXMuncipio = data.colonias;
-          console.log(this.allColoniaXMuncipio);
+          console.log(data.colonias);
+          // console.log(this.allColoniaXMuncipio);
           this.filteredColoniasXMuncipio = [...this.allColoniaXMuncipio];
         } else {
           console.log("No se encontraron datos.");
@@ -1202,11 +1144,10 @@ export class RutaFormComponent implements OnInit {
       ) {
         return false; // Mantiene el día asignado disponible
       } else if (
-        (repartidor?._id != this.selectedRepartidor?._id &&
-          this.diasDisponiblesR[dia]) &&
-        (vehiculo?._id != this.selectedVehiculo?._id &&
-          this.diasDisponiblesV[dia]
-          )
+        repartidor?._id != this.selectedRepartidor?._id &&
+        this.diasDisponiblesR[dia] &&
+        vehiculo?._id != this.selectedVehiculo?._id &&
+        this.diasDisponiblesV[dia]
       ) {
         return false;
       }

@@ -1,9 +1,0 @@
-<div id="qr-container">
-  <div *ngFor="let cliente of clientes">
-    <h3>{{ cliente.nombre }}</h3>
-    <qrcode [qrdata]="cliente.nombre" [width]="150"></qrcode>
-  </div>
-</div>
-
-<!-- Botón para generar el PDF -->
-<button (click)="generarPDF()">Descargar PDF</button>

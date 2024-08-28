@@ -27,13 +27,12 @@ import { ResultadosListadoComponent } from "./commons/components/resultados-list
 import { MiPerfilView } from "./view/mi-perfil/mi-perfil.view";
 import { AsignarClientesRutaComponent } from "./commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component";
 import { HistorialEntregaComponent } from "./commons/components/historial-entrega/historial-entrega.component";
-import { QrGnerarPdfComponent } from "./commons/components/qr-gnerar-pdf/qr-gnerar-pdf.component";
 import { ClienteListadoComponent } from "./commons/components/cliente-listado/cliente-listado.component";
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "purificadoraAdm/Home",
+    redirectTo: "Home",
     pathMatch: "full",
   },
   {
@@ -67,10 +66,7 @@ const routes: Routes = [
           },
         ],
       },
-      {
-        path: "QrClients",
-        component: QrGnerarPdfComponent,
-      },
+      
       {
         path: "miPerfil",
         component: MiPerfilView,

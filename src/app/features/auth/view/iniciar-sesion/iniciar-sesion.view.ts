@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-// import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
@@ -21,7 +20,8 @@ export class IniciarSesionView {
   loginForm: FormGroup;
   errorMessage!: string;
   userROL!: string;
-  public loading = false;
+  public loading = false; // Variable para manejar la carga
+
   constructor(
     private ngxService: NgxUiLoaderService,
     private signInService: SignInService,
@@ -38,7 +38,6 @@ export class IniciarSesionView {
 
   login(): void {
     if (this.loginForm.invalid) {
-      // Mostrar alerta si los campos están vacíos
       Swal.fire({
         title: "Campos incompletos",
         text: "Por favor, completa todos los campos",
@@ -48,66 +47,83 @@ export class IniciarSesionView {
       return;
     }
 
+    // Verificar conexión a Internet
+    if (!navigator.onLine) {
+      Swal.fire({
+        title: "Sin conexión a Internet",
+        text: "Por favor, verifica tu conexión y vuelve a intentarlo.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+
     const email = this.loginForm.value.email;
     const password1 = this.loginForm.value.password1;
 
-    // Iniciar el loading
+    this.loading = true; // Iniciar carga
     this.ngxService.start();
 
-    // Temporizador para detener el loading después de 3 segundos
-    const loadingTimeout = setTimeout(() => {
-      this.ngxService.stop();
-    }, 3000); // 3000 ms = 3 segundos
-
-    
-    this.loading = true;  // Mostrar el loading al iniciar el login
-    // Llamar al servicio de inicio de sesión
     this.signInService
       .signIn({ email, password1 })
       .pipe(
-        // Manejar errores en la solicitud
         catchError((error: HttpErrorResponse) => {
-          this.errorMessage = error.error.message || "Error en la solicitud";
+          if (error.status === 0) {
+            this.errorMessage = "No se pudo conectar con el servidor. Por favor, intenta más tarde.";
+          } else if (error.status >= 500) {
+            this.errorMessage = "El servidor está experimentando problemas. Por favor, intenta más tarde.";
+          } else {
+            this.errorMessage = error.error.message || "Error en la solicitud.";
+          }
+
           Swal.fire({
             title: "Error!",
             text: this.errorMessage,
             icon: "error",
             confirmButtonText: "Ok",
           });
-          // Detener el loading en caso de error
-          clearTimeout(loadingTimeout); // Limpiar el temporizador si hay un error
-          this.ngxService.stop();
+
           return throwError(this.errorMessage);
         }),
-        // Asegurarse de detener el loading al finalizar la solicitud (ya sea éxito o error)
         finalize(() => {
-          // Limpiar el temporizador en caso de éxito para evitar detener el loading prematuramente
-          clearTimeout(loadingTimeout);
           this.ngxService.stop();
+          this.loading = false; // Finalizar carga
         })
       )
       .subscribe(
         (response) => {
-          // Al recibir una respuesta exitosa
           if (response) {
             this.storageService.setToken(response.token);
             const userData = this.sessionService.getUserData();
             if (userData) {
               this.userROL = userData.rol;
+              let navigateTo = "";
+
               if (this.userROL === ERol.ADMIN) {
-                this.router.navigate(["admin/inicio"]);
+                navigateTo = "admin/inicio";
               } else if (this.userROL === ERol.ADMPRF) {
-                this.router.navigate(["purificadoraAdm/Home"]);
+                navigateTo = "purificadoraAdm/Home";
               } else if (this.userROL === ERol.REPARTIDOR) {
-                this.router
-                  .navigate(["repartidor/Home"])
-                  .then(() => window.location.reload());
+                navigateTo = "repartidor/Home";
               }
+
+              this.router.navigate([navigateTo]).then(() => {
+                if (navigateTo === "repartidor/Home") {
+                  window.location.reload();
+                } else {
+                  // Mostrar alerta de éxito
+                  Swal.fire({
+                    title: "Acceso exitoso",
+                    text: "Has iniciado sesión correctamente.",
+                    icon: "success",
+                    confirmButtonText: "Continuar",
+                  });
+                }
+              });
             }
           }
         },
         (err) => {
-          // Manejo de errores si ocurre un error en el subscribe
           this.loading = false;
         }
       );

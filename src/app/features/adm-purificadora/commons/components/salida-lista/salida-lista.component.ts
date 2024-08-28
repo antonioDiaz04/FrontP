@@ -17,11 +17,15 @@ import Swal from "sweetalert2";
 import { Toast } from "../../../../../shared/services/toast.service";
 import { Salida } from "../../../../../shared/models/salida.model";
 import { Cliente } from "../../../../../shared/interfaces/client.interface";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
 @Component({
   selector: "app-salida-lista",
   templateUrl: "./salida-lista.component.html",
   styleUrls: [
-   "../../../colorsClass.scss", "../../../tablePrime.scss","../../../tooltip.scss",
+    "../../../colorsClass.scss",
+    "../../../tablePrime.scss",
+    "../../../tooltip.scss",
     "./modal.scss",
     "../../../form.scss",
   ],
@@ -38,7 +42,7 @@ export class SalidaListaComponent implements OnInit {
   selectedRepartidor: Repartidor | null = null;
   allNombreRuta: Ruta[] = [];
   allVehiculos: Vehiculo[] = [];
-
+  idPurificadora!: string;
   allRutas: DetalleEntregaInterface[] = [];
   date2: Date | undefined;
   paginatedRutasDetalles: DetalleEntregaInterface[] = [];
@@ -57,9 +61,12 @@ export class SalidaListaComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerRutas();
     this.updatePaginatedRutasDetalles();
-    // this.getRepartidores();
-    // this.getAllNombresRutas();
-    // this.getVehiculos();
+
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+    }
   }
 
   constructor(
@@ -69,7 +76,9 @@ export class SalidaListaComponent implements OnInit {
     private rutaS: RutaService,
     private router: Router,
     private fb: FormBuilder,
-    private toast: Toast
+    private toast: Toast,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService
   ) {
     this.cantidadForm = this.fb.group({
       // nombreRuta: ['', Validators.required],
@@ -127,18 +136,6 @@ export class SalidaListaComponent implements OnInit {
       }
     );
   }
-
-
-  // getRepartidores() {
-  //   this.repService.getRepartidores().subscribe(
-  //     (data: Repartidor[]) => {
-  //       this.allRepartidores = data;
-  //     },
-  //     (error) => {
-  //       console.log("Ocurrió un error al obtener la información", error);
-  //     }
-  //   );
-  // }
 
   updatePaginatedRutasDetalles() {
     this.paginatedRutasDetalles = this.allRutas.slice(
@@ -218,10 +215,7 @@ export class SalidaListaComponent implements OnInit {
         const selectedRepartidor = this.allRepartidores.find(
           (repartidor) => repartidor._id === selectedRepartidorId
         );
-
-        // Actualiza la ruta con el vehículo seleccionado
         ruta.repartidorId = selectedRepartidor;
-
         Swal.fire(`Repartidor seleccionado: ${selectedRepartidor?.nombre}`);
       }
     });
@@ -277,9 +271,6 @@ export class SalidaListaComponent implements OnInit {
     if (!Array.isArray(ruta.puntosDeEntrega)) {
       return [];
     }
-
-    //   clienteId: allClients
-
     const clientesSeleccionados = ruta.puntosDeEntrega.map((punto: any) => {
       const cliente = punto.clienteId;
 
@@ -287,8 +278,6 @@ export class SalidaListaComponent implements OnInit {
         ? cliente._id
         : cliente;
     });
-
-    // Filtra valores undefined o null
     return clientesSeleccionados.filter((clienteId: any) => clienteId);
   }
 
@@ -305,7 +294,6 @@ export class SalidaListaComponent implements OnInit {
   }
 
   enviar(data: any, esSalida: any) {
-    // if (ruta) {
     const nombreRuta = data.nombreRuta;
     const selectedRepartidor = data.repartidorId;
     const selectedVehiculo = data.vehiculoId;
@@ -339,6 +327,7 @@ export class SalidaListaComponent implements OnInit {
         if (result.isConfirmed) {
           if (data && !esSalida) {
             const SALIDA: Salida = {
+              idPurificadora: this.idPurificadora,
               nombreRuta: nombreRuta,
               repartidorId: selectedRepartidor,
               vehiculoId: selectedVehiculo,
@@ -355,10 +344,9 @@ export class SalidaListaComponent implements OnInit {
                 this.toast.showToastSwalSuccess(
                   "Se ha agregado correctamente."
                 );
-
                 this.router.navigate([
                   "/purificadoraAdm/salida/salida-listado",
-                ]); // Navegación hacia otras páginas públicas
+                ]);
               },
               (error) => {
                 console.error(error); // Imprime el error en la consola para depuración
@@ -373,6 +361,7 @@ export class SalidaListaComponent implements OnInit {
             console.log("es salida");
 
             const SALIDAUPDATE: Salida = {
+              idPurificadora: this.idPurificadora,
               nombreRuta: nombreRuta,
               repartidorId: selectedRepartidor,
               vehiculoId: selectedVehiculo,

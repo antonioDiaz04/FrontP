@@ -57,7 +57,7 @@ import { StepperModule } from 'primeng/stepper';
 import { SalidaView } from './view/salida/salida.view';
 import { EntradaView } from './view/entrada/entrada.view';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { QRCodeModule } from 'angularx-qrcode';
+// import { QRCodeModule } from 'angularx-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { CalendarModule } from 'primeng/calendar';
 import { SalidaListaComponent } from './commons/components/salida-lista/salida-lista.component';
@@ -76,23 +76,25 @@ import { MessagesModule } from 'primeng/messages';
 import { ClienteRutaComponent } from './commons/components/cliente-ruta/cliente-ruta.component';
 import { AsignarClientesRutaComponent } from './commons/components/asignar-clientes-ruta/asignar-clientes-ruta.component';
 import { HistorialEntregaComponent } from './commons/components/historial-entrega/historial-entrega.component';
-import { QrGnerarPdfComponent } from './commons/components/qr-gnerar-pdf/qr-gnerar-pdf.component';
+// import { QrGnerarPdfComponent } from './commons/components/qr-gnerar-pdf/qr-gnerar-pdf.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ClienteListadoComponent } from './commons/components/cliente-listado/cliente-listado.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 const MATERIALS = [CalendarModule, InputNumberModule, ToastModule,TabViewModule,BreadcrumbModule,
   AvatarModule, PaginatorModule,AvatarGroupModule, DialogModule, ModalModule,TableModule,IconFieldModule,InputIconModule
 ]
-
-
+import { QRCodeModule } from 'angularx-qrcode';
+// NgxScannerQrcodeModule
+// QRCodeModule 
 
 const PIPES=[FilterPipe]
 @NgModule({
   declarations: [PIPES,HistorialEntregaComponent,SalidaListaComponent,EntradaListaComponent,ClienteFormComponent,RepartidoresView,RutaFormComponent,VehiculosView,VehiculoFormComponent,
     AdmPurificadoraComponent,RepartidoresFormComponent,RepartidoresListadoComponent,ClienteTablaComponent,MapaView,AsignarClientesRutaComponent,RutaListadoComponent,RutaView,EntradaView,
     AdmHomeView, PedidosView, NotificacionesView, MapaClientsView, ControlEntregasView, ComentariosView,SalidaView,ResultadosListadoComponent,EntradaEditComponent,ResultadoEntregaView,
-    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,VehiculoListadoComponent,ClienteRutaComponent,MiPerfilView,MapaClientUbicacionView, QrGnerarPdfComponent, ClienteListadoComponent,
+    AdmDashboardView, InicioView, PedidosComponent, RutaDetalleComponent,VehiculoListadoComponent,ClienteRutaComponent,MiPerfilView,MapaClientUbicacionView, ClienteListadoComponent,
   ],
-  imports: [MessagesModule,MATERIALS, QRCodeModule,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
+  imports: [QRCodeModule,MessagesModule,MATERIALS,HttpClientModule, CheckboxModule, TriStateCheckboxModule, StepperModule,
     CommonModule, FormsModule, DropdownModule, MultiSelectModule, ToggleButtonModule,
     AdmPurificadoraRoutingModule, MaterialModule, ReactiveFormsModule, PanelMenuModule,
   ],

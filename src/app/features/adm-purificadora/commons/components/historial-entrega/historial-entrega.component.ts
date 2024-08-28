@@ -42,7 +42,7 @@ export interface PuntoDeEntrega {
 @Component({
   selector: "app-historial-entrega",
   templateUrl: "./historial-entrega.component.html",
-  styleUrls:[ "../../../tablePrime.scss", "../../../form.scss"]
+  styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
 })
 export class HistorialEntregaComponent {
   messages!: Message[];
@@ -59,6 +59,7 @@ export class HistorialEntregaComponent {
   selectedRepartidor: Repartidor | null = null;
   allNombreRuta: Ruta[] = [];
   allVehiculos: Vehiculo[] = [];
+  idPurificadora!: string;
 
   allEntregas: DetalleEntregaInterface[] = [];
   date2: Date | undefined;
@@ -445,6 +446,7 @@ export class HistorialEntregaComponent {
         if (result.isConfirmed) {
           if (data && !esSalida) {
             const SALIDA: Salida = {
+              idPurificadora: this.idPurificadora,
               nombreRuta: nombreRuta,
               repartidorId: selectedRepartidor,
               vehiculoId: selectedVehiculo,
@@ -479,6 +481,8 @@ export class HistorialEntregaComponent {
             console.log("es salida");
 
             const SALIDAUPDATE: Salida = {
+              idPurificadora: this.idPurificadora,
+
               nombreRuta: nombreRuta,
               repartidorId: selectedRepartidor,
               vehiculoId: selectedVehiculo,

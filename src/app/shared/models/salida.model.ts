@@ -7,6 +7,7 @@ export interface PuntoDeEntrega {
 }
 
 export class Salida {
+  idPurificadora!:string;
   _id?: string; // Identificador único de la ruta
   nombreRuta!: string;
   repartidorId!: Repartidor;

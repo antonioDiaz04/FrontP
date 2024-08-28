@@ -11,7 +11,7 @@ import { Usuario } from "../models/usuario.model";
 export class ClientesService {
   constructor(private http: HttpClient) {}
 
-  // !mover a otro servicio
+  
   obtenerPurificadoras(): Observable<any> {
     return this.http.get(`${environment.api}/adminPage/purificadoras`);
   }
@@ -23,6 +23,12 @@ export class ClientesService {
   // http://localhost:4000/usuarios/getUsuarios
   obtenerCLientes(): Observable<any> {
     return this.http.get(`${environment.api}/usuarios/`);
+  }
+   obtenerCLientesByIdPurificadora(idPurificadora: any): Observable<any> {
+    return this.http.get(
+      `${environment.api}/purificadoraAdmin/clientesByIdPurificadora/` +
+        idPurificadora
+    );
   }
   obtenerCLientesDisponibles(): Observable<any> {
     return this.http.get(

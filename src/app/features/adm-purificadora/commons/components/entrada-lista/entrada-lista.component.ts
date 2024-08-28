@@ -4,6 +4,8 @@ import { RutaService } from "../../../../../shared/services/ruta.service";
 import { Subscription, interval } from "rxjs";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EntregaService } from "../../services/entrega.service";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 export interface ClienteInterface {
   _id: string;
@@ -71,11 +73,7 @@ export interface DetalleEntregaInterface {
 @Component({
   selector: "app-entrada-lista",
   templateUrl: "./entrada-lista.component.html",
-  styleUrls: [
-    "../../../tablePrime.scss",
-    "./modal.scss",
-    "../../../form.scss",
-  ],
+  styleUrls: ["../../../tablePrime.scss", "./modal.scss", "../../../form.scss"],
 })
 export class EntradaListaComponent implements OnInit, OnDestroy {
   allRutas: DetalleEntregaInterface[] = [];
@@ -84,7 +82,7 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
   rows: number = 5;
   first: number = 0;
 
-  filterText:string=''
+  filterText: string = "";
   estadoinput: boolean = true;
   ruta!: DetalleEntregaInterface[];
   inputNumberValue: number | null = null; // Valor del campo de entrada
@@ -93,6 +91,7 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
   // rutaSeleccionada!: DetalleEntregaInterface;
   cantidadInvalida: boolean = false;
   rutaSeleccionada: DetalleEntregaInterface | null = null; // Asegúrate de que sea null al iniciar
+  idPurificadora!: string;
 
   private pollingSubscription: Subscription | undefined;
 
@@ -100,11 +99,18 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     private rutaS: RutaService,
     private router: Router,
     private fb: FormBuilder,
-    private entregaS: EntregaService // Inyecta el servicio EntregaService
+    private entregaS: EntregaService,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService // Inyecta el servicio EntregaService
   ) {}
 
   ngOnInit(): void {
     this.obtenerRutas();
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    if (userData) {
+      this.idPurificadora = userData;
+    }
     // this.startPolling();
   }
 
@@ -112,10 +118,9 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     this.stopPolling();
   }
 
-   onGlobalFilter(event: Event) {
+  onGlobalFilter(event: Event) {
     // // const value = event.target as HTMLInputElement;
     // const value = (event.target as HTMLInputElement).value.toLowerCase();
-
     // if (value) {
     //   const filteredData = this.allClients.filter(
     //     (c) =>
@@ -125,7 +130,6 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     //       c.municipio.toLowerCase().includes(value) ||
     //       c.colonia.toLowerCase().includes(value)
     //   );
-
     //   this.totalRecords = filteredData.length;
     //   this.paginatedUser = filteredData.slice(
     //     this.first,
@@ -137,7 +141,6 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     //     this.first,
     //     this.first + this.rows
     //   );
-
     //   // this.dt2.filterGlobal(input.value, "contains");
     // }
   }
@@ -150,18 +153,6 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
           (ruta: DetalleEntregaInterface) => ruta.fechaSalida
         );
         this.allRutas = rutasConFechaSalida;
-
-  // this.totalEntregado = item.puntosDeEntrega.reduce(
-  //                   (total, dt: any) => {
-  //                     return total + dt.cantidadEntregada;
-  //                   },
-  //                   0
-  //                 );
-  // cantidadBotellas: number;
-  // cantidadContada?: number; // Hacerlo opcional
-
-//  cantidadBotellas: number;
-  // cantidadContada?: number;
 
         this.totalRecords = this.allRutas.length;
         this.updatePaginatedRutasDetalles();
@@ -268,6 +259,7 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     const fechaEntradaFormatted = `${day}-${month}-${year}`;
     // !aqui corregir
     const entrega = {
+      idPurificadora: this.idPurificadora,
       nombreRuta: this.rutaSeleccionada.nombreRuta,
       repartidorId: this.rutaSeleccionada.repartidorId._id,
       vehiculoId: this.rutaSeleccionada.vehiculoId._id,

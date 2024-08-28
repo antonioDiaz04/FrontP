@@ -176,6 +176,9 @@
     <div class="qr-grid">
       <div class="qr-item" *ngFor="let cliente of listClientes">
         <h4>{{ cliente.clienteId.nombre }}</h4>
+        <!-- 
+// File: app.component.html
+<qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel] -->
         <qrcode [qrdata]="cliente.clienteId._id" [width]="80" [style]=""></qrcode>
       </div>
     </div>
