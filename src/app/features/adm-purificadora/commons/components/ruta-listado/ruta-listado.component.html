@@ -99,7 +99,7 @@
 
 
 
-<section *ngIf="allRutas.length > 0" >
+<section *ngIf="allRutas.length > 0">
   <h1>Listar Rutas</h1>
   <p-table #dt2 [value]="paginatedRutas" selectionMode="single" dataKey="_id" [rows]="rows"
     [totalRecords]="totalRecords" [first]="first" (onPageChange)="onPageChange($event)">

@@ -7,17 +7,16 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class RepartidoresService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // !mover a otro servicio
   getRepartidores(): Observable<any> {
     return this.http.get(
       `${environment.api}/purificadoraRepartidores/repartidores`
     );
   }
-  getRepartidoresByIdPurificadora(idPurificadora: string): Observable<any> {
- const url =
-      `${environment.api}/purificadoraRepartidores/obtenerRepartidoresByIdPurificadora/` + idPurificadora;
-   return this.http.get(url);
+  getRepartidoresByIdPurificadora(idPurificadora: any): Observable<any> {
+    const url = `${environment.api}/purificadoraRepartidores/` + idPurificadora;
+    return this.http.get(url);
   }
   getRepartidoresVehiculosDisponibles(): Observable<any> {
     return this.http.get(
@@ -45,7 +44,7 @@ export class RepartidoresService {
     return this.http.put(url, cliente);
   }
 
-  
+
 
   eliminarRepartidores(id: string): Observable<any> {
     const url =

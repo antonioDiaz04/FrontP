@@ -31,7 +31,7 @@ import { NgxUiLoaderService } from "ngx-ui-loader";
 @Component({
   selector: 'app-cliente-listado',
   templateUrl: './cliente-listado.component.html',
-    styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
+  styleUrls: ["../../../tablePrime.scss", "../../../form.scss"],
 
 })
 export class ClienteListadoComponent {
@@ -170,43 +170,53 @@ export class ClienteListadoComponent {
     }
   }
 
-  getUsers() { this.ngxUiLoaderService.start();
+  getUsers() {
+    this.ngxUiLoaderService.start();
     const userData = this.sessionService.getId();
-      const idPurificadora = userData;
-    
+    const idPurificadora = userData;
+
     this.UserS.obtenerCLientesByIdPurificadora(idPurificadora).subscribe(
       (data: Cliente[]) => {
-        this.allClients = data;
+        console.log('Data received:', data);
+        if (Array.isArray(data)) {
+          this.allClients = data; // Ensure it's an array
+        } else {
+          this.allClients = []; // Fallback to empty array
+          console.error('Unexpected data format:', data);
+        }
         this.totalRecords = this.allClients.length;
         this.updatePaginatedUser();
+        this.ngxUiLoaderService.stop(); // Stop the loader when done
       },
       (error) => {
         console.log("ocurrió un error al obtener la información", error);
+        this.ngxUiLoaderService.stop(); // Stop the loader in case of error
       }
     );
   }
 
- eliminarUsuario(id: any) {
-  this.UserS.eliminarCliente(id).pipe(
-    tap((data) => {
-      // Aquí puedes manejar los datos de la respuesta si es necesario
-      this.toast.showToastPmNgInfo('Eliminación exitosa')
-    }),
-    finalize(() => {
-      // Acción a realizar al finalizar la operación, independientemente del éxito o error
-      this.getUsers(); // Actualizar la lista de usuarios
-    })
-  ).subscribe(
-    (data) => {
-      // Acción a realizar en caso de éxito
-      this.toast.showToastPmNgError('Eliminado del registro.');
-    },
-    (error) => {
-      // Acción a realizar en caso de error
-      console.error('Error al eliminar', error);
-    }
-  );
-}
+
+  eliminarUsuario(id: any) {
+    this.UserS.eliminarCliente(id).pipe(
+      tap((data) => {
+        // Aquí puedes manejar los datos de la respuesta si es necesario
+        this.toast.showToastPmNgInfo('Eliminación exitosa')
+      }),
+      finalize(() => {
+        // Acción a realizar al finalizar la operación, independientemente del éxito o error
+        this.getUsers(); // Actualizar la lista de usuarios
+      })
+    ).subscribe(
+      (data) => {
+        // Acción a realizar en caso de éxito
+        this.toast.showToastPmNgError('Eliminado del registro.');
+      },
+      (error) => {
+        // Acción a realizar en caso de error
+        console.error('Error al eliminar', error);
+      }
+    );
+  }
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
@@ -214,6 +224,7 @@ export class ClienteListadoComponent {
   }
 
   updatePaginatedUser() {
+    console.log()
     this.paginatedUser = this.allClients.slice(
       this.first,
       this.first + this.rows

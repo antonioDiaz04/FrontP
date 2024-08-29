@@ -86,9 +86,6 @@ export class RutaFormComponent implements OnInit {
   filas!: FormArray;
   registroRuta!: FormGroup;
   currentIndex: number = 0; // Índice de la fila actual
-  // diasDisponiblesR: { [key: string]: boolean } = {};
-  // diasDisponiblesV: { [key: string]: boolean } = {};
-  // clientesPorFila: { [key: number]: any[] } = {};
   clientesPorFila: any[][] = [];
 
   colonias: { label: string; value: string }[] = [];
@@ -150,15 +147,6 @@ export class RutaFormComponent implements OnInit {
       filas: this.formBuilder.array([
         this.createFilaGroup(), // Inicializa con una fila si es necesario
       ]),
-
-      // filas: this.formBuilder.array([
-      //   this.formBuilder.group({
-      //     addSelectedColonia: [""],
-      //     addSelectedClient: [""],
-      //     editSelectedColonia: [""],
-      //     editSelectedClient: [""],
-      //   }),
-      // ]),
     });
 
     this.diasSeleccionados = [];
@@ -226,13 +214,20 @@ export class RutaFormComponent implements OnInit {
   }
 
   getRepartidores() {
-    this.repService.getRepartidores().subscribe(
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    // if (idPurificadora == null) {
+    console.log(idPurificadora);
+    // }
+    this.repService.getRepartidoresByIdPurificadora(idPurificadora).subscribe(
       (data: Repartidor[]) => {
         this.allRepartidores = data;
         // this.show();
       },
       (error) => {
-        console.log("Ocurrió un error al obtener la información", error);
+        // console.log("Ocurrió un error al obtener la información", error);
       }
     );
     // }
@@ -278,15 +273,6 @@ export class RutaFormComponent implements OnInit {
               {} as { [key: string]: boolean }
             );
           }
-
-          // this.diasSeleccionados = [];
-          // for (let dia of this.diasSemana) {
-          //   if (this.diasAsignados[dia] && this.diasDisponiblesR[dia]) {
-          //     this.diasSeleccionados.push(dia);
-          //   } else {
-          //     this.diasAsignados[dia] = false;
-          //   }
-          // }
         },
         (error) => {
           console.error(
@@ -339,15 +325,6 @@ export class RutaFormComponent implements OnInit {
               {} as { [key: string]: boolean }
             );
           }
-
-          // this.diasSeleccionados = [];
-          // for (let dia of this.diasSemana) {
-          //   if (this.diasAsignados[dia] && this.diasDisponiblesV[dia]) {
-          //     this.diasSeleccionados.push(dia);
-          //   } else {
-          //     this.diasAsignados[dia] = false;
-          //   }
-          // }
         },
         (error) => {
           console.error(
@@ -359,75 +336,17 @@ export class RutaFormComponent implements OnInit {
     }
   }
 
-  // ?esto funciona perfecto
-  // onVehiculoSelectionChange() {
-  //   let selectedId = this.registroRuta.get("selectedVehiculo")?.value;
-
-  //     this.selectedVehiculoId=selectedId
-  //   //  selectedVehiculoId!: any
-  //   if (selectedId && typeof selectedId === "object") {
-  //     selectedId = selectedId._id;
-  //   } else if (this.selectedVehiculo) {
-  //     selectedId = this.selectedVehiculo?._id;
-  //   }
-
-  //   const selectedVehiculo = this.allVehiculos.find(
-  //     (vehiculo) => vehiculo._id === selectedId
-  //   );
-
-  //   if (selectedVehiculo) {
-  //     // if (!this.id) {
-  //       this.rutaService.getRutasByVehiculo(selectedId).subscribe(
-  //         (diasOcupados: string[]) => {
-  //           const diasOcupadosSet = new Set(diasOcupados);
-
-  //           this.diasDisponiblesV = selectedVehiculo.diasAsignados.reduce(
-  //             (acc, dia) => {
-  //               acc[dia] = !diasOcupadosSet.has(dia);
-  //               return acc;
-  //             },
-  //             {} as { [key: string]: boolean }
-  //           );
-
-  //           this.diasSeleccionados = [];
-  //           for (let dia of this.diasSemana) {
-  //             if (this.diasAsignados[dia] && this.diasDisponiblesV[dia]) {
-  //               this.diasSeleccionados.push(dia);
-  //             } else {
-  //               this.diasAsignados[dia] = false;
-  //             }
-  //           }
-  //         },
-  //         (error) => {
-  //           console.error(
-  //             "Error al obtener los días ocupados del vehículo:",
-  //             error
-  //           );
-  //         }
-  //       );
-  //     // } else {
-  //     //   this.diasDisponiblesV = {};
-  //     //   selectedVehiculo.diasAsignados.forEach((dia) => {
-  //     //     this.diasDisponiblesV[dia] = true;
-  //     //   });
-
-  //     //   this.diasSeleccionados = [];
-  //     //   for (let dia of this.diasSemana) {
-  //     //     if (this.diasAsignados[dia]) {
-  //     //       this.diasSeleccionados.push(dia);
-  //     //     }
-  //     //   }
-  //     // }
-  //   }
-  // }
-
   volverAtras() {
     this.location.back();
     console.log("presionado atras");
   }
 
   getVehiculos() {
-    this.vehiculoService.getVehiculos().subscribe(
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    this.vehiculoService.getVehiculosByIdPurificadora(idPurificadora).subscribe(
       (data: Vehiculo[]) => {
         this.allVehiculos = data;
         // console.log(this.allVehiculos);
@@ -439,10 +358,11 @@ export class RutaFormComponent implements OnInit {
         }
       },
       (error) => {
-        console.log("ocurrió un error al obtener la información", error);
+        // console.log("ocurrió un error al obtener la información", error);
       }
     );
   }
+
   onColoniaSelectionChange(event: any, index: number) {
     // Determina el nombre del control de formulario en función del modo
     const coloniaControlName = this.id
@@ -454,7 +374,7 @@ export class RutaFormComponent implements OnInit {
 
     const filaFormGroup = this.filas.at(index) as FormGroup;
     const selectedColoniaValue = filaFormGroup.get(coloniaControlName)?.value;
-4
+    4;
     console.log(`Selected colonia value: ${selectedColoniaValue}`);
     if (selectedColoniaValue === null || selectedColoniaValue === undefined) {
       console.log(
@@ -471,22 +391,7 @@ export class RutaFormComponent implements OnInit {
     // Actualiza el array de colonias seleccionadas
     this.selectedColonias[index] = selectedColoniaValue || null;
 
-    // Filtra las colonias disponibles después de la selección
     this.updateFilteredColonias(index);
-    // // / Filtra las colonias disponibles para la fila actual
-    // this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter((colonia: any) =>
-    //   // Incluye la colonia si es la seleccionada en la fila actual o no está seleccionada en otras filas
-    //   this.selectedColonias[index] === colonia || !this.selectedColonias.some(
-    //     (selectedColonia, i) => selectedColonia === colonia && i !== index
-    //   )
-    // );
-    // // Filtra las colonias disponibles después de la selección
-    // this.filteredColoniasXMuncipio = this.allColoniaXMuncipio.filter(
-    //   (colonia: any) =>
-    //     !this.selectedColonias.some(
-    //       (selectedColonia, i) => selectedColonia === colonia.nombre && i !== index
-    //     ) // Excluye las colonias seleccionadas en otras filas
-    // );
 
     console.log("Filtered Colonias:", this.filteredColoniasXMuncipio);
 
@@ -573,23 +478,28 @@ export class RutaFormComponent implements OnInit {
   }
 
   getColoniaPorMunicipio() {
-    const municipio = "Huejutla de Reyes";
-    this.consultasCOPOMEX.getColoniaXMunicipioByClientes(municipio).subscribe(
-      (data) => {
-        // console.log(data); // Asegúrate de que la estructura es correcta
-        if (data) {
-          this.allColoniaXMuncipio = data.colonias;
-          console.log(data.colonias);
-          // console.log(this.allColoniaXMuncipio);
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    this.consultasCOPOMEX
+      .getColoniaXMunicipioByClientes(idPurificadora)
+      .subscribe(
+        (data) => {
+          
+          if (Array.isArray(data)) {  // Verificamos que `data` sea un array
+          this.allColoniaXMuncipio = data;
+          console.log(data); // Verifica qué se recibe exactamente
           this.filteredColoniasXMuncipio = [...this.allColoniaXMuncipio];
         } else {
-          console.log("No se encontraron datos.");
+          console.log("No se encontraron datos o la respuesta no es un array.");
         }
-      },
-      (error) => {
-        console.log("Ocurrió un error al obtener la información", error);
-      }
-    );
+
+        },
+        (error) => {
+          console.log("Ocurrió un error al obtener la información", error);
+        }
+      );
   }
 
   obtenerTodosLasColonias() {

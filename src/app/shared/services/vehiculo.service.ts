@@ -12,9 +12,9 @@ export class VehiculoService {
   getVehiculos(): Observable<any> {
     return this.http.get(`${environment.api}/vehiculos/obtenerVehiculos`);
   }
-  getVehiculosByIdPurificadora(idPurificadora: string): Observable<any> {
+  getVehiculosByIdPurificadora(idPurificadora: any): Observable<any> {
     return this.http.get(
-      `${environment.api}/vehiculos/obtenerVehiculosByIdPurificadora/` +
+      `${environment.api}/vehiculos/` +
         idPurificadora
     );
   }

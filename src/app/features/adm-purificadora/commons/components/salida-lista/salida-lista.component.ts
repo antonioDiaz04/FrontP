@@ -132,7 +132,7 @@ export class SalidaListaComponent implements OnInit {
         this.updatePaginatedRutasDetalles();
       },
       (error) => {
-        console.log("ocurrió un error al obtener la información", error);
+        // console.log("ocurrió un error al obtener la información", error);
       }
     );
   }

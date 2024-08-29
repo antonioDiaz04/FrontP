@@ -1,3 +1,4 @@
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { RutaService } from "../../../../../shared/services/ruta.service";
@@ -14,6 +15,7 @@ import { Salida } from "../../../../../shared/models/salida.model";
 // import { Component } from '@angular/core';
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { SessionService } from '../../../../../core/commons/components/service/session.service';
 // import QRCode from "@zxing/library/esm/core/qrcode/encoder/QRCode";
 // import QRCode from 'qrcode';
 export interface PuntoDeEntrega {
@@ -48,8 +50,11 @@ export class RutaListadoComponent implements OnInit {
   constructor(
     private rutaS: RutaService,
     private toast: Toast,
-    private router: Router
-  ) {}
+    private router: Router,
+    private ngxUiLoaderService:NgxUiLoaderService,
+    private sessionService:SessionService,
+
+  ) { }
 
   // clientes = [
   //   { nombre: 'Nico Antonio', id: 1 },
@@ -106,54 +111,58 @@ export class RutaListadoComponent implements OnInit {
   //   const input = event.target as HTMLInputElement;
   //   this.dt2.filterGlobal(input.value, "contains");
   // }
-onGlobalFilter(event: Event) {
-  const value = (event.target as HTMLInputElement).value.toLowerCase();
+  onGlobalFilter(event: Event) {
+    const value = (event.target as HTMLInputElement).value.toLowerCase();
 
-  if (value) {
-    // Filtrar las rutas basadas en el valor de búsqueda
-    const filteredData = this.allRutas.filter(
-      (r) =>
-        r.nombreRuta.toLowerCase().includes(value) ||
-        r.repartidorId.nombre.toLowerCase().includes(value) ||
-        r.vehiculoId.placas.toLowerCase().includes(value) ||
-        r.puntosDeEntrega.length.toString().includes(value)
+    if (value) {
+      // Filtrar las rutas basadas en el valor de búsqueda
+      const filteredData = this.allRutas.filter(
+        (r) =>
+          r.nombreRuta.toLowerCase().includes(value) ||
+          r.repartidorId.nombre.toLowerCase().includes(value) ||
+          r.vehiculoId.placas.toLowerCase().includes(value) ||
+          r.puntosDeEntrega.length.toString().includes(value)
+      );
+
+      // Actualizar el número total de registros y la paginación
+      this.totalRecords = filteredData.length;
+      this.paginatedRutas = filteredData;
+    } else {
+      // Restablecer la lista cuando no hay filtro
+      this.totalRecords = this.allRutas.length;
+      this.paginatedRutas = this.allRutas;
+    }
+
+    // Reiniciar la paginación después de filtrar
+    this.first = 0;
+    this.paginatedRutas = this.paginatedRutas.slice(
+      this.first,
+      this.first + this.rows
     );
-
-    // Actualizar el número total de registros y la paginación
-    this.totalRecords = filteredData.length;
-    this.paginatedRutas = filteredData;
-  } else {
-    // Restablecer la lista cuando no hay filtro
-    this.totalRecords = this.allRutas.length;
-    this.paginatedRutas = this.allRutas;
   }
 
-  // Reiniciar la paginación después de filtrar
-  this.first = 0;
-  this.paginatedRutas = this.paginatedRutas.slice(
-    this.first,
-    this.first + this.rows
-  );
-}
-
-isTextHighlighted(text: string): boolean {
-  if (!this.filterText) return false;
-  return text?.toLowerCase().includes(this.filterText.toLowerCase());
-}
-
-  filterText:string=''
-highlightText(text: string): string {
-
-  if (!this.filterText) {
-    return text; // Si no hay texto a filtrar, regresa el texto original.
+  isTextHighlighted(text: string): boolean {
+    if (!this.filterText) return false;
+    return text?.toLowerCase().includes(this.filterText.toLowerCase());
   }
 
-  const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
-  return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto envuelto en <mark>.
-}
+  filterText: string = ''
+  highlightText(text: string): string {
+
+    if (!this.filterText) {
+      return text; // Si no hay texto a filtrar, regresa el texto original.
+    }
+
+    const regex = new RegExp(`(${this.filterText})`, 'gi'); // Crea una expresión regular para encontrar el texto de búsqueda.
+    return text.replace(regex, '<strong>$1</strong>'); // Reemplaza las coincidencias con el texto envuelto en <mark>.
+  }
 
   obtenerRutas() {
-    this.rutaS.getRutas().subscribe(
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    this.rutaS.getRutasByIdPurificadora(idPurificadora).subscribe(
       (data) => {
         this.allRutas = data;
         this.totalRecords = this.allRutas.length;
@@ -174,7 +183,7 @@ highlightText(text: string): string {
           // data es un objeto, no un array
           this.data = data;
           console.log(this.data.nombreRuta)
-this.name=this.data.nombreRuta
+          this.name = this.data.nombreRuta
 
 
           // Asegúrate de que puntosDeEntrega es un array antes de mapearlo
