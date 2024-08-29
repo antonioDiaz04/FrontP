@@ -124,7 +124,12 @@ export class SalidaListaComponent implements OnInit {
   }
 
   obtenerRutas() {
-    this.rutaS.getRutasSalidas().subscribe(
+
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    this.rutaS.getRutasSalidasByIdPurificadora(idPurificadora).subscribe(
       (data) => {
         this.allRutas = data;
         this.clientAll = data;

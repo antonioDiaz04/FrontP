@@ -9,9 +9,13 @@ import { Observable } from "rxjs";
 export class RutaService {
   constructor(private http: HttpClient) {}
 
-  getRutasSalidas(): Observable<any> {
-    return this.http.get(`${environment.api}/salida/salidaActual`);
+  // getRutasSalidas(): Observable<any> {
+  //   return this.http.get(`${environment.api}/salida/salidaActual`);
+  // }
+  getRutasSalidasByIdPurificadora(idPurificadora:any): Observable<any> {
+    return this.http.get(`${environment.api}/salida/salidaActual/`+idPurificadora);
   }
+  
   getEntregas(): Observable<any> {
     return this.http.get(`${environment.api}/entrega/entregas`);
   }
