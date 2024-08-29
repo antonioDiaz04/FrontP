@@ -16,7 +16,7 @@ export class RutaService {
     return this.http.get(`${environment.api}/entrega/entregas`);
   }
   getEntregasByidPurificadora(idPurificadora:any): Observable<any> {
-    return this.http.get(`${environment.api}/entrega/entregas`+idPurificadora);
+    return this.http.get(`${environment.api}/entrega/`+idPurificadora);
   }
   getRutasByIdPurificadora(idPurificadora:any): Observable<any> {
     return this.http.get(`${environment.api}/ruta/idPurificadora/`+idPurificadora);
