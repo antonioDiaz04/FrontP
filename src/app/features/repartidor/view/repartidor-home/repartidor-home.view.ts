@@ -9,6 +9,7 @@ import { Salida } from '../../../../shared/models/salida.model';
   templateUrl: './repartidor-home.view.html',
   styleUrl: './repartidor-home.view.css'
 })
+
 export class RepartidorHomeView {
 
   constructor(private router: Router, private ngxService: NgxUiLoaderService,
