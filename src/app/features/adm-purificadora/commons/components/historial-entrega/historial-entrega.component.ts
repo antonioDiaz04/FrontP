@@ -18,6 +18,8 @@ import {
   RepartidorInterface,
   VehiculoInterface,
 } from "../entrada-lista/entrada-lista.component";
+import { NgxUiLoaderService } from "ngx-ui-loader";
+import { SessionService } from "../../../../../core/commons/components/service/session.service";
 
 export interface DetalleEntregaInterface {
   _id: string;
@@ -94,7 +96,9 @@ export class HistorialEntregaComponent {
     private rutaS: RutaService,
     private router: Router,
     private fb: FormBuilder,
-    private toast: Toast
+    private toast: Toast,
+    private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService
   ) {
     this.cantidadForm = this.fb.group({
       // nombreRuta: ['', Validators.required],
@@ -108,30 +112,6 @@ export class HistorialEntregaComponent {
     // this.id = this.aRouter.snapshot.paramMap.get('id');
   }
   onGlobalFilter(event: Event) {
-    // // const value = event.target as HTMLInputElement;
-    // const value = (event.target as HTMLInputElement).value.toLowerCase();
-    // if (value) {
-    //   const filteredData = this.allClients.filter(
-    //     (c) =>
-    //       c.nombre.toLowerCase().includes(value) ||
-    //       c.email.toLowerCase().includes(value) ||
-    //       c.telefono.toLowerCase().includes(value) ||
-    //       c.municipio.toLowerCase().includes(value) ||
-    //       c.colonia.toLowerCase().includes(value)
-    //   );
-    //   this.totalRecords = filteredData.length;
-    //   this.paginatedUser = filteredData.slice(
-    //     this.first,
-    //     this.first + this.rows
-    //   );
-    // } else {
-    //   this.totalRecords = this.allClients.length;
-    //   this.paginatedUser = this.allClients.slice(
-    //     this.first,
-    //     this.first + this.rows
-    //   );
-    //   // this.dt2.filterGlobal(input.value, "contains");
-    // }
   }
 
   obtenerFechaYYYYMMDD() {
@@ -166,7 +146,11 @@ export class HistorialEntregaComponent {
   }
 
   obtenerEntregas() {
-    this.rutaS.getEntregas().subscribe(
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    this.rutaS.getEntregasByidPurificadora(idPurificadora).subscribe(
       (data) => {
         this.allEntregas = data;
         this.clientAll = data;
@@ -212,24 +196,8 @@ export class HistorialEntregaComponent {
                 const clientes = item.puntosDeEntrega.map(
                   (entrega: PuntoDeEntrega) => entrega
                 );
-
-                // / Suponiendo que item.puntosDeEntrega es un array de objetos
-                // this.cantidadEntregadaTotal = item.puntosDeEntrega.reduce(
-                //   (total, dt: any) => {
-                //     return total + dt.cantidadEntregada;
-                //   },
-                //   0
-                // );
-                // console.log(this.cantidadEntregadaTotal);
-                // const diferencia =
-                //   data[0].cantidadBotellas - this.cantidadEntregadaTotal;
-                // this.botellasSobrantes = diferencia;
-
                 this.listClientes = clientes;
-                // Suponiendo que item.puntosDeEntrega es un array de objetos
-                // Show the modal after data is loaded
                 this.visible = true;
-                // console.log(cantidadEntregadaTotal);
               } else {
                 console.log(
                   "No hay puntos de entrega disponibles para este item."
@@ -294,9 +262,8 @@ export class HistorialEntregaComponent {
       ${this.allRepartidores
         .map(
           (repartidor) => `
-        <option value="${repartidor._id}" ${
-            repartidor._id === ruta.repartidorId?._id ? "selected" : ""
-          }>
+        <option value="${repartidor._id}" ${repartidor._id === ruta.repartidorId?._id ? "selected" : ""
+            }>
           ${repartidor.nombre}
         </option>
       `
@@ -342,9 +309,8 @@ export class HistorialEntregaComponent {
       ${this.allVehiculos
         .map(
           (vehiculo) => `
-        <option value="${vehiculo._id}" ${
-            vehiculo._id === ruta.vehiculoId?._id ? "selected" : ""
-          }>
+        <option value="${vehiculo._id}" ${vehiculo._id === ruta.vehiculoId?._id ? "selected" : ""
+            }>
           ${vehiculo.placas}
         </option>
       `
