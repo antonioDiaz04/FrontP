@@ -3,6 +3,8 @@ import { DetalleEntregaInterface } from '../../../../../shared/interfaces/detall
 import { RutaService } from '../../../../../shared/services/ruta.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { SessionService } from '../../../../../core/commons/components/service/session.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-resultados-listado',
@@ -27,11 +29,16 @@ export class ResultadosListadoComponent {
     this.obtenerRutas();
   }
 
-  constructor(private rutaS: RutaService, private router: Router, private fb: FormBuilder) {
+  constructor( private ngxUiLoaderService: NgxUiLoaderService,
+    private sessionService: SessionService,private rutaS: RutaService, private router: Router, private fb: FormBuilder) {
   }
 
   obtenerRutas() {
-    this.rutaS.getRutasSalidas().subscribe(
+    
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+    this.rutaS.getRutasSalidasByIdPurificadora(idPurificadora).subscribe(
       data => {
         // Filtrar los datos para solo incluir los que tienen fechaProgramada
         const rutasConFechaProgramada = data.filter((ruta: any) => ruta.fechaInicio);

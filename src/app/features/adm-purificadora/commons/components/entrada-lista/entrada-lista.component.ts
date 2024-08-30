@@ -102,7 +102,7 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     private entregaS: EntregaService,
     private ngxUiLoaderService: NgxUiLoaderService,
     private sessionService: SessionService // Inyecta el servicio EntregaService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obtenerRutas();
@@ -145,7 +145,11 @@ export class EntradaListaComponent implements OnInit, OnDestroy {
     // }
   }
   obtenerRutas() {
-    this.rutaS.getRutasSalidas().subscribe(
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
+    this.rutaS.getRutasSalidasByIdPurificadora(idPurificadora).subscribe(
       (data: DetalleEntregaInterface[]) => {
         this.ruta = data;
         // Filtrar los datos para solo incluir los que tienen fechaSalida
