@@ -40,10 +40,7 @@ export class RutaService {
 
     return this.http.put(url, cliente);
   }
-  // updateRutaEntregaDetalle(id: string, cliente: any): Observable<any> {
-  //   const url = `${environment.api}/ruta/updateRutaDetalle/` + id
-  //   return this.http.put(url, cliente)
-  // }
+
   updateRuta(id: string, cliente: any): Observable<any> {
     const url = `${environment.api}/ruta/` + id;
     return this.http.put(url, cliente);
