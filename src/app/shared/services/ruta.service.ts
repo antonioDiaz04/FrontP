@@ -26,7 +26,6 @@ export class RutaService {
     return this.http.get(`${environment.api}/ruta/idPurificadora/`+idPurificadora);
   }
   
-
   detalleRutaById(id: string): Observable<any> {
     const url = `${environment.api}/ruta/` + id;
     return this.http.get(url);
