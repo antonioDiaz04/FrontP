@@ -26,7 +26,7 @@ body {
   z-index: 100;
   overflow: scroll;
 
-  scrollbar-color: #28b6b1 orange;
+  scrollbar-color: #28b6b1 transparent;
   scrollbar-width: thin;
 
 
@@ -91,7 +91,7 @@ body {
     }
 
     overflow: scroll;
-    scrollbar-color: #28b6b1 orange;
+    scrollbar-color: #28b6b1 transparent;
   }
 
   ul {
@@ -112,7 +112,7 @@ body {
     }
 
     overflow: scroll;
-    scrollbar-color: #28b6b1 orange;
+    scrollbar-color: #28b6b1 transparent;
 
     // scrollbar-width: thin;
     li {
