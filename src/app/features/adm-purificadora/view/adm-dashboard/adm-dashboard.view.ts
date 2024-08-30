@@ -1,3 +1,4 @@
+import { VehiculoService } from './../../../../shared/services/vehiculo.service';
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ClientesService } from "../../../../shared/services/clientes.service";
 import { Cliente } from "../../../../shared/interfaces/client.interface";
@@ -7,8 +8,9 @@ import { Router } from "@angular/router";
 import { Ruta } from "../../../../shared/interfaces/ruta.interface";
 import { RutaService } from "../../../../shared/services/ruta.service";
 // import { SessionService
-  import { NgxUiLoaderService } from "ngx-ui-loader";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 import { SessionService } from '../../../../core/commons/components/service/session.service';
+import { Vehiculo } from '../../../../shared/models/vehiculo.model';
 @Component({
   selector: "app-adm-dashboard",
   templateUrl: "./adm-dashboard.view.html",
@@ -23,11 +25,15 @@ export class AdmDashboardView {
   // nombre: string = "Andrea";
   id!: string;
   data: any = {};
-fechaTexto!:string;
-
+  fechaTexto!: string;
+  idPurificadora!: any
 
 
   ngOnInit() {
+    this.ngxService.start();
+    const userData = this.sessionService.getId();
+    console.log("userData=>", userData)
+    this.idPurificadora = userData;
     this.getUsers();
     this.getRepartidores();
     this.getData()
@@ -127,21 +133,22 @@ fechaTexto!:string;
     }
   }
   allClients: Cliente[] = [];
+  allVehiculos: Vehiculo[] = [];
   allRepartidores: Repartidor[] = [];
   allRutas?: Ruta[] | any = [];
 
   constructor(
     private rutaS: RutaService,
     private router: Router,
-    private UserS: ClientesService,
-    private repService: RepartidoresService,private sessionService: SessionService,
+    private UserS: ClientesService,private vehiculoService:VehiculoService,
+    private repService: RepartidoresService, private sessionService: SessionService,
     private ngxService: NgxUiLoaderService
   ) {
-      this.fechaTexto = this.obtenerFechaTexto();
+    this.fechaTexto = this.obtenerFechaTexto();
   }
 
 
-   obtenerFechaTexto() {
+  obtenerFechaTexto() {
     let diasSemana = [
       "Domingo",
       "Lunes",
@@ -188,7 +195,7 @@ fechaTexto!:string;
     }
   }
   obtenerRutas() {
-    this.rutaS.getRutas().subscribe(
+    this.rutaS.getRutasByIdPurificadora(this.idPurificadora).subscribe(
       (data) => {
         this.allRutas = data;
         console.log(this.allRutas);
@@ -199,7 +206,7 @@ fechaTexto!:string;
     );
   }
   getUsers() {
-    this.UserS.obtenerCLientes().subscribe(
+    this.UserS.obtenerCLientesByIdPurificadora(this.idPurificadora).subscribe(
       (data: Cliente[]) => {
         this.allClients = data;
       },
@@ -209,9 +216,19 @@ fechaTexto!:string;
     );
   }
   getRepartidores() {
-    this.repService.getRepartidores().subscribe(
+    this.repService.getRepartidoresByIdPurificadora(this.idPurificadora).subscribe(
       (data) => {
         this.allRepartidores = data;
+      },
+      (error) => {
+        console.log("ocurrió un error al obtener la información", error);
+      }
+    );
+  }
+  getVehiculos() {
+    this.vehiculoService.getVehiculosByIdPurificadora(this.idPurificadora).subscribe(
+      (data) => {
+        this.allVehiculos = data;
       },
       (error) => {
         console.log("ocurrió un error al obtener la información", error);
