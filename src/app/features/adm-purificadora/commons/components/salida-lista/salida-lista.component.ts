@@ -331,6 +331,7 @@ export class SalidaListaComponent implements OnInit {
         cancelButtonText: "No, cancelar!",
         reverseButtons: true,
       })
+      
       .then((result) => {
         if (result.isConfirmed) {
           if (data && !esSalida) {

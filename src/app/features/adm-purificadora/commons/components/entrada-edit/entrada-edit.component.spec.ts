@@ -6,6 +6,8 @@ describe('EntradaEditComponent', () => {
   let component: EntradaEditComponent;
   let fixture: ComponentFixture<EntradaEditComponent>;
 
+
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EntradaEditComponent]
