@@ -189,9 +189,8 @@ export class SalidaListaComponent implements OnInit {
       ${this.allRepartidores
         .map(
           (repartidor) => `
-        <option value="${repartidor._id}" ${
-            repartidor._id === ruta.repartidorId?._id ? "selected" : ""
-          }>
+        <option value="${repartidor._id}" ${repartidor._id === ruta.repartidorId?._id ? "selected" : ""
+            }>
           ${repartidor.nombre}
         </option>
       `
@@ -234,9 +233,8 @@ export class SalidaListaComponent implements OnInit {
       ${this.allVehiculos
         .map(
           (vehiculo) => `
-        <option value="${vehiculo._id}" ${
-            vehiculo._id === ruta.vehiculoId?._id ? "selected" : ""
-          }>
+        <option value="${vehiculo._id}" ${vehiculo._id === ruta.vehiculoId?._id ? "selected" : ""
+            }>
           ${vehiculo.placas}
         </option>
       `
@@ -299,6 +297,11 @@ export class SalidaListaComponent implements OnInit {
   }
 
   enviar(data: any, esSalida: any) {
+
+    this.ngxUiLoaderService.start();
+    const userData = this.sessionService.getId();
+    const idPurificadora = userData;
+
     const nombreRuta = data.nombreRuta;
     const selectedRepartidor = data.repartidorId;
     const selectedVehiculo = data.vehiculoId;
@@ -332,7 +335,7 @@ export class SalidaListaComponent implements OnInit {
         if (result.isConfirmed) {
           if (data && !esSalida) {
             const SALIDA: Salida = {
-              idPurificadora: this.idPurificadora,
+              idPurificadora: idPurificadora,
               nombreRuta: nombreRuta,
               repartidorId: selectedRepartidor,
               vehiculoId: selectedVehiculo,
@@ -340,7 +343,8 @@ export class SalidaListaComponent implements OnInit {
               puntosDeEntrega: puntosDeEntrega,
               estado: "enviado",
             };
-            console.log("no es salida");
+
+            console.log(Salida);
 
             this.rutaS.addSalida(SALIDA).subscribe(
               (response) => {
