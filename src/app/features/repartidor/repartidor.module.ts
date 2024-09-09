@@ -20,7 +20,7 @@ import { CodigoqrView } from './view/codigoqr/codigoqr.view';
 import { ScannerIneModule } from 'ngx-scanner';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
-
+import {GoogleMapsModule} from 'google-maps-angular2';
 // import { ZXingScannerModule, ZXingScannerComponent } from '@zxing/ngx-scanner';
 // import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanLOAD_WASMner-qrcode';
 // import  } from 'angularx-qrcode';
@@ -41,7 +41,9 @@ const ngxScanner = [NgQrScannerModule]
   declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView, NotificacionesView, MapaComponent],
   imports: [primeNg,
     CommonModule,
-    RepartidorRoutingModule,
+    RepartidorRoutingModule,GoogleMapsModule.forRoot({
+      url: 'You google api link without callback'
+  })
   ], providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService]
 })
