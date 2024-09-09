@@ -79,7 +79,7 @@ body {
 
 header {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   background: #057cb3;
   padding: 10px 20px;
