@@ -12,7 +12,6 @@ import { CodigoqrView } from './view/codigoqr/codigoqr.view';
 import { NotificacionesView } from './view/notificaciones/notificaciones.view';
 import { MapaComponent } from './view/mapa/mapa.component';
 
-
 const routes: Routes = [
 
   {
