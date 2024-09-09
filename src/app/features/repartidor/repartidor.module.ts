@@ -35,16 +35,13 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { MapaComponent } from './view/mapa/mapa.component';
 
-// import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser'; // O CommonModule
-
 const primeNg = [ReactiveFormsModule,MessagesModule,ToastModule,FormsModule,SidebarModule,DialogModule,DropdownModule,CardModule,InputNumberModule,ButtonModule,ZXingScannerModule]
 const ngxScanner = [NgQrScannerModule]
 @NgModule({
   declarations: [RepartidorComponent, InicioView,RepartidorHomeView, ClientesView, RutaView, PerfilView, EntregasView, OpcionesView, CodigoqrView, NotificacionesView, MapaComponent],
   imports: [primeNg,
-    CommonModule,BrowserModule,
-           
+    CommonModule,
+    RepartidorRoutingModule
   ], providers: [Toast,MessageService,provideClientHydration(), [provideHttpClient(withFetch())],
     SignupService]
 })
