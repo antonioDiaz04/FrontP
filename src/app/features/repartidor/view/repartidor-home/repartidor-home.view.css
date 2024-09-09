@@ -124,7 +124,7 @@ header {
       /* background-color: #057cb3; */
       color: white;
       display: flex;
-      justify-content: space-around;
+      /* justify-content: space-around; */
       align-items: center;
       padding: 10px 20px;
     }
